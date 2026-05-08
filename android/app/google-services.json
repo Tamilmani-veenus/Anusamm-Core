@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "548143423324",
+    "project_id": "anusamm-3d8ae",
+    "storage_bucket": "anusamm-3d8ae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548143423324:android:308c52c8c2e71e1e0beb99",
+        "android_client_info": {
+          "package_name": "com.veenus.anusamm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwZalJ5eOMzalHaiTne5j_sm1dOn9BDHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
