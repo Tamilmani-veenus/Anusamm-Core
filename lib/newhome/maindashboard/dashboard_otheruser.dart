@@ -21,6 +21,8 @@ import '../../controller/subcontcontroller.dart';
 import '../../home/account_settings/account_setting.dart';
 import '../../home/dashboard/button_widget.dart';
 import '../../home/dashboard/site_locations_view.dart';
+import '../../home/punch_in_out/punch_in.dart';
+import '../../home/punch_in_out/punch_out.dart';
 import '../../login/animation_signinpage/Animations/FadeAnimation.dart';
 import '../../login/animation_signinpage/signin_page.dart';
 import '../../login/animation_signinpage/welcomepage.dart';
@@ -342,6 +344,7 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
   void initState() {
     // TODO: implement initState
     punchInController.getProjectPunchInSts();
+    punchInController.getPunchTypeList();
     super.initState();
   }
 
@@ -373,7 +376,7 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 70),
                   Column(
                     children: [
                       FadeAnimation(1.2,
@@ -424,116 +427,190 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                           const SizedBox(height: 20,),
                         ],
                       )),
-                      FadeAnimation(  1.5,
-                        Card(elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32), // Apply rounded corners here
-                          ),
-                          child: Container(
-                            decoration: kGradientBoxDecoration,
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                width: BaseUtitiles.getWidthtofPercentage(context, 70),
-                                child: Column(
-                                  children: [
-                                    SizedBox( height: BaseUtitiles.getheightofPercentage(context, 2),),
+                      Obx(() {
+                        return punchInController.punchTypeList.isNotEmpty
+                            ? FadeAnimation(
+                          1.5,
+                          Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            child: Container(
+                              decoration: kGradientBoxDecoration,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  width: BaseUtitiles.getWidthtofPercentage(context, 70),
+                                  child: Column(
+                                    children: [
 
-                                    FadeAnimation(
-                                      1.5,
-                                      Obx(()=>
-                                          Container(
-
-                                              width: BaseUtitiles.getWidthtofPercentage(context, 65),
-                                              height: BaseUtitiles.getheightofPercentage(context, 5),
-                                              child: ListTile(
-                                                title: GestureDetector(
-                                                    onTap: (){
-                                                      _handleRadioValueChange(1);
-                                                    },
-                                                    child: Text('Alloted Projects',style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.bold))),
-                                                leading: Radio<int>(
-                                                  activeColor: Theme.of(context).primaryColor,
-                                                  value: 1,
-                                                  groupValue: punchInController.selectedRadio.value,
-                                                  onChanged: _handleRadioValueChange,
-                                                ),
-                                              )),
+                                      SizedBox(
+                                        height: BaseUtitiles.getheightofPercentage(context, 1),
                                       ),
-                                    ),
-                                    Obx(()=>
-                                        FadeAnimation(
-                                          1.5, Container(
-                                          width: BaseUtitiles.getWidthtofPercentage(context, 65),
-                                          height: BaseUtitiles.getheightofPercentage(context, 5),
-                                          child: ListTile(
-                                            title: GestureDetector(
-                                                onTap: (){
-                                                  _handleRadioValueChange(2);
-                                                },
-                                                child: Text('Non-Alloted Projects',style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.bold))),
-                                            leading: Radio<int>(
-                                              activeColor: Theme.of(context).primaryColor,
-                                              value: 2,
-                                              groupValue: punchInController.selectedRadio.value,
-                                              onChanged: _handleRadioValueChange,
+
+                                      /// ACTIVE LIST
+                                      Obx(() {
+                                        final activeList = punchInController.punchTypeList
+                                            .where((item) => item.active == "Y" || item.active == "y")
+                                            .toList();
+
+                                        return activeList.length==0?SizedBox():ListView.builder(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.zero,
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: activeList.length,
+                                          itemBuilder: (context, index) {
+                                            final item = activeList[index];
+
+                                            return FadeAnimation(
+                                              1.5,
+                                              Center(
+                                                child: Container(
+                                                  width: BaseUtitiles.getWidthtofPercentage(
+                                                      context, 55),
+                                                  height: BaseUtitiles.getheightofPercentage(
+                                                      context, 5),
+                                                  child: Obx(()=>
+                                                      ListTile(
+                                                        title: GestureDetector(
+                                                          onTap: () {
+                                                            _handleRadioValueChange(item.id);
+                                                          },
+                                                          child: Text(
+                                                            item.punchinandOutType,
+                                                            style: const TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        leading: Radio<int>(
+                                                          activeColor: Theme
+                                                              .of(context)
+                                                              .primaryColor,
+                                                          value: item.id,
+                                                          groupValue:
+                                                          punchInController.selectedRadio.value,
+                                                          onChanged: (value) {
+                                                            _handleRadioValueChange(value);
+                                                          },
+                                                        ),
+                                                      ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }),
+
+                                      SizedBox(
+                                        height: BaseUtitiles.getheightofPercentage(context, 3),
+                                      ),
+
+                                      FadeAnimation(
+                                        1.5,
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: 16.r,
+                                            left: 16.r,
+                                            right: 16.r,
+                                          ),
+                                          child: PunchButtonWidget(
+                                            maxHeight: 40.h,
+                                            maxWidth: 150.w,
+                                            color: Theme
+                                                .of(context)
+                                                .primaryColor,
+                                            title: Obx(
+                                                  () =>
+                                                  Text(
+                                                    punchInController.resPunchSts.value == "TRUE"
+                                                        ? "Punch Out"
+                                                        : "Punch In",
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14.0,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
                                             ),
+                                            onTap: () async {
+                                              int selected =
+                                                  punchInController.selectedRadio.value;
+
+                                              final selectedItem = punchInController.punchTypeList
+                                                  .firstWhereOrNull(
+                                                    (item) => item.id == selected,
+                                              );
+
+                                              if (selectedItem != null) {
+                                                if (selectedItem.punchinandOutValues == "OD") {
+                                                  await punchInController.getProjectPunchInSts();
+
+                                                  if (punchInController.resPunchSts.value == "FALSE") {
+                                                    await Get.to(() =>
+                                                        PunchIn(
+                                                            latitude: "",
+                                                            longitude: "",
+                                                            radius: "",
+                                                            allotedStatus: selectedItem.punchinandOutValues));
+                                                  }
+                                                  else {
+                                                    await Get.to(() =>
+                                                        PunchOut(
+                                                            latitude: "",
+                                                            longitude: "",
+                                                            radius: "",
+                                                            allotedStatus: selectedItem.punchinandOutValues));
+                                                  }
+                                                }
+                                                else {
+                                                  await punchInController
+                                                      .getProjectPunchInSts();
+
+                                                  punchIn = punchInController
+                                                      .resPunchSts.value ==
+                                                      "FALSE";
+
+                                                  await siteLocationController
+                                                      .getProjectName(
+                                                    selectedItem
+                                                        .punchinandOutValues,
+                                                    "0",
+                                                  );
+
+                                                  Get.to(() =>
+                                                      SiteLocationView(
+                                                        allotedStatus: selectedItem.punchinandOutValues,
+                                                        checkValue: "0",
+                                                      ),
+                                                  );
+                                                }
+                                              } else {
+                                                BaseUtitiles.showToast(
+                                                  "Please select any one",
+                                                );
+                                              }
+                                            },
                                           ),
                                         ),
-                                        ),
-                                    ),
-
-                                    SizedBox( height: BaseUtitiles.getheightofPercentage(context, 3),),
-
-                                    FadeAnimation(
-                                      1.5, Padding(
-                                      padding: EdgeInsets.only(bottom: 16.r,left: 16.r,right: 16.r),
-                                      child: PunchButtonWidget(
-                                        maxHeight: 40.h,
-                                        maxWidth: 150.w,
-                                        color: Theme.of(context).primaryColor,
-                                        title:
-                                        Obx(()=>
-                                            Text(
-                                              punchInController.resPunchSts.value=="TRUE" ?"Punch Out":"Punch In",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                        ),
-                                        onTap: () async {
-                                          int selected = punchInController.selectedRadio.value;
-
-                                          if (selected == 1 || selected == 2) {
-                                            String allotedStatus = selected == 1 ? "Y" : "N";
-
-                                            await punchInController.getProjectPunchInSts();
-                                            punchIn = punchInController.resPunchSts.value == "FALSE";
-
-                                            await siteLocationController.getProjectName(allotedStatus, "0");
-                                            Get.to(() => SiteLocationView(allotedStatus: allotedStatus, checkValue: "0"));
-                                          } else {
-                                            BaseUtitiles.showToast("Please select any one");
-                                          }
-
-                                        },
                                       ),
-                                    ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        ) : SizedBox();
+                      } )
                     ],
                   ),
                   const SizedBox(height: 150),

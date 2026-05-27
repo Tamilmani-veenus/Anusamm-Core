@@ -1726,7 +1726,7 @@ class BottomsheetControllers {
 
   //-------voucher------------
 
-  StaffName(context, list ){
+  StaffName(context, list,{String? type} ){
     showModalBottomSheet(context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),),
@@ -1801,13 +1801,12 @@ class BottomsheetControllers {
                         child: Container(
                           margin: EdgeInsets.only(left: 10),
                           alignment: Alignment.center,
-                          child: Text(list[index].staffName.toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE,fontWeight: FontWeight.bold),),
+                          child: Text(type=="staffVoucher"?list[index].employeeName:list[index].staffName, textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE,fontWeight: FontWeight.bold),),
                         ),
                         onTap: (){
                           staffController.selectedstaffId.value = list[index].id;
-                          staffController.Staffname.text = list[index].staffName.toString();
+                          staffController.Staffname.text = type=="staffVoucher"?list[index].employeeName.toString():list[index].staffName.toString();
                           searchcontroller.text = "";
-                          // cashBookStaffController.calculations();
                           Navigator.pop(context);
                         },
                       ),
@@ -1822,6 +1821,7 @@ class BottomsheetControllers {
         );
       },);
   }
+
 
   BankName(context, list ){
     showModalBottomSheet(context: context,
@@ -1898,11 +1898,11 @@ class BottomsheetControllers {
                         child: Container(
                           margin: EdgeInsets.only(left: 10),
                           alignment: Alignment.center,
-                          child: Text(list[index].bank.toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE,fontWeight: FontWeight.bold),),
+                          child: Text(list[index].bankName.toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE,fontWeight: FontWeight.bold),),
                         ),
                         onTap: (){
-                          staffVoucher_Controller.selectedbankId.value = list[index].bankId;
-                          staffVoucher_Controller.BankName.text = list[index].bank.toString();
+                          staffVoucher_Controller.selectedbankId.value = list[index].id;
+                          staffVoucher_Controller.BankName.text = list[index].bankName.toString();
                           searchcontroller.text = "";
                           Navigator.pop(context);
                         },

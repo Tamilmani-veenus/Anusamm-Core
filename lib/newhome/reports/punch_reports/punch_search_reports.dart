@@ -19,7 +19,7 @@ class PunchSearchReports extends GetView<PunchInController> {
   final LoginController loginController = Get.put(LoginController());
   final StaffController staffController = Get.put(StaffController());
   final BottomsheetControllers bottomsheetControllers =
-      Get.put(BottomsheetControllers());
+  Get.put(BottomsheetControllers());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,7 +28,7 @@ class PunchSearchReports extends GetView<PunchInController> {
     final double height = MediaQuery.of(context).size.height * 50 / 100;
     ScreenUtil.init(context);
     return controller.obx(
-      (state) => StatefulBuilder(builder: (BuildContext context, setState) {
+          (state) => StatefulBuilder(builder: (BuildContext context, setState) {
         return SafeArea(
           top: false,
           child: Form(
@@ -43,7 +43,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                   children: <Widget>[
                     Padding(
                       padding:
-                          EdgeInsets.only(left: 8.0, right: 8.0, top: 16.r),
+                      EdgeInsets.only(left: 8.0, right: 8.0, top: 16.r),
                       child: Row(
                         children: [
                           Expanded(
@@ -69,7 +69,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                                     labelStyle: const TextStyle(
                                         color: Colors.grey,
                                         fontSize:
-                                            RequestConstant.Lable_Font_SIZE),
+                                        RequestConstant.Lable_Font_SIZE),
                                     prefixIconConstraints: const BoxConstraints(
                                         minWidth: 0, minHeight: 0),
                                     prefixIcon: Padding(
@@ -97,7 +97,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                                                 onSurface: Colors.black,
                                               ),
                                               textButtonTheme:
-                                                  TextButtonThemeData(
+                                              TextButtonThemeData(
                                                 style: TextButton.styleFrom(
                                                   foregroundColor: Colors.black,
                                                 ),
@@ -108,8 +108,8 @@ class PunchSearchReports extends GetView<PunchInController> {
                                         });
                                     if (fromDate != null) {
                                       String formattedDate =
-                                          DateFormat('yyyy-MM-dd')
-                                              .format(fromDate);
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(fromDate);
                                       punchInController.fromDate.text =
                                           formattedDate;
                                     } else {
@@ -151,7 +151,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                                     labelStyle: const TextStyle(
                                         color: Colors.grey,
                                         fontSize:
-                                            RequestConstant.Lable_Font_SIZE),
+                                        RequestConstant.Lable_Font_SIZE),
                                     prefixIconConstraints: const BoxConstraints(
                                         minWidth: 0, minHeight: 0),
                                     prefixIcon: Padding(
@@ -168,13 +168,13 @@ class PunchSearchReports extends GetView<PunchInController> {
                                         .fromDate.text.isNotEmpty) {
                                       fromDateParsed = DateFormat('yyyy-MM-dd')
                                           .parse(
-                                              punchInController.fromDate.text);
+                                          punchInController.fromDate.text);
                                     }
                                     var todate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate:
-                                          fromDateParsed ?? DateTime(2010),
+                                      fromDateParsed ?? DateTime(2010),
                                       lastDate: now,
                                       builder: (context, child) {
                                         return Theme(
@@ -186,7 +186,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                                               onSurface: Colors.black,
                                             ),
                                             textButtonTheme:
-                                                TextButtonThemeData(
+                                            TextButtonThemeData(
                                               style: TextButton.styleFrom(
                                                 foregroundColor: Colors.black,
                                               ),
@@ -198,8 +198,8 @@ class PunchSearchReports extends GetView<PunchInController> {
                                     );
                                     if (todate != null) {
                                       String formattedDate =
-                                          DateFormat('yyyy-MM-dd')
-                                              .format(todate);
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(todate);
                                       punchInController.toDate.text =
                                           formattedDate;
                                     }
@@ -257,7 +257,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                           side:
-                              const BorderSide(color: Colors.white70, width: 1),
+                          const BorderSide(color: Colors.white70, width: 1),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         elevation: 3,
@@ -277,7 +277,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                                   color: Colors.grey,
                                   fontSize: RequestConstant.Lable_Font_SIZE),
                               prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
+                              BoxConstraints(minWidth: 0, minHeight: 0),
                               prefixIcon: Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -285,13 +285,14 @@ class PunchSearchReports extends GetView<PunchInController> {
                               ),
                             ),
                             onTap: () async {
+                              bottomsheetControllers.searchcontroller.text = "";
                               if (loginController.user.value.userType == "A") {
                                 await staffController
-                                    .get_staffDropdowntList(context);
+                                    .get_staffDropdowntList(context,"punchReport");
                                 bottomsheetControllers.StaffName(
                                     context,
                                     staffController
-                                        .getStaffDropdownvalue.value);
+                                        .getStaffDropdownvalue.value,type: "punchReport");
                                 FocusScope.of(context).unfocus();
                               } else {
                                 null;
@@ -314,7 +315,7 @@ class PunchSearchReports extends GetView<PunchInController> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             side:
-                                const BorderSide(width: 3, color: Colors.white),
+                            const BorderSide(width: 3, color: Colors.white),
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)),
@@ -337,413 +338,475 @@ class PunchSearchReports extends GetView<PunchInController> {
                     ),
                     Expanded(
                       child:
-                          Obx(
-                              () =>
-                                  (punchInController.punchFilterRxList.length !=
-                                          0)
-                                      ? ListView.builder(
-                                          itemCount: punchInController
-                                              .punchFilterRxList.length,
-                                          itemBuilder: (context, index) {
-                                            var listItem = punchInController
-                                                .punchFilterRxList[index];
+                      Obx(() =>
+                      (punchInController.punchFilterRxList.length != 0)
+                          ? ListView.builder(
+                        itemCount: punchInController
+                            .punchFilterRxList.length,
+                        itemBuilder: (context, index) {
+                          var listItem = punchInController
+                              .punchFilterRxList[index];
 
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10,
-                                                  right: 10,
-                                                  bottom: 10),
-                                              child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                                elevation: 3,
-                                                child: Column(
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                bottom: 10),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      10.0)),
+                              elevation: 3,
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .primaryColor, // ✅ correct place
+                                      borderRadius:
+                                      const BorderRadius
+                                          .only(
+                                        topLeft: Radius.circular(
+                                            10), // 🔥 increase for more curve
+                                        topRight:
+                                        Radius.circular(
+                                            10),
+                                      ),
+                                    ),
+                                    padding:
+                                    EdgeInsets.all(12),
+                                    child: Align(
+                                      alignment:
+                                      Alignment.center,
+                                      child: Text(
+                                        (listItem!.staffName !=
+                                            "" &&
+                                            listItem!
+                                                .staffName !=
+                                                "null")
+                                            ? listItem!
+                                            .staffName!
+                                            : "-",
+                                        style:
+                                        const TextStyle(
+                                          fontWeight:
+                                          FontWeight.bold,
+                                          fontSize: 14.0,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow
+                                            .ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  ...(listItem.punchDetails !=
+                                      null &&
+                                      listItem
+                                          .punchDetails!
+                                          .isNotEmpty
+                                      ? listItem.punchDetails!
+                                      .map((index) {
+                                    bool isLastItem =
+                                        index ==
+                                            listItem
+                                                .punchDetails!
+                                                .last;
+                                    return Padding(
+                                      padding:
+                                      const EdgeInsets
+                                          .only(
+                                          bottom:
+                                          10,
+                                          left: 10,
+                                          right:
+                                          10),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                                   children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .primaryColor, // ✅ correct place
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          topLeft: Radius.circular(
-                                                              10), // 🔥 increase for more curve
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  10),
-                                                        ),
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.all(12),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          (listItem!.staffName !=
-                                                                      "" &&
-                                                                  listItem!
-                                                                          .staffName !=
-                                                                      "null")
-                                                              ? listItem!
-                                                                  .staffName!
-                                                              : "-",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 14.0,
-                                                            color: Colors.white,
-                                                          ),
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ),
+                                                    Text(
+                                                      "${index.punchInDate.toString() != "" && index.punchInDate.toString() != "null" ? index.punchInDate.toString() : "        -   "}",
+                                                      style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: Colors.black),
                                                     ),
-                                                    const SizedBox(height: 10),
-                                                    ...(listItem.punchDetails !=
-                                                                null &&
-                                                            listItem
-                                                                .punchDetails!
-                                                                .isNotEmpty
-                                                        ? listItem.punchDetails!
-                                                            .map((index) {
-                                                            bool isLastItem =
-                                                                index ==
-                                                                    listItem
-                                                                        .punchDetails!
-                                                                        .last;
-                                                            return Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      bottom:
-                                                                          10,
-                                                                      left: 10,
-                                                                      right:
-                                                                          10),
-                                                              child: Column(
-                                                                children: [
-                                                                  Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Text(
-                                                                              "${index.punchInDate.toString() != "" && index.punchInDate.toString() != "null" ? index.punchInDate.toString() : "        -   "}",
-                                                                              style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: Colors.black),
-                                                                            ),
-                                                                            const SizedBox(height: 5),
-                                                                            Row(
-                                                                              children: [
-                                                                                Container(
-                                                                                  padding: EdgeInsets.all(6),
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: Icon(
-                                                                                    Icons.access_time,
-                                                                                    size: 16,
-                                                                                    color: Theme.of(context).primaryColor,
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  width: 5,
-                                                                                ),
-                                                                                Text(
-                                                                                  "In Details:",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 13,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    color: Theme.of(context).primaryColor,
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                            Column(
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(left: 20),
-                                                                                  child: Row(
-                                                                                    children: [
-                                                                                      SizedBox(
-                                                                                        width: 70,
-                                                                                        child: Text(
-                                                                                          "In Time :",
-                                                                                          style: TextStyle(
-                                                                                            fontSize: 12,
-                                                                                            color: Colors.grey,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                      SizedBox(
-                                                                                        width: 120,
-                                                                                        child: Text(
-                                                                                          index.punchInTime != null && index.punchInTime != "" && index.punchInTime != "null"
-                                                                                              ? DateFormat("hh:mm a").format(
-                                                                                                  DateFormat("hh:mm:ss a").parse(index.punchInTime!),
-                                                                                                )
-                                                                                              : "-",
-                                                                                          style: const TextStyle(
-                                                                                            fontSize: 13,
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            color: Colors.black,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 10,
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.only(left: 20),
-                                                                                  child: Row(
-                                                                                    children: [
-                                                                                      SizedBox(
-                                                                                        width: 70,
-                                                                                        child: Text(
-                                                                                          "In Project :  ",
-                                                                                          style: TextStyle(
-                                                                                            fontSize: 12,
-                                                                                            color: Colors.grey,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                      Container(
-                                                                                        width: 120,
-                                                                                        child: Text(
-                                                                                          '${index.inLocation != "" && index.inLocation != "null" ? index.inLocation! : "-"}',
-                                                                                          style: const TextStyle(
-                                                                                            fontSize: 13,
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                            color: Colors.black,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                            if (!isLastItem)
-                                                                              const Divider(),
-                                                                          ],
-                                                                        ),
-                                                                        GestureDetector(
-                                                                          child:
-                                                                              Container(
-                                                                            height:
-                                                                                height * 0.2,
-                                                                            width:
-                                                                                width * 0.2,
-                                                                            child:
-                                                                                Image.network(
-                                                                              index.inImageUrl!,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
-                                                                          ),
-                                                                          onTap:
-                                                                              () {
-                                                                            Navigator.push(
-                                                                                context,
-                                                                                MaterialPageRoute(
-                                                                                    builder: (context) => ImageViewPage(
-                                                                                          imageUrl: index.inImageUrl!,
-                                                                                          netUrl: true,
-                                                                                        )));
-                                                                          },
-                                                                        ),
-                                                                      ]),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                          5),
-                                                                  Divider(),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Row(
-                                                                            children: [
-                                                                              Container(
-                                                                                padding: EdgeInsets.all(6),
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Icon(
-                                                                                  Icons.access_time,
-                                                                                  size: 16,
-                                                                                  color: Theme.of(context).primaryColor,
-                                                                                ),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                width: 5,
-                                                                              ),
-                                                                              Text(
-                                                                                "Out Details:",
-                                                                                style: TextStyle(
-                                                                                  fontSize: 13,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  color: Theme.of(context).primaryColor,
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          Column(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(left: 20),
-                                                                                child: Row(
-                                                                                  children: [
-                                                                                    SizedBox(
-                                                                                      width: 70,
-                                                                                      child: Text(
-                                                                                        "Out Time :",
-                                                                                        style: TextStyle(
-                                                                                          fontSize: 12,
-                                                                                          color: Colors.grey,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 120,
-                                                                                      child: Text(
-                                                                                        index.punchOutTime != null && index.punchOutTime != "" && index.punchOutTime != "null"
-                                                                                            ? DateFormat("hh:mm a").format(
-                                                                                                DateFormat("hh:mm:ss a").parse(index.punchOutTime!),
-                                                                                              )
-                                                                                            : "-",
-                                                                                        style: const TextStyle(
-                                                                                          fontSize: 13,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          color: Colors.black,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(left: 20),
-                                                                                child: Row(
-                                                                                  children: [
-                                                                                    SizedBox(
-                                                                                      width: 70,
-                                                                                      child: Text(
-                                                                                        "Out Project : ",
-                                                                                        style: TextStyle(
-                                                                                          fontSize: 12,
-                                                                                          color: Colors.grey,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                    Container(
-                                                                                      width: 120,
-                                                                                      child: Text(
-                                                                                        '${index.outLocation != null && index.outLocation != "" && index.outLocation != "null" ? index.outLocation! : "-"}',
-                                                                                        style: const TextStyle(
-                                                                                          fontSize: 13,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          color: Colors.black,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      index.outImageUrl != null &&
-                                                                              index.outImageUrl!.isNotEmpty &&
-                                                                              index.outImageUrl != "null"
-                                                                          ? GestureDetector(
-                                                                              onTap: () {
-                                                                                Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                    builder: (context) => ImageViewPage(
-                                                                                      imageUrl: index.outImageUrl!,
-                                                                                      netUrl: true,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                height: height * 0.2,
-                                                                                width: width * 0.2,
-                                                                                child: Image.network(
-                                                                                  index.outImageUrl!,
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            )
-                                                                          : Container(
-                                                                              height: height * 0.2,
-                                                                              width: width * 0.2,
-                                                                            ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }).toList()
-                                                        : [
-                                                            Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(
-                                                                      16.0),
-                                                              child:
-                                                                  const Center(
+                                                    const SizedBox(height: 5),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          padding: EdgeInsets.all(6),
+                                                          decoration: BoxDecoration(
+                                                            color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                                            shape: BoxShape.circle,
+                                                          ),
+                                                          child: Icon(
+                                                            Icons.access_time,
+                                                            size: 16,
+                                                            color: Theme.of(context).primaryColor,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "In Details:",
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Theme.of(context).primaryColor,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 20),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 70,
                                                                 child: Text(
-                                                                  "No details found",
+                                                                  "In Time :",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      color: Colors
-                                                                          .grey),
+                                                                    fontSize: 12,
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 120,
+                                                                child: Text(
+                                                                  index.punchInTime != null && index.punchInTime != "" && index.punchInTime != "null"
+                                                                      ? DateFormat("hh:mm a").format(
+                                                                    DateFormat("hh:mm:ss a").parse(index.punchInTime!),
+                                                                  )
+                                                                      : "-",
+                                                                  style: const TextStyle(
+                                                                    fontSize: 13,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 20),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 70,
+                                                                child: Text(
+                                                                  "In Project :  ",
+                                                                  style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: 120,
+                                                                child:
+                                                                Text(index.instatus == "Alloted" || index.instatus == "Non-Alloted" ?
+                                                                '${index.inLocation != "" && index.inLocation != "null" ? index.inLocation! : "-"}' : index.instatus,
+                                                                  style: const TextStyle(
+                                                                    fontSize: 13,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 20),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 70,
+                                                                child: Text(
+                                                                  "In Address :  ",
+                                                                  style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: 120,
+                                                                child:  Text(index.instatus == "Alloted" || index.instatus == "Non-Alloted" ?
+                                                                '${index.projectAddress != "" && index.projectAddress != null ? index.projectAddress! : "-"}' : index.onPinInAddress!,
+                                                                  style: const TextStyle(
+                                                                    fontSize: 13,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+
+                                                  ],
+                                                ),
+                                                GestureDetector(
+                                                  child:
+                                                  Container(
+                                                    height:
+                                                    height * 0.2,
+                                                    width:
+                                                    width * 0.2,
+                                                    child:
+                                                    Image.network(
+                                                      index.inImageUrl!,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  onTap:
+                                                      () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ImageViewPage(
+                                                              imageUrl: index.inImageUrl!,
+                                                              netUrl: true,
+                                                            )));
+                                                  },
+                                                ),
+                                              ]),
+                                          const SizedBox(
+                                              height:
+                                              5),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding: EdgeInsets.all(6),
+                                                        decoration: BoxDecoration(
+                                                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                                          shape: BoxShape.circle,
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.access_time,
+                                                          size: 16,
+                                                          color: Theme.of(context).primaryColor,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        "Out Details:",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Theme.of(context).primaryColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                    10,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 20),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 70,
+                                                              child: Text(
+                                                                "Out Time :",
+                                                                style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors.grey,
                                                                 ),
                                                               ),
                                                             ),
-                                                          ]),
-                                                  ],
-                                                ),
+                                                            SizedBox(
+                                                              width: 120,
+                                                              child: Text(
+                                                                index.punchOutTime != null && index.punchOutTime != "" && index.punchOutTime != "null"
+                                                                    ? DateFormat("hh:mm a").format(
+                                                                  DateFormat("hh:mm:ss a").parse(index.punchOutTime!),
+                                                                )
+                                                                    : "-",
+                                                                style: const TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 20),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 70,
+                                                              child: Text(
+                                                                "Out Project : ",
+                                                                style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child: Text(index.outStatus == "Alloted" || index.outStatus == "Non-Alloted" ?
+                                                              '${index.outLocation != null && index.outLocation != "" && index.outLocation != null ? index.outLocation! : "-"}' :
+                                                              index.outStatus == null || index.outStatus == "" || index.outStatus == "-" ? "-" : index.outStatus,
+                                                                style: const TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 20),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 70,
+                                                              child: Text(
+                                                                "Out Address : ",
+                                                                style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors.grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:Text(index.outStatus == "Alloted" || index.outStatus == "Non-Alloted" ?
+                                                              '${index.outProjectAddress != null && index.outProjectAddress != "" && index.outProjectAddress != null ? index.outProjectAddress! : "-"}' : index.onPinOutAddress,
+                                                                style: const TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
-                                            );
-                                          },
-                                        )
-                                      : SizedBox()),
+                                              index.outImageUrl != null &&
+                                                  index.outImageUrl!.isNotEmpty &&
+                                                  index.outImageUrl != "null"
+                                                  ? GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => ImageViewPage(
+                                                        imageUrl: index.outImageUrl!,
+                                                        netUrl: true,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  height: height * 0.2,
+                                                  width: width * 0.2,
+                                                  child: Image.network(
+                                                    index.outImageUrl!,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              )
+                                                  : Container(
+                                                height: height * 0.2,
+                                                width: width * 0.2,
+                                              ),
+                                            ],
+                                          ),
+                                          if (!isLastItem)
+                                            const Divider(),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList()
+                                      : [
+                                    Container(
+                                      padding:
+                                      const EdgeInsets
+                                          .all(
+                                          16.0),
+                                      child:
+                                      const Center(
+                                        child: Text(
+                                          "No details found",
+                                          style: TextStyle(
+                                              fontSize:
+                                              14.0,
+                                              color: Colors
+                                                  .grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                          : SizedBox()),
                     )
                   ],
                 ),

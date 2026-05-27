@@ -4,8 +4,8 @@ class ApiConfig {
   // static const String LIVE_ENDPOINT_CORE = "http://192.168.0.250:8080/";  //local
   static const String LIVE_ENDPOINT_CORE = "http://49.204.233.151:8080/";    //local
 
-  static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "AnusammAPI/";
-  // static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "ERPNEW/";
+  // static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "AnusammAPI/";
+  static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "VeenusAPI/";
   static late final String APIURL;
   static late final String APIURL_CORE;
   static late final String WebURL;
@@ -16,8 +16,8 @@ class ApiConfig {
   static Future<void> initializeUrl() async {
     final isLive = await _isEndpointLive(Uri.parse(LIVE_ENDPOINT_CORE).host);
     if (isLive) {
-      APIURL = "${LIVE_ENDPOINT_CORE}AnusammAPI/";
-      APIURL_CORE = "${LIVE_ENDPOINT_CORE}AnusammAPI/";
+      APIURL = "${LIVE_ENDPOINT_CORE}VeenusAPI/";
+      APIURL_CORE = "${LIVE_ENDPOINT_CORE}VeenusAPI/";
       WebURL = "${LIVE_ENDPOINT_CORE}Anusamm/";
       print("IP_URL $APIURL");
     } else {
@@ -152,8 +152,8 @@ class ApiConstant{
   static String GETTRANSITEMLIST = BASE_URL + "api/MaterialTransferProject/GetMaterialList";
   static String GETMATTRANSREQ = BASE_URL + "api/MaterialTransferRequest/GetMaterialListbyPRJSIT";
   static String GET_TRANSBETSITE_ENTRYLIST = BASE_URL_CORE + "api/MaterialSitetosite/GetAllSitetoSiteMas";
-  static String GETCASHBOOK_SITE = BASE_URL + "api/Report/GetCashBookSite";
-  static String GETCASHBOOK_STAFF = BASE_URL + "api/Report/GetCashBookStaff";
+  static String GETCASHBOOK_SITE = BASE_URL_CORE + "api/AccountsReports/getCashBookSite";
+  static String GETCASHBOOK_STAFF = BASE_URL_CORE + "api/AccountsReports/getCashBookStaff";
   static String GETACCOUNTTYPEDROPDOWNLIST = BASE_URL_CORE + "api/SiteVoucher/GetAccountType";
   static String GETACCOUNTTYPEDROPDOWNLISTADVREQ = BASE_URL + "api/CommonFile/GetAccTypeAdvReq";
   static String GetADVREQ_SITEWIEPAYMENTLIST = BASE_URL + "api/AdvRequisitionVoucher/GetAdvreq_sitewisePayment";
@@ -162,11 +162,13 @@ class ApiConstant{
   static String GETPAYFORDROPDOWNLIST = BASE_URL_CORE + "api/SiteVoucher/GetAccountPayFor";
   static String ACCOUNTNAMEDROPDWONLISTAPI = BASE_URL_CORE + "api/SiteVoucher/GetAccountName";
   static String STAFFDROPDWONLISTAPI = BASE_URL_CORE + "api/StaffRequisition/GetStaffDd";
+  static String STAFFVOUSTAFFLISTAPI = BASE_URL_CORE + "api/StaffVoucher/GetAllStaffNameDropDown";
   static String GET_ADVREQ_ENTRY_LIST = BASE_URL + "api/AdvRequisitionVoucher/GetVoucherProjectEntryList";
   static String GETSITEVOC_ENTRY_LIST = BASE_URL_CORE + "api/SiteVoucher/GetAllAccountSiteVoucher";
-  static String GETSTAFFVOC_ENTRY_LIST = BASE_URL + "api/VoucherStaff/GetVoucherStaffEntryList";
+  static String GETSTAFFVOC_ENTRY_LIST = BASE_URL_CORE + "api/StaffVoucher/GetAllStaffVoucher";
+  static String GET_STAFFVOUCHER_BANKNAMELIST_API = BASE_URL_CORE + "api/GenericMaster/GetBank";
   static String GET_SITEVOUCHER_EDIT_API = BASE_URL_CORE + "api/SiteVoucher/GetAccountSiteVoucherById";
-  static String GET_STAFFVOUCHERSITE_EDIT_API = BASE_URL + "api/VoucherStaff/GetVoucherStaffById";
+  static String GET_STAFFVOUCHERSITE_EDIT_API = BASE_URL_CORE + "api/StaffVoucher/GetStafVoucherById";
   static String GET_STAFFVOUCHER_BankNAMELIST_API = BASE_URL + "api/commonfile/GetBankName";
   static String GETMRNREQUEST_ENTRY_LIST = BASE_URL_CORE + "api/MaterialReqOrdMas/GetAllReqOrdMas";
   static String GET_MATERIAL_EDIT_API = BASE_URL_CORE + "api/MaterialReqOrdMas/GetReqOrdMasById";
@@ -204,6 +206,8 @@ class ApiConstant{
   // static const String GET_PUNCHIN_STATUS = BASE_URL + "api/StaffPunching/GetPunchInandoutStatus";
   static String TODAY_PUNCHIN_STATUS = BASE_URL + "api/StaffPunching/GetPunchInandOutTodayWiseReports";
   static String OLDTODAY_PUNCHIN_STATUS = BASE_URL_CORE + "api/PunchInandOut/GetAllPunInAndOut";
+  static String GET_PUNCH_TYPE_LIST = BASE_URL_CORE + "api/PunchInandOut/GetAllPunchInandOutType";
+
 
   static String PUNCH_FILTER_STATUS = BASE_URL + "api/StaffPunching/GetPunchInandOutReports";
   static String GET_INVOICEANDDCNOCHECK = BASE_URL + "api/MaterialInward/GetCheckNo";
@@ -318,7 +322,7 @@ class ApiConstant{
   static String PUT_TRANSFERBET_SITE_UPDATE_API = BASE_URL_CORE + "api/MaterialSitetosite/UpdateMaterialSitetoSiteMas";
   static String PUT_ADVREQ_UPDATE_API = BASE_URL + "api/AdvRequisitionVoucher/PUTVoucherProjectUpdate";
   static String PUT_SITEVOUCHER_UPDATE_API = BASE_URL_CORE + "api/SiteVoucher/UpdateAccountSiteVoucher";
-  static String PUT_STAFFVOUCHER_UPDATE_API = BASE_URL + "api/VoucherStaff/PUTVoucherStaffUpdate";
+  static String PUT_STAFFVOUCHER_UPDATE_API = BASE_URL_CORE + "api/StaffVoucher/UpdateAccountStafVoucher";
   static String PUT_MATERIALREQUEST_UPDATE_API = BASE_URL_CORE + "api/MaterialReqOrdMas/UpdateReqOrdMas";
   static String PUT_MATERIALREQUEST_APPROVAL_API = BASE_URL + "api/MaterialRequest/PUTRequestApproval";
   static String PUT_COMPANYNMR_UPDATE_API = BASE_URL + "api/CompanyLabAttendance/PUTAttendanceUpdate";
@@ -362,7 +366,7 @@ class ApiConstant{
   static String ADVREQ_SAVE = BASE_URL + "api/AdvRequisitionVoucher/POSTVoucherProjectSave";
   static String TRANSFER_ACKNOW_ENTRYSAVE = BASE_URL_CORE + "api/MaterialAckMas/AddOrUpdateAck";
   static String SITEVOUCHER_SAVE = BASE_URL_CORE + "api/SiteVoucher/AddAccountSiteVoucher";
-  static String STAFFVOUCHER_SAVE = BASE_URL + "api/VoucherStaff/POSTVoucherStaffSave";
+  static String STAFFVOUCHER_SAVE = BASE_URL_CORE + "api/StaffVoucher/AddStaffVoc";
   static String MATERIALREQUEST_SAVE = BASE_URL_CORE + "api/MaterialReqOrdMas/AddReqOrdMas";
   static String COMPANY_NMR_SAVE_API = BASE_URL + "api/CompanyLabAttendance/POSTAttendanceSave";
   static String CONSUM_SAVE = BASE_URL_CORE + "api/MaterialExpenseMas/AddMaterialExpenses";
@@ -403,7 +407,7 @@ class ApiConstant{
   static String DELETE_ADVREQVOUCHER_API = BASE_URL + "api/AdvRequisitionVoucher/DeleteVoucherProject";
   static String USERTOKENDELETE_API = BASE_URL_CORE + "api/Login/logout";
   static String DELETE_SITEVOUCHER_ENTRYLIST_API = BASE_URL_CORE + "api/SiteVoucher/DeleteAccountSiteVoucher";
-  static String DELETE_STAFFVOUCHERSITE_ENTRYLIST_API = BASE_URL + "api/VoucherStaff/DeleteVoucherStaff";
+  static String DELETE_STAFFVOUCHERSITE_ENTRYLIST_API = BASE_URL_CORE + "api/StaffVoucher/DeleteStaffVoucher";
   static String DELETE_MATERIAL_ENTRYLIST_API = BASE_URL_CORE + "api/MaterialReqOrdMas/Delete";
   static String DELETE_MATTRANSREQLIST_API = BASE_URL_CORE + "api/MaterialTransferRequest/DeleteTransferReq";
   static String DELETE_CONSUM_ENTRYLIST_API = BASE_URL_CORE + "api/MaterialExpenseMas/DeleteMaterialExpenses";

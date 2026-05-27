@@ -56,6 +56,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
     var duration = const Duration(seconds: 0);
     Future.delayed(duration, () async {
       if (siteVoucher_Controller.SaveButton.value == RequestConstant.SUBMIT) {
+        siteVoucher_Controller.imageFiles.value = [];
         siteVoucher_Controller.gettingNetworkImages.value = [];
         projectController.projectname.text = "--SELECT--";
         projectController.selectedProjectId.value = 0;
