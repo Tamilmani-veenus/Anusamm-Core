@@ -59,7 +59,7 @@ class DatabaseConnection {
     String sitevoucherListTable = "CREATE TABLE sitevoucherListTable (id INTEGER PRIMARY KEY UNIQUE,siteid INTEGER,paytype TEXT,sitename TEXT,amt REAL,TdsPer REAL,TdsAmt REAL,NetAmt REAL,reqDetId INTEGER)";
     await database.execute(sitevoucherListTable);
 
-    String staffvouchersite = "CREATE TABLE staffvouchersite (id INTEGER PRIMARY KEY UNIQUE,siteid INTEGER,projectid INTEGER,paytype TEXT,sitename TEXT,projectname TEXT,amt REAL,TdsPer REAL,TdsAmt REAL,NetAmt REAL)";
+    String staffvouchersite = "CREATE TABLE staffvouchersite (id INTEGER PRIMARY KEY UNIQUE,siteid INTEGER,projectid INTEGER,paytype TEXT,sitename TEXT,projectname TEXT,amt REAL,TdsPer REAL,TdsAmt REAL,NetAmt REAL,reqDetId INTEGER)";
     await database.execute(staffvouchersite);
 
     String materialApprovalListTable = "CREATE TABLE materialApprovalListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,reqDetId INTEGER,materialname TEXT,scale TEXT,balqty REAL,reqqty REAL,appqty REAL,apptype TEXT,tranfromprjid TEXT,tranfromprjname TEXT,remarks TEXT,desc TEXT,scaleId INTEGER)";
@@ -148,6 +148,9 @@ class DatabaseConnection {
       );
       await database.execute(
           "ALTER TABLE materialListTable ADD COLUMN reqQty INTEGER"
+      );
+      await database.execute(
+          "ALTER TABLE staffvouchersite ADD COLUMN reqDetId INTEGER"
       );
       await database.execute(
           "ALTER TABLE materialTransReqDet ADD COLUMN trQty INTEGER"

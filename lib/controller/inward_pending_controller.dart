@@ -491,7 +491,7 @@ class InwardPending_Controller extends GetxController
     String body = poAmendmentApproveResModelToJson(PoAmendmentApproveResModel(
       purOrdOId: purOrdMasId,
       woOrdId: 0,
-      amdDate: punchInController.currentDates,
+      amdDate: punchInController.currentDate,
       projectId: projectId,
       siteId: siteId,
       amdType: "Q",
