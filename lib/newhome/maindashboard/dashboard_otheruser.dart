@@ -27,6 +27,7 @@ import '../../login/animation_signinpage/Animations/FadeAnimation.dart';
 import '../../login/animation_signinpage/signin_page.dart';
 import '../../login/animation_signinpage/welcomepage.dart';
 import '../../provider/daily_wrkdone_dprNew_provider.dart';
+// import '../../signalr_service.dart';
 import '../../utilities/baseutitiles.dart';
 import '../../utilities/requestconstant.dart';
 import '../menus/main_menuslist.dart';
@@ -53,35 +54,8 @@ class _DashboardScreen_OtherUserState extends State<DashboardScreen_OtherUser> {
 
   int _currentPage = 0;
   final _pageController = PageController();
-  final searchcontroller = TextEditingController();
-
   LoginController loginController = Get.put(LoginController());
-  ProjectController projectController = Get.put(ProjectController());
-  SubcontractorController subcontractorController = Get.put(SubcontractorController());
-  CompanyController Companycontroller = Get.put(CompanyController());
-  StockSiteController stockSiteController = Get.put(StockSiteController());
-  AutoYearWiseNoController autoYearWiseNoController = Get.put(AutoYearWiseNoController());
-  // MenuController menuController = Get.put(MenuController());
   Menu_Controller menuController=Get.put(Menu_Controller());
-  PendingListController pendingListController = Get.put(PendingListController());
-  RequisitionSlipController requisitionSlipController = Get.put(RequisitionSlipController());
-  CommanController commanController = Get.put(CommanController());
-  Dashboard_Controller dashboard_controller = Get.put(Dashboard_Controller());
-
-
-  @override
-  void initState() {
-    setState(() {
-      punchIn = false;
-      loginController.getPunchInStatus();
-    });
-    var duration = const Duration(seconds: 0);
-    Future.delayed(duration, () {
-      SignInPage.checkVersion(context);
-    });
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +66,7 @@ class _DashboardScreen_OtherUserState extends State<DashboardScreen_OtherUser> {
           bottomNavigationBar: BottomBar(
             selectedIndex: _currentPage,
             onTap: (int index) {
+              menuController.formMenuId.value = 0;
               _pageController.jumpToPage(index);
               setState(() => _currentPage = index);
             },
@@ -342,12 +317,13 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    punchInController.getProjectPunchInSts();
-    punchInController.getPunchTypeList();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      punchInController.getPunchTypeList();
+      punchInController.getProjectPunchInSts();
+      SignInPage.checkVersion(context);
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -376,7 +352,7 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 80),
                   Column(
                     children: [
                       FadeAnimation(1.2,
@@ -427,6 +403,25 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                           const SizedBox(height: 20,),
                         ],
                       )),
+                      // Text(
+                      //   SignalRService().isSignalRConnected()
+                      //       ? "Connected"
+                      //       : "Disconnected",
+                      // ),
+                      //
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     SignalRService().startLocalMaintenanceTest();
+                      //   },
+                      //   child:Text("Start Maintenance Test"),
+                      // ),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     SignalRService().stopLocalMaintenanceTest();
+                      //   },
+                      //   child:Text("stop Maintenance Test"),
+                      // ),
+
                       Obx(() {
                         return punchInController.punchTypeList.isNotEmpty
                             ? FadeAnimation(
