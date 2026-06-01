@@ -232,29 +232,29 @@ class PendingListController extends GetxController {
   }
 
 
-  Future poAproval_buttonApi(BuildContext context, String Urlname) async {
+  Future poAproval_buttonApi(BuildContext context, String Urlname, {int? id}) async {
 
     List body = [];
 
     List<ApprovalDet>? finalList = getPoAprovalDetList.value.length == 0
-        ? getPoApprovalDet()
+        ? getPoApprovalDet(id)
         : getPoAprovalDetList.value;
 
     if (finalList != null) {
       body = finalList.map((e) => e.toJson()).toList();
     }
-    if (add_PoaprovalListvalue.isNotEmpty) {
-      if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
-        var response = await PendingListProvider.PoAprovalAPI(Urlname, body, context);
-        if (response != null) {
-          BaseUtitiles.showToast(response.message=="PO/WO verified successfully"?"PO verified successfully":response.message=="PO/WO Approved successfully"?"PO Approved successfully":response.message ?? 'Something went wrong..');
-          Navigator.pop(context);
-        }
-        else{
-          Navigator.pop(context);
-          BaseUtitiles.showToast('Something went wrong..');
-        }
+    // if (add_PoaprovalListvalue.isNotEmpty) {
+    if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
+      var response = await PendingListProvider.PoAprovalAPI(Urlname, body, context);
+      if (response != null) {
+        BaseUtitiles.showToast(response.message=="PO/WO verified successfully"?"PO verified successfully":response.message=="PO/WO Approved successfully"?"PO Approved successfully":response.message ?? 'Something went wrong..');
+        Navigator.pop(context);
       }
+      else{
+        Navigator.pop(context);
+        BaseUtitiles.showToast('Something went wrong..');
+      }
+      // }
     }
   }
 
@@ -263,14 +263,14 @@ class PendingListController extends GetxController {
 
 
 
-  List<ApprovalDet>? getPoApprovalDet() {
-    add_PoaprovalListvalue.value.forEach((element) {
-      var list = new ApprovalDet(
-        id: element.PoId,
-        poWoType: "PO",
-      );
-      getPoAprovalDetList.value.add(list);
-    });
+  List<ApprovalDet>? getPoApprovalDet(id) {
+    // add_PoaprovalListvalue.value.forEach((element) {
+    var list = new ApprovalDet(
+      id: id,
+      poWoType: "PO",
+    );
+    getPoAprovalDetList.value.add(list);
+    // });
     return getPoAprovalDetList.value;
   }
 
@@ -581,7 +581,9 @@ class PendingListController extends GetxController {
   }
 
   Future PoVerification_ApproveDetDetails(
-      String Url, int RID, String Reqno,BuildContext context,{String? purchaseType}) async {
+      String Url, int RID, String Reqno,BuildContext context,
+      String projectName, String siteName,String supName,String preparedBy,
+      String date,String dueDate,String netAmount,{String? purchaseType}) async {
     onclickPendingListDet.clear();
     var response = await PendingListProvider.getOnclickDetProvider(Url, RID, purchaseType:purchaseType);
     if (response != null ) {
@@ -591,8 +593,17 @@ class PendingListController extends GetxController {
         return Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PendingPo_Approvel_Popup(
-                    heading: Url, list: onclickPendingListDet, ReqNo: Reqno)));
+                builder: (context) => PendingPo_Approval_Popup(id: RID,
+                  heading: Url, list: onclickPendingListDet,
+                  ReqNo: Reqno,
+                  projectName: projectName,
+                  siteName: siteName,
+                  supplierName: supName,
+                  preparedBy: preparedBy,
+                  Date: date,
+                  dueDate: dueDate,
+                  netAmount: netAmount,
+                )));
       }
       else {
         BaseUtitiles.showToast(response.message ?? 'Something went wrong..');

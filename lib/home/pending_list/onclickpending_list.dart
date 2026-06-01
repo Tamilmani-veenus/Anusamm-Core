@@ -7094,49 +7094,6 @@ class _PoVerificationState extends State<PoVerification> {
         top: false,
         child: Scaffold(
           backgroundColor: Setmybackground,
-          bottomNavigationBar: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 80,
-              ),
-              InkWell(
-                child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  width: BaseUtitiles.getWidthtofPercentage(context, 20),
-                  height: BaseUtitiles.getheightofPercentage(context, 4),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Theme.of(context).primaryColor),
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 3, right: 3),
-                    child: Text(
-                      RequestConstant.VERIFY,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: RequestConstant.Lable_Font_SIZE,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-                onTap: () async {
-                  if (pendingListController
-                      .add_PoaprovalListvalue.value.length !=
-                      0) {
-                    pendingListController.checkColor = 1;
-                    pendingListController.getPoAprovalDetList.value = [];
-                    await pendingListController.poAproval_buttonApi(
-                        context, widget.heading.toString());
-                    Navigator.pop(context);
-                    await pendingListController.getPendingList();
-                  } else {
-                    BaseUtitiles.showToast("Please select checkbox");
-                  }
-                },
-              ),
-            ],
-          ),
           body: GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
@@ -7219,380 +7176,278 @@ class _PoVerificationState extends State<PoVerification> {
                       )
                     ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 6, right: 6),
-                    height: BaseUtitiles.getheightofPercentage(context, 80),
-                    child: ListView.builder(
-                        padding: EdgeInsets.only(bottom:BaseUtitiles.getheightofPercentage(context, 10) ),
-                        physics: BouncingScrollPhysics(),
-                        itemCount: pendingListController.mainlist.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {},
-                            child: Container(
-                              margin: EdgeInsets.only(left: 3, right: 3),
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Container(
-                                  margin: EdgeInsets.all(3),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: Row(
-                                              children: [
-                                                ConstIcons.list_date,
-                                                Text(
-                                                  pendingListController.mainlist
-                                                      .value[index].date
+                  GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 6, right: 6),
+                      height: BaseUtitiles.getheightofPercentage(context, 80),
+                      child: ListView.builder(
+                          padding: EdgeInsets.only(bottom:BaseUtitiles.getheightofPercentage(context, 10) ),
+                          physics: BouncingScrollPhysics(),
+                          itemCount: pendingListController.mainlist.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                pendingListController
+                                    .PoVerification_ApproveDetDetails(
+                                    "PO VERIFICATION",
+                                    widget.onclickPendingListData[index].PoId!,
+                                    widget.onclickPendingListData[index].purchaseOrdNo.toString(),
+                                    context,
+                                    widget.onclickPendingListData[index].ProjectName.toString(),
+                                    widget.onclickPendingListData[index].SiteName.toString(),
+                                    widget.onclickPendingListData[index].supplier.toString(),
+                                    widget.onclickPendingListData[index].preparedByName.toString(),
+                                    pendingListController.mainlist.value[index].date.toString(),
+                                    pendingListController.mainlist.value[index].dueDate.toString(),
+                                    widget.onclickPendingListData[index].netAmount.toString(),
+                                    purchaseType: widget.onclickPendingListData[index].purchaseType.toString());
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 3, right: 3),
+                                child: Card(
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Container(
+                                    margin: EdgeInsets.all(3),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              child: Row(
+                                                children: [
+                                                  ConstIcons.list_date,
+                                                  Text(
+                                                    pendingListController.mainlist
+                                                        .value[index].date
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        fontWeight:
+                                                        FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(right: 10),
+                                              child: Text(
+                                                widget
+                                                    .onclickPendingListData[index]
+                                                    .purchaseOrdNo
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 7),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5, left: 10),
+                                              child: Text(""),
+                                            ),
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "Project",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  widget
+                                                      .onclickPendingListData[
+                                                  index]
+                                                      .ProjectName
                                                       .toString(),
                                                   style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                      FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              widget
-                                                  .onclickPendingListData[index]
-                                                  .purchaseOrdNo
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Project",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                widget
-                                                    .onclickPendingListData[
-                                                index]
-                                                    .ProjectName
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Site",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                widget
-                                                    .onclickPendingListData[
-                                                index]
-                                                    .SiteName
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Supplier",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                widget
-                                                    .onclickPendingListData[
-                                                index]
-                                                    .supplier
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Net Amount",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                RequestConstant
-                                                    .CURRENCY_SYMBOL +
-                                                    widget
-                                                        .onclickPendingListData[
-                                                    index]
-                                                        .netAmount
-                                                        .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Text(
-                                            "Prepared By       ",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Expanded(
-                                              flex: 7,
-                                              child: Text(
-                                                widget
-                                                    .onclickPendingListData[
-                                                index]
-                                                    .preparedByName
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-
-                                          // SizedBox(width: 5),
-                                        ],
-                                      ),
-                                      Divider(thickness: 1),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                              flex: 5,
-                                              child: InkWell(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 15),
-                                                        child: Text(
-                                                          "More details",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .bold,
-                                                              color: Theme.of(
-                                                                  context)
-                                                                  .primaryColor),
-                                                        )),
-                                                  ],
-                                                ),
-                                                onTap: () {
-                                                  pendingListController
-                                                      .PoVerification_ApproveDetDetails(
-                                                      "PO VERIFICATION",
-                                                      widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .PoId!,
-                                                      widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .purchaseOrdNo
-                                                          .toString(),
-                                                      context,
-                                                      purchaseType: widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .purchaseType
-                                                          .toString());
-                                                },
-                                              )),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 60),
-                                            child: Checkbox(
-                                              shape:
-                                              const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.all(
-                                                      Radius.circular(
-                                                          5.0))),
-                                              side: MaterialStateBorderSide
-                                                  .resolveWith(
-                                                    (states) => BorderSide(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                              checkColor: Colors.white,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              // Rounded Checkbox
-                                              value: _isChecked[index],
-                                              onChanged: (val) {
-                                                setState(
-                                                      () {
-                                                    if (val == true) {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PoaprovalListvalue
-                                                          .value
-                                                          .add(widget
-                                                          .onclickPendingListData[
-                                                      index]);
-                                                    } else {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PoaprovalListvalue
-                                                          .value
-                                                          .remove(widget
-                                                          .onclickPendingListData[
-                                                      index]);
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Container(
-                                            height: BaseUtitiles
-                                                .getheightofPercentage(
-                                                context, 4),
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 5),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 20, right: 20),
-                                                    width: BaseUtitiles
-                                                        .getWidthtofPercentage(
-                                                        context, 20),
-                                                    height: BaseUtitiles
-                                                        .getheightofPercentage(
-                                                        context, 4),
-                                                    // decoration: BoxDecoration(
-                                                    //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                    //   // Change the background color to red
-                                                    //   color: pendingListController.checkColor == 0
-                                                    //       ? Colors.red
-                                                    //       : Colors.white,
-                                                    // ),
-                                                    alignment: Alignment.center,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 1),
-                                                      child: Text(
-                                                        RequestConstant.DELETE,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                          FontWeight.bold,
-                                                          fontSize: RequestConstant
-                                                              .Lable_Font_SIZE,
-                                                          color: Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    color: Colors.black,
                                                   ),
-                                                  onTap: () async {
-                                                    pendingListController
-                                                        .checkColor = 1;
-                                                    await deleteAlert(
-                                                        context, index);
-                                                  },
-                                                ),
-                                              ],
+                                                )),
+                                          ],
+                                        ),
+                                        SizedBox(height: 7),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5, left: 10),
+                                              child: Text(""),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "Site",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  widget
+                                                      .onclickPendingListData[
+                                                  index]
+                                                      .SiteName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                        SizedBox(height: 7),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5, left: 10),
+                                              child: Text(""),
+                                            ),
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "Supplier",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  widget
+                                                      .onclickPendingListData[
+                                                  index]
+                                                      .supplier
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+
+                                          ],
+                                        ),
+                                        SizedBox(height: 7),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5, left: 10),
+                                              child: Text(""),
+                                            ),
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "Net Amount",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  RequestConstant
+                                                      .CURRENCY_SYMBOL +
+                                                      widget
+                                                          .onclickPendingListData[
+                                                      index]
+                                                          .netAmount
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                        SizedBox(height: 7),
+                                        Divider(thickness: 1),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 5, left: 10,bottom: 10),
+                                              child: Text(""),
+                                            ),
+                                            Text(
+                                              "Prepared By       ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Expanded(
+                                                flex: 7,
+                                                child: Text(
+                                                  widget
+                                                      .onclickPendingListData[
+                                                  index]
+                                                      .preparedByName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                flex: 5,
+                                                child: InkWell(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 15),
+                                                          child: Text(
+                                                              "Delete",
+
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Colors.red,
+                                                              ))),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      deleteAlert(context, index);
+                                                    });
+                                                    // pendingListController.GetDetDetails("MRN VERIFICATION",pendingListController.mainlist.value[index].id!,pendingListController.mainlist.value[index].no.toString(),context);
+                                                  },
+                                                )),
+                                            SizedBox(width: 5),
+                                          ],
+                                        ),
+
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                    ),
                   ),
                   SizedBox(height: 20)
                 ],
@@ -7654,17 +7509,17 @@ class _PoVerificationState extends State<PoVerification> {
                   Expanded(
                     child: TextButton(
                         onPressed: () async {
-                          await pendingListController.PO_Approval_DeleteApi(
-                              pendingListController
-                                  .mainlist.value[index].PoId!);
-                          pendingListController.mainlist.removeAt(index);
-                          pendingListController.getPoAprovalDetList.clear();
-                          pendingListController.update();
-                          await pendingListController.getPendingList();
-                          Navigator.pop(context);
-                          // if (pendingListController.mainlist.isEmpty) {
-                          Navigator.pop(context);
-                          // }
+                          bool result = await pendingListController.PO_Approval_DeleteApi(pendingListController
+                              .mainlist.value[index].PoId!);
+                          if (result) {
+                            pendingListController.mainlist.removeAt(index);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            await pendingListController.getPendingList();
+                          }
+                          else{
+                            Navigator.of(context).pop();
+                          }
                         },
                         child: const Text("Delete",
                             style: TextStyle(
@@ -8220,48 +8075,6 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
         top: false,
         child: Scaffold(
           backgroundColor: Setmybackground,
-          bottomNavigationBar: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  width: BaseUtitiles.getWidthtofPercentage(context, 20),
-                  height: BaseUtitiles.getheightofPercentage(context, 4),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color:  Theme.of(context).primaryColor
-                  ),
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 3, right: 3),
-                    child: Text(
-                      RequestConstant.APPROVAL,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: RequestConstant.Lable_Font_SIZE,
-                          color:  Colors.white
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () async {
-                  if (pendingListController
-                      .add_PoaprovalListvalue.value.length !=
-                      0) {
-                    pendingListController.checkColor = 1;
-                    pendingListController.getPoAprovalDetList.value.clear();
-                    await pendingListController.poAproval_buttonApi(
-                        context, widget.heading.toString());
-                    Navigator.pop(context);
-                    await pendingListController.getPendingList();
-                  } else {
-                    BaseUtitiles.showToast("Please select checkbox");
-                  }
-                },
-              ),
-            ],
-          ),
           body: GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
@@ -8353,7 +8166,22 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                         itemCount: pendingListController.mainlist.length,
                         itemBuilder: (context, index) {
                           return InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              pendingListController
+                                  .PoVerification_ApproveDetDetails(
+                                  "PO APPROVAL",
+                                  widget.onclickPendingListData[index].PoId!,
+                                  widget.onclickPendingListData[index].PurchaseOrdNo.toString(),
+                                  context,
+                                  widget.onclickPendingListData[index].projectName.toString(),
+                                  widget.onclickPendingListData[index].siteName.toString(),
+                                  widget.onclickPendingListData[index].suppliername.toString(),
+                                  widget.onclickPendingListData[index].createdName.toString(),
+                                  pendingListController.mainlist.value[index].purchaseOrdDate.toString(),
+                                  pendingListController.mainlist.value[index].deliveryDate.toString(),
+                                  widget.onclickPendingListData[index].netAmount.toString(),
+                                  purchaseType: widget.onclickPendingListData[index].PurchaseType.toString());
+                            },
                             child: Container(
                               margin: EdgeInsets.only(left: 3, right: 3),
                               child: Card(
@@ -8497,6 +8325,7 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                                   color: Colors.black,
                                                 ),
                                               )),
+
                                         ],
                                       ),
                                       SizedBox(height: 5),
@@ -8533,12 +8362,13 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                         ],
                                       ),
                                       SizedBox(height: 5),
-                                      //Divider(thickness: 1),
+
+                                      Divider(thickness: 1),
                                       Row(
                                         children: <Widget>[
                                           Container(
                                             margin: EdgeInsets.only(
-                                                top: 5, left: 10),
+                                                top: 5, left: 10,bottom: 10),
                                             child: Text(""),
                                           ),
                                           Text(
@@ -8560,14 +8390,8 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                                   color: Colors.black,
                                                 ),
                                               )),
-                                          SizedBox(width: 5),
-                                        ],
-                                      ),
-                                      Divider(thickness: 1),
-                                      Row(
-                                        children: [
                                           Expanded(
-                                              flex: 7,
+                                              flex: 5,
                                               child: InkWell(
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -8578,134 +8402,169 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                                         margin: EdgeInsets.only(
                                                             left: 15),
                                                         child: Text(
-                                                          "More details",
-                                                          style: TextStyle(
+                                                            "Delete",
+
+                                                            style: TextStyle(
                                                               fontWeight:
                                                               FontWeight
                                                                   .bold,
-                                                              color: Theme.of(
-                                                                  context)
-                                                                  .primaryColor),
-                                                        )),
+                                                              color: Colors.red,
+                                                            ))),
                                                   ],
                                                 ),
                                                 onTap: () {
-                                                  pendingListController
-                                                      .PoVerification_ApproveDetDetails(
-                                                      "PO APPROVAL",
-                                                      widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .PoId!,
-                                                      widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .PurchaseOrdNo
-                                                          .toString(),
-                                                      context,
-                                                      purchaseType: widget
-                                                          .onclickPendingListData[
-                                                      index]
-                                                          .PurchaseType
-                                                          .toString());
+                                                  setState(() {
+                                                    deleteAlert(context, index);
+                                                  });
+                                                  // pendingListController.GetDetDetails("MRN VERIFICATION",pendingListController.mainlist.value[index].id!,pendingListController.mainlist.value[index].no.toString(),context);
                                                 },
                                               )),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 60),
-                                            child: Checkbox(
-                                              shape:
-                                              const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.all(
-                                                      Radius.circular(
-                                                          5.0))),
-                                              side: MaterialStateBorderSide
-                                                  .resolveWith(
-                                                    (states) => BorderSide(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                              checkColor: Colors.white,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              // Rounded Checkbox
-                                              value: _isChecked[index],
-                                              onChanged: (val) {
-                                                setState(
-                                                      () {
-                                                    if (val == true) {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PoaprovalListvalue
-                                                          .value
-                                                          .add(widget
-                                                          .onclickPendingListData[
-                                                      index]);
-                                                    } else {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PoaprovalListvalue
-                                                          .value
-                                                          .remove(widget
-                                                          .onclickPendingListData[
-                                                      index]);
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Container(
-                                            height: BaseUtitiles
-                                                .getheightofPercentage(
-                                                context, 4),
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 5),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 20, right: 20),
-                                                    width: BaseUtitiles
-                                                        .getWidthtofPercentage(
-                                                        context, 20),
-                                                    height: BaseUtitiles
-                                                        .getheightofPercentage(
-                                                        context, 4),
-                                                    alignment: Alignment.center,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 1),
-                                                      child: Text(
-                                                        RequestConstant.DELETE,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                          FontWeight.bold,
-                                                          fontSize: RequestConstant
-                                                              .Lable_Font_SIZE,
-                                                          color: Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  onTap: () async {
-                                                    pendingListController
-                                                        .checkColor = 1;
-                                                    await deleteAlert(
-                                                        context, index);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          SizedBox(width: 5),
                                         ],
                                       ),
+                                      // Divider(thickness: 1),
+                                      // Row(
+                                      //   children: [
+                                      //     Expanded(
+                                      //         flex: 7,
+                                      //         child: InkWell(
+                                      //           child: Row(
+                                      //             mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //             children: [
+                                      //               Container(
+                                      //                   margin: EdgeInsets.only(
+                                      //                       left: 15),
+                                      //                   child: Text(
+                                      //                     "More details",
+                                      //                     style: TextStyle(
+                                      //                         fontWeight:
+                                      //                         FontWeight
+                                      //                             .bold,
+                                      //                         color: Theme.of(
+                                      //                             context)
+                                      //                             .primaryColor),
+                                      //                   )),
+                                      //             ],
+                                      //           ),
+                                      //           onTap: () {
+                                      //             pendingListController
+                                      //                 .PoVerification_ApprovalDetDetails(
+                                      //                 "PO APPROVAL",
+                                      //                 widget
+                                      //                     .onclickPendingListData[
+                                      //                 index]
+                                      //                     .PoId!,
+                                      //                 widget
+                                      //                     .onclickPendingListData[
+                                      //                 index]
+                                      //                     .PurchaseOrdNo
+                                      //                     .toString(),
+                                      //                 context,
+                                      //                 purchaseType: widget
+                                      //                     .onclickPendingListData[
+                                      //                 index]
+                                      //                     .PurchaseType
+                                      //                     .toString());
+                                      //           },
+                                      //         )),
+                                      //     Padding(
+                                      //       padding: const EdgeInsets.only(
+                                      //           right: 60),
+                                      //       child: Checkbox(
+                                      //         shape:
+                                      //         const RoundedRectangleBorder(
+                                      //             borderRadius:
+                                      //             BorderRadius.all(
+                                      //                 Radius.circular(
+                                      //                     5.0))),
+                                      //         side: MaterialStateBorderSide
+                                      //             .resolveWith(
+                                      //               (states) => BorderSide(
+                                      //             width: 1.0,
+                                      //             color: Theme.of(context)
+                                      //                 .primaryColor,
+                                      //           ),
+                                      //         ),
+                                      //         checkColor: Colors.white,
+                                      //         activeColor: Theme.of(context)
+                                      //             .primaryColor,
+                                      //         // Rounded Checkbox
+                                      //         value: _isChecked[index],
+                                      //         onChanged: (val) {
+                                      //           setState(
+                                      //                 () {
+                                      //               if (val == true) {
+                                      //                 _isChecked[index] = val!;
+                                      //                 pendingListController
+                                      //                     .add_PoaprovalListvalue
+                                      //                     .value
+                                      //                     .add(widget
+                                      //                     .onclickPendingListData[
+                                      //                 index]);
+                                      //               } else {
+                                      //                 _isChecked[index] = val!;
+                                      //                 pendingListController
+                                      //                     .add_PoaprovalListvalue
+                                      //                     .value
+                                      //                     .remove(widget
+                                      //                     .onclickPendingListData[
+                                      //                 index]);
+                                      //               }
+                                      //             },
+                                      //           );
+                                      //         },
+                                      //       ),
+                                      //     ),
+                                      //     Container(
+                                      //       height: BaseUtitiles
+                                      //           .getheightofPercentage(
+                                      //           context, 4),
+                                      //       margin: EdgeInsets.symmetric(
+                                      //           vertical: 3, horizontal: 5),
+                                      //       child: Row(
+                                      //         mainAxisAlignment:
+                                      //         MainAxisAlignment.center,
+                                      //         children: [
+                                      //           InkWell(
+                                      //             child: Container(
+                                      //               margin: EdgeInsets.only(
+                                      //                   left: 20, right: 20),
+                                      //               width: BaseUtitiles
+                                      //                   .getWidthtofPercentage(
+                                      //                   context, 20),
+                                      //               height: BaseUtitiles
+                                      //                   .getheightofPercentage(
+                                      //                   context, 4),
+                                      //               alignment: Alignment.center,
+                                      //               child: Padding(
+                                      //                 padding: EdgeInsets.only(
+                                      //                     left: 1),
+                                      //                 child: Text(
+                                      //                   RequestConstant.DELETE,
+                                      //                   style: TextStyle(
+                                      //                     fontWeight:
+                                      //                     FontWeight.bold,
+                                      //                     fontSize: RequestConstant
+                                      //                         .Lable_Font_SIZE,
+                                      //                     color: Colors.red,
+                                      //                   ),
+                                      //                 ),
+                                      //               ),
+                                      //             ),
+                                      //             onTap: () async {
+                                      //               pendingListController
+                                      //                   .checkColor = 1;
+                                      //               await deleteAlert(
+                                      //                   context, index);
+                                      //             },
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -8774,18 +8633,20 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                   Expanded(
                     child: TextButton(
                         onPressed: () async {
-                          await pendingListController.PO_Approval_DeleteApi(
-                              pendingListController
-                                  .mainlist.value[index].PoId!);
-                          pendingListController.mainlist.removeAt(index);
-                          pendingListController.getPoAprovalDetList.value = [];
-                          pendingListController.update();
-                          await pendingListController.getPendingList();
-                          Navigator.pop(context);
-                          // if (pendingListController.mainlist.isEmpty) {
-                          Navigator.pop(context);
-                          // }
+                          bool result = await pendingListController.PO_Approval_DeleteApi(pendingListController
+                              .mainlist.value[index].PoId!);
+                          if (result) {
+                            pendingListController.mainlist.removeAt(index);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            await pendingListController.getPendingList();
+
+                          }
+                          else{
+                            Navigator.of(context).pop();
+                          }
                         },
+
                         child: const Text("Delete",
                             style: TextStyle(
                                 color: Colors.red,
