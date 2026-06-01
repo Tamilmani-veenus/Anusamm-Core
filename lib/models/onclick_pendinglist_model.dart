@@ -68,6 +68,7 @@ class OnClickListResult {
   dynamic? no;
   String? date;
   String? dueDate;
+  String? deliveryDate;
   String? accName;
   String? accType;
   String? supplierName;
@@ -193,6 +194,7 @@ class OnClickListResult {
     this.no,
     this.date,
     this.dueDate,
+    this.deliveryDate,
     this.accName,
     this.accType,
     this.supplierName,
@@ -320,6 +322,7 @@ class OnClickListResult {
     no: json["No"],
     date: json["PODate"],
     dueDate: json["DueDate"],
+    deliveryDate: json["deliveryDate"],
     accName: json["Acc_name"],
     accType: json["Acc_type"],
     supplierName: json["SupplierName"],
@@ -449,6 +452,7 @@ class OnClickListResult {
     "No": no,
     "PODate": date,
     "DueDate": dueDate,
+    "deliveryDate": deliveryDate,
     "ProjectName": projectName,
     "SiteName": SiteName,
     "Acc_name": accName,
