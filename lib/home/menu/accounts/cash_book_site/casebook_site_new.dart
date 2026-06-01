@@ -146,7 +146,12 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                                       cashBookSiteController.cashbooksite_frdateController.text = Frdate.toString().substring(0, 10);
 
                                     },
-
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Select Date';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ),
@@ -208,7 +213,12 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                                           });
                                       cashBookSiteController.cashbooksite_todateController.text = Todate.toString().substring(0, 10);
                                     },
-
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Select Date';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ),
@@ -531,6 +541,7 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                                         )),
                                   ],
                                 ),
+
                                 SizedBox(height: 10,),
                                 Row(
                                   children: [

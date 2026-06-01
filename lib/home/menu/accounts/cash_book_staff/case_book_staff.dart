@@ -166,7 +166,12 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                                           .cashbookStaff_frdateController
                                           .text = Frdate.toString();
                                     },
-
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Select Date';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ),
@@ -240,7 +245,12 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                                           .cashbookStaff_todateController.text =
                                           Todate.toString().substring(0, 10);
                                     },
-
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Select Date';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                               ),
@@ -263,7 +273,6 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                           child: TextFormField(
                             readOnly: true,
                             controller: staffController.Staffname,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             cursorColor: Colors.black,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -290,7 +299,7 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                               FocusScope.of(context).unfocus();
                             },
                             validator: (value) {
-                              if (value!.isEmpty || value == "--SELECT--") {
+                              if (value=="--SELECT--") {
                                 return '\u26A0 Required';
                               }
                               return null;
@@ -328,7 +337,6 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                               _formKey.currentState!.save();
                               await cashBookStaffController.getcashbookstaffdetails();
                             }
-
                           },
                         ),
                       ],
