@@ -185,7 +185,7 @@ class _PunchInState extends State<PunchIn> {
             ),
             color: Colors.white,
             onPressed: () {
-              Get.back();
+                  Get.back();
             },
           ),
           title: const Text("Punch In"),

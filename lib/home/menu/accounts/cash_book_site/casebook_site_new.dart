@@ -241,7 +241,6 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                           child: TextFormField(
                             readOnly: true,
                             controller: projectController.projectname,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             cursorColor: Colors.black,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -260,16 +259,16 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                             ),
                             onTap: () async {
 
-                              await projectController.getProjectList();
-                              if (mounted) {
-                                bottomsheetControllers.ProjectName(context, projectController.getdropDownvalue.value);
-                              }
-                              FocusScope.of(context).unfocus();
+                                await projectController.getProjectList();
+                                if (mounted) {
+                                  bottomsheetControllers.ProjectName(context, projectController.getdropDownvalue.value);
+                                }
+                                FocusScope.of(context).unfocus();
 
                             },
                             validator: (value) {
-                              if (value!.isEmpty || value == "--SELECT--") {
-                                return '\u26A0 Required';
+                              if (value!.isEmpty) {
+                                return '\u26A0 Enter user name';
                               }
                               return null;
                             },
@@ -298,7 +297,7 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: RequestConstant.Lable_Font_SIZE,
                                   color: Colors.white
-                              ),
+                                      ),
                             ),
                           ),
                           onTap: () async {

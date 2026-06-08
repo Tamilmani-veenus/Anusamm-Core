@@ -238,7 +238,7 @@ class _PunchOutState extends State<PunchOut> {
                         ),
                       ),
                     ),
-
+              
                   ),
                   SizedBox(height: BaseUtitiles.getheightofPercentage(context,  widget.allotedStatus=="NA" || widget.allotedStatus=="OD"?3:6)),
                   Text(

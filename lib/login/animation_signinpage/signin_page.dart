@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:new_version_plus/new_version_plus.dart';
 import '../../controller/logincontroller.dart';
+import '../../signalr_service.dart';
 import '../../utilities/baseutitiles.dart';
 import '../../utilities/requestconstant.dart';
 import 'Animations/FadeAnimation.dart';

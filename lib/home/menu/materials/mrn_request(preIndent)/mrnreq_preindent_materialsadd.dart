@@ -26,7 +26,6 @@ class _MRNRequest_PreIndent_MAterialsAddState extends State<MRNRequest_PreIndent
 
   @override
   void initState() {
-    // mrn_request_controller.list.value.clear();
     int i = 0;
     mrnRequest_PreIndent_Controller.getmaterialvalue.forEach((element) {
       mrnRequest_PreIndent_Controller.Material_itemlist_textControllersInitiate();

@@ -20,7 +20,6 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
 
   @override
   void initState() {
-    dailyWrkDone_DPRNEW_Controller.entrycheck = 1;
     dailyWrkDone_DPRNEW_Controller.nosAndothrsZerovalueset();
     super.initState();
   }
@@ -66,7 +65,7 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Row(
@@ -208,10 +207,6 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
                                   child: TextFormField(
                                       onTap: () {
                                         dailyWrkDone_DPRNEW_Controller.NosControllers[index].text = "";
-                                        setState(() {
-                                          dailyWrkDone_DPRNEW_Controller.clickEdit();
-                                          dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
-                                        });
                                       },
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(color: Colors.black),
@@ -227,11 +222,11 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
                                             borderSide: BorderSide(color: Theme.of(context).primaryColor),
                                             borderRadius: const BorderRadius.all(Radius.circular(10))),
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          dailyWrkDone_DPRNEW_Controller.clickEdit();
-                                          dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
-                                        });
+                                      onChanged: (value) async {
+                                        await dailyWrkDone_DPRNEW_Controller.clickEdit();
+                                        await dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
+
+                                        setState(() {});
                                       }
                                   ),
                                 )),
@@ -251,10 +246,6 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
                                   child: TextFormField(
                                       onTap: () {
                                         dailyWrkDone_DPRNEW_Controller.OtHrsController[index].text = "";
-                                        setState(() {
-                                          dailyWrkDone_DPRNEW_Controller.clickEdit();
-                                          dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
-                                        });
                                       },
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
@@ -272,11 +263,11 @@ class _DailyWork_done_DPR_LabourState extends State<DailyWork_done_DPR_Labour> {
                                             borderSide: BorderSide(color: Theme.of(context).primaryColor),
                                             borderRadius: const BorderRadius.all(Radius.circular(10))),
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          dailyWrkDone_DPRNEW_Controller.clickEdit();
-                                          dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
-                                        });
+                                      onChanged: (value) async {
+                                        await dailyWrkDone_DPRNEW_Controller.clickEdit();
+                                        await dailyWrkDone_DPRNEW_Controller.getLabourTablesDatas();
+
+                                        setState(() {});
                                       }
 
                                   )),

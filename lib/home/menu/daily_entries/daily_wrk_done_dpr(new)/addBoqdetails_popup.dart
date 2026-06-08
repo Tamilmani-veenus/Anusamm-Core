@@ -92,11 +92,13 @@ class _AddBoqPopupState extends State<AddBoqPopup> {
                   itemCount: dailyWrkDone_DPRNEW_Controller.dprNew_mainList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-                      onTap: (){
-                        dailyWrkDone_DPRNEW_Controller.dprNew_DetTable_Delete();
-                        dailyWrkDone_DPRNEW_Controller.dprNew_DetTableSave(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index]);
-                        dailyWrkDone_DPRNEW_Controller.getDetTablesDatas();
-                        dailyWrkDone_DPRNEW_Controller.check=1;
+                      onTap: () async {
+                        dailyWrkDone_DPRNEW_Controller.level3ItemIdValue.value = dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index].measureLevel3ItemId;
+                        await dailyWrkDone_DPRNEW_Controller.dprNew_DetTable_Delete();
+                        await dailyWrkDone_DPRNEW_Controller.dprNew_DetTableSave(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index]);
+                        await dailyWrkDone_DPRNEW_Controller.getDetTablesDatas();
+                        await dailyWrkDone_DPRNEW_Controller.getLabourList();
+                        dailyWrkDone_DPRNEW_Controller.totalNetAmnt=0.0;
                         Navigator.pop(context);
                       },
                       child: Column(
@@ -107,7 +109,7 @@ class _AddBoqPopupState extends State<AddBoqPopup> {
                             children: <Widget>[
                               Container(
                                   width: BaseUtitiles.getWidthtofPercentage(context, 90),
-                                  child: Text(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index].itemDesc
+                                  child: Text(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index].itemdesc
                                       .toString(), textAlign: TextAlign.justify,style: TextStyle(fontSize: RequestConstant.ALERT_Font_SIZE,fontWeight: FontWeight.bold),)),
                               Divider(
                                 color: Theme.of(context).primaryColorLight,
@@ -124,81 +126,5 @@ class _AddBoqPopupState extends State<AddBoqPopup> {
         ),
         ),
       );
-
-    //   AlertDialog(
-    //   contentPadding: EdgeInsets.all(5.0),
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    //   ),
-    //   content: Stack( children: <Widget>[
-    //     SingleChildScrollView(
-    //       child: Container(
-    //         //height: BaseUtitiles.getheightofPercentage(context, 60),
-    //         child: Column(
-    //           children: <Widget>[
-    //             Container(
-    //               margin: EdgeInsets.only(top: 10),
-    //               height: BaseUtitiles.getheightofPercentage(context, 4),
-    //               child: TextField(
-    //                 onChanged: (value) {
-    //                   setState(() {
-    //                     dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value=BaseUtitiles.itemDescPopupAlert(value,dailyWrkDone_DPRNEW_Controller.dprNew_BoqDetailsList.value);
-    //                   });
-    //                 },
-    //                 controller: editingController,
-    //                 decoration: InputDecoration(
-    //                     contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-    //                     labelText: "Search",
-    //                     labelStyle: TextStyle(color: Theme.of(context).primaryColor,
-    //                         fontStyle: FontStyle.italic, fontSize: RequestConstant.App_Font_SIZE),
-    //                     prefixIcon: Icon(Icons.search,color: Theme.of(context).primaryColor,),
-    //                     border: OutlineInputBorder(
-    //                         borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-    //               ),
-    //             ),
-    //             Container(
-    //               margin: const EdgeInsets.only(top: 20),
-    //               width: BaseUtitiles.getWidthtofPercentage(context, 80),
-    //               height: BaseUtitiles.getheightofPercentage(context, 55),
-    //               child: ListView.builder(
-    //                   itemCount: dailyWrkDone_DPRNEW_Controller.dprNew_mainList.length,
-    //                   itemBuilder: (BuildContext context, int index) {
-    //                     return InkWell(
-    //                       onTap: (){
-    //                         dailyWrkDone_DPRNEW_Controller.dprNew_DetTable_Delete();
-    //                         dailyWrkDone_DPRNEW_Controller.dprNew_DetTableSave(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index]);
-    //                         dailyWrkDone_DPRNEW_Controller.getDetTablesDatas();
-    //                         dailyWrkDone_DPRNEW_Controller.check=1;
-    //                         Navigator.pop(context);
-    //                       },
-    //                       child: Column(
-    //                         mainAxisAlignment: MainAxisAlignment.center,
-    //                         children: <Widget>[
-    //                           Column(
-    //                             mainAxisAlignment:
-    //                             MainAxisAlignment.center,
-    //                             children: <Widget>[
-    //                               Container(
-    //                                   width:
-    //                                   BaseUtitiles.getWidthtofPercentage(
-    //                                       context, 60),
-    //                                   child: Text(dailyWrkDone_DPRNEW_Controller.dprNew_mainList.value[index].itemDesc
-    //                                       .toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.ALERT_Font_SIZE,fontWeight: FontWeight.bold),)),
-    //                               Divider(
-    //                                 color: Theme.of(context).primaryColorLight,
-    //                               )
-    //                             ],
-    //                           ),
-    //                         ],
-    //                       ),
-    //                     );
-    //                   }),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ]),
-    // );
   }
 }

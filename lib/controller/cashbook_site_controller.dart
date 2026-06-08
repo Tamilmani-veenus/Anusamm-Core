@@ -21,10 +21,6 @@ class CashBookSiteController extends GetxController{
   RxList cashsiteDatas = [].obs;
 
   Future getcashbooksitedetails() async {
-    totalDebit.text = "0.0";
-    totalCredit.text ="0.0";
-    closingDebit.text = "0.0";
-    closingCredit.text ="0.0";
     cashsiteDatas.value = [];
 
     final value = await CashBookProvider.getcashbooksiteList(
