@@ -24,7 +24,7 @@ class DprNew_MeasurementService {
   DprNew_MeasurementTable_Update(
       List<DprNew_MeasurementTable> dprNewMSrTableModel) async {
     dprNewMSrTableModel.forEach((element) async {
-      return await _dbManager.UpdateTableIdwise('dprNewMSRTable', element.DprNew_MeasurementMap());
+      return await _dbManager.DprNew_Measurement_UpdateDataById('dprNewMSRTable', element.DprNew_MeasurementMap());
     });
   }
 

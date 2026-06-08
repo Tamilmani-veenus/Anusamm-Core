@@ -17,17 +17,11 @@ class DailyWork_done_DPR_Material extends StatefulWidget {
       _DailyWork_done_DPR_MaterialState();
 }
 
-class _DailyWork_done_DPR_MaterialState
-    extends State<DailyWork_done_DPR_Material> {
+class _DailyWork_done_DPR_MaterialState extends State<DailyWork_done_DPR_Material> {
 
   DailyWrkDone_DPRNEW_Controller dailyWrkDone_DPRNEW_Controller=Get.put(DailyWrkDone_DPRNEW_Controller());
   BottomsheetControllers bottomsheetControllers = Get.put(BottomsheetControllers());
 
-  @override
-  void initState() {
-    dailyWrkDone_DPRNEW_Controller.entrycheck=1;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +107,9 @@ class _DailyWork_done_DPR_MaterialState
                                     vertical: 8, horizontal: 8),
                                 child: ConstIcons.materialName),
                           ),
-                          onTap: () {
-                            setState(() {
-                              bottomsheetControllers.MaterialName(context, dailyWrkDone_DPRNEW_Controller.MaterialApiLIst.value);
-                            });
+                          onTap: () async {
+                            await dailyWrkDone_DPRNEW_Controller.getMaterialName();
+                              bottomsheetControllers.MaterialName(context, dailyWrkDone_DPRNEW_Controller.MaterialApiList.value);
                           },
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -147,8 +140,11 @@ class _DailyWork_done_DPR_MaterialState
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.number,
                                   onTap: (){
-                                    dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text = "";
+                                    if(dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text == "0" || dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text == "0.0"){
+                                      dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text = "";
+                                    }
                                   },
                                   controller: dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController,
                                   cursorColor: Colors.black,
@@ -239,157 +235,30 @@ class _DailyWork_done_DPR_MaterialState
                           height: BaseUtitiles.getheightofPercentage(context, 4),
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            color: dailyWrkDone_DPRNEW_Controller.checkColor == 0 ?  Theme.of(context).primaryColor : Colors.white  ,
+                            color: Theme.of(context).primaryColor,
                           ),
                           alignment: Alignment.center,
                           child: Text("ADD",  style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                              color:  dailyWrkDone_DPRNEW_Controller.checkColor == 0 ? Colors.white :  Theme.of(context).primaryColor ),),
+                              color:  Colors.white ),),
                         ),
                         onTap: (){
-                          setState(() {
-                            dailyWrkDone_DPRNEW_Controller.checkColor = 0;
                             if(dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="0.0"||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="0"||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text==""||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="00"){
                               BaseUtitiles.showToast("Please Enter Qty value greater than 0");
                             } else{
                               dailyWrkDone_DPRNEW_Controller.dprNew_MaterialTableSave();
                               dailyWrkDone_DPRNEW_Controller.getMaterialTablesDatas();
-                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_NameController.text="--Select--";
-                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_ScaleController.text="";
-                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text="";
+                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_NameController.text="--SELECT--";
+                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_ScaleController.text="UNIT";
+                              dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text="0.0";
+                              dailyWrkDone_DPRNEW_Controller.matScaleId.value=0;
+                              dailyWrkDone_DPRNEW_Controller.selectedMatId.value=0;
                             }
-                          });
                         },
                       ),
                     ],
                   ),
                   Obx(()=> Listdetails()),
-
-                  // Container(
-                  //   height: BaseUtitiles.getheightofPercentage(context, 4),
-                  //   margin: EdgeInsets.only(left: 10, right: 20, top: 10),
-                  //   decoration: BoxDecoration(),
-                  //   child: TextField(
-                  //     readOnly: true,
-                  //     style: TextStyle(
-                  //         fontSize: 12,
-                  //         color: Theme.of(context).primaryColor,
-                  //         fontWeight: FontWeight.bold),
-                  //     controller: dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_NameController,
-                  //     textAlign: TextAlign.center,
-                  //     decoration: InputDecoration(
-                  //       contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                  //       labelText: "Material Name",
-                  //       border: OutlineInputBorder(),
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
-                  //       ),
-                  //     ),
-                  //     onTap: (){
-                  //       showDialog(
-                  //           context: context,
-                  //           builder: (BuildContext context) {
-                  //             return MaterialPopup(list: dailyWrkDone_DPRNEW_Controller.MaterialApiLIst.value);
-                  //           });
-                  //     },
-                  //   ),
-                  // ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 5),
-                  //   child: Row(
-                  //     children: <Widget>[
-                  //       Expanded(
-                  //         flex: 1,
-                  //         child: Container(
-                  //           height: BaseUtitiles.getheightofPercentage(context, 4),
-                  //           margin: EdgeInsets.only(left: 10, right: 20, top: 10),
-                  //           decoration: BoxDecoration(),
-                  //           child: TextField(
-                  //             style: TextStyle(
-                  //                 fontSize: 12,
-                  //                 color: Theme.of(context).primaryColor,
-                  //                 fontWeight: FontWeight.bold),
-                  //             controller: dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController,
-                  //             textAlign: TextAlign.center,
-                  //             keyboardType: TextInputType.number,
-                  //             decoration: InputDecoration(
-                  //               contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                  //               labelText: "Quantity",
-                  //               border: OutlineInputBorder(),
-                  //               enabledBorder: OutlineInputBorder(
-                  //                 borderSide:
-                  //                     BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
-                  //               ),
-                  //             ),
-                  //             onChanged: (value) {
-                  //             },
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       Expanded(
-                  //         flex: 1,
-                  //         child: Container(
-                  //           height: BaseUtitiles.getheightofPercentage(context, 4),
-                  //           margin: EdgeInsets.only(left: 10, right: 20, top: 10),
-                  //           decoration: BoxDecoration(),
-                  //           child: TextField(
-                  //             readOnly: true,
-                  //             style: TextStyle(
-                  //                 fontSize: 12,
-                  //                 color: Theme.of(context).primaryColor,
-                  //                 fontWeight: FontWeight.bold),
-                  //             controller: dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_ScaleController,
-                  //             textAlign: TextAlign.center,
-                  //             decoration: InputDecoration(
-                  //               contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                  //               labelText: "Unit",
-                  //               border: OutlineInputBorder(),
-                  //               enabledBorder: OutlineInputBorder(
-                  //                 borderSide:
-                  //                     BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
-                  //               ),
-                  //             ),
-                  //             onChanged: (value) {
-                  //
-                  //             },
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Container(
-                  //   height: BaseUtitiles.getheightofPercentage(context, 5),
-                  //   width: BaseUtitiles.getWidthtofPercentage(context,30),
-                  //   margin: EdgeInsets.only(top: 15, bottom: 5),
-                  //   child: ElevatedButton(
-                  //       style: ElevatedButton.styleFrom(
-                  //         primary: Theme.of(context).primaryColor,
-                  //         //background color of button
-                  //         side: BorderSide(width: 3, color: Colors.black),
-                  //         //border width and color
-                  //         elevation: 3,
-                  //         //elevation of button
-                  //         shape: RoundedRectangleBorder(
-                  //             //to set border radius to button
-                  //             borderRadius: BorderRadius.circular(30)),
-                  //       ),
-                  //       child: Text("ADD"),
-                  //       onPressed: () async{
-                  //         if(dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="0.0"||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="0"||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text==""||dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text=="00"){
-                  //           BaseUtitiles.showToast("Please Enter Qty value greater than 0");
-                  //         }
-                  //         else{
-                  //           dailyWrkDone_DPRNEW_Controller.dprNew_MaterialTableSave();
-                  //           dailyWrkDone_DPRNEW_Controller.getMaterialTablesDatas();
-                  //
-                  //           dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_NameController.text="--Select--";
-                  //           dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_ScaleController.text="";
-                  //           dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text="";
-                  //         }
-                  //
-                  //       }),
-                  // ),
 
                 ],
               ),
@@ -408,19 +277,21 @@ class _DailyWork_done_DPR_MaterialState
                       height: BaseUtitiles.getheightofPercentage(context, 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color:  dailyWrkDone_DPRNEW_Controller.checkColor == 0 ? Colors.white : Theme.of(context).primaryColor ,
+                        color:   Colors.white ,
                       ),
                       alignment: Alignment.center,
                       child: Text("Reset",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                            color:  dailyWrkDone_DPRNEW_Controller.checkColor == 0 ?  Theme.of(context).primaryColor : Colors.white ),
+                            color:  Theme.of(context).primaryColor),
                       ),
                     ),
                     onTap: (){
-                      setState(() {
-                        dailyWrkDone_DPRNEW_Controller.checkColor = 1;
-                      });
+                      if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+                        BaseUtitiles.showToast("In this approval page can't be reset");
+                      }else {
+                        ResetAlert(context);
+                      }
                     },
                   ),
                 ),
@@ -431,18 +302,15 @@ class _DailyWork_done_DPR_MaterialState
                       height: BaseUtitiles.getheightofPercentage(context, 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: dailyWrkDone_DPRNEW_Controller.checkColor == 0 ?  Theme.of(context).primaryColor : Colors.white  ,
+                        color: Theme.of(context).primaryColor,
                       ),
                       alignment: Alignment.center,
                       child: Text("NEXT",  style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                          color:  dailyWrkDone_DPRNEW_Controller.checkColor == 0 ? Colors.white :  Theme.of(context).primaryColor ),),
+                          color: Colors.white),),
                     ),
                     onTap: (){
-                      setState(() {
-                        dailyWrkDone_DPRNEW_Controller.checkColor = 0;
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DailyWork_done_DPR_Measurement()));
-                      });
                     },
                   ),
                 ),
@@ -528,51 +396,6 @@ class _DailyWork_done_DPR_MaterialState
                                 ],
                               ),
                             );
-
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (context) => AlertDialog(
-                            //     title: Text(RequestConstant
-                            //         .DO_YOU_WANT_DELETE),
-                            //     actions: <Widget>[
-                            //       Container(
-                            //         margin: EdgeInsets.only(left: 20,right: 20),
-                            //         child: IntrinsicHeight(
-                            //           child: Row(
-                            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //             children: [
-                            //               Expanded(
-                            //                 child: TextButton(onPressed: (){
-                            //                   Navigator.pop(context);
-                            //                 }, child: Text("Cancle", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
-                            //               ),
-                            //               VerticalDivider(
-                            //                 color: Colors.grey.shade400,  //color of divider
-                            //                 width: 5, //width space of divider
-                            //                 thickness: 2, //thickness of divier line
-                            //                 indent: 15, //Spacing at the top of divider.
-                            //                 endIndent: 15, //Spacing at the bottom of divider.
-                            //               ),
-                            //               Expanded(
-                            //                 child: TextButton(
-                            //                     onPressed: () {
-                            //                       setState(() {
-                            //                         dailyWrkDone_DPRNEW_Controller.deleteParticularList(dailyWrkDone_DPRNEW_Controller.dprNewGetMatreadListdata.value[index]);
-                            //                         dailyWrkDone_DPRNEW_Controller.dprNewGetMatreadListdata.value.removeAt(index);
-                            //                         dailyWrkDone_DPRNEW_Controller.getMaterialTablesDatas();
-                            //                         Navigator.pop(context);
-                            //                       });
-                            //                     },
-                            //                     child: Text("Delete",
-                            //                         style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
-                            //               )
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // );
                           },
                           child: ConstIcons.cancle
 
@@ -600,7 +423,6 @@ class _DailyWork_done_DPR_MaterialState
                             child: TextFormField(
                                 onTap: (){
                                   dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtylistTextControllers[index].text = "";
-                                  dailyWrkDone_DPRNEW_Controller.MatclickEdit();
                                 },
                                 controller: dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtylistTextControllers[index],
                                 textAlign: TextAlign.center,
@@ -632,4 +454,57 @@ class _DailyWork_done_DPR_MaterialState
       ),
     );
   }
+
+  Future ResetAlert(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Alert!'),
+        content: Text('Are you sure to Reset?'),
+        actions:[
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: TextButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, child: Text("Cancel", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
+                  ),
+                  VerticalDivider(
+                    color: Colors.grey.shade400,  //color of divider
+                    width: 5, //width space of divider
+                    thickness: 2, //thickness of divier line
+                    indent: 15, //Spacing at the top of divider.
+                    endIndent: 15, //Spacing at the bottom of divider.
+                  ),
+                  Expanded(
+                    child: TextButton(
+                        onPressed: () {
+                          Future.delayed(Duration(seconds: 0),(){
+                            dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_NameController.text="--SELECT--";
+                            dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_ScaleController.text="UNIT";
+                            dailyWrkDone_DPRNEW_Controller.dpr_new_Mat_QtyController.text="0.0";
+                            dailyWrkDone_DPRNEW_Controller.matScaleId.value=0;
+                            dailyWrkDone_DPRNEW_Controller.selectedMatId.value=0;
+                            dailyWrkDone_DPRNEW_Controller.dprNew_MaterialTable_Delete();
+                            dailyWrkDone_DPRNEW_Controller.dprNewGetMatreadListdata.value=[];
+                            Navigator.pop(context);
+                          });
+
+                        },
+                        child: Text("Reset", style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
+                  )
+                ],
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
 }

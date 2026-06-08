@@ -30,7 +30,7 @@ class HomeState {
 class PunchInController extends GetxController with StateMixin<HomeState> {
   LoginController loginController = Get.put(LoginController());
   SiteLocationController siteLocationController =
-  Get.put(SiteLocationController());
+      Get.put(SiteLocationController());
 
   final Rxn<XFile> imageFile = Rxn<XFile>();
   final Rxn<XFile> punchOutImageFile = Rxn<XFile>();
@@ -149,22 +149,22 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
   Future punchOutUpdate(context, allotedStatus) async {
     final data = await PunchInProvider.punchOutProvider(
         PunchOutSaveModel(
-            id: int.tryParse(siteLocationController.punchInID.value),
-            EmployeeId: int.tryParse(loginController.EmpId()),
-            OutLocId: allotedStatus == "OD"
-                ? 0
-                : int.tryParse(siteLocationController.locId!),
-            OutDate: currentDate,
-            OutTime: currentTime,
-            OutStatus: allotedStatus,
-            TodayTask: todayTaskPunchOut.text,
-            TomorrowTask: tomorrowPlanPunchOut.text,
-            OutNAPRemarks: allotedStatus == "NA" ? punchOutRemarks.text : "-",
-            OnPinOutAddress: punchAddress.value,
-            OnPinOutLatitude: punchLat.value,
-            OnPinOutLongitude: punchLon.value,
+          id: int.tryParse(siteLocationController.punchInID.value),
+          EmployeeId: int.tryParse(loginController.EmpId()),
+          OutLocId: allotedStatus == "OD"
+              ? 0
+              : int.tryParse(siteLocationController.locId!),
+          OutDate: currentDate,
+          OutTime: currentTime,
+          OutStatus: allotedStatus,
+          TodayTask: todayTaskPunchOut.text,
+          TomorrowTask: tomorrowPlanPunchOut.text,
+          OutNAPRemarks: allotedStatus == "NA" ? punchOutRemarks.text : "-",
+          OnPinOutAddress: punchAddress.value,
+          OnPinOutLatitude: punchLat.value,
+          OnPinOutLongitude: punchLon.value,
             OnDutyRemarks: allotedStatus == "OD" ? punchOutRemarks.text : "-"
-        ),
+    ),
         File(punchOutImageFile.value!.path),
         context);
 
@@ -234,19 +234,19 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
     if (value.isNotEmpty) {
       filteredList.value = originalList!
           .where((item) =>
-      (item.staffName ?? "")
-          .toLowerCase()
-          .contains(value.toLowerCase()) ||
-          (item.punchDetails?.any((detail) =>
-          (detail.projectAddress ?? "")
-              .toLowerCase()
-              .contains(value.toLowerCase()) ||
-              (detail.punchInTime ?? "").contains(value) ||
-              (detail.projectAddress ?? "")
+              (item.staffName ?? "")
                   .toLowerCase()
-                  .contains(value) ||
-              (detail.punchOutTime ?? "").contains(value)) ??
-              false))
+                  .contains(value.toLowerCase()) ||
+              (item.punchDetails?.any((detail) =>
+                      (detail.projectAddress ?? "")
+                          .toLowerCase()
+                          .contains(value.toLowerCase()) ||
+                      (detail.punchInTime ?? "").contains(value) ||
+                      (detail.projectAddress ?? "")
+                          .toLowerCase()
+                          .contains(value) ||
+                      (detail.punchOutTime ?? "").contains(value)) ??
+                  false))
           .toList();
     } else {
       filteredList.value = List.from(originalList!);

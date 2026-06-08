@@ -32,7 +32,7 @@ class AttendanceController extends GetxController {
 
 
   Future getAttendance_rptList(workType) async {
-    attendanceDatas.value.clear();
+    attendanceDatas.value=[];
     final value = await ReportsProvider.getAttendancereportList(
         reportsController.selectedProjectId.value,
         reportsController.selectedsiteId.value,

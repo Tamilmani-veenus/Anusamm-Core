@@ -24,11 +24,6 @@ class DBManager {
     return await connection?.insert(table, data);
   }
 
-  insert_data(table, data) async {
-    var connection =  _database;
-    return await connection?.insert(table, data);
-  }
-
   readData(table) async {
     var connection =  _database;
     return await connection?.query(table);
@@ -109,6 +104,11 @@ class DBManager {
     return await connection?.update(table, data, where: 'id=?', whereArgs: [data['id']]);
   }
 
+  DprNew_Measurement_UpdateDataById(table, data) async {
+    var connection =  _database;
+    return await connection?.rawDelete('delete from $table where Name=? AND qty=?',[data['Name'],data['qty']]);
+  }
+
   TransAckUpdateTableIdwise(table, data) async {
     var connection =  _database;
     return await connection?.update(table, data, where: 'transferDetId=?', whereArgs: [data['transferDetId']]);
@@ -122,7 +122,7 @@ class DBManager {
 
   dpr_NewMSRTable_deleteDataByName(table, data) async {
     var connection =  _database;
-    return await connection?.rawDelete('delete from $table where id=?',[data['id']]);
+    return await connection?.rawDelete('delete from $table where reqDetId=?',[data['reqDetId']]);
   }
 
 
@@ -192,11 +192,11 @@ class DBManager {
 
   deleteboqitemlById(table, data) async {
     var connection =  _database;
-    return await connection?.rawDelete('delete from $table where Level3item_id=?',[data['Level3item_id']]);
+    return await connection?.rawDelete('delete from $table where measureLevel3ItemId=?',[data['measureLevel3ItemId']]);
   }
 
   Update_BoqTable(table, data) async {
     var connection =  _database;
-    return await connection?.update(table, data, where: 'Level3item_id=?', whereArgs: [data['Level3item_id']]);
+    return await connection?.update(table, data, where: 'measureLevel3ItemId=?', whereArgs: [data['measureLevel3ItemId']]);
   }
 }

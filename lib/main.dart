@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:upgrader/upgrader.dart';
+import 'package:anusamm/signalr_service.dart';
 import 'package:anusamm/utilities/apiconstant.dart';
 import '../splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,11 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.notification!.title.toString());
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Future<void> main() async {
-  await ApiConfig.initializeUrl();
   WidgetsFlutterBinding.ensureInitialized();
+  await ApiConfig.initializeUrl();
   await Upgrader.clearSavedSettings();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp],
   );
@@ -36,6 +39,7 @@ Future<void> main() async {
           projectId: "anusamm-3d8ae"));
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
+  // await SignalRService().startConnection();
   runApp(const StartApp());
 }
 
@@ -110,6 +114,7 @@ class _StartAppState extends State<StartApp> {
 
   Widget _buildWithTheme(BuildContext context, ThemeState state) {
     return GetMaterialApp(
+      navigatorKey: navigatorKey,
       title: "Anusamm Infra",
       builder: (context, child) {
         return MediaQuery(

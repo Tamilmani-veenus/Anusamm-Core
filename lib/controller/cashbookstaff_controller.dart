@@ -62,5 +62,4 @@ class CashBookStaffController extends GetxController{
   }
 
 
-
 }

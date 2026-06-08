@@ -1297,6 +1297,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import '../app_theme/app_colors.dart';
 import '../controller/pendinglistcontroller.dart';
 import '../utilities/baseutitiles.dart';
@@ -2125,7 +2126,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Setmybackground,
+        backgroundColor: Setmybackground,
 
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(
@@ -2197,8 +2198,8 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                         flex: 5,
 
                         child: Text(
-                          "${RequestConstant.CURRENCY_SYMBOL} "
-                              "${pendingListController
+                            "${RequestConstant.CURRENCY_SYMBOL} "
+                          "${pendingListController
                               .onclickPendingListDet[0].netPayAmount.toString()}",
                           textAlign: TextAlign.end,
                           style: TextStyle(
@@ -2595,32 +2596,32 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                     children: [
 
                                       tableCell(
-                                          "${item.materialName} "
-                                              "(${item.scaleName})"
+                                        "${item.materialName} "
+                                            "(${item.scaleName})"
                                       ),
 
                                       tableCell(
-                                          item.Poqty.toString()
+                                        item.Poqty.toString()
                                       ),
 
                                       tableCell(
-                                          item.rate.toString()
+                                        item.rate.toString()
                                       ),
 
                                       tableCell(
-                                          item.amount.toString()
+                                        item.amount.toString()
                                       ),
 
                                       tableCell(
-                                          item.GSTPer.toString()
+                                        item.GSTPer.toString()
                                       ),
 
                                       tableCell(
-                                          item.GSTAmt.toString()
+                                        item.GSTAmt.toString()
                                       ),
 
                                       tableCell(
-                                          item.netAmount.toString()
+                                        item.netAmount.toString()
                                       ),
 
                                       tableCell("0.0"),
@@ -2969,7 +2970,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
         Text(
           ": ",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold,
               fontSize: 11
           ),
         ),
