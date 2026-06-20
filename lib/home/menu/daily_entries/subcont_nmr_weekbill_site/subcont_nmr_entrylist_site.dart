@@ -281,7 +281,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                             textInputAction: TextInputAction.search,
                             onChanged: (value) {
                               setState(() {
-                                nmrWklyController.NmrEtyList.value=BaseUtitiles.filterSearchResults(value, nmrWklyController.mainEtyList);
+                                nmrWklyController.NmrEtyList.value=BaseUtitiles.filterSearchNMRResults(value, nmrWklyController.mainEtyList);
                               });
                             },
                           ),

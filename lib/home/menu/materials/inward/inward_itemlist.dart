@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utilities/image_view.dart';
 import '../../../../utilities/requestconstant.dart';
+import '../../../punch_in_out/Image_galleryScreen.dart';
 import '../../../punch_in_out/camera_screen.dart';
 
 class Inward_Itemlist extends StatefulWidget {
@@ -99,6 +100,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                           ),
                         ),
                         onTap: () async {
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return const ImageGalleryPopup_Alert(imageUrl: "Inward");
+                          //     });
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -425,14 +431,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                                                           Radius.circular(10))),
                                             ),
                                             onChanged: (value) {
-                                              setState(() {
                                                 inwardPendingcontroller.editClick(
                                                     inwardPendingcontroller
                                                         .ItemGetTableListdata[
                                                             index]
                                                         .id);
-                                                // inwardPendingcontroller.updateItemlistTable();
-                                              });
                                             },
                                           ),
                                         ))
@@ -561,6 +564,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
       height: 200.h,
       width: ScreenUtil().screenWidth,
       child: Obx(
+
         () => ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: inwardPendingcontroller.count.value + 1,
@@ -629,7 +633,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                     ],
                   ),
                 );
-              } else if (inwardPendingcontroller.count! == 0) {
+              } else if (inwardPendingcontroller.count.value! == 0) {
                 return InkWell(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 16.r, left: 100.r),
@@ -644,6 +648,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                     ),
                   ),
                   onTap: () async {
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return const ImageGalleryPopup_Alert(imageUrl: "Inward");
+                    //     });
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -658,13 +667,17 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                   padding: EdgeInsets.only(left: 16.4, bottom: 24.r),
                   child: GestureDetector(
                     onTap: () async {
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return const ImageGalleryPopup_Alert(imageUrl: "InwardButton");
+                      //     });
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => CameraCapturePage(
                                     fromScreen: "InwardAddButton",
                                   )));
-                      // await getImage(ImageSource.camera);
                     },
                     child: CircleAvatar(
                       radius: 25,
@@ -727,6 +740,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
                     ),
                   ),
                   onTap: () async {
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return const ImageGalleryPopup_Alert(imageUrl: "Inward");
+                    //     });
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -889,13 +907,17 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Inward_Itemlist> {
       padding: EdgeInsets.only(left: 16.4, bottom: 24.r),
       child: GestureDetector(
         onTap: () async {
+          // showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return const ImageGalleryPopup_Alert(imageUrl: "InwardButton");
+          //     });
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (_) => CameraCapturePage(
                         fromScreen: "InwardAddButton",
                       )));
-          // await getImage(ImageSource.camera);
         },
         child: CircleAvatar(
           radius: 25,

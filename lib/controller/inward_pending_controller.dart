@@ -113,9 +113,6 @@ class InwardPending_Controller extends GetxController
     InwardVechileNoText.text = "";
     InwardDriverNameText.text = "";
     InwardRemarksText.text = "";
-    count.value = 0;
-    pickedImageCount.value = 0;
-    imageFiles.value = [];
     Zerovalueset(ItemGetTableListdata);
     itemlistTable_Delete();
     ItemGetTableListdata.value.clear();
@@ -477,8 +474,7 @@ class InwardPending_Controller extends GetxController
 
   /// ------PoApproval Approval API--------------
 
-  Future PoAmendment_ApprovalButtonsave(
-      BuildContext context, purOrdMasId, projectId, siteId, inwType) async {
+  Future PoAmendment_ApprovalButtonsave(BuildContext context, purOrdMasId, projectId, siteId, inwType) async {
     await Future.delayed(const Duration(seconds: 0));
     String body = poAmendmentApproveResModelToJson(PoAmendmentApproveResModel(
       purOrdOId: purOrdMasId,
@@ -493,6 +489,7 @@ class InwardPending_Controller extends GetxController
     var list =
     await Inward_Pending_provider.inward_PoAmendment_ApprovalAPI(body);
     if (list != null) {
+      await pendingListController.getPendingList();
       Navigator.pop(context);
       Navigator.pop(context);
       Navigator.pop(context);

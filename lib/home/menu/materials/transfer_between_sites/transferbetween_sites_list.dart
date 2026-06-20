@@ -133,7 +133,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
-                                        lastDate: DateTime(2100),builder: (context, child) {
+                                        lastDate: DateTime.now(),builder: (context, child) {
                                       return Theme(data: Theme.of(context).copyWith(
                                         colorScheme: ColorScheme.light(
                                           primary: Theme.of(context).primaryColor, // header background color
@@ -237,6 +237,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                                   primary: Theme.of(context).primaryColor),
                               onPressed: () async {
                                 setState(() {
+                                  editingController.text = "";
                                   transferBt_Site_Controller.getEntryList();
                                 });
                               },

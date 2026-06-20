@@ -105,24 +105,20 @@ class _MrnPreapprovalItemlistState extends State<MrnPreapprovalItemlist> {
                     height: BaseUtitiles.getheightofPercentage(context, 4),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: mrnPreApprovalController.checkColor == 0
-                          ? Theme.of(context).primaryColor
-                          : Colors.white,
+                      color: Theme.of(context).primaryColor
                     ),
                     alignment: Alignment.center,
                     child: Text( "Pre Approve",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: RequestConstant.Lable_Font_SIZE,
-                          color: mrnPreApprovalController.checkColor == 0
-                              ? Colors.white
-                              : Theme.of(context).primaryColor),
+                          color:Colors.white
+                      ),
                     ),
                   ),
                   onTap: () {
                     if (formGlobalKey.currentState!.validate()) {
                       formGlobalKey.currentState!.save();
-                      mrnPreApprovalController.checkColor = 0;
                       if (check()) {
                         BaseUtitiles.showToast("Please select FromProject Name");
                       } else {

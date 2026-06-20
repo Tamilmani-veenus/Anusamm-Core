@@ -299,8 +299,8 @@ class _Case_Book_StaffState extends State<Case_Book_Staff> {
                               FocusScope.of(context).unfocus();
                             },
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return '\u26A0 Enter user name';
+                                if (value!.isEmpty || value == "--SELECT--") {
+                                  return '\u26A0 Required';
                                 }
                                 return null;
                               },

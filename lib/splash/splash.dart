@@ -56,15 +56,10 @@ class _SplashState extends State<Splash> {
     super.initState();
     var duration = const Duration(seconds: 3);
     Future.delayed(duration, () async {
-      final ConnectivityResult result = await Connectivity().checkConnectivity();
-      if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
         await BaseUtitiles.getDeviceDetails();
         SessionCheck();
         DBManager dbManager = DBManager();
         dbManager.database;
-      } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const InternetLostConnection()));
-      }
     });
   }
 

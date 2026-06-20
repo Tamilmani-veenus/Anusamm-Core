@@ -21,6 +21,7 @@ import '../home/menu/accounts/staff_voucher/staff_voucher_entrylist.dart';
 import '../home/menu/daily_entries/advancereques_voucher_new/advance_req_entrylist_new.dart';
 import '../home/menu/daily_entries/bill_generation/bill_generation_boq_entrylist.dart';
 import '../home/menu/daily_entries/bill_generation_direct/bill_generation_entrylist.dart';
+import '../home/menu/daily_entries/company_nmr_attendance/company_nmr_entrylist.dart';
 import '../home/menu/daily_entries/company_nmr_attendance/company_nmr_main.dart';
 import '../home/menu/daily_entries/daily_wrk_done_dpr(labour)/daily_wrkdone_dpr_labour.dart';
 import '../home/menu/daily_entries/daily_wrk_done_dpr(new)/daily_wrkdone_dpr_entrylistnew.dart';
@@ -242,7 +243,7 @@ class Menu_Controller extends GetxController {
 
     }
     else if(value=="Company NMR Attendance"){
-      Navigator.push(context, MaterialPageRoute(builder: (context) =>  CompanyNmrMain(0)),);
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>  Company_nmr_entrylist()),);
     }
 
     else if (value == "SubCont NMR Wkly Bill - Generation") {

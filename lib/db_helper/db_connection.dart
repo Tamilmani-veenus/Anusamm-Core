@@ -43,7 +43,7 @@ class DatabaseConnection {
     String directBillGenItemlistTable = "CREATE TABLE directBillGenItemlistTable (id INTEGER PRIMARY KEY UNIQUE,Name TEXT,unit TEXT,qty REAL,rate REAL,amount REAL,reqDetId INTEGER)";
     await database.execute(directBillGenItemlistTable);
 
-    String billGenBoqItemlistTable = "CREATE TABLE billGenBoqItemlistTable (id INTEGER PRIMARY KEY UNIQUE,Name TEXT,unit TEXT,qty REAL,rate REAL,amount REAL,reqDetId INTEGER)";
+    String billGenBoqItemlistTable = "CREATE TABLE billGenBoqItemlistTable (id INTEGER PRIMARY KEY UNIQUE,Name TEXT,unit TEXT,qty REAL,rate REAL,amount REAL,reqDetId INTEGER, balbillqty REAL, CurBillQty REAL, appQty REAL,level3ItemId INTEGER, headItemid INTEGER, subItemid INTEGER)";
     await database.execute(billGenBoqItemlistTable);
 
     String directBillGenGSTItemlistTable = "CREATE TABLE directBillGenGSTItemlistTable (id INTEGER PRIMARY KEY UNIQUE,reqDetId INTEGER,addLessId INTEGER,percentValue REAL,amount REAL,addLessName TEXT,addLessType TEXT)";
@@ -58,7 +58,7 @@ class DatabaseConnection {
     String transferbetweenSiteWiseItemlistTable = "CREATE TABLE transferbetweenSiteWiseItemlistTable (id INTEGER PRIMARY KEY UNIQUE,materialId INTEGER,materialName TEXT,scale TEXT,stockQty REAL,Qty REAL,balQty REAL,reqDetId INTEGER,StSDetId INTEGER,rate REAL,amount REAL)";
     await database.execute(transferbetweenSiteWiseItemlistTable);
 
-    String advanceReqvoucherItemlistTable = "CREATE TABLE advanceReqvoucherItemlistTable (id INTEGER PRIMARY KEY UNIQUE,siteId INTEGER,siteName TEXT,paymentType TEXT,amount REAL,tds_percent REAL,tds_amount REAL,netAmount REAL)";
+    String advanceReqvoucherItemlistTable = "CREATE TABLE advanceReqvoucherItemlistTable (id INTEGER PRIMARY KEY UNIQUE,siteId INTEGER,siteName TEXT,paymentType TEXT,amount REAL,tds_percent REAL,tds_amount REAL,netAmount REAL,reqDetId INTEGER)";
     await database.execute(advanceReqvoucherItemlistTable);
 
 
@@ -83,10 +83,10 @@ class DatabaseConnection {
     String transferAcknowDetTableTable = "CREATE TABLE transferAcknowDetTableTable (id INTEGER PRIMARY KEY UNIQUE,transferDetId INTEGER,materialName Text,materialId INTEGER,scale TEXT,transQty REAL,ackQty REAL,detRemarks TEXT)";
     await database.execute(transferAcknowDetTableTable);
 
-    String companyNMRDetTable = "CREATE TABLE companyNMRDetTable (id INTEGER PRIMARY KEY UNIQUE,labourId INTEGER,labourName Text,Labour_No TEXT,categaryName TEXT,wages REAL,shift TEXT,status TEXT,busfare REAL,othrs REAL,advance REAL,detRemarks TEXT)";
+    String companyNMRDetTable = "CREATE TABLE companyNMRDetTable (id INTEGER PRIMARY KEY UNIQUE,labourId INTEGER,labourName Text,labourNo TEXT,categaryName TEXT,wages REAL,shift TEXT,status TEXT,busfare REAL,othrs REAL,advance REAL,detRemarks TEXT,categaryId INTEGER,statusKeyText TEXT,reqDetId INTEGER)";
     await database.execute(companyNMRDetTable);
 
-    String advReqVoucherSitewisePayTable = "CREATE TABLE advReqVoucherSitewisePayTable (id INTEGER PRIMARY KEY UNIQUE,PurOrdMasId  INTEGER,OrderNo Text,Project TEXT,ProjectId INTEGER,SiteName TEXT,SiteId INTEGER,DPRAmt REAL,AdvanceAmt REAL,BAmount REAL,Amount REAL,paymentType TEXT)";
+    String advReqVoucherSitewisePayTable = "CREATE TABLE advReqVoucherSitewisePayTable (id INTEGER PRIMARY KEY UNIQUE,PurOrdMasId  INTEGER,OrderNo Text,Project TEXT,ProjectId INTEGER,SiteName TEXT,SiteId INTEGER,DPRAmt REAL,AdvanceAmt REAL,BAmount REAL,Amount REAL,paymentType TEXT,reqDetId INTEGER)";
     await database.execute(advReqVoucherSitewisePayTable);
 
     String loginDetailsTable = "CREATE TABLE loginDetailsTable (id INTEGER PRIMARY KEY UNIQUE,userId INTEGER,userName Text,userType TEXT,userActive TEXT,userAppActive INTEGER,empId INTEGER,empName TEXT)";

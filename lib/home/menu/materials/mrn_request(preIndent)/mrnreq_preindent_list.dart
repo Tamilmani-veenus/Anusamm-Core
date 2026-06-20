@@ -238,6 +238,7 @@ class _MRNRequest_PreIndent_ListState extends State<MRNRequest_PreIndent_List> {
                                 primary: Theme.of(context).primaryColor),
                             onPressed: () async {
                               setState(() {
+                                editingController.text = "";
                                 mrnRequest_PreIndent_Controller.getMrnReq_PreIndent_EntryList();
                               });
                             },
@@ -458,7 +459,7 @@ class _MRNRequest_PreIndent_ListState extends State<MRNRequest_PreIndent_List> {
                                       Expanded(
                                           flex: 2,
                                           child: Text(
-                                            "Prepared By :",
+                                            "Prepared By ",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),

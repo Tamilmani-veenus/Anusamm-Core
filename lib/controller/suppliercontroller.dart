@@ -30,18 +30,6 @@ class SupplierController extends GetxController {
   LoginController loginController = Get.put(LoginController());
 
 
-  Future getSupplierList(BuildContext context) async {
-    supplierListDropdown.value = await CommonProvider.getSupplierDropdown();
-    supplierListDropdown.value.forEach((element) {
-      return supplierDropdownName.value.add(element.supplierName);
-    });
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return SupplierShowPopup(list:supplierListDropdown.value);
-    //     });
-  }
-
   setSelectSupplierID(String value) {
     if (supplierListDropdown.value.length > 0) {
       supplierListDropdown.forEach((element) {

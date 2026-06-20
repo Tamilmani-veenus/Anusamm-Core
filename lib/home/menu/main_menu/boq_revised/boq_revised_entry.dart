@@ -36,8 +36,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
   SiteController siteController = Get.put(SiteController());
   AutoYearWiseNoController autoYearWiseNoController =
       Get.put(AutoYearWiseNoController());
-  Boq_Revised_Controller boq_revised_controller =
-      Get.put(Boq_Revised_Controller());
+  Boq_Revised_Controller boq_revised_controller = Get.put(Boq_Revised_Controller());
   BottomsheetControllers bottomsheetControllers =
       Get.put(BottomsheetControllers());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

@@ -77,11 +77,11 @@ class MRN_Request_Controller extends GetxController {
   late List<bool> check;
   int reqId = 0;
 
-  int checkColor = 0;
+
 
   RxBool activeType = false.obs;
 
-  String screenCheck = "";
+
   var materialTableModel = Materiallist();
   var materiallistService = MateriallistService();
 
@@ -666,14 +666,4 @@ class MRN_Request_Controller extends GetxController {
     );
   }
 
-  addmaterialQty(BuildContext context) {
-    Mrn_Req_provider.addmatGetQtyApi().then((value) {
-      addmaterialQtylist.value = value;
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return MaterialAddQtyAlert(list: addmaterialQtylist.value);
-          });
-    });
-  }
 }

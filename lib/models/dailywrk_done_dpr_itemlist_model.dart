@@ -20,9 +20,9 @@ class DprItemListResponse {
   });
 
   factory DprItemListResponse.fromJson(Map<String, dynamic> json) => DprItemListResponse(
-    success: json["success"],
-    result: List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
-    message: json["message"]
+      success: json["success"],
+      result: List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
+      message: json["message"]
   );
 
   Map<String, dynamic> toJson() => {

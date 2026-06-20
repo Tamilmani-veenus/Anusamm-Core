@@ -29,10 +29,10 @@ int? DLRId;
 class DailyEntriesController extends GetxController {
   ProjectController projectController = Get.put(ProjectController());
   PendingListController pendingListController =
-      Get.put(PendingListController());
+  Get.put(PendingListController());
   SiteController siteController = Get.put(SiteController());
   SubcontractorController subcontractorController =
-      Get.put(SubcontractorController());
+  Get.put(SubcontractorController());
   LoginController loginController = Get.put(LoginController());
 
   final AttendDateController = TextEditingController();
@@ -110,7 +110,7 @@ class DailyEntriesController extends GetxController {
     int j = 0;
     store_ShowList.forEach((element) {
       if ((NosControllers[i].text.isEmpty ||
-              double.parse(NosControllers[i].text) == 0) &&
+          double.parse(NosControllers[i].text) == 0) &&
           (OtHrsController[i].text.isEmpty ||
               double.parse(OtHrsController[i].text) == 0)) {
       } else {
@@ -136,8 +136,8 @@ class DailyEntriesController extends GetxController {
         subContDetModel.EvgOtAmt = 0.0;
         subContDetModel.EvgExtrsAmt = 0.0;
         subContDetModel.netAmt =
-            (element.wages * (double.tryParse(NosControllers[i].text) ?? 0) +
-                subContDetModel.MrgOtAmt);
+        (element.wages * (double.tryParse(NosControllers[i].text) ?? 0) +
+            subContDetModel.MrgOtAmt);
         readListdata.value.forEach((element) {
           if (element.siteId == subContDetModel.siteId &&
               element.catId == subContDetModel.catId) {
@@ -154,7 +154,7 @@ class DailyEntriesController extends GetxController {
       i++;
     });
     var savedatas =
-        await subContAttendatanceDetService.SubContDetSave(subcontModelList);
+    await subContAttendatanceDetService.SubContDetSave(subcontModelList);
     return Navigator.pop(context, savedatas);
   }
 
@@ -255,37 +255,37 @@ class DailyEntriesController extends GetxController {
     for (var index = 0; index < readListdata.length; index++) {
       textControllersInitiate();
       MrngOtAmtControllers[index].text = ((readListdata[index].wages / 8) *
-              double.parse(MrngOtHrsControllers[index].value.text != ""
-                  ? MrngOtHrsControllers[index].value.text
-                  : "0"))
+          double.parse(MrngOtHrsControllers[index].value.text != ""
+              ? MrngOtHrsControllers[index].value.text
+              : "0"))
           .toString();
       EvgOtAmtControllers[index].text = ((readListdata[index].wages / 8) *
-              double.parse(EvgOtHrsControllers[index].value.text != ""
-                  ? EvgOtHrsControllers[index].value.text
-                  : "0"))
+          double.parse(EvgOtHrsControllers[index].value.text != ""
+              ? EvgOtHrsControllers[index].value.text
+              : "0"))
           .toString();
 
       // NetAmtController[index].text = (readListdata[index].wages * double.parse(EntrySCreenNosControllers[index].value.text != ""
       //     ? EntrySCreenNosControllers[index].value.text : "0")).toString();
 
       NetAmtController[index].text = (readListdata[index].wages *
-                  double.parse(EntrySCreenNosControllers[index].value.text != ""
-                      ? EntrySCreenNosControllers[index].value.text
-                      : "0") +
-              (double.parse(ExtrasControllers[index].text != ""
-                      ? ExtrasControllers[index].text
-                      : "0") *
-                  double.parse(EntrySCreenNosControllers[index].value.text != ""
-                      ? EntrySCreenNosControllers[index].value.text
-                      : "0")) +
-              double.parse(EvgExtraAmtControllers[index].text != ""
-                  ? EvgExtraAmtControllers[index].text
-                  : "0") +
-              double.parse(MrngOtAmtControllers[index].text != ""
-                  ? MrngOtAmtControllers[index].text
-                  : "0") +
-              double.parse(
-                  EvgOtAmtControllers[index].text != "" ? EvgOtAmtControllers[index].text : "0"))
+          double.parse(EntrySCreenNosControllers[index].value.text != ""
+              ? EntrySCreenNosControllers[index].value.text
+              : "0") +
+          (double.parse(ExtrasControllers[index].text != ""
+              ? ExtrasControllers[index].text
+              : "0") *
+              double.parse(EntrySCreenNosControllers[index].value.text != ""
+                  ? EntrySCreenNosControllers[index].value.text
+                  : "0")) +
+          double.parse(EvgExtraAmtControllers[index].text != ""
+              ? EvgExtraAmtControllers[index].text
+              : "0") +
+          double.parse(MrngOtAmtControllers[index].text != ""
+              ? MrngOtAmtControllers[index].text
+              : "0") +
+          double.parse(
+              EvgOtAmtControllers[index].text != "" ? EvgOtAmtControllers[index].text : "0"))
           .toString();
     }
     updateSubcontDetValue();
@@ -439,15 +439,15 @@ class DailyEntriesController extends GetxController {
         attendId);
   }
 
-  Future subContEntryList_EditApi(int attendId, BuildContext context,
+  Future subContEntryList_EditApi(int attendId, status, BuildContext context,
       {String? type}) async {
     var response =
-        await SubContAttendanceProvider.subcont_entryList_editAPI(attendId);
+    await SubContAttendanceProvider.subcont_entryList_editAPI(attendId,status);
     if (response != null) {
       if (response.success == true) {
         EditListResDatas.value = [response.result];
         if (EditListResDatas.isNotEmpty) {
-            saveButton.value = type=="approve"?RequestConstant.APPROVAL:RequestConstant.RESUBMIT;
+          saveButton.value = type=="approve"?RequestConstant.APPROVAL:RequestConstant.RESUBMIT;
           editSaveDetTable();
           getDetTablesDatas();
           return Navigator.pushReplacement(
@@ -471,8 +471,6 @@ class DailyEntriesController extends GetxController {
       element.subContLabourAttendDetS.forEach((val) {
         subContDetModel = SubContDetModel();
         subContDetModel.reqDetId = val.id;
-        print("wwwwww...${val.id}");
-        print("wwwwww...${subContDetModel.reqDetId}");
         subContDetModel.catId = val.labourCategoryId;
         subContDetModel.catName = val.labourCategoryName;
         subContDetModel.wages = val.rate;
@@ -491,7 +489,7 @@ class DailyEntriesController extends GetxController {
       });
     });
     var savedatas =
-        await subContAttendatanceDetService.SubContDetSave(subcontModelList);
+    await subContAttendatanceDetService.SubContDetSave(subcontModelList);
     return savedatas;
   }
 
@@ -586,6 +584,8 @@ class DailyEntriesController extends GetxController {
   var gettingNetworkImages = <String>[].obs;
   List<int> imageIds = []; // store IDs for delete
 
+  RxInt pickedImageCount = 0.obs;
+
   /// Getting image.....
 
   Future<void> gettingImage() async {
@@ -593,7 +593,7 @@ class DailyEntriesController extends GetxController {
     imageIds.clear();
     imageFiles.clear();
     final value =
-        await Inward_Pending_provider.gettingImageProvider(DLRId!, "DLR");
+    await Inward_Pending_provider.gettingImageProvider(DLRId!, "DLR");
     if (value != null) {
       for (int i = 0; i < value!.length; i++) {
         gettingNetworkImages.add(value[i].url.toString());

@@ -49,6 +49,7 @@ class SiteVoucher_Controller extends GetxController {
   var sitevoucherlistService = SitevoucherlistService();
 
   RxList SiteVocEtyList = [].obs;
+  RxList main_entryList = [].obs;
   RxList Sitevoucher_itemview_GetDbList = [].obs;
   RxList Sitevoucher_EditListApiValue = [].obs;
   int VocID = 0;
@@ -59,6 +60,7 @@ class SiteVoucher_Controller extends GetxController {
   var imageFiles = <File>[].obs;
   var gettingNetworkImages = <String>[].obs;
   List<int> imageId = [];
+  RxInt pickedImageCount = 0.obs;
 
   clearDatas() {
     SaveButton.value = RequestConstant.SUBMIT;
@@ -86,11 +88,13 @@ class SiteVoucher_Controller extends GetxController {
 
   Future getSiteVoc_EntryList() async {
     SiteVocEtyList.value.clear();
+    main_entryList.value.clear();
     final value = await Sitevoucher_provider.getSiteVouc_Entry_List(SiteVocEntrylistFrDate.text, SiteVocEntrylistToDate.text);
       if (value != null) {
         if(value.success==true){
           if(value.result!.isNotEmpty){
             SiteVocEtyList.value = value.result!;
+            main_entryList.value = value.result!;
           }
           else {
             BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
@@ -199,12 +203,12 @@ class SiteVoucher_Controller extends GetxController {
 
   Future  SaveButtonSitevoucher_ItemlistScreen(BuildContext context, int id) async {
     SitevoucherSaveRequest formdata = SitevoucherSaveRequest(
-      id: SaveButton.value == RequestConstant.RESUBMIT? id : 0,
+      id: SaveButton.value == RequestConstant.RESUBMIT || SaveButton.value == RequestConstant.APPROVAL? id : 0,
       siteVoucherNo: AutoYearwiseSiteVoc.text,
       siteVoucherDate: sitevocDate.text,
       siteVoucherType: commonVoucherController.VocType.value,
       projectId: projectController.selectedProjectId.value,
-      companyId: SaveButton.value == RequestConstant.RESUBMIT?Sitevoucher_EditListApiValue.value[0].companyId:0,
+      companyId: SaveButton.value == RequestConstant.RESUBMIT || SaveButton.value == RequestConstant.APPROVAL ? Sitevoucher_EditListApiValue.value[0].companyId:0,
       accountTypeId: commonVoucherController.selectedAccTypeId.value,
       accountNameId: commonVoucherController.selectedAccnameId.value,
       siteVoucherAmount: double.tryParse(Amount.text),
@@ -220,8 +224,11 @@ class SiteVoucher_Controller extends GetxController {
       cheQueDate: sitevocDate.text,
       requisitionId: 0,
       createdBy: int.tryParse(loginController.EmpId()),
+      verifyStatus: SaveButton.value == RequestConstant.VERIFY || SaveButton.value == RequestConstant.APPROVAL? "Y":"N",
+      approveStatus: SaveButton.value == RequestConstant.APPROVAL? "Y":"N",
       createdDt: BaseUtitiles().convertToUtcIso(sitevocDate.text),
-      accountSiteVoucherSwPayments: getSitevoucherDet(id)
+      accountSiteVoucherSwPayments: getSitevoucherDet(id),
+
     );
     print(jsonEncode(formdata.toJson()));
 
@@ -250,8 +257,8 @@ class SiteVoucher_Controller extends GetxController {
     getSiteDetList.value.clear();
     Sitevoucher_itemview_GetDbList.value.forEach((element) {
       var list = new AccountSiteVoucherSwPayment(
-        id: SaveButton.value == RequestConstant.RESUBMIT? element.reqDetId : 0 ,
-        siteVoucherId: SaveButton.value == RequestConstant.RESUBMIT?id:0,
+        id: SaveButton.value == RequestConstant.RESUBMIT || SaveButton.value == RequestConstant.APPROVAL ? element.reqDetId : 0 ,
+        siteVoucherId: SaveButton.value == RequestConstant.RESUBMIT || SaveButton.value == RequestConstant.APPROVAL ?id:0,
         payType: element.paytype,
         projectId: projectController.selectedProjectId.value,
         siteId: element.siteid,
@@ -303,14 +310,20 @@ class SiteVoucher_Controller extends GetxController {
     return savedatas;
   }
 
-  Future SiteVoucher_List_EditApi(int VocId, BuildContext context) async {
+  Future SiteVoucher_List_EditApi(int VocId, BuildContext context,Url) async {
     Sitevoucher_EditListApiValue.value = [];
     await Sitevoucher_provider.Sitevoucher_entryList_editAPI(VocId)
         .then((value) async {
       if (value != null) {
         if (value.success == true) {
           Sitevoucher_EditListApiValue.value = [value.result];
-          SaveButton.value = RequestConstant.RESUBMIT;
+          if(Url == "Resubmit") {
+            SaveButton.value = RequestConstant.RESUBMIT;
+          }
+          else
+            {
+              SaveButton.value = RequestConstant.APPROVAL;
+            }
           delete_Sitevoucher_itemlist_Table();
           Sitevoucher_itemview_GetDbList.clear();
           await Sitevoucher_entrylist_editSaveDetTable();
@@ -391,6 +404,7 @@ class SiteVoucher_Controller extends GetxController {
     gettingNetworkImages.clear();
     imageId.clear();
     imageFiles.clear();
+    print("DDDDD...>${vocId}");
     final value =
     await Inward_Pending_provider.gettingImageProvider(vocId!, "siteVoucher");
     if (value != null) {

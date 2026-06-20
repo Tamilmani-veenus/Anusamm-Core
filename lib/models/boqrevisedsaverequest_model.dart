@@ -71,6 +71,10 @@ class BoqReviseDet {
   double? qty;
   double? reviseQty;
   String? remarks;
+  int? approvedBy;
+  String? approveStatus;
+  String? boQcode;
+
 
   BoqReviseDet({
     this.id,
@@ -83,6 +87,9 @@ class BoqReviseDet {
     this.qty,
     this.reviseQty,
     this.remarks,
+    this.approvedBy,
+    this.approveStatus,
+    this.boQcode,
   });
 
   factory BoqReviseDet.fromJson(Map<String, dynamic> json) => BoqReviseDet(
@@ -96,6 +103,9 @@ class BoqReviseDet {
     qty: json["qty"],
     reviseQty: json["reviseQty"],
     remarks: json["remarks"],
+    approvedBy: json["approvedBy"],
+    approveStatus: json["approveStatus"],
+    boQcode: json["boQcode"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -109,5 +119,8 @@ class BoqReviseDet {
     "qty": qty,
     "reviseQty": reviseQty,
     "remarks": remarks,
+    "approvedBy": approvedBy,
+    "approveStatus": approveStatus,
+    "boQcode": boQcode,
   };
 }

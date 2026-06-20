@@ -346,7 +346,7 @@ class _TransferAcknow_EntryScreenState extends State<TransferAcknow_EntryScreen>
                               },
                               validator: (value) {
                                 if (value!.isEmpty || value == "--Select--") {
-                                  return '\u26A0 Please select project name.';
+                                  return '\u26A0 Required.';
                                 }
                                 return null;
                               },

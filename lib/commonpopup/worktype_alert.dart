@@ -317,7 +317,7 @@ class _wrkTypeAlertAllState extends State<wrkTypeAlertAll> {
                         }
                         else {
                         dailyWrkDone_DPR_Controller.workType_DPR_Controller.text="RATE";
-                        dailyWrkDone_DPR_Controller.wrktype_DPR.value= "RATE";
+                        dailyWrkDone_DPR_Controller.wrktype_DPR.value = "RAT";
                         }
                         Navigator.pop(context);
                       },

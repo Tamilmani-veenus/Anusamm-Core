@@ -108,8 +108,7 @@ class _PendingList_ScreenState extends State<PendingList_Screen> {
                                       ),
 
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 10),
+                                    child: Center(
                                       child: Text(
                                         pendingListController.pendingList_datas.value[index].count.toString(),
                                         style: TextStyle(color: Colors.white, fontSize: RequestConstant.Lable_Font_SIZE),
@@ -130,11 +129,9 @@ class _PendingList_ScreenState extends State<PendingList_Screen> {
 
   Future<bool> homeScreen() async {
     if (loginController.user.value.userType == "A") {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Dashboard_screen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard_screen()));
     } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => DashboardScreen_OtherUser()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen_OtherUser()));
     }
     return false; // Prevent the default back navigation
   }

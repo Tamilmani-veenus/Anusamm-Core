@@ -34,10 +34,7 @@ class MrnFinalApprovalController extends GetxController{
   final PreparedbyText = TextEditingController();
 
   int preparedById = 0;
-  int entrycheck=0;
   int reqId=0;
-  int checkColor=0;
-  String screenCheck="";
   RxList mrngetdropDownvalue=[].obs;
   List mainlist = [];
   RxList mrnProjectDropdownName=[].obs;

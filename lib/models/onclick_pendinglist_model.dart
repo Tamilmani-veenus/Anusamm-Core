@@ -37,10 +37,14 @@ class OnclickPendingListResponse {
 
 class OnClickListResult {
   int? id;
+  int? voucherId;
   int? ReqOrdMasId;
   int? PONo;
   int? PoId;
   String? requisitionNo;
+  String? advanceReqVoucherDate;
+  String? advanceReqVoucherNo;
+  String? NMRLabourAttendanceNo;
   String? requisitionTypeValue;
   String? reqOrdNo;
   String? ReqOrdNo;
@@ -52,6 +56,8 @@ class OnClickListResult {
   String? ReqOrdDate;
   String? reqdueDate;
   String? ReqDueDate;
+  String? NMRLabourAttendanceDate1;
+  int? Labcount;
   String? requestType;
   int? projectId;
   int? siteId;
@@ -83,6 +89,7 @@ class OnClickListResult {
   String? preparedby;
   String? preparedByName;
   String? Preparedbyname;
+  String? preparebyname;
   String? preparedByBOQ;
   String? preparedName;
   int? preparedByid;
@@ -97,6 +104,7 @@ class OnClickListResult {
   int? DprType;
   String? appNo;
   String? subContractorName;
+  String? subContractor;
   String? SubcontName;
   double? totNos;
   double? totAmt;
@@ -191,14 +199,29 @@ class OnClickListResult {
   String? entryNo;
   String? billStatus;
   String? billType;
+  String? siteVoucherNo;
+  String? vocdate;
+  String? accountName;
+  String? payMode;
+  String? accountTypeName;
+  double? siteVoucherAmount;
+  String? payfor;
+  double? advanceReqVoucherAmount;
+  String? advanceReqVoucherType;
 
   OnClickListResult({
     this.id,
+    this.voucherId,
     this.ReqOrdMasId,
     this.PONo,
     this.PoId,
     this.requisitionNo,
+    this.advanceReqVoucherDate,
+    this.advanceReqVoucherNo,
+    this.NMRLabourAttendanceNo,
     this.requisitionTypeValue,
+    this.NMRLabourAttendanceDate1,
+    this.Labcount,
     this.reqOrdNo,
     this.ReqOrdNo,
     this.reviseNo,
@@ -242,6 +265,7 @@ class OnClickListResult {
     this.preparedByid,
     this.preparedByName,
     this.Preparedbyname,
+    this.preparebyname,
     this.preparedByBOQ,
     this.preparedName,
     this.netAmt,
@@ -256,6 +280,7 @@ class OnClickListResult {
     this.requisitionType,
     this.appNo,
     this.subContractorName,
+    this.subContractor,
     this.SubcontName,
     this.totNos,
     this.totAmt,
@@ -347,17 +372,32 @@ class OnClickListResult {
     this.netPayAmount,
     this.entryNo,
     this.billType,
-    this.billStatus
+    this.billStatus,
+    this.siteVoucherNo,
+    this.vocdate,
+    this.accountName,
+    this.payMode,
+    this.accountTypeName,
+    this.siteVoucherAmount,
+    this.payfor,
+    this.advanceReqVoucherAmount,
+    this.advanceReqVoucherType,
   });
 
   factory OnClickListResult.fromJson(Map<String, dynamic> json) => OnClickListResult(
+    voucherId: json["voucherId"],
     id: json["id"],
     ReqOrdMasId: json["ReqOrdMasId"],
     PONo: json["PONO"],
     PoId: json["PoId"],
     reqOrdNo: json["reqOrdNo"],
     requisitionNo: json["requisitionNo"],
+    advanceReqVoucherDate: json["advanceReqVoucherDate"],
+    advanceReqVoucherNo: json["advanceReqVoucherNo"],
+    NMRLabourAttendanceNo: json["NMRLabourAttendanceNo"],
     requisitionTypeValue: json["requisitionTypeValue"],
+    NMRLabourAttendanceDate1: json["NMRLabourAttendanceDate1"],
+    Labcount: json["Labcount"],
     ReqOrdNo: json["ReqOrdNo"],
       reviseNo: json["reviseNo"],
       reviseDate: json["reviseDate"],
@@ -403,6 +443,7 @@ class OnClickListResult {
     prepareby: json["preparedby"],
     appRemarks: json["appRemarks"],
     preparedByName: json["Prepared_by"],
+      preparebyname: json["PreparedByName"],
       preparedByBOQ: json["preparedBy"],
     netAmt: json["NetAmt"],
     netAmount: json["NetAmount"],
@@ -415,9 +456,10 @@ class OnClickListResult {
     appNo: json["AppNo"],
     subContractorName: json["SubContractorName"],
     SubcontName: json["subcontractorName"],
+    subContractor: json["subContractorName"],
     totNos: json["TotNos"],
     totAmt: json["TotNos"],
-    Payfor: json["Payfor"],
+    Payfor: json["Payfor"] ?? json["payFor"],
     ProjectId: json["ProjectId"],
     projId: json["projectId"],
     SiteId: json["SiteId"],
@@ -505,16 +547,31 @@ class OnClickListResult {
     netPayAmount: json["netPayAmount"],
     entryNo: json["entryNo"],
     billStatus: json["billStatus"],
-    billType: json["billType"]
+    billType: json["billType"],
+    siteVoucherNo: json["siteVoucherNo"],
+    vocdate: json["vocdate"],
+    accountName: json["accountName"],
+    payMode: json["payMode"],
+    accountTypeName: json["accountTypeName"],
+    siteVoucherAmount: json["SiteVoucherAmount"],
+    payfor: json["payfor"],
+    advanceReqVoucherAmount: json["advanceReqVoucherAmount"],
+    advanceReqVoucherType: json["advanceReqVoucherType"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "voucherId": voucherId,
     "ReqOrdMasId": ReqOrdMasId,
     "PONO": PONo,
     "PoId": PoId,
     "requisitionNo": requisitionNo,
+    "advanceReqVoucherDate": advanceReqVoucherDate,
+    "advanceReqVoucherNo": advanceReqVoucherNo,
+    "NMRLabourAttendanceNo": NMRLabourAttendanceNo,
     "requisitionTypeValue": requisitionTypeValue,
+    "NMRLabourAttendanceDate1": NMRLabourAttendanceDate1,
+    "Labcount": Labcount,
     "reqOrdNo": reqOrdNo,
     "ReqOrdNo": ReqOrdNo,
     "reviseNo": reviseNo,
@@ -565,6 +622,7 @@ class OnClickListResult {
     "Prepared_by": preparedByName,
     "Preparedbyname": Preparedbyname,
     "preparedByName": preparedName,
+    "PreparedByName": preparebyname,
     "preparedby": prepareby,
     "preparedBy": preparedByBOQ,
     "NetAmt": netAmt,
@@ -578,6 +636,7 @@ class OnClickListResult {
     "AppNo": appNo,
     "SubContractorName": subContractorName,
     "subcontractorName": SubcontName,
+    "subContractorName": subContractor,
     "TotNos": totNos,
     "TotNos": totAmt,
     "Payfor": Payfor,
@@ -663,6 +722,15 @@ class OnClickListResult {
     "netPayAmount":netPayAmount,
     "entryNo": entryNo,
     "billStatus": billStatus,
-    "billType": billType
+    "billType": billType,
+    "siteVoucherNo": siteVoucherNo,
+    "vocdate": vocdate,
+    "accountName": accountName,
+    "payMode": payMode,
+    "accountTypeName": accountTypeName,
+    "SiteVoucherAmount": siteVoucherAmount,
+    "payfor": payfor,
+    "advanceReqVoucherType": advanceReqVoucherType,
+    "advanceReqVoucherAmount": advanceReqVoucherAmount,
   };
 }

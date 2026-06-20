@@ -104,20 +104,6 @@ class Inward_Pending_provider {
 
 
   ///-----invoiceNO and DCNo checking API----
-  static Future invoice_DcNoCheck(String inwardNo,String invoiceNo,String dcNo,String supplierId,String inwardId) async {
-    var data = null;
-    await ApiManager.getAPICall(ApiConstant.GET_INVOICEANDDCNOCHECK + "?InwardNo=$inwardNo&invoiceNo=$invoiceNo&partyDcNo=$dcNo&supplierId=$supplierId&inwardid=$inwardId").then((value) {
-      print("invoice_DcNoCheck:" + value);
-      data = value;
-      if (data != null && data.length > 0) {
-        return data;
-      }
-    }, onError: (error) {
-      print(error);
-      // BaseUtitiles.showToast(error);
-    });
-    return data;
-  }
 
   static Future<dynamic> inward_Save(InwardPendingSaveReq data, List<File> imagesPath, saveButton,id) async {
       try {

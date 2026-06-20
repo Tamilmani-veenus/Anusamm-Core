@@ -245,6 +245,7 @@ class _Staff_Voucher_EntryListScreenState
                           style: ElevatedButton.styleFrom(
                               primary: Theme.of(context).primaryColor),
                           onPressed: () async {
+                            editingController.text = "";
                             await  staffVoucher_Controller.getStaffVoc_EntryList();
                           },
                           child: Center(
@@ -294,7 +295,10 @@ class _Staff_Voucher_EntryListScreenState
                           },
                           textInputAction: TextInputAction.search,
                           onChanged: (value) {
-                              staffVoucher_Controller.StaffVocEtyList.value = BaseUtitiles.filterSearchResultsStaffVouchers(value, staffVoucher_Controller.StaffVocEtyList);
+                            setState(() {
+                              staffVoucher_Controller.StaffVocEtyList.value = BaseUtitiles.filterSearchResultsStaffVouchers(value, staffVoucher_Controller.main_entryList);
+
+                            });
                           },
                         ),
                       ),

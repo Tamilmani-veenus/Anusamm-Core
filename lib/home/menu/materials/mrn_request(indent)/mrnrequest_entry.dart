@@ -153,7 +153,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                   children: <Widget>[
                     Visibility(
                       visible:
-                      mrn_request_controller.saveButton.value != RequestConstant.VERIFY
+                      mrn_request_controller.saveButton.value != RequestConstant.VERIFY || mrn_request_controller.saveButton.value != RequestConstant.RESUBMIT
                               ? true
                               : false,
                       child: Expanded(
@@ -179,7 +179,6 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                           ),
                           onTap: () {
                             setState(() {
-                              mrn_request_controller.checkColor = 1;
                               ResetAlert(context);
                             });
                           },
@@ -195,9 +194,8 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                             decoration: BoxDecoration(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
-                              color: mrn_request_controller.checkColor == 0
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
+                              color: Theme.of(context).primaryColor
+
                             ),
                             alignment: Alignment.center,
                             child: Obx(() => Text(
@@ -205,13 +203,10 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: RequestConstant.Lable_Font_SIZE,
-                                      color:
-                                          mrn_request_controller.checkColor == 0
-                                              ? Colors.white
-                                              : Theme.of(context).primaryColor),
+                                      color: Colors.white
+                                             ),
                                 ))),
                         onTap: () async {
-                          mrn_request_controller.checkColor = 0;
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             if (mrn_request_controller
@@ -286,8 +281,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                         ),
                       ),
                       Container(
-                        margin:
-                            const EdgeInsets.only(top: 2, left: 10, right: 10),
+                        margin: const EdgeInsets.only(top: 2, left: 10, right: 10),
                         child: Card(
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(

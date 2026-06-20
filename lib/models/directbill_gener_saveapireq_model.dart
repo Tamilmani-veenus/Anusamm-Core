@@ -304,38 +304,4 @@ class SubContractorWorkQtyDet {
 }
 
 
-// class BillDet {
-//   BillDet({
-//     this.sno,
-//     this.itemDes,
-//     this.unit,
-//     this.qty,
-//     this.rate,
-//     this.amount,
-//   });
-//
-//   String? sno;
-//   String? itemDes;
-//   String? unit;
-//   String? qty;
-//   String? rate;
-//   String? amount;
-//
-//   factory BillDet.fromJson(Map<String, dynamic> json) => BillDet(
-//     sno: json["Sno"],
-//     itemDes: json["ItemDes"],
-//     unit: json["Unit"],
-//     qty: json["Qty"],
-//     rate: json["Rate"],
-//     amount: json["Amount"],
-//   );
-//
-//   Map<String, dynamic> toJson() => {
-//     "Sno": sno,
-//     "ItemDes": itemDes,
-//     "Unit": unit,
-//     "Qty": qty,
-//     "Rate": rate,
-//     "Amount": amount,
-//   };
-// }
+

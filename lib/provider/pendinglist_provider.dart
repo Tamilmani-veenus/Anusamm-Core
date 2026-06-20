@@ -177,6 +177,12 @@ class PendingListProvider {
       else if (formName == "BILL APPROVAL - DIRECT") {
         response = await ApiManager.getAPICall(ApiConstant.GETBILLDIRECTAPPROVELIST);
       }
+      else if (formName == "BILL VERIFICATION - BOQ") {
+        response = await ApiManager.getAPICall(ApiConstant.GETBILLBOQVERIFYLIST);
+      }
+      else if (formName == "BILL APPROVAL - BOQ") {
+        response = await ApiManager.getAPICall(ApiConstant.GETBILLBOQAPPROVELIST);
+      }
       else if (formName == "STAFF L & P VERIFICATION") {
         response = await ApiManager.getAPICall(ApiConstant.GETSTAFFREQVERIFYLIST);
       }
@@ -184,7 +190,16 @@ class PendingListProvider {
         response = await ApiManager.getAPICall(ApiConstant.GETSTAFFREQAPPLIST);
       }
       else if (formName == "BOQ REVISED - APPROVAL") {
-        response = await ApiManager.getAPICall(ApiConstant.GETBOQAPPROLIST + "?fromDate=2025-06-06&toDate=2026-06-06");
+        response = await ApiManager.getAPICall(ApiConstant.GETBOQAPPROLIST);
+      }
+      else if (formName == "SITE VOUCHER APPROVAL") {
+        response = await ApiManager.getAPICall(ApiConstant.GETSITEVOUCHERAPPROLIST);
+      }
+      else if (formName == "ADV REQ APPROVAL PENDING") {
+        response = await ApiManager.getAPICall(ApiConstant.GETADVREQAPPROLIST);
+      }
+      else if (formName == "COMPANY LABOUR ATTENDANCE APPROVAL PENDING") {
+        response = await ApiManager.getAPICall(ApiConstant.GETCOMPANYNMRAPPROLIST);
       }
       return onclickPendingListResponseFromJson(response);
     } catch (error, stackTrace) {
@@ -217,7 +232,7 @@ class PendingListProvider {
       int transId) async {
     var data = null;
     await ApiManager.getAPICall(
-            ApiConstant.GET_TRANSFERACKPENDING_LIST + "?Transfer_id=$transId")
+            "ApiConstant.GET_TRANSFERACKPENDING_LIST" + "?Transfer_id=$transId")
         .then((value) {
       final res = transferAckMatListFromJson(value);
       if (res.length > 0 && res != null) {
@@ -236,20 +251,20 @@ class PendingListProvider {
 
   static Future subcontNMR_BillAprovalAPI(body, context) async {
     var ratingRes = null;
-    await ApiManager.putUpdateAPIButton(
-            ApiConstant.PUT_SUBCONTNMRBILL_APPROVAL_API, body)
-        .then((value) {
-      var response ;
-      // = dprItemscreenSaveResponseFromJson(value);
-      if (response.RetString != null) {
-        ratingRes = response.RetString;
-        BaseUtitiles.showToast(ratingRes);
-        return Navigator.pop(context);
-      }
-    }, onError: (error) {
-      print(error);
-      BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG);
-    });
+    // await ApiManager.putUpdateAPIButton(
+    //         ApiConstant.PUT_SUBCONTNMRBILL_APPROVAL_API, body)
+    //     .then((value) {
+    //   var response ;
+    //   // = dprItemscreenSaveResponseFromJson(value);
+    //   if (response.RetString != null) {
+    //     ratingRes = response.RetString;
+    //     BaseUtitiles.showToast(ratingRes);
+    //     return Navigator.pop(context);
+    //   }
+    // }, onError: (error) {
+    //   print(error);
+    //   BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG);
+    // });
   }
 
   // static Future<void> PoAprovalAPI(body, context) async {
@@ -368,7 +383,7 @@ class PendingListProvider {
   static Future BillGenAprovalAPI(body, context) async {
     var ratingRes = null;
     await ApiManager.putUpdateAPIButton(
-            ApiConstant.PUT_BILLGEN_APPROVAL_API, body)
+            "ApiConstant.PUT_BILLGEN_APPROVAL_API", body)
         .then((value) {
       var response ;
       // = dprItemscreenSaveResponseFromJson(value);
@@ -431,7 +446,7 @@ class PendingListProvider {
   static Future<List<TransferAckEntryListApi>> gettransferACk_Entry_List(
       int? Userid, String UserType, String frdate, String todate) async {
     var data = null;
-    await ApiManager.getAPICall(ApiConstant.GET_TRAACK_ENTYLIST_API +
+    await ApiManager.getAPICall("ApiConstant.GET_TRAACK_ENTYLIST_API" +
             "?UserId=$Userid&UserType=$UserType&Frdate=$frdate&Todate=$todate")
         .then((value) {
       print("TransferprojectEntryList:" + value);
@@ -449,28 +464,10 @@ class PendingListProvider {
   static Future<List<TransferAckEditApiRes>> entryList_editAPI(
       int AckId, int TransferId) async {
     var data = null;
-    await ApiManager.getAPICall(ApiConstant.EDIT_TRANSFER_ACKNOW_API +
+    await ApiManager.getAPICall("ApiConstant.EDIT_TRANSFER_ACKNOW_API" +
             "?AckId=$AckId&TransferId=$TransferId")
         .then((value) {
       final res = transferAckEditApiResFromJson(value);
-      if (res != null) {
-        data = res;
-        return data;
-      }
-    }, onError: (error) {
-      print(error);
-      BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG + error);
-    });
-    return data;
-  }
-
-  static Future entryList_deleteAPI(int TransferId, String ackNo,
-      String TransferNo, String UserId, String DeviceName) async {
-    var data = null;
-    await ApiManager.deleteAPICall(ApiConstant.DELETE_TRANSACKENTRYLIST_API +
-            "?TransferId=$TransferId&AckNo=$ackNo&TransferNo=$TransferNo&UserId=$UserId&DeviceName=$DeviceName")
-        .then((value) {
-      final res = json.decode(value);
       if (res != null) {
         data = res;
         return data;

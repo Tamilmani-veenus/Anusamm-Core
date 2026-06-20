@@ -628,14 +628,19 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                                 borderRadius: BorderRadius.circular(30)),),
                           child: Text(RequestConstant.SUBMIT,style: TextStyle(color: Colors.white)),
                           onPressed: () async {
-                            if(nmrWklyController.saveButton.value == RequestConstant.RESUBMIT){
-                            }
-                            else{
-                              if(projectController.selectedProjectId.value!=0 && siteController.selectedsiteId.value !=0 &&  subcontractorController.selectedSubcontId.value!=0){
-                                await nmrWklyController.getNmrcheckstatusCount(projectController.selectedProjectId.value,subcontractorController.selectedSubcontId.value.toString(),siteController.selectedsiteId.value,nmrWklyController.FromdateController.text,nmrWklyController.TodateController.text);
-                                await nmrWklyController.getNmrcheckstatus(projectController.selectedProjectId.value,subcontractorController.selectedSubcontId.value.toString(),siteController.selectedsiteId.value,nmrWklyController.FromdateController.text,nmrWklyController.TodateController.text,context);
+                            if(_formkey.currentState!.validate())
+                              {
+                                _formkey.currentState!.save();
+                                if(nmrWklyController.saveButton.value == RequestConstant.RESUBMIT){
+                                }
+                                else{
+                                  if(projectController.selectedProjectId.value!=0 && siteController.selectedsiteId.value !=0 &&  subcontractorController.selectedSubcontId.value!=0){
+                                    await nmrWklyController.getNmrcheckstatusCount(projectController.selectedProjectId.value,subcontractorController.selectedSubcontId.value.toString(),siteController.selectedsiteId.value,nmrWklyController.FromdateController.text,nmrWklyController.TodateController.text);
+                                    await nmrWklyController.getNmrcheckstatus(projectController.selectedProjectId.value,subcontractorController.selectedSubcontId.value.toString(),siteController.selectedsiteId.value,nmrWklyController.FromdateController.text,nmrWklyController.TodateController.text,context);
+                                  }
+                                }
                               }
-                            }
+
 
                           },
                         ),
@@ -770,14 +775,17 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                         ),
                       ),
                       onTap: () {
-                        // if(_formkey.currentState!.validate()) {
-                        //   _formkey.currentState!.save();
-                        //   nmrWklyController.checkColor = 0;
-                        Navigator.of(context).push(MaterialPageRoute(builder: (
-                            BuildContext context) => const Subcont_NMR_Deduction_Site()));
-
-                        // SubmitAlert(context);
-                        // }},
+                        if(_formkey.currentState!.validate()) {
+                          _formkey.currentState!.save();
+                          if(nmrWklyController.NmritemList.isEmpty)
+                            {}
+                          else {
+                            nmrWklyController.tobededadv.addListener(() {
+                              nmrWklyController.updateAdvanceReadOnly();
+                            });
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) => const Subcont_NMR_Deduction_Site()));
+                          }}
                       }
                   ),
                 ),
@@ -827,18 +835,22 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                   Expanded(
                     child: TextButton(
                         onPressed: () async {
-                          nmrWklyController.NmritemList.value.clear();
-                          projectController.projectname.text="--Select--";
+                        Future.delayed(Duration(seconds: 0),(){
+                          nmrWklyController.NmritemList.value=[];
+                          projectController.projectname.text="--SELECT--";
                           projectController.selectedProjectId.value=0;
-                          siteController.Sitename.text=RequestConstant.SELECT;
+                          siteController.Sitename.text="--SELECT--";
                           siteController.selectedsiteId.value=0;
-                          subcontractorController.Subcontractorname.text="--Select--";
+                          subcontractorController.Subcontractorname.text="--SELECT--";
                           subcontractorController.selectedSubcontId.value=0;
-                          nmrWklyController.RemarksController.clear();
+                          subcontractorController.InvoiceNo.text = "";
+                          nmrWklyController.RemarksController.text = "";
                           nmrWklyController.NmrentryDateController.text = BaseUtitiles.initiateCurrentDateFormat();
                           nmrWklyController.FromdateController.text=BaseUtitiles.initiateCurrentDateFormat();
                           nmrWklyController.TodateController.text=BaseUtitiles.initiateCurrentDateFormat();
                           nmrWklyController.autoYearWiseNoController.text=autoYearWiseNoController.NMR_autoYrsWise.value;
+                          });
+                        Navigator.pop(context);
                         },
                         child: Text("Reset",
                             style: TextStyle(

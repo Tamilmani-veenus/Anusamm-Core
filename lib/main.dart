@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:anusamm/splash/connectivity_service.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:anusamm/signalr_service.dart';
 import 'package:anusamm/utilities/apiconstant.dart';
@@ -39,7 +40,7 @@ Future<void> main() async {
           projectId: "anusamm-3d8ae"));
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
-  // await SignalRService().startConnection();
+  await Get.putAsync(() async => ConnectivityService());
   runApp(const StartApp());
 }
 
@@ -55,18 +56,20 @@ class _StartAppState extends State<StartApp> {
 
   @override
   void initState() {
+    super.initState();
 
-    /// ---- 1 ----
+    /// Start SignalR after UI is ready
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(seconds: 3)); // ⏳ delay 3 seconds
+      SignalRService().startConnection();
+    });
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       print("FirebaseMessaging.instance.getInitialMessage");
       if (message != null) {
         print("New Notification");
       }
-    },
-    );
-
-    /// ---- 2 ----
+    });
 
     FirebaseMessaging.onMessage.listen((message) {
       if (kDebugMode) {
@@ -78,27 +81,20 @@ class _StartAppState extends State<StartApp> {
         print("message.data11 ${message.data}");
         LocalNotificationService.createanddisplaynotification(message);
       }
-    },
-    );
+    });
 
-    /// ---- 3 ----
-
-    FirebaseMessaging.onMessageOpenedApp.listen(
-          (message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      if (kDebugMode) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+      }
+      if (message.notification != null) {
+        print(message.notification!.title.toString());
+        print(message.notification!.body.toString());
         if (kDebugMode) {
-          print("FirebaseMessaging.onMessageOpenedApp.listen");
+          print("Message ${message.data['_id']}");
         }
-        if (message.notification != null) {
-          print(message.notification!.title.toString());
-          print(message.notification!.body.toString());
-          if (kDebugMode) {
-            print("Message ${message.data['_id']}");
-          }
-        }
-      },
-    );
-
-    super.initState();
+      }
+    });
   }
 
   @override

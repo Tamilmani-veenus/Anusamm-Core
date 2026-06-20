@@ -56,9 +56,8 @@ class DirectBillGenerateProvider {
 
   static Future<BillDirectWorkOrdDet?> getWorkOrderList(int pId,int sId, int subId, int workOrderNo,type,toDate) async {
     try{
-      final value = await ApiManager.getAPICall(type == "BILL DIRECT" ?
-          "${ApiConstant.GET_WORKORDER_ENTRY_LIST}?projectId=$pId&siteId=$sId&subcontractorId=$subId&workOrderId=$workOrderNo" :
-      "${ApiConstant.GET_WORKORDERBOQ_ENTRY_LIST}?projectId=$pId&subContractorId=$subId&workOrderId=$workOrderNo&toDate=$toDate"
+      final value = await ApiManager.getAPICall(
+          "${ApiConstant.GET_WORKORDER_ENTRY_LIST}?projectId=$pId&siteId=$sId&subcontractorId=$subId&workOrderId=$workOrderNo"
       );
       print("AdvEntryList:" + value);
       return billDirectWorkOrdDetFromJson(value);

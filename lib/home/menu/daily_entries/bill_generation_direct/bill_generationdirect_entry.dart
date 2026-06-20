@@ -77,26 +77,6 @@ class _Subcont_Nmr_EntryScreenState_Site
 
           billGenerationDirectController.RemarksController.text =
               element.remarks.toString();
-          billGenerationDirectController.billamount.text =
-              element.netBillAmount.toString();
-          billGenerationDirectController.tobededadv.text =
-              element.actualAdvanceAmount.toString();
-          billGenerationDirectController.Creditamt.text =
-              element.creditAmount.toString();
-          billGenerationDirectController.Debitamt.text =
-              element.debitAmount.toString();
-          billGenerationDirectController.CreditRemarksController.text =
-              element.creditRemarks.toString();
-          billGenerationDirectController.DebitRemarksController.text =
-              element.debitRemarks.toString();
-          billGenerationDirectController.to_be_dection_advance =
-              element.advanceAmount.toString();
-          billGenerationDirectController.Advded.text =
-              element.advanceAmount.toString();
-          billGenerationDirectController.Roundoff.text =
-              element.roundOff.toString();
-          billGenerationDirectController.netpayamt.text =
-              element.netPayAmount.toString();
         });
       }
       if (billGenerationDirectController.saveButton.value == RequestConstant.SUBMIT) {
@@ -314,11 +294,15 @@ class _Subcont_Nmr_EntryScreenState_Site
                                 child: ConstIcons.projectName),
                           ),
                           onTap: () async {
-                            await projectController.getProjectList();
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
+                              await projectController.getProjectList();
                             if(mounted) {
                               bottomsheetControllers.ProjectName(context,
                                   projectController.getdropDownvalue.value);
-                            }},
+                            }}
+                            },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
                               return '\u26A0 ${RequestConstant.VALIDATE}';
@@ -360,10 +344,13 @@ class _Subcont_Nmr_EntryScreenState_Site
                                 child: ConstIcons.siteName),
                           ),
                           onTap: () {
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
                             setState(() {
                               bottomsheetControllers.SiteName(context,
                                   siteController.getSiteDropdownvalue.value);
-                            });
+                            });}
                           },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
@@ -406,12 +393,15 @@ class _Subcont_Nmr_EntryScreenState_Site
                                 child: ConstIcons.subcontractorName),
                           ),
                           onTap: () async {
-                            await subcontractorController.getSubcontList(context,
-                                projectController.selectedProjectId.value,
-                                siteController.selectedsiteId.value,"billdirect");
-                            bottomsheetControllers.SubcontractorName(context,
-                                subcontractorController.getdropDownvalue.value);
-                          },
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
+                              await subcontractorController.getSubcontList(context,
+                              projectController.selectedProjectId.value,
+                              siteController.selectedsiteId.value,"billdirect");
+                              bottomsheetControllers.SubcontractorName(context,
+                              subcontractorController.getdropDownvalue.value);
+                          } },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
                               return '\u26A0 ${RequestConstant.VALIDATE}';
@@ -462,11 +452,14 @@ class _Subcont_Nmr_EntryScreenState_Site
                             return null;
                           },
                           onTap: () async {
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return BillType_Alert();
-                                });
+                                });}
 
                           },
                         ),
@@ -504,13 +497,16 @@ class _Subcont_Nmr_EntryScreenState_Site
                                 child: ConstIcons.dcNo),
                           ),
                           onTap: ()  async {
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
                             await subcontractorController.getWorkOrderNoList("BILL DIRECT",
                                 projectController.selectedProjectId.value,
                                 siteController.selectedsiteId.value,
                                 subcontractorController.selectedSubcontId.value);
                             bottomsheetControllers.WorkOrderName(context,
                                 subcontractorController.getdpDnWrkOrderValue.value,type: "BILL DIRECT");
-                          },
+                          }},
 
                         ),
                       ),
@@ -761,6 +757,9 @@ class _Subcont_Nmr_EntryScreenState_Site
                       setState(() {
                         if(_formKey.currentState!.validate()){
                           _formKey.currentState!.save();
+                          billGenerationDirectController.tobededadv.addListener(() {
+                            billGenerationDirectController.updateAdvanceReadOnly();
+                          });
                           Navigator.push(
                               context,
                               MaterialPageRoute(

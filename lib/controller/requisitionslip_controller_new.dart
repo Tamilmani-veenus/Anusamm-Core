@@ -106,22 +106,22 @@ class  RequisitionSlipControllerNew extends GetxController{
     }
   }
 
-  Future getLeaveInfo_List(int empId) async {
-    staffLeaveInfolist.value.clear();
-    await RequisitionslipProvider.getStaffLeaveInfo_Provider(empId).then((value) async {
-      if (value != null && value.length > 0) {
-        staffLeaveInfolist.value = value;
-        await leaveInfo();
-        update();
-        print("yearofLeavedays :: ${yearofLeavedays.value}");
-        print("yearofPerHrs :: ${yearofPerHrs.value}");
-        return staffLeaveInfolist.value;
-      }
-      else {
-        BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
-      }
-    });
-  }
+  // Future getLeaveInfo_List(int empId) async {
+  //   staffLeaveInfolist.value.clear();
+  //   await RequisitionslipProvider.getStaffLeaveInfo_Provider(empId).then((value) async {
+  //     if (value != null && value.length > 0) {
+  //       staffLeaveInfolist.value = value;
+  //       await leaveInfo();
+  //       update();
+  //       print("yearofLeavedays :: ${yearofLeavedays.value}");
+  //       print("yearofPerHrs :: ${yearofPerHrs.value}");
+  //       return staffLeaveInfolist.value;
+  //     }
+  //     else {
+  //       BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
+  //     }
+  //   });
+  // }
 
 
   Future<void> leaveInfo() async {
@@ -222,7 +222,7 @@ class  RequisitionSlipControllerNew extends GetxController{
       if(list["success"] == true){
         BaseUtitiles.showToast(list["message"]);
         await pendingListController.getPendingList();
-        BaseUtitiles.popMultiple(context, count: 2);
+        BaseUtitiles.popMultiple(context, count: 3);
       }
       else {
         BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');

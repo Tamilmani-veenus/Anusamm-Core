@@ -302,13 +302,12 @@ class _Inward_PoAmendmentState extends State<Inward_PoAmendment> {
     );
   }
 
-
   Future SubmitAlert(BuildContext context) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Alert!'),
-        content: Text('Are you sure to Approve?'),
+        content: Text('Are you sure to Amendment?'),
         actions: [
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
@@ -349,7 +348,7 @@ class _Inward_PoAmendmentState extends State<Inward_PoAmendment> {
                             Navigator.pop(context);
                           }
                         },
-                        child: Text(RequestConstant.APPROVAL,
+                        child: Text("Amendment",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,

@@ -45,7 +45,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     subContId: json["id"],
-    subContName: json["subcontractorName"],
+    subContName: json["subcontractorName"] ?? json["subContractorName"],
     subcontNameRpt: json["subcontractName"],
   );
 

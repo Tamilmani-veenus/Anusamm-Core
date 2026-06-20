@@ -129,7 +129,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
-                                        lastDate: DateTime(2100),builder: (context, child) {
+                                        lastDate: DateTime.now(),builder: (context, child) {
                                       return Theme(data: Theme.of(context).copyWith(
                                         colorScheme: ColorScheme.light(
                                           primary: Theme.of(context).primaryColor, // header background color
@@ -230,6 +230,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                   primary: Theme.of(context).primaryColor),
                               onPressed: () async {
                                 setState(() {
+                                  editingController.text = "";
                                   billGenerationDirectController.DirectBill_EntryList();
                                 });
                               },
@@ -283,7 +284,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                               textInputAction: TextInputAction.search,
                               onChanged: (value) {
                                 setState(() {
-                                   BaseUtitiles.filterSearchResults_billGenerationDirect(value, billGenerationDirectController.bill_entryList.value);
+                                  billGenerationDirectController.bill_entryList.value= BaseUtitiles.filterSearchResults_billGenerationDirect(value,billGenerationDirectController.main_entryList);
                                 });
                               },
                             ),

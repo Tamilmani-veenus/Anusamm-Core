@@ -18,14 +18,27 @@ class BillGenBoq_ItemlistService {
 
   DirectBillGen_ItemlistTable_readAll() async {
     return _dbManager.readData('billGenBoqItemlistTable');
+
   }
 
 
-  DirectBillGen_ItemlistTable_Update(
-      List<BillGenBoqItemListTableModel> billGenBoqItemListTableModel) async {
-    billGenBoqItemListTableModel.forEach((element) async {
-      return await _dbManager.UpdateTableIdwise('billGenBoqItemlistTable', element.BillGenBoqItemListTableMap());
-    });
+  Future<void> DirectBillGen_ItemlistTable_Update(
+      List<BillGenBoqItemListTableModel> list) async {
+
+    for (var element in list) {
+      await _dbManager.Update_BillBoqTable(
+        'billGenBoqItemlistTable',
+        element.BillGenBoqItemListTableMap(),
+      );
+    }
+
+    // Verify updated data
+    var data = await _dbManager.readData('billGenBoqItemlistTable');
+
+    print("===== UPDATED TABLE DATA =====");
+    for (var row in data) {
+      print(row);
+    }
   }
 
   DirectBillGen_ItemlistTable_deleteById(

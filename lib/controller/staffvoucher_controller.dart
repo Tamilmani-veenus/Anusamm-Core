@@ -34,7 +34,7 @@ class StaffVoucher_Controller extends GetxController {
 
   LoginController loginController = Get.put(LoginController());
   ProjectController projectController = Get.put(ProjectController());
-
+  RxList main_entryList = [].obs;
   RxList StaffVocEtyList = [].obs;
   RxList getbankNameList = [].obs;
   RxList SearchBar_bankNameList = [].obs;
@@ -82,12 +82,14 @@ class StaffVoucher_Controller extends GetxController {
 
   Future getStaffVoc_EntryList() async {
     StaffVocEtyList.value = [];
+    main_entryList.value = [];
     final value = await StaffVoucher_provider.getStaffVouc_Entry_List(
         StaffVocEntrylistFrDate.text, StaffVocEntrylistToDate.text);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           StaffVocEtyList.value = value.result!;
+          main_entryList.value = value.result!;
         } else {
           BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
         }

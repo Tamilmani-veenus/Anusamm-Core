@@ -232,6 +232,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                               primary: Theme.of(context).primaryColor),
                           onPressed: () async {
                             setState(() {
+                              editingController.text = "";
                               dailyWrkDone_DPR_Controller.dpr_getEntryList();
                             });
                           },
@@ -389,6 +390,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                       )),
                                 ],
                               ),
+                              SizedBox(height: 5,),
                               Row(
                                 children: <Widget>[
                                   Container(
@@ -414,7 +416,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                       )),
                                 ],
                               ),
-
+                              SizedBox(height: 5,),
                               Row(
                                 children: <Widget>[
                                   Container(
@@ -440,6 +442,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                       )),
                                 ],
                               ),
+                              SizedBox(height: 5,),
                               Row(
                                 children: <Widget>[
                                   Container(
@@ -473,7 +476,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                   const Expanded(
                                       flex: 2,
                                       child: Text(
-                                        "Prepared By :",
+                                        "Prepared By ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black),
@@ -496,6 +499,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                             }else{
                                               showModalBottomSheet(
                                                   context: context,
+
                                                   shape: RoundedRectangleBorder(
                                                     // <-- SEE HERE
                                                     borderRadius: BorderRadius.vertical(

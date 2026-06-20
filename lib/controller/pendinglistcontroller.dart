@@ -44,7 +44,6 @@ class PendingListController extends GetxController {
   List<TransferAckMatList> transAckMaterialList = [];
   RxList Search_transAckMaterialList = [].obs;
 
-  int checkColor = 0;
 
   RxString mrn_preapproval_autoYrsWise = "".obs;
 
@@ -195,33 +194,6 @@ class PendingListController extends GetxController {
     return PendingListProvider.PO_Approval_deleteAPI(reqId);
   }
 
-  // Future PO_Approval_DeleteApi(int reqId) async {
-  //   await PendingListProvider.PO_Approval_deleteAPI(reqId)
-  //       .then((value) async {
-  //     if (value != null && value.length > 0) {
-  //       return value;
-  //     }
-  //   });
-  // }
-
-  ///---------------------------mrnfinal_approval_delete----------------------------------------
-  Future mrnfinal_approvil_delete(BuildContext context, id) async {
-    String body =
-    pendingPoapprovalApiResmodelToJson(PendingPoapprovalApiResmodel(
-      urlName: "MRN FINAL APPROVAL DELETE",
-      userId: loginController.user.value.userId.toString(),
-      deviceName: BaseUtitiles.deviceName,
-      approvalDet: getPoAprovalDetList.value.isEmpty
-          ? getmrnfinalDet(id)
-          : getPoAprovalDetList.value,
-    ));
-    if (mainlist.isNotEmpty) {
-      await MrnFinalApprovalProvider.mrnfinaldeleteApi(body);
-    } else {
-      BaseUtitiles.showToast("Please select a list");
-    }
-  }
-
   List<ApprovalDet> getmrnfinalDet(int id) {
     getPoAprovalDetList.value.clear();
     mainlist.forEach((element) {
@@ -262,9 +234,6 @@ class PendingListController extends GetxController {
   }
 
   ///-------------Po Approval && Direct Transfer (Verify & Approval)
-
-
-
 
   List<ApprovalDet>? getPoApprovalDet(id) {
     // add_PoaprovalListvalue.value.forEach((element) {
@@ -591,7 +560,7 @@ class PendingListController extends GetxController {
     var response = await PendingListProvider.getOnclickDetProvider(Url, RID, purchaseType:purchaseType);
     if (response != null ) {
       if(response.success==true){
-        onclickPendingListDet = response.result!.mMatPurOrdLink!;
+        onclickPendingListDet = response.result?.mMatPurOrdLink ?? [];
         print(onclickPendingListDet.toString());
         return Navigator.push(
             context,
@@ -1170,7 +1139,7 @@ class PendingListController extends GetxController {
                   onclickPendingListData: onclickPendingListData,
                   heading: name)),
             )
-                : name == "COMPANY LABOUR ATTENDANCE APPROVAL"
+                : name == "COMPANY LABOUR ATTENDANCE APPROVAL PENDING"
                 ? Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CompanyLbrAtendance(
@@ -1208,7 +1177,7 @@ class PendingListController extends GetxController {
                   onclickPendingListData: onclickPendingListData,
                   heading: name)),
             )
-                : name == "ADVANCE REQUISITION APPROVAL"
+                : name == "ADV REQ APPROVAL PENDING"
                 ? Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AdvanceReqAproval(
@@ -1271,10 +1240,22 @@ class PendingListController extends GetxController {
               MaterialPageRoute(builder: (context) => BillDirectVerification(
                   onclickPendingListData: onclickPendingListData,
                   heading: name)),
+            ): name == "BILL VERIFICATION - BOQ" || name == "BILL APPROVAL - BOQ"
+                ? Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BillBoqVerification(
+                  onclickPendingListData: onclickPendingListData,
+                  heading: name)),
             ): name == "BOQ REVISED - APPROVAL"
                 ? Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => BOQRevisedApproval(
+                  onclickPendingListData: onclickPendingListData,
+                  heading: name)),
+            ): name == "SITE VOUCHER APPROVAL"
+                ? Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SiteVoucherApproval(
                   onclickPendingListData: onclickPendingListData,
                   heading: name)),
             )

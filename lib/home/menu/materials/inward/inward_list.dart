@@ -136,7 +136,7 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
-                                        lastDate: DateTime(2100),
+                                        lastDate: DateTime.now(),
                                         builder: (context, child) {
                                           return Theme(data: Theme.of(context).copyWith(
                                             colorScheme: ColorScheme.light(
@@ -223,6 +223,7 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                     primary: Theme.of(context).primaryColor),
                                 onPressed: () async {
                                   setState(() {
+                                    editingController.text = "";
                                     inward_controller.getInward_EntryList();
                                   });
                                 },

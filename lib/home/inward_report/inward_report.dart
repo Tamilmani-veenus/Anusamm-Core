@@ -284,7 +284,7 @@ class _InwardReportState extends State<InwardReport> {
                         },
                         validator: (value) {
                           if (value!.isEmpty || value == "--Select--") {
-                            return '\u26A0 Please select project name.';
+                            return '\u26A0 Required.';
                           }
                           return null;
                         },
@@ -327,13 +327,13 @@ class _InwardReportState extends State<InwardReport> {
                           ),
                         ),
                         onTap: () async {
-                          await siteController.subcontEntry_siteDropdowntList(context, 0,type: "InwardReport");
+                          await siteController.subcontEntry_siteDropdowntList(context, 0,type: "Report");
                               if (mounted) {
                             bottomsheetControllers.siteNameReport(context, siteController.getSiteDropdownvalue.value);
                               }},
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return '\u26A0 Please select site name.';
+                            return '\u26A0 Required.';
                           }
                           return null;
                         },
@@ -539,8 +539,8 @@ class _InwardReportState extends State<InwardReport> {
 
 
   download(int uid,String uType,int pId,int sId,String pName, String sName,int supId, String supName,String fdate,String todate,mId){
-    launch("${ApiConfig.WebURL}mobile-inward-report?fromDate=2020-04-01&toDate=2026-04-06&projectId=$pId&siteId=$sId&supplierId=$supId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
-    print("${ApiConfig.WebURL}mobile-inward-report?fromDate=2020-04-01&toDate=2026-04-06&projectId=$pId&siteId=$sId&supplierId=$supId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
+    launch("${ApiConfig.WebURL}mobile-inward-report?fromDate=$fdate&toDate=$todate&projectId=$pId&siteId=$sId&supplierId=$supId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
+    print("${ApiConfig.WebURL}mobile-inward-report?fromDate=$fdate&toDate=$todate&projectId=$pId&siteId=$sId&supplierId=$supId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
   }
 
   List<PdfListModel> getInwardReportList() {

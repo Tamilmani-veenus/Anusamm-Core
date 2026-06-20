@@ -179,9 +179,11 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
         punchLat.value = "";
         imageFile.value = null;
       } else {
+        Get.to(() => DashboardScreen_OtherUser());
         BaseUtitiles.showToast(data["message"] ?? "Something went wrong...");
       }
     } else {
+      Get.to(() => DashboardScreen_OtherUser());
       BaseUtitiles.showToast("Something went wrong...");
     }
   }
@@ -200,11 +202,19 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
     if (response != null) {
       if (response.success == true) {
         if (response.result!.isNotEmpty) {
+          final validData = response.result!
+              .where((e) => e.punchDetails != null && e.punchDetails!.isNotEmpty)
+              .toList();
+          if (validData.isEmpty) {
+            BaseUtitiles.showToast("No Data Found");
+            return;
+          }
+
           if (Url == "Old Reports") {
-            punchFilterRxList?.assignAll(response.result!);
+            punchFilterRxList.assignAll(validData);
           } else {
-            originalList?.assignAll(response.result!);
-            filteredList.value = List.from(originalList!);
+            originalList.assignAll(validData);
+            filteredList.assignAll(validData);
           }
         } else {
           BaseUtitiles.showToast("No Data Found");
