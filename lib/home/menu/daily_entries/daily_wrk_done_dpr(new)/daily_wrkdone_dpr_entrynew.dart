@@ -19,6 +19,7 @@ import '../../../../utilities/requestconstant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../controller/dailywrk_done_dpr_controller.dart';
+import '../../../punch_in_out/Image_galleryScreen.dart';
 import '../../../punch_in_out/camera_screen.dart';
 import 'daily_wrkdone_dpr_labour.dart';
 
@@ -645,6 +646,11 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                                   primary: Setmybackground,
                                 ),
                                 onPressed: () async {
+                                  // showDialog(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) {
+                                  //       return const ImageGalleryPopup_Alert(imageUrl: "DPR NEW");
+                                  //     });
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

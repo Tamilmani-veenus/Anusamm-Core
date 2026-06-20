@@ -16,7 +16,7 @@ class _VoucherTypeAlertState extends State<VoucherTypeAlert> {
 
   CommonVoucherController commonVoucherController = Get.put(CommonVoucherController());
 
-  final list=["--Select--","Site Petty Cash","Advance"];
+  final list=["Site Petty Cash","Advance"];
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,12 @@ class _VoucherTypeAlertState extends State<VoucherTypeAlert> {
               Container(
                 height: BaseUtitiles.getheightofPercentage(context, 4),
                 color: Theme.of(context).primaryColor,
-                child: Center(child: Text("voc Type ",style: TextStyle(color: Colors.white),)),
+                child: Center(child: Text("VOC Type ",style: TextStyle(color: Colors.white),)),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 width: BaseUtitiles.getWidthtofPercentage(context, 80),
-                height: BaseUtitiles.getheightofPercentage(context,12),
+                height: BaseUtitiles.getheightofPercentage(context,10),
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -45,22 +45,18 @@ class _VoucherTypeAlertState extends State<VoucherTypeAlert> {
                       onTap: () {
                         switch (index) {
                           case 0:
-                            commonVoucherController.VoucherTypeController.text = "--Select--";
-                            commonVoucherController.VocType.value = "S";
-                            break;
-                          case 1:
                             commonVoucherController.VoucherTypeController.text = "Site Petty Cash";
                             commonVoucherController.VocType.value = "P";
                             commonVoucherController.payforController.text = "SUSPENSE";
                             commonVoucherController.payfor.value = "SU";
                             setState(() {
-                              commonVoucherController.getdropDownvalue.value.clear();
+                              commonVoucherController.getdropDownvalue.value=[];
                               commonVoucherController.AccountTypename.text = "--SELECT--";
                               commonVoucherController.selectedAccTypeId.value = 0;
-                              commonVoucherController.getaccdropDownvalue.value.clear();
+                              commonVoucherController.getaccdropDownvalue.value=[];
                               commonVoucherController.setSelectedaccountName(0);
-                              commonVoucherController.Accountname.text = "--Select--";
-                              commonVoucherController.namethrough.text = "--Select--";
+                              commonVoucherController.Accountname.text = "--SELECT--";
+                              commonVoucherController.namethrough.text = "--SELECT--";
                               commonVoucherController.selectedAccnameId.value = 0;
                             });
                             break;
@@ -98,62 +94,6 @@ class _VoucherTypeAlertState extends State<VoucherTypeAlert> {
                     );
                   },
                 ),
-
-                // ListView.builder(
-                //     itemCount: list.length,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return InkWell(
-                //         onTap: ()  {
-                //           if(index==0){
-                //             commonVoucherController.VoucherTypeController.text="--Select--";
-                //             commonVoucherController.VocType.value = "S";
-                //           }else if(index==1){
-                //             commonVoucherController.VoucherTypeController.text="Site Petty Cash";
-                //             commonVoucherController.VocType.value = "P";
-                //             commonVoucherController.payforController.text = "SUSPENSE";
-                //             commonVoucherController.payfor.value = "SU";
-                //             Future.delayed(Duration(seconds: 0){
-                //             setState(() {
-                //             commonVoucherController.getdropDownvalue.value.clear();
-                //             commonVoucherController.AccountTypename.text == "--SELECT--";
-                //             commonVoucherController.selectedAccId.value = 0;
-                //             });
-                //             });
-                //
-                //
-                //           }
-                //           else{
-                //             commonVoucherController.VoucherTypeController.text="Advance";
-                //             commonVoucherController.VocType.value = "A";
-                //             commonVoucherController.payforController.text = "Advance";
-                //             commonVoucherController.payfor.value = "A";
-                //           }
-                //           Navigator.pop(context);
-                //         },
-                //         child: Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: <Widget>[
-                //             Column(
-                //               mainAxisAlignment:
-                //               MainAxisAlignment.center,
-                //               children: <Widget>[
-                //                 Container(
-                //                     width:
-                //                     BaseUtitiles.getWidthtofPercentage(
-                //                         context, 60),
-                //                     child: Text(list[index]
-                //                         .toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.ALERT_Font_SIZE,fontWeight: FontWeight.bold),)),
-                //
-                //                 if(index < list.length - 1)
-                //                 Divider(
-                //                   color: Theme.of(context).primaryColorLight,
-                //                 )
-                //               ],
-                //             ),
-                //           ],
-                //         ),
-                //       );
-                //     }),
               ),
             ],
           ),

@@ -104,11 +104,6 @@ class DBManager {
     return await connection?.update(table, data, where: 'id=?', whereArgs: [data['id']]);
   }
 
-  DprNew_Measurement_UpdateDataById(table, data) async {
-    var connection =  _database;
-    return await connection?.rawDelete('delete from $table where Name=? AND qty=?',[data['Name'],data['qty']]);
-  }
-
   TransAckUpdateTableIdwise(table, data) async {
     var connection =  _database;
     return await connection?.update(table, data, where: 'transferDetId=?', whereArgs: [data['transferDetId']]);
@@ -122,7 +117,7 @@ class DBManager {
 
   dpr_NewMSRTable_deleteDataByName(table, data) async {
     var connection =  _database;
-    return await connection?.rawDelete('delete from $table where reqDetId=?',[data['reqDetId']]);
+    return await connection?.rawDelete('delete from $table where id=?',[data['id']]);
   }
 
 
@@ -198,5 +193,11 @@ class DBManager {
   Update_BoqTable(table, data) async {
     var connection =  _database;
     return await connection?.update(table, data, where: 'measureLevel3ItemId=?', whereArgs: [data['measureLevel3ItemId']]);
+  }
+
+
+  Update_BillBoqTable(table, data) async {
+    var connection =  _database;
+    return await connection?.update(table, data, where: 'level3ItemId=?', whereArgs: [data['level3ItemId']]);
   }
 }

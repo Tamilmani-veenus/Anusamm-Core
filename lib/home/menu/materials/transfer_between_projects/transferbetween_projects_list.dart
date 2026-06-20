@@ -246,6 +246,7 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
                                     primary: Theme.of(context).primaryColor),
                                 onPressed: () async {
                                   setState(() {
+                                    editingController.text = "";
                                     transferBW_project_Controller
                                         .getTransproject_EntryList();
                                   });

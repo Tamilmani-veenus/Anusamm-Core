@@ -12,7 +12,6 @@ import '../db_services/bill_boq_itemlist_service.dart';
 import '../home/menu/daily_entries/bill_generation/bill_generation_boq_entry.dart';
 import '../models/directbill_gener_saveapireq_model.dart';
 import '../provider/billgeneration_boq_provider.dart';
-import '../provider/directbill_generat_provider.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'package:flutter/cupertino.dart';
@@ -130,6 +129,7 @@ class BillGenerationBoqController extends GetxController {
       if(value.success==true){
         if(value.result!.isNotEmpty){
           bill_entryList.value = value.result!;
+          main_entryList.value = value.result!;
 
         }
         else {
@@ -182,7 +182,7 @@ class BillGenerationBoqController extends GetxController {
   Future<String?> getNmrAdvance() async {
     final value = await BillGenerateBoqProvider.billadv_balance(
         projectController.selectedProjectId.value,
-        subcontractorController.selectedSubcontId.value);
+        dailyWrkDone_DPR_Controller.TypeSubcontId.value);
     if (value != null) {
       if (value["success"] == true) {
         if (value["result"].isNotEmpty) {
@@ -209,7 +209,7 @@ class BillGenerationBoqController extends GetxController {
   Future deleteByIditemlistTableable(BillGenBoqItemListTableModel data) async {
     deleteitemListModelList.clear();
     ItemListTableModel = new BillGenBoqItemListTableModel();
-    ItemListTableModel.Id = data.Id;
+    ItemListTableModel.level3ItemId = data.level3ItemId;
     ItemListTableModel.Name = data.Name;
     deleteitemListModelList.add(ItemListTableModel);
     await directBillGen_ItemlistService.DirectBillGen_ItemlistTable_deleteById(deleteitemListModelList);
@@ -222,40 +222,63 @@ class BillGenerationBoqController extends GetxController {
     ItemListTableModel.unit = itemUnitController.text;
     ItemListTableModel.qty = double.parse(itemQuantityController.text);
     ItemListTableModel.rate = double.parse(itemRateController.text);
-    ItemListTableModel.amount = (ItemListTableModel.qty!) * (ItemListTableModel.rate!);
+    ItemListTableModel.amount = (ItemListTableModel.appQty!) * (ItemListTableModel.rate!);
     ItemListTableModelList.add(ItemListTableModel);
     var savedatas = await directBillGen_ItemlistService.DirectBillGen_ItemlistTable_Save(ItemListTableModelList);
     return savedatas;
   }
 
   Future getItemlistTablesDatas() async {
-    var datas = await directBillGen_ItemlistService
-        .DirectBillGen_ItemlistTable_readAll();
+
+    for (var controller in itemlist_ListAppQtyController) {
+      controller.dispose();
+    }
+
+    // Clear controller lists
+    itemlist_ListAppQtyController.clear();
+
+    var datas =
+    await directBillGen_ItemlistService.DirectBillGen_ItemlistTable_readAll();
+
     ItemListTableModelReadList = <BillGenBoqItemListTableModel>[];
     ItemListTableModelReadList.clear();
     ItemGetTableListdata.value.clear();
-    datas.forEach((value) {
-      ItemListTableModel = new BillGenBoqItemListTableModel();
+
+    for (var value in datas) {
+
+      // Create controllers for this row
       ItemListTextInitiate();
-      ItemListTableModel.Id = value['id'];
+
+      ItemListTableModel = BillGenBoqItemListTableModel();
+
       ItemListTableModel.reqDetId = value['reqDetId'];
       ItemListTableModel.Name = value['Name'];
       ItemListTableModel.unit = value['unit'];
       ItemListTableModel.qty = value['qty'];
       ItemListTableModel.rate = value['rate'];
+      ItemListTableModel.balbillqty = value['balbillqty'];
+      ItemListTableModel.CurBillQty = value['CurBillQty'];
+      ItemListTableModel.appQty = value['appQty'];
+      ItemListTableModel.level3ItemId = value['level3ItemId'];
+      ItemListTableModel.headItemid = value['headItemid'];
+      ItemListTableModel.subItemid = value['subItemid'];
       ItemListTableModel.amount = value['amount'];
+
+
       ItemListTableModelReadList.add(ItemListTableModel);
-      ItemGetTableListdata.value = ItemListTableModelReadList;
-    });
+    }
+    ItemGetTableListdata.value = ItemListTableModelReadList;
     setItemListListTextValue(ItemGetTableListdata.value);
   }
-
   ItemListTextInitiate() {
     itemlist_ListDescController.add(new TextEditingController());
     itemlist_ListUnitsController.add(new TextEditingController());
     itemlist_ListQtyController.add(new TextEditingController());
     itemlist_ListRateController.add(new TextEditingController());
     itemlist_ListAmtController.add(new TextEditingController());
+    itemlist_ListBalQtyController.add(new TextEditingController());
+    itemlist_ListCurQtyController.add(new TextEditingController());
+    itemlist_ListAppQtyController.add(new TextEditingController());
   }
 
   setItemListListTextValue(vale) {
@@ -267,18 +290,21 @@ class BillGenerationBoqController extends GetxController {
       itemlist_ListQtyController[i].text = datas.qty.toString();
       itemlist_ListRateController[i].text = datas.rate.toString();
       itemlist_ListAmtController[i].text = datas.amount.toString();
+      itemlist_ListBalQtyController[i].text = datas.balbillqty.toString();
+      itemlist_ListCurQtyController[i].text = datas.CurBillQty.toString();
+      itemlist_ListAppQtyController[i].text = datas.appQty.toString();
       i++;
     });
   }
 
-  itemListclickChanged() {
+  itemListclickChanged() async {
     int i=0;
     ItemGetTableListdata.value.forEach((element) {
       ItemListTextInitiate();
       itemlist_ListAmtController[i].text = (double.parse(itemlist_ListAppQtyController[i].text != "" ? itemlist_ListAppQtyController[i].text : "0")* double.parse(itemlist_ListRateController[i].text != "" ? itemlist_ListRateController[i].text : "0")).toString();
       i++;
     });
-    updateItemlistTable();
+   await updateItemlistTable();
   }
 
   updateItemlistTable() async {
@@ -286,68 +312,67 @@ class BillGenerationBoqController extends GetxController {
     itemListUpdateModelList.clear();
     ItemGetTableListdata.forEach((element) {
       ItemListTableModel = BillGenBoqItemListTableModel();
-      ItemListTableModel.Id = element.Id;
       ItemListTableModel.reqDetId = element.reqDetId!;
       ItemListTableModel.Name = element.Name;
-      ItemListTableModel.unit = itemlist_ListUnitsController[i].text;
-      ItemListTableModel.qty = double.parse(itemlist_ListQtyController[i].text != "" ? itemlist_ListQtyController[i].text : "0");
-      ItemListTableModel.rate = double.parse(itemlist_ListRateController[i].text != "" ? itemlist_ListRateController[i].text : "0");
-      ItemListTableModel.amount = ItemListTableModel.qty! * ItemListTableModel.rate!;
+      ItemListTableModel.unit = element.unit;
+      ItemListTableModel.qty = element.qty;
+      ItemListTableModel.rate = element.rate;
+      ItemListTableModel.level3ItemId = element.level3ItemId;
+      ItemListTableModel.headItemid = element.headItemid;
+      ItemListTableModel.subItemid = element.subItemid;
+      ItemListTableModel.balbillqty = element.balbillqty;
+      ItemListTableModel.CurBillQty = element.CurBillQty;
+      ItemListTableModel.appQty = double.parse(itemlist_ListAppQtyController[i].text != "" ? itemlist_ListAppQtyController[i].text : "0");
+
+      ItemListTableModel.amount = ItemListTableModel.appQty! * ItemListTableModel.rate!;
       itemListUpdateModelList.add(ItemListTableModel);
       i++;
     });
     await directBillGen_ItemlistService.DirectBillGen_ItemlistTable_Update(itemListUpdateModelList);
   }
 
-  void validateTotalQty(int index) {
-    double totalQty = double.tryParse(
-        itemlist_ListQtyController[index].text) ??
-        0.0;
+  Future<void> validateTotalQty(int index) async {
+    double totalQty =
+        double.tryParse(itemlist_ListQtyController[index].text) ?? 0.0;
 
-    double appQty = double.tryParse(
-        itemlist_ListAppQtyController[index].text) ??
-        0.0;
+    double appQty =
+        double.tryParse(itemlist_ListAppQtyController[index].text) ?? 0.0;
 
-    if (totalQty > appQty && appQty > 0) {
+    if (appQty > totalQty) {
       Fluttertoast.showToast(
-        msg: "Total Qty should not exceed To Be App Qty",
+        msg: "AppQty should not be greater than Total Qty",
         toastLength: Toast.LENGTH_SHORT,
       );
 
-      itemlist_ListQtyController[index].text =
-          appQty.toString();
-
-      itemlist_ListQtyController[index].selection =
-          TextSelection.fromPosition(
-            TextPosition(
-              offset: itemlist_ListQtyController[index]
-                  .text
-                  .length,
-            ),
-          );
+      itemlist_ListAppQtyController[index].text = "0.0";
     }
   }
 
-  Future getWorkOrderList(name, type, toDate) async {
-    bill_editListApiDatas.value.clear();
-    final value = await DirectBillGenerateProvider.getWorkOrderList(
+  Future getWorkOrderList(name,toDate) async {
+    ItemGetTableListdata.value = [];
+    bill_editListApiDatas.value = [];
+    final value = await BillGenerateBoqProvider.getWorkOrderList(
         projectController.selectedProjectId.value,
         siteController.selectedsiteId.value,
-        type == "BILL DIRECT"
-            ? subcontractorController.selectedSubcontId.value
-            : dailyWrkDone_DPR_Controller.TypeSubcontId.value,
+        dailyWrkDone_DPR_Controller.TypeSubcontId.value,
         subcontractorController.selectedWorkOrderId.value,
-        type,
         toDate);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
-          billgen_itemlistTable_Delete();
-          ItemGetTableListdata.value = [];
-          bill_editListApiDatas.value = [];
+          await billgen_itemlistTable_Delete();
+
+          itemlist_ListDescController.clear();
+          itemlist_ListUnitsController.clear();
+          itemlist_ListQtyController.clear();
+          itemlist_ListRateController.clear();
+          itemlist_ListAmtController.clear();
+          itemlist_ListBalQtyController.clear();
+          itemlist_ListCurQtyController.clear();
+          itemlist_ListAppQtyController.clear();
           bill_editListApiDatas.value = value.result!;
-          billgen_EditTable_SaveTable(name);
-          getItemlistTablesDatas();
+          await billgen_EditTable_SaveTable(name);
+          await getItemlistTablesDatas();
         } else {
           BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
         }
@@ -364,9 +389,9 @@ class BillGenerationBoqController extends GetxController {
     to_be_dection_advance="0";
     saveButton.value=RequestConstant.SUBMIT;
     workid=0;
-    projectController.projectname.text="--Select--";
+    projectController.projectname.text="--SELECT--";
     projectController.selectedProjectId.value=0;
-    subcontractorController.Subcontractorname.text="--Select--";
+    subcontractorController.Subcontractorname.text="--SELECT--";
     subcontractorController.selectedSubcontId.value=0;
     RemarksController.clear();
     billentryDateController.text = BaseUtitiles.initiateCurrentDateFormat();
@@ -375,7 +400,7 @@ class BillGenerationBoqController extends GetxController {
     FromdateController.text=BaseUtitiles.initiateCurrentDateFormat();
     TodateController.text=BaseUtitiles.initiateCurrentDateFormat();
     siteController.selectedsiteId=0.obs;
-    siteController.selectedsitedropdownName="--Select--".obs;
+    siteController.selectedsitedropdownName="--SELECT--".obs;
     siteController.getSiteDropdownvalue.value.clear();
     siteController.Sitename.text=RequestConstant.SELECT;
     siteController.siteDropdownName.clear();
@@ -397,35 +422,34 @@ class BillGenerationBoqController extends GetxController {
 
 
   Future SaveButton_DeductionScreen(BuildContext context, int id,int workOrderId) async {
-    getDetList.value.clear();
     await Future.delayed(const Duration(seconds: 0));
     String body = billDirectGenSaveApiReqToJson(BillDirectGenSaveApiReq(
       workId: id != 0 ? id : 0,
       workNo: autoYearWiseNoController.text,
       workDate: billentryDateController.text,
-      entryType: "D",
+      entryType: entryType.value,
       billType: directBillTypeID.value,
       projectId: projectController.selectedProjectId.value,
       siteId: siteController.selectedsiteId.value,
-      subContId: subcontractorController.selectedSubcontId.value,
+      subContId:  dailyWrkDone_DPR_Controller.TypeSubcontId.value,
       workOrderId: workOrderId,
       refWorkId: 0,
-      fromDate: BaseUtitiles.initiateCurrentDateFormat(),
-      toDate: BaseUtitiles.initiateCurrentDateFormat(),
+      fromDate: FromdateController.text,
+      toDate: TodateController.text,
       billno: subcontractorController.InvoiceNo.text,
       remarks: RemarksController.text,
-      rndOff: double.tryParse(Roundoff.text),
-      billAmt: double.tryParse(billamount.text),
-      actAdvAmt: double.tryParse(tobededadv.text),
-      advAmt: double.tryParse(Advded.text),
-      netPayAmt: double.tryParse(netpayamt.text),
-      debitAmt: double.tryParse(Debitamt.text),
-      creditAmt: double.tryParse(Creditamt.text),
+      rndOff: double.tryParse(Roundoff.text) ?? 0.0,
+      billAmt: double.tryParse(billamount.text)?? 0.0,
+      actAdvAmt: double.tryParse(tobededadv.text)?? 0.0,
+      advAmt: double.tryParse(Advded.text)?? 0.0,
+      netPayAmt: double.tryParse(netpayamt.text)?? 0.0,
+      debitAmt: double.tryParse(Debitamt.text)?? 0.0,
+      creditAmt: double.tryParse(Creditamt.text)?? 0.0,
       debitRemarks: DebitRemarksController.text,
       creditRemarks: CreditRemarksController.text,
       materialDebitRemarks: materialDebitRemarks.text,
-      materialDebitAmount: double.tryParse(materialDebitamt.text),
-      finalBillAmount: double.tryParse(netpayamt.text),
+      materialDebitAmount: double.tryParse(materialDebitamt.text)?? 0.0,
+      finalBillAmount: double.tryParse(netpayamt.text)?? 0.0,
       penaltyAmount: 0,
       paymentDate: billPaymentWkDateController.text,
       partRateStatus: 0,
@@ -433,10 +457,8 @@ class BillGenerationBoqController extends GetxController {
       createdDt: BaseUtitiles().convertToUtcIso(billentryDateController.text),
       verifyStatus: saveButton.value == RequestConstant.VERIFY || saveButton.value == RequestConstant.APPROVAL? "Y":"N",
       approveStatus: saveButton.value == RequestConstant.APPROVAL? "Y":"N",
-      subContractorWorkQtyDetS: getNmrBillDet(id),
+      subContractorWorkQtyDetS: getNmrBillDet(id,entryType.value),
       subContractorBillAddLessSetupS: getNmrBillDetAddLess(id, autoYearWiseNoController.text),
-
-
 
     ));
     final decodedJson = jsonDecode(body);
@@ -452,14 +474,13 @@ class BillGenerationBoqController extends GetxController {
 
     if (list != null ) {
       if(list["success"] == true){
-        clearDatas();
         BaseUtitiles.showToast(list["message"]);
         if(saveButton.value == RequestConstant.VERIFY || saveButton.value == RequestConstant.APPROVAL){
           await pendingListController.getPendingList();
         }else{
           await DirectBill_EntryList();
-          billgen_itemlistTable_Delete();
         }
+        clearDatas();
         BaseUtitiles.popMultiple(context, count: 5);
       }
       else {
@@ -472,31 +493,31 @@ class BillGenerationBoqController extends GetxController {
     }
   }
 
-  List<SubContractorWorkQtyDet>? getNmrBillDet(id) {
+  List<SubContractorWorkQtyDet>? getNmrBillDet(id,workType) {
     getDetList.value.clear();
     ItemGetTableListdata.value.forEach((element) {
       var list = SubContractorWorkQtyDet(
         id: saveButton.value == RequestConstant.RESUBMIT?element.reqDetId:0,
         subContractorWorkQtyMasId:  id != 0 ? id : 0,
-        headItemid: 0,
-        subItemid: 0,
-        level3ItemId: 0,
+        headItemid: element.headItemid,
+        subItemid: element.subItemid,
+        level3ItemId: element.level3ItemId,
         refWorkDetId: 0,
         flatNo: "0",
         actualQty: 0,
         actualAmount: 0,
         itemDes:element.Name.toString(),
         unit:element.unit.toString(),
-        qty:element.qty,
+        qty:element.appQty,
         rate:element.rate,
         amount:element.amount,
-        balanceBillQty: 0,
-        currentBillQty: 0,
+        balanceBillQty: element.balbillqty,
+        currentBillQty: element.CurBillQty,
         balanceQty: 0,
         partRateStatus: 0,
         qtysClosed: "0",
-        totalQty: 0,
-        workType: "D",
+        totalQty: element.qty,
+        workType: workType,
         dbrWorkDetId: 0,
         siteId: siteController.selectedsiteId.value,
         boqCode: "0",
@@ -522,20 +543,14 @@ class BillGenerationBoqController extends GetxController {
       }});
     return getDetAddLessList.value;
   }
-
-  bool advance(String textAmount) {
-    bool value = true;
-    double amt = double.parse(textAmount);
-    if (amt > 0.0) {
-      value = false;
-      return value;
-    } else
-      return value;
+  RxBool isAdvanceReadOnly = true.obs;
+  void updateAdvanceReadOnly() {
+    final amt = double.tryParse(tobededadv.text) ?? 0.0;
+    isAdvanceReadOnly.value = amt <= 0;
   }
 
-
   Future<bool> deductionPaymentCalculation() async {
-
+    await getItemlistTablesDatas();
     double advLimit =
         double.tryParse(tobededadv.text) ?? 0;
 
@@ -551,6 +566,7 @@ class BillGenerationBoqController extends GetxController {
     }
 
     if (ItemGetTableListdata.value.isEmpty) return false;
+
 
     double totalNetAmount = 0.0;
 
@@ -891,9 +907,9 @@ class BillGenerationBoqController extends GetxController {
     }
   }
 
-  Future directBillEntryList_EditApi(int workid, BuildContext context,Url) async {
+  Future directBillEntryList_EditApi(int workid, BuildContext context,Url,status) async {
     bill_editListApiDatas.value=[];
-    final value = await BillGenerateBoqProvider.directBill_entryList_editAPI(workid);
+    final value = await BillGenerateBoqProvider.directBill_entryList_editAPI(workid,status);
     if (value != null) {
       if(value.success==true){
         bill_editListApiDatas.value = [value.result];
@@ -907,8 +923,8 @@ class BillGenerationBoqController extends GetxController {
           else{
             saveButton.value = RequestConstant.RESUBMIT;
           }
-          billgen_EditTable_SaveTable("");
-          getItemlistTablesDatas();
+          await billgen_EditTable_SaveTable("");
+          await getItemlistTablesDatas();
           return Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -929,8 +945,8 @@ class BillGenerationBoqController extends GetxController {
 
 
 
-  Future<bool> EntryList_DeleteApi(int WorkId) async {
-    return BillGenerateBoqProvider.entryList_deleteAPI(WorkId);
+  Future<bool> EntryList_DeleteApi(int WorkId,status) async {
+    return BillGenerateBoqProvider.entryList_deleteAPI(WorkId,status);
   }
 
 
@@ -938,25 +954,45 @@ class BillGenerationBoqController extends GetxController {
 
   billgen_EditTable_SaveTable(name) async {
     ItemListTableModelList.clear();
-    bill_editListApiDatas.value.forEach((element) {
+    bill_editListApiDatas.value.asMap().forEach((index, element) {
       if(name == "ItemListDet") {
+        double appQty;
+        if (index < itemlist_ListAppQtyController.length && itemlist_ListAppQtyController[index].text.isNotEmpty) {
+          appQty = double.tryParse(itemlist_ListAppQtyController[index].text) ?? (element.totalqty ?? 0.0);
+        } else {
+          appQty = element.totalqty ?? 0.0;
+        }
+        double rate = element.rate ?? 0.0;
         ItemListTableModel = new BillGenBoqItemListTableModel();
+        ItemListTableModel.reqDetId = 0;
         ItemListTableModel.Name = element.itemDesc.toString();
         ItemListTableModel.unit = element.unit.toString();
-        ItemListTableModel.qty = element.qty;
-        ItemListTableModel.rate = element.rate;
-        ItemListTableModel.amount = element.amount;
+        ItemListTableModel.qty = element.totalqty;
+        ItemListTableModel.rate = rate;
+        ItemListTableModel.balbillqty = element.balbillqty;
+        ItemListTableModel.CurBillQty = element.CurBillQty;
+        ItemListTableModel.level3ItemId = element.level3ItemId;
+        ItemListTableModel.headItemid = element.headItemid;
+        ItemListTableModel.subItemid = element.subItemid;
+        ItemListTableModel.appQty = appQty;
+        ItemListTableModel.amount = appQty * rate;
         ItemListTableModelList.add(ItemListTableModel);
-      } else
-      {
+      }
+      else {
         element.subContractorWorkQtyDetS!.forEach((value) {
           ItemListTableModel = new BillGenBoqItemListTableModel();
           ItemListTableModel.reqDetId = value.reqDetId;
           ItemListTableModel.Name = value.itemDesc.toString();
           ItemListTableModel.unit = value.unit.toString();
-          ItemListTableModel.qty = value.qty;
+          ItemListTableModel.qty = value.totalqty;
           ItemListTableModel.rate = value.rate;
+          ItemListTableModel.appQty = value.qty;
           ItemListTableModel.amount = value.amount;
+          ItemListTableModel.balbillqty = value.balbillqty;
+          ItemListTableModel.CurBillQty = value.CurBillQty;
+          ItemListTableModel.level3ItemId = value.level3ItemId;
+          ItemListTableModel.headItemid = value.headItemid;
+          ItemListTableModel.subItemid = value.subItemid;
           ItemListTableModelList.add(ItemListTableModel);
         });
       } });
@@ -966,7 +1002,7 @@ class BillGenerationBoqController extends GetxController {
   }
 
 
-  Future DeleteAlert(BuildContext context,int index) async {
+  Future DeleteAlert(BuildContext context,int index,status) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -994,7 +1030,7 @@ class BillGenerationBoqController extends GetxController {
                   Expanded(
                     child: TextButton(
                         onPressed: () async {
-                          bool result = await EntryList_DeleteApi(bill_entryList[index].id);
+                          bool result = await EntryList_DeleteApi(bill_entryList[index].id,status);
                           if (result) {
                             bill_entryList.removeAt(index);
                             Navigator.of(context).pop();
@@ -1012,10 +1048,4 @@ class BillGenerationBoqController extends GetxController {
       ),
     );
   }
-
-
-
-
-
-
 }

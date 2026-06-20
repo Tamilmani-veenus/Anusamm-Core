@@ -31,9 +31,9 @@ class SubcontractorController extends GetxController {
   RxList labourmainList=[].obs;
   final LabournameText=new TextEditingController();
 
-  Future getLabourList(BuildContext context) async {
-    labourList.value = await CommonProvider.getLabour();
-  }
+  // Future getLabourList(BuildContext context) async {
+  //   labourList.value = await CommonProvider.getLabour();
+  // }
 
   setSelectedLabourID(String value) {
     if (labourList.value.length>0) {

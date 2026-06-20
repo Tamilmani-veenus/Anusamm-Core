@@ -152,7 +152,7 @@ class _Consumption_ListState extends State<Consumption_List> {
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime(1900),
-                                      lastDate: DateTime(2100),
+                                      lastDate: DateTime.now(),
                                       builder: (context, child) {
                                         return Theme(
                                           data: Theme.of(context).copyWith(
@@ -269,6 +269,7 @@ class _Consumption_ListState extends State<Consumption_List> {
                                   primary: Theme.of(context).primaryColor),
                               onPressed: () {
                                 setState(() {
+                                  editingController.text = "";
                                   consumption_controller.getConsum_EntryList();
                                 });
                               },

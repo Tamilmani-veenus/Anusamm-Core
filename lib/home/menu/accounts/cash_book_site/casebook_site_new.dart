@@ -267,8 +267,8 @@ class _CashBook_SiteState extends State<CashBook_Site> {
 
                             },
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return '\u26A0 Enter user name';
+                              if (value!.isEmpty || value == "--SELECT--") {
+                                return '\u26A0 Required';
                               }
                               return null;
                             },

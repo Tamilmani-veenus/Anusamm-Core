@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:anusamm/home/menu/accounts/site_voucher/site_voucher_new/site_voucher_sitewise.dart';
+import 'package:anusamm/home/punch_in_out/Image_galleryScreen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../../app_theme/app_colors.dart';
 import '../../../../../commonpopup/accountnameadd_alert.dart';
 import '../../../../../commonpopup/vouchertype_alert.dart';
@@ -50,6 +52,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
   BottomsheetControllers bottomsheetControllers =
       Get.put(BottomsheetControllers());
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -80,7 +83,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
         siteVoucher_Controller.AutoYearwiseSiteVoc.text =
             autoYearWiseNoController.SiteVoucher_autoYrsWise.value;
       } else if (siteVoucher_Controller.SaveButton.value ==
-          RequestConstant.RESUBMIT) {
+          RequestConstant.RESUBMIT || siteVoucher_Controller.SaveButton.value == RequestConstant.APPROVAL) {
         await siteVoucher_Controller.gettingImage();
         siteVoucher_Controller.Sitevoucher_EditListApiValue.forEach((element) {
           siteVoucher_Controller.VocID = element.id;
@@ -991,6 +994,139 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                             ),
                           ),
                         ),
+                        // Container(
+                        //   margin: const EdgeInsets.only(top: 5),
+                        //   child: Row(
+                        //     children: <Widget>[
+                        //       Expanded(
+                        //         flex: 1,
+                        //         child: InkWell(
+                        //           child: Container(
+                        //               margin: const EdgeInsets.only(right: 5, left: 5),
+                        //               alignment: Alignment.center,
+                        //               height: BaseUtitiles.getheightofPercentage(context, 4),
+                        //               decoration: BoxDecoration(
+                        //                 borderRadius: BorderRadius.circular(0),
+                        //                 color: Theme.of(context).primaryColor,
+                        //                 boxShadow: const [
+                        //                   BoxShadow(
+                        //                       offset: Offset(0, 10),
+                        //                       blurRadius: 50,
+                        //                       color: Color(0xffEEEEEE)),
+                        //                 ],
+                        //               ),
+                        //               child: Row(
+                        //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //                 children: [
+                        //                   CircleAvatar(
+                        //                       backgroundColor: Theme.of(context).primaryColor,
+                        //                       child: const Icon(Icons.camera_alt, color: Colors.white)
+                        //                   ),
+                        //                   const Text("Camera", style: TextStyle(color: Colors.white)),
+                        //                 ],
+                        //               )
+                        //           ),
+                        //           onTap: () {
+                        //             if (_formKey.currentState!.validate()) {
+                        //               _formKey.currentState!.save();
+                        //               Navigator.push(
+                        //                 context,
+                        //                 MaterialPageRoute(
+                        //                     builder: (_) => CameraCapturePage(
+                        //                       fromScreen:
+                        //                       "Site Voucher",
+                        //                     )),
+                        //               );
+                        //             }
+                        //           },
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         flex: 1,
+                        //         child: InkWell(
+                        //           child: Container(
+                        //               margin: const EdgeInsets.only(right: 5),
+                        //               alignment: Alignment.center,
+                        //               height: BaseUtitiles.getheightofPercentage(
+                        //                   context, 4),
+                        //               decoration: BoxDecoration(
+                        //                 borderRadius: BorderRadius.circular(0),
+                        //                 color: Theme.of(context).primaryColor,
+                        //                 boxShadow: const [
+                        //                   BoxShadow(
+                        //                       offset: Offset(0, 10),
+                        //                       blurRadius: 50,
+                        //                       color: Color(0xffEEEEEE)),
+                        //                 ],
+                        //               ),
+                        //               child: Row(
+                        //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //                 children: [
+                        //                   CircleAvatar(
+                        //                       backgroundColor: Theme.of(context).primaryColor,
+                        //                       child: const Icon(Icons.photo_library, color: Colors.white,)
+                        //                   ),
+                        //                   const Text("Gallery", style: TextStyle( color: Colors.white)),
+                        //                 ],
+                        //               )
+                        //           ),
+                        //           onTap: () async {
+                        //             if (_formKey.currentState!.validate()) {
+                        //               _formKey.currentState!.save();
+                        //               setState(() {
+                        //                 getImage(ImageSource.gallery);
+                        //               });
+                        //             }
+                        //           },
+                        //         ),
+                        //       ),
+                        //
+                        //       Obx(() => Visibility(
+                        //         visible: siteVoucher_Controller.type.value == "Direct Payment/Office" ? false : true,
+                        //         child: Expanded(
+                        //           flex: 1,
+                        //           child: InkWell(
+                        //             child: Container(
+                        //               margin: const EdgeInsets.only(right: 5),
+                        //               alignment: Alignment.center,
+                        //               height: BaseUtitiles.getheightofPercentage(
+                        //                   context, 4),
+                        //               decoration: BoxDecoration(
+                        //                 borderRadius: BorderRadius.circular(0),
+                        //                 color: Theme.of(context).primaryColor,
+                        //                 boxShadow: const [
+                        //                   BoxShadow(
+                        //                       offset: Offset(0, 10),
+                        //                       blurRadius: 50,
+                        //                       color: Color(0xffEEEEEE)),
+                        //                 ],
+                        //               ),
+                        //               child: const Row(
+                        //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //                 children: [
+                        //                   Icon(Icons.add, color: Colors.white),
+                        //                   Text("Add List", style: TextStyle(color: Colors.white),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //             onTap: () {
+                        //               if (_formKey.currentState!.validate()) {
+                        //                 _formKey.currentState!.save();
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder: (context) =>
+                        //                         const Site_Voucher_Sitewise()));
+                        //               }
+                        //             },
+                        //           ),
+                        //         ),
+                        //       )),
+                        //
+                        //     ],
+                        //   ),
+                        // ),
                         Padding(
                           padding: EdgeInsets.only(left: 16.0),
                           child: ElevatedButton(
@@ -999,7 +1135,6 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                // await getImage(ImageSource.camera);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -1007,6 +1142,12 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                                             fromScreen: "Site Voucher",
                                           )),
                                 );
+                                // showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context) {
+                                //       return const ImageGalleryPopup_Alert(imageUrl: "SITE VOUCHER");
+                                //     });
+
                               }
                             },
                             child: Row(

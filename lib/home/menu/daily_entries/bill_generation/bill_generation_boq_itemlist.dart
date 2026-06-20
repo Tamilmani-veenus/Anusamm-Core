@@ -41,6 +41,31 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
               children: <Widget>[
                 const SizedBox(height: 40),
 
+                Container(
+                  margin: const EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Bill Generation BOQ Item Lists",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+
+
+
                 Obx(() => Visibility(
                     visible: billGenerationBoqController.ItemGetTableListdata.value.isEmpty
                         ? false
@@ -55,9 +80,6 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-
-
-
                 InkWell(
                   child: Container(
                     margin: const EdgeInsets.only(left: 20, right: 20),
@@ -87,8 +109,6 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                     });
                   },
                 ),
-
-                // ),
               ],
             ),
           ),
@@ -105,10 +125,10 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
         left: 5,
         right: 5,
       ),
-      height: BaseUtitiles.getheightofPercentage(context, 58),
+      height: MediaQuery.of(context).size.height,
       child: ListView.builder(
         itemCount: billGenerationBoqController.ItemGetTableListdata.value.length,
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.only(bottom:BaseUtitiles.getheightofPercentage(context, 10) ),
         itemBuilder: (BuildContext context, int index) {
           billGenerationBoqController.ItemListTextInitiate();
           return Card(
@@ -230,6 +250,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                           child: SizedBox(
                             height: BaseUtitiles.getheightofPercentage(context, 4),
                             child: TextFormField(
+                              readOnly: true,
                                 controller: billGenerationBoqController.itemlist_ListUnitsController[index],
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(color: Colors.black),
@@ -259,6 +280,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                           child: SizedBox(
                             height: BaseUtitiles.getheightofPercentage(context, 4),
                             child: TextFormField(
+                              readOnly: true,
                                 onTap: (){
                                   if(billGenerationBoqController.itemlist_ListRateController[index].text != "" && billGenerationBoqController.itemlist_ListRateController[index].text != "0" && billGenerationBoqController.itemlist_ListRateController[index].text != "0.0"){
                                     return;
@@ -308,6 +330,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                           child: SizedBox(
                             height: BaseUtitiles.getheightofPercentage(context, 4),
                             child: TextFormField(
+                              readOnly: true,
                                 onTap: (){
                                   if(billGenerationBoqController.itemlist_ListRateController[index].text != "" && billGenerationBoqController.itemlist_ListRateController[index].text != "0" && billGenerationBoqController.itemlist_ListRateController[index].text != "0.0"){
                                     return;
@@ -391,6 +414,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                           child: SizedBox(
                             height: BaseUtitiles.getheightofPercentage(context, 4),
                             child:  TextFormField(
+                              readOnly: true,
                                 onTap: (){
                                   if(billGenerationBoqController.itemlist_ListQtyController[index].text != "" && billGenerationBoqController.itemlist_ListQtyController[index].text != "0" && billGenerationBoqController.itemlist_ListQtyController[index].text != "0.0"){
                                     return;
@@ -418,8 +442,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                                       borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 ),
                                 onChanged: (value) {
-                                    billGenerationBoqController.validateTotalQty(index);
-                                    billGenerationBoqController.itemListclickChanged();
+
                                 }),
                           )),
                       const Expanded(
@@ -440,10 +463,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                                   if(billGenerationBoqController.itemlist_ListAppQtyController[index].text != "" && billGenerationBoqController.itemlist_ListAppQtyController[index].text != "0" && billGenerationBoqController.itemlist_ListAppQtyController[index].text != "0.0"){
                                     return;
                                   } else {
-                                    setState(() {
                                       billGenerationBoqController.itemlist_ListAppQtyController[index].text = "";
-                                      billGenerationBoqController.itemListclickChanged();
-                                    });
                                   }
                                 },
                                 controller: billGenerationBoqController.itemlist_ListAppQtyController[index],
@@ -462,9 +482,11 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                                           color: Theme.of(context).primaryColor),
                                       borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 ),
-                                onChanged: (value) {
-                                    billGenerationBoqController.validateTotalQty(index);
-                                    billGenerationBoqController.itemListclickChanged();
+                                onChanged: (value) async{
+                                  await billGenerationBoqController.validateTotalQty(index);
+                                  await billGenerationBoqController.itemListclickChanged();
+                                  setState(() {
+                                    });
                                 }),
                           )),
                     ],
@@ -486,6 +508,7 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                           child: SizedBox(
                             height: BaseUtitiles.getheightofPercentage(context, 4),
                             child: TextFormField(
+                              readOnly: true,
                                 controller: billGenerationBoqController.itemlist_ListAmtController[index],
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(color: Colors.black),

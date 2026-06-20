@@ -44,6 +44,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
   var imageFiles = <File>[].obs;
   var gettingNetworkImages = <String>[].obs;
   List<int> imageIds = [];
+  RxInt pickedImageCount = 0.obs;
   double currentQty=0.0;
   RxInt matScaleId = 0.obs;
 
@@ -279,8 +280,8 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
       dprNew_LabourTable.otAmt = 0.0;
       dprNew_LabourTable.netAmt = 0.0;
       dprNew_LabourTable.labourId = element.labourId;
-        dprNew_LabourTable.remarks = RemarksController[i].value.text.toString();
-        dprNewLabourModelList.add(dprNew_LabourTable);
+      dprNew_LabourTable.remarks = RemarksController[i].value.text.toString();
+      dprNewLabourModelList.add(dprNew_LabourTable);
       i++;
     });
     var savedatas = await dprNew_LabourService.DprNew_LabTable_Save(dprNewLabourModelList);
@@ -309,7 +310,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
 
   updateLabourTable() async {
     int i=0;
-     dprNew_UpdateModelListReadList.clear();
+    dprNew_UpdateModelListReadList.clear();
     for (var element in dprNew_LabourReadList){
       dprNew_LabourTable = DprNew_LabourTable();
       dprNew_LabourTable.reqDetId=element.reqDetId;
@@ -330,10 +331,10 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
 
   clickEdit() async {
     for (var index = 0; index < dprNew_LabourReadList.length; index++) {
-        OtAmtController[index].text = ((dprNew_LabourReadList[index].wages / 8) * double.parse(OtHrsController[index].value.text != "" ? OtHrsController[index].value.text : "0")).toString();
-        NetAmtController[index].text = ((dprNew_LabourReadList[index].wages * double.parse(NosControllers[index].value.text != "" ? NosControllers[index].value.text : "0")) + ((dprNew_LabourReadList[index].wages / 8) * double.parse(OtHrsController[index].value.text != "" ? OtHrsController[index].value.text : "0"))).toString();
+      OtAmtController[index].text = ((dprNew_LabourReadList[index].wages / 8) * double.parse(OtHrsController[index].value.text != "" ? OtHrsController[index].value.text : "0")).toString();
+      NetAmtController[index].text = ((dprNew_LabourReadList[index].wages * double.parse(NosControllers[index].value.text != "" ? NosControllers[index].value.text : "0")) + ((dprNew_LabourReadList[index].wages / 8) * double.parse(OtHrsController[index].value.text != "" ? OtHrsController[index].value.text : "0"))).toString();
     }
-   await updateLabourTable();
+    await updateLabourTable();
     totalNetAmnt = 0.0;
     dprNew_UpdateModelListReadList.forEach((element) {
       totalNetAmnt= totalNetAmnt + element.netAmt!;
@@ -377,13 +378,13 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
   dprNew_MaterialTableSave() async {
     int j=0;
     dprNewMaterialModelList.clear();
-      dprNew_MaterialTable = new DprNew_MaterialTable();
-      dprNew_MaterialTable.reqDetId=0;
-      dprNew_MaterialTable.MatId=selectedMatId.value;
-      dprNew_MaterialTable.Name=dpr_new_Mat_NameController.text;
-      dprNew_MaterialTable.qty=double.parse(dpr_new_Mat_QtyController.text);
-      dprNew_MaterialTable.Scale=dpr_new_Mat_ScaleController.text;
-      dprNew_MaterialTable.scaleId=matScaleId.value;
+    dprNew_MaterialTable = new DprNew_MaterialTable();
+    dprNew_MaterialTable.reqDetId=0;
+    dprNew_MaterialTable.MatId=selectedMatId.value;
+    dprNew_MaterialTable.Name=dpr_new_Mat_NameController.text;
+    dprNew_MaterialTable.qty=double.parse(dpr_new_Mat_QtyController.text);
+    dprNew_MaterialTable.Scale=dpr_new_Mat_ScaleController.text;
+    dprNew_MaterialTable.scaleId=matScaleId.value;
     dprNewGetMatreadListdata.value.forEach((element) {
       if (element.MatId == dprNew_MaterialTable.MatId) {
         j = 1;
@@ -480,6 +481,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     datas.forEach((value) {
       dprNew_MeasurementTable=new DprNew_MeasurementTable();
       textMSRTextInitiate();
+      dprNew_MeasurementTable.id = value['id'];
       dprNew_MeasurementTable.reqDetId = value['reqDetId'];
       dprNew_MeasurementTable.Name = value['Name'];
       dprNew_MeasurementTable.nos = value['nos'];
@@ -530,7 +532,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     int i=0;
     dprNewGetMSRreadListdata.value.forEach((element) {
       textMSRTextInitiate();
-        dpr_new_MeasurListQtyController[i].text = ((double.parse(dpr_new_MeasurListNosController[i].text != "" ? dpr_new_MeasurListNosController[i].text : "0")*(double.parse(dpr_new_MeasurListLengthController[i].text != "" ? dpr_new_MeasurListLengthController[i].text : "0"))*(double.parse(dpr_new_MeasurListBreathController[i].text != "" ? dpr_new_MeasurListBreathController[i].text : "0"))*(double.parse(dpr_new_MeasurListDepthController[i].text != "" ? dpr_new_MeasurListDepthController[i].text : "0")))).toString();
+      dpr_new_MeasurListQtyController[i].text = ((double.parse(dpr_new_MeasurListNosController[i].text != "" ? dpr_new_MeasurListNosController[i].text : "0")*(double.parse(dpr_new_MeasurListLengthController[i].text != "" ? dpr_new_MeasurListLengthController[i].text : "0"))*(double.parse(dpr_new_MeasurListBreathController[i].text != "" ? dpr_new_MeasurListBreathController[i].text : "0"))*(double.parse(dpr_new_MeasurListDepthController[i].text != "" ? dpr_new_MeasurListDepthController[i].text : "0")))).toString();
       i++;
     });
     updateMSRTable();
@@ -542,6 +544,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     dprNewMSRUpdateModelList.clear();
     dprNewGetMSRreadListdata.forEach((element) {
       dprNew_MeasurementTable = DprNew_MeasurementTable();
+      dprNew_MeasurementTable.id = element.id;
       dprNew_MeasurementTable.reqDetId = element.reqDetId;
       dprNew_MeasurementTable.Name = element.Name;
       dprNew_MeasurementTable.nos = double.tryParse(dpr_new_MeasurListNosController[i].text) ?? 0;
@@ -559,6 +562,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
   Future deleteByIdMSRTable(DprNew_MeasurementTable data) async {
     deletedprNewMSRModelList.clear();
     dprNew_MeasurementTable = DprNew_MeasurementTable();
+    dprNew_MeasurementTable.id = data.id;
     dprNew_MeasurementTable.reqDetId = data.reqDetId;
     dprNew_MeasurementTable.Name = data.Name;
     dprNew_MeasurementTable.nos = data.nos;
@@ -581,7 +585,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     getDprNewMSRList.value=[];
     getDprNewMatList.value=[];
     await Future.delayed(const Duration(seconds:0));
-      DprNewSaveReq formdata = DprNewSaveReq(
+    DprNewSaveReq formdata = DprNewSaveReq(
       id: id,
       workNo: autoYearWiseNoController.text,
       workDate: dateController.text,
@@ -609,31 +613,31 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     debugPrint(prettyJson, wrapWidth: 1024);
 
     final list = await DPR_New_Provider.DPR_NEW_SaveAPI(formdata, imageFiles, saveButton.value, id);
-      if (list != null ) {
-        if(list["success"] == true){
-          BaseUtitiles.showToast(list["message"]);
-          clearDatas();
-          if(saveButton.value==RequestConstant.APPROVAL) {
-            await pendingListController.getPendingList();
-          }
-          else{
-            await dpr_New_getEntryList();
-          }
-          BaseUtitiles.popMultiple(context, count: 6);
+    if (list != null ) {
+      if(list["success"] == true){
+        BaseUtitiles.showToast(list["message"]);
+        clearDatas();
+        if(saveButton.value==RequestConstant.APPROVAL) {
+          await pendingListController.getPendingList();
         }
-        else {
-          BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');
-          BaseUtitiles.popMultiple(context, count: 2);
+        else{
+          await dpr_New_getEntryList();
         }
-      }else{
-        BaseUtitiles.showToast("Something went wrong..");
+        BaseUtitiles.popMultiple(context, count: 6);
+      }
+      else {
+        BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');
         BaseUtitiles.popMultiple(context, count: 2);
       }
+    }else{
+      BaseUtitiles.showToast("Something went wrong..");
+      BaseUtitiles.popMultiple(context, count: 2);
+    }
   }
 
 
   clearDatas(){
-     dpr_new_currQtyController.text="0.0";
+    dpr_new_currQtyController.text="0.0";
     projectController.projectname.text=RequestConstant.SELECT;
     projectController.selectedProjectId.value=0;
     siteController.Sitename.text=RequestConstant.SELECT;
@@ -650,51 +654,51 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
 
 
     //Labour Screen
-     dprNew_LabourTable_Delete();
-     dprNew_LabourReadList.clear();
-     totalNetAmnt=0.0;
+    dprNew_LabourTable_Delete();
+    dprNew_LabourReadList.clear();
+    totalNetAmnt=0.0;
 
     //Material Screen
-     dpr_new_Mat_NameController.text="--SELECT--";
-     dpr_new_Mat_ScaleController.text="UNIT";
-     dpr_new_Mat_QtyController.text="0.0";
-     matScaleId.value=0;
-     selectedMatId.value=0;
-     dprNew_MaterialTable_Delete();
-     dprNewGetMatreadListdata.clear();
+    dpr_new_Mat_NameController.text="--SELECT--";
+    dpr_new_Mat_ScaleController.text="UNIT";
+    dpr_new_Mat_QtyController.text="0.0";
+    matScaleId.value=0;
+    selectedMatId.value=0;
+    dprNew_MaterialTable_Delete();
+    dprNewGetMatreadListdata.clear();
 
     //Masurement Screen
-     dpr_new_Measur_DescController.text = "";
-     dpr_new_Measur_NosController.text = "";
-     dpr_new_Measur_LengthController.text = "";
-     dpr_new_Measur_BreathController.text = "";
-     dpr_new_Measur_DepthController.text = "";
-     dprNew_MSRTable_Delete();
-     dprNewGetMSRreadListdata.clear();
+    dpr_new_Measur_DescController.text = "";
+    dpr_new_Measur_NosController.text = "";
+    dpr_new_Measur_LengthController.text = "";
+    dpr_new_Measur_BreathController.text = "";
+    dpr_new_Measur_DepthController.text = "";
+    dprNew_MSRTable_Delete();
+    dprNewGetMSRreadListdata.clear();
 
   }
 
   List<SubContractDailyWorkDet>? getDprNewDet(masId) {
     dprNew_EntryDetReadList.forEach((element) {
       var list = SubContractDailyWorkDet(
-        id: saveButton.value==RequestConstant.SUBMIT? 0: element.reqDetId,
-        subContractDailyWorkMasId: masId,
-        subContarctWorkdetid: element.woDetId,
-        cement: double.tryParse(element.cement==""?"0.0":element.cement),
-        rate: element.rate,
-        workRemarks: element.workremarks,
-        siteId: element.siteid,
-        scaleId: element.unitId,
-        itemDescription: element.itemDesc,
-        workType: "RAT",
-        headItemId: element.headItemId,
-        subItemId: element.subItemId,
-        boqCode: element.boqCode,
-        qty: currentQty,
-        amount: element.amt,
-        billStatus: "N",
-        avgLabRate: 0,
-        level3ItemId: element.level3ItemId
+          id: saveButton.value==RequestConstant.SUBMIT? 0: element.reqDetId,
+          subContractDailyWorkMasId: masId,
+          subContarctWorkdetid: element.woDetId,
+          cement: double.tryParse(element.cement==""?"0.0":element.cement),
+          rate: element.rate,
+          workRemarks: element.workremarks,
+          siteId: element.siteid,
+          scaleId: element.unitId,
+          itemDescription: element.itemDesc,
+          workType: "RAT",
+          headItemId: element.headItemId,
+          subItemId: element.subItemId,
+          boqCode: element.boqCode,
+          qty: currentQty,
+          amount: element.amt,
+          billStatus: "N",
+          avgLabRate: 0,
+          level3ItemId: element.level3ItemId
       );
       getDprNewDetList.add(list);
     });
@@ -704,15 +708,15 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
   List<SubcontractDailyWorkLabour>? getDprNewLab(masId) {
     dprNew_LabourReadList.forEach((element) {
       var list = SubcontractDailyWorkLabour(
-        id: saveButton.value==RequestConstant.SUBMIT? 0:element.reqDetId,
-        subContractDailyWorkMasId: masId,
-        otHrs: element.otHrs,
-        wages: element.wages,
-        subContractorId: element.labourId,
-        nos: element.nos,
-        amount: element.netAmt,
-        categoryId: element.catId,
-        otAmount: element.otAmt
+          id: saveButton.value==RequestConstant.SUBMIT? 0:element.reqDetId,
+          subContractDailyWorkMasId: masId,
+          otHrs: element.otHrs,
+          wages: element.wages,
+          subContractorId: element.labourId,
+          nos: element.nos,
+          amount: element.netAmt,
+          categoryId: element.catId,
+          otAmount: element.otAmt
       );
       getDprNewLabList.add(list);
     });
@@ -799,8 +803,8 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     dprNewMaterialModelList.clear();
     dprNewMaterialModelList.clear();
 
-   dprNew_DetTable_Delete();
-   dprNew_EntryDetReadList.clear();
+    dprNew_DetTable_Delete();
+    dprNew_EntryDetReadList.clear();
 
     dprNew_LabourTable_Delete();
     dprNew_LabourReadList.clear();
@@ -808,8 +812,8 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     dprNew_MaterialTable_Delete();
     dprNewGetMatreadListdata.value.clear();
 
-  dprNew_MSRTable_Delete();
-  dprNewGetMSRreadListdata.value.clear();
+    dprNew_MSRTable_Delete();
+    dprNewGetMSRreadListdata.value.clear();
   }
 
   Future Dpr_New_EntryList_EditApi(int workid, BuildContext context) async {
@@ -848,7 +852,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
           dprNew_EditDetApiList.value = response.result!;
           await dprNew_EditDetTableSave();
           await getDetTablesDatas();
-          }
+        }
         else {
           BaseUtitiles.showToast("No Data Found");
         }
@@ -871,26 +875,26 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
   dprNew_EditDetTableSave() async {
     dprNewDetModelList.clear();
     dprNew_EditDetApiList.value.forEach((data) {
-        dprNewDetmodel = new DprNew_DetTable();
-        dprNewDetmodel.reqDetId = data.id;
-        dprNewDetmodel.cement = data.cement.toString();
-        dprNewDetmodel.workremarks = data.workRemarks;
-        dprNewDetmodel.siteid = data.siteId;
-        dprNewDetmodel.headItemId = data.measureheadItemId;
-        dprNewDetmodel.subItemId = data.measuresubItemId;
-        dprNewDetmodel.level3ItemId = data.measureLevel3ItemId;
-        dprNewDetmodel.woDetId = data.subContarctWorkdetid;
-        dprNewDetmodel.itemDesc = data.fulldescription;
-        dprNewDetmodel.rate = data.rate;
-        dprNewDetmodel.unitId = data.unit;
-        dprNewDetmodel.balQty = data.balQty;
-        dprNewDetmodel.qty = data.qty;
-        dprNewDetmodel.amt = data.amount;
-        dprNewDetmodel.unit = data.scaleName;
-        dprNewDetmodel.boqCode = data.boqcode;
-        level3ItemIdValue.value = data.measureLevel3ItemId;
-        dprNewDetModelList.add(dprNewDetmodel);
-      });
+      dprNewDetmodel = new DprNew_DetTable();
+      dprNewDetmodel.reqDetId = data.id;
+      dprNewDetmodel.cement = data.cement.toString();
+      dprNewDetmodel.workremarks = data.workRemarks;
+      dprNewDetmodel.siteid = data.siteId;
+      dprNewDetmodel.headItemId = data.measureheadItemId;
+      dprNewDetmodel.subItemId = data.measuresubItemId;
+      dprNewDetmodel.level3ItemId = data.measureLevel3ItemId;
+      dprNewDetmodel.woDetId = data.subContarctWorkdetid;
+      dprNewDetmodel.itemDesc = data.fulldescription;
+      dprNewDetmodel.rate = data.rate;
+      dprNewDetmodel.unitId = data.unit;
+      dprNewDetmodel.balQty = data.balQty;
+      dprNewDetmodel.qty = data.qty;
+      dprNewDetmodel.amt = data.amount;
+      dprNewDetmodel.unit = data.scaleName;
+      dprNewDetmodel.boqCode = data.boqcode;
+      level3ItemIdValue.value = data.measureLevel3ItemId;
+      dprNewDetModelList.add(dprNewDetmodel);
+    });
     var savedatas =
     await dprNew_DetService.DprNew_DetTable_Save(dprNewDetModelList);
     return savedatas;

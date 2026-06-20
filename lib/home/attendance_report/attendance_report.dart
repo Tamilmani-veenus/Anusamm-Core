@@ -306,7 +306,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         },
                         validator: (value) {
                           if (value!.isEmpty || value == "--Select--") {
-                            return '\u26A0 Please select project name.';
+                            return '\u26A0 Required.';
                           }
                           return null;
                         },
@@ -348,7 +348,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         onTap: () async {
                           await siteController.subcontEntry_siteDropdowntList(
                               context, 0,
-                              type: "InwardReport");
+                              type: "Report");
                           if (mounted) {
                             bottomsheetControllers.siteNameReport(context,
                                 siteController.getSiteDropdownvalue.value);
@@ -356,7 +356,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         },
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return '\u26A0 Please select site name.';
+                            return '\u26A0 Required.';
                           }
                           return null;
                         },

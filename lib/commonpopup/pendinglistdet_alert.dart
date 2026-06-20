@@ -1320,62 +1320,65 @@ class _PendingListDet_PopupState extends State<PendingListDet_Popup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "MRN Verification",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "MRN Verification",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
+                Divider(),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -1473,61 +1476,64 @@ class _PendingListDet_PreApprovalState extends State<PendingListDet_PreApproval>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.heading,
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
-            ],
-          ),
-        ));
+                Divider(),
+                ListDetails(context),
+              ],
+            ),
+          )),
+    );
   }
   Widget ListDetails(BuildContext context){
     return Container(
@@ -1638,62 +1644,65 @@ class _PendingListDet_MRNFinalApproval_PopupState extends State<PendingListDet_M
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "MRN Final Approval",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "MRN Final Approval",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
+                Divider(),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
   Widget ListDetails(BuildContext context){
     return
@@ -1803,64 +1812,67 @@ class _DirectTransVerifyApprovalDetState extends State<DirectTransVerifyApproval
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.heading.toString(),
+                          style: TextStyle(
+                              fontSize: RequestConstant.Lable_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
-                        widget.heading.toString(),
-                        style: TextStyle(
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.frProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.frProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
+                Divider(),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
   Widget ListDetails(BuildContext context){
     return
@@ -1951,63 +1963,66 @@ class _PendingList_PoPopupState extends State<PendingList_PoPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Pending Po",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Pending Po",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
+                Divider(),
+                ListDetails(context),
 
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
-
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -2122,716 +2137,1037 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
 
   PendingListController pendingListController = Get.put(PendingListController());
 
+  final ScrollController leftController = ScrollController();
+  final ScrollController rightController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    leftController.addListener(() {
+      if (rightController.hasClients &&
+          rightController.offset != leftController.offset) {
+        rightController.jumpTo(leftController.offset);
+      }
+    });
+
+    rightController.addListener(() {
+      if (leftController.hasClients &&
+          leftController.offset != rightController.offset) {
+        leftController.jumpTo(rightController.offset);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
 
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-          top: 8,
-          bottom: 10,
-        ),
+        bottomNavigationBar: widget.list.isNotEmpty?Container(
+          padding: EdgeInsets.only(
+            top: 8,
+            bottom: 10,
+          ),
 
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              blurRadius: 5,
-            )
-          ],
-        ),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 5,
+              )
+            ],
+          ),
 
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
 
-          children: [
+            children: [
 
-            /// NET AMOUNT
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: 5),
+              /// NET AMOUNT
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: 5),
 
-              padding: EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 12,
-              ),
-
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
-              ),
-
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
-
-                    children: [
-
-                      Expanded(
-                        flex: 3,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Net Amount ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              ":",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Expanded(
-                        flex: 5,
-
-                        child: Text(
-                            "${RequestConstant.CURRENCY_SYMBOL} "
-                          "${pendingListController
-                              .onclickPendingListDet[0].netPayAmount.toString()}",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor,
-
-
-
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
-
-                    children: [
-
-                      Expanded(
-                        flex: 3,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Net Pay Amount ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              ":",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Expanded(
-                        flex: 5,
-
-                        child: Text(
-                          "${RequestConstant.CURRENCY_SYMBOL} "
-                              "${widget.netAmount}",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor,
-
-
-
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 7),
-
-            /// BUTTONS
-            Container(
-              height: BaseUtitiles.getheightofPercentage(context, 4),
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: InkWell(
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 20 , right: 20),
-                        height: BaseUtitiles.getheightofPercentage(context, 4),
-
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
-                          color:  Theme.of(context).primaryColor   ,
-                        ),
-
-                        alignment: Alignment.center,
-
-                        child: Text(
-                          widget.heading == "PO VERIFICATION" ? RequestConstant.VERIFY : RequestConstant.APPROVAL,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: RequestConstant.Lable_Font_SIZE,
-                              color: Colors.white  ),),
-                      ),
-
-                      onTap: () {
-                        setState(() {
-                          verifyAlert(context, widget.id);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-
-      body: SafeArea(
-        child: Column(
-          children: [
-
-            /// TOP HEADER
-            Container(
-              margin: EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 15,
-                  vertical: 10),
+                  vertical: 12,
+                ),
 
-              child: Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
 
-                children: [
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
 
-                  Text(
-                    widget.heading,
+                      children: [
 
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-
-                    child: Text(
-                      "Back",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-            /// SUPPLIER + PURCHASE INFO
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [
-
-                  /// SUPPLIER INFO CARD
-                  Expanded(
-                    child: Card(
-                      elevation: 2,
-
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-
-                      child: Padding(
-                        padding: EdgeInsets.all(12),
-
-                        child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-
-                          children: [
-
-                            Text(
-                              "Supplier Info",
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor,
+                        Expanded(
+                          flex: 3,
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Net Amount ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-
-                            SizedBox(height: 15),
-
-                            buildInfoRow(
-                              "Project",
-                              widget.projectName,
-                            ),
-
-                            SizedBox(height: 10),
-
-                            buildInfoRow(
-                              "Site",
-                              widget.siteName,
-                            ),
-
-                            SizedBox(height: 10),
-
-                            buildInfoRow(
-                              "Supplier",
-                              widget.supplierName,
-                            ),
-
-                            SizedBox(height: 10),
-
-                            buildInfoRow(
-                              "Prepared By",
-                              widget.preparedBy,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(width: 10),
-
-                  /// PURCHASE INFO CARD
-                  Expanded(
-                    child: Card(
-                      elevation: 3,
-
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-
-                      child: Padding(
-                        padding: EdgeInsets.all(12),
-
-                        child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-
-                          children: [
-
-                            Text(
-                              "Purchase Info",
-
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor,
+                              Text(
+                                ":",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-
-                            SizedBox(height: 15),
-
-                            buildInfoRow(
-                              "PO No",
-                              widget.ReqNo,
-                            ),
-
-                            SizedBox(height: 10),
-
-                            buildInfoRow(
-                              "Date",
-                              widget.Date,
-                            ),
-
-                            SizedBox(height: 10),
-                            buildInfoRow(
-                              "Delivery Date",
-                              widget.dueDate,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
 
-            SizedBox(height: 15),
-            /// HORIZONTAL SCROLL AREA
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+                        Expanded(
+                          flex: 5,
 
-                child: SizedBox(
-                  width: 750,
+                          child: Text(
+                              "${RequestConstant.CURRENCY_SYMBOL} "
+                            "${pendingListController
+                                .onclickPendingListDet[0].netPayAmount.toString()}",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).primaryColor,
 
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
 
-                      /// HEADER
-                      Container(
-                        color: Theme.of(context).primaryColor,
 
-                        child: Table(
-                          border: TableBorder(
-                            verticalInside: BorderSide(
-                              color: Colors.white24,
                             ),
                           ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
 
-                          columnWidths: {
+                      children: [
 
-                            /// MATERIAL NAME BIGGER
-                            0: FixedColumnWidth(150),
+                        Expanded(
+                          flex: 3,
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Net Pay Amount ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                ":",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
-                            /// ALL SAME WIDTH
-                            1: FixedColumnWidth(75),
-                            2: FixedColumnWidth(75),
-                            3: FixedColumnWidth(75),
-                            4: FixedColumnWidth(75),
-                            5: FixedColumnWidth(75),
-                            6: FixedColumnWidth(75),
-                            7: FixedColumnWidth(75),
-                            8: FixedColumnWidth(75),
-                          },
+                        Expanded(
+                          flex: 5,
 
-                          children: [
+                          child: Text(
+                            "${RequestConstant.CURRENCY_SYMBOL} "
+                                "${widget.netAmount}",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).primaryColor,
 
-                            TableRow(
+
+
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              /// BUTTONS
+              Container(
+                height: BaseUtitiles.getheightofPercentage(context, 4),
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      child: InkWell(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 20 , right: 20),
+                          height: BaseUtitiles.getheightofPercentage(context, 4),
+
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                            color:  Theme.of(context).primaryColor   ,
+                          ),
+
+                          alignment: Alignment.center,
+
+                          child: Text(
+                            widget.heading == "PO VERIFICATION" ? RequestConstant.VERIFY : RequestConstant.APPROVAL,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: RequestConstant.Lable_Font_SIZE,
+                                color: Colors.white  ),),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            verifyAlert(context, widget.id);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ):SizedBox(),
+
+        body: SafeArea(
+          child: Column(
+            children: [
+
+              /// TOP HEADER
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 10),
+
+                child: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+
+                  children: [
+
+                    Text(
+                      widget.heading,
+
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+
+                      child: Text(
+                        "Back",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
+              /// SUPPLIER + PURCHASE INFO
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+
+                    /// SUPPLIER INFO CARD
+                    Expanded(
+                      child: Card(
+                        elevation: 2,
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+
+                            children: [
+
+                              Text(
+                                "Supplier Info",
+
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+
+                              SizedBox(height: 15),
+
+                              buildInfoRow(
+                                "Project",
+                                widget.projectName,
+                              ),
+
+                              SizedBox(height: 10),
+
+                              buildInfoRow(
+                                "Site",
+                                widget.siteName,
+                              ),
+
+                              SizedBox(height: 10),
+
+                              buildInfoRow(
+                                "Supplier",
+                                widget.supplierName,
+                              ),
+
+                              SizedBox(height: 10),
+
+                              buildInfoRow(
+                                "Prepared By",
+                                widget.preparedBy,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(width: 10),
+
+                    /// PURCHASE INFO CARD
+                    Expanded(
+                      child: Card(
+                        elevation: 3,
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+
+                            children: [
+
+                              Text(
+                                "Purchase Info",
+
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+
+                              SizedBox(height: 15),
+
+                              buildInfoRow(
+                                "PO No",
+                                widget.ReqNo,
+                              ),
+
+                              SizedBox(height: 10),
+
+                              buildInfoRow(
+                                "Date",
+                                widget.Date,
+                              ),
+
+                              SizedBox(height: 10),
+                              buildInfoRow(
+                                "Delivery Date",
+                                widget.dueDate,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 15),
+              /// HORIZONTAL SCROLL AREA
+
+              Expanded(
+                child: Row(
+                  children: [
+
+                    /// FIXED SECTION
+                    SizedBox(
+                      width: 200,
+                      child: Column(
+                        children: [
+
+                          /// HEADER
+                          Container(
+                            height: 50,
+                            color: Theme.of(context).primaryColor,
+
+                            child: Row(
                               children: [
 
-                                tableHeader("Material Name"),
+                                // fixedHeaderCell("S.No", 30),
 
-                                tableHeader("Qty"),
+                                fixedHeaderCell("", 40),
 
-                                tableHeader("PO\nRate"),
-
-                                tableHeader("PO\nAmt"),
-
-                                tableHeader("GST %"),
-
-                                tableHeader("GST\nAmt"),
-
-                                tableHeader("Net\nAmt"),
-
-                                tableHeader("Data\nRate"),
-
-                                tableHeader(""),
+                                fixedHeaderCell("Material Name", 160),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
-                      /// LIST
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: pendingListController
-                              .onclickPendingListDet.length,
+                          /// DATA
+                          Expanded(
+                            child: ListView.builder(
+                              controller: leftController,
+                              itemCount: pendingListController
+                                  .onclickPendingListDet.length,
+                              itemBuilder: (context, index) {
 
-                          itemBuilder: (context, index) {
+                                var item = pendingListController
+                                    .onclickPendingListDet[index];
 
-                            var item =
-                            pendingListController
-                                .onclickPendingListDet[index];
-
-                            return Container(
-
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.grey.shade300,
+                                return Container(
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    //   right: BorderSide(
+                                    //   color: Colors.grey.shade400,
+                                    //   width: 1,
+                                    // ),
+                                    ),
                                   ),
-                                ),
-                              ),
 
-                              child: Table(
-                                border: TableBorder(
-                                  verticalInside: BorderSide(
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-
-                                columnWidths: {
-
-                                  /// MATERIAL NAME BIGGER
-                                  0: FixedColumnWidth(150),
-
-                                  /// ALL SAME WIDTH
-                                  1: FixedColumnWidth(75),
-                                  2: FixedColumnWidth(75),
-                                  3: FixedColumnWidth(75),
-                                  4: FixedColumnWidth(75),
-                                  5: FixedColumnWidth(75),
-                                  6: FixedColumnWidth(75),
-                                  7: FixedColumnWidth(75),
-                                  8: FixedColumnWidth(75),
-                                },
-
-                                children: [
-
-                                  TableRow(
+                                  child: Row(
                                     children: [
 
-                                      tableCell(
-                                        "${item.materialName} "
-                                            "(${item.scaleName})"
-                                      ),
+                                      /// S.NO
+                                      // fixedDataCell(
+                                      //   "${index + 1}",
+                                      //   30,
+                                      // ),
 
-                                      tableCell(
-                                        item.Poqty.toString()
-                                      ),
+                                      /// Action
 
-                                      tableCell(
-                                        item.rate.toString()
-                                      ),
-
-                                      tableCell(
-                                        item.amount.toString()
-                                      ),
-
-                                      tableCell(
-                                        item.GSTPer.toString()
-                                      ),
-
-                                      tableCell(
-                                        item.GSTAmt.toString()
-                                      ),
-
-                                      tableCell(
-                                        item.netAmount.toString()
-                                      ),
-
-                                      tableCell("0.0"),
-
-                                      Padding(
-                                        padding: EdgeInsets.all(8),
-
-                                        child: InkWell(
-                                          onTap: () {
-
-                                            pendingListController
-                                                .poapprovalSupplierlist(
-                                              context,
-                                              item.materialId,
-                                              item.materialName
-                                                  .toString(),
-                                              item.scaleName
-                                                  .toString(),
-                                            );
-                                          },
-
-                                          child: Icon(
-                                            Icons
-                                                .arrow_circle_right_outlined,
-
-                                            color:
-                                            Theme.of(context)
-                                                .primaryColor,
+                                      Container(
+                                        width: 40,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            right: BorderSide(
+                                              color: Colors.grey.shade300,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: InkWell(
+                                            onTap: () {
+                                              pendingListController.poapprovalSupplierlist(
+                                                context,
+                                                item.materialId,
+                                                item.materialName.toString(),
+                                                item.scaleName.toString(),
+                                              );
+                                            },
+                                            child: Icon(
+                                              Icons.search,
+                                              size: 20,
+                                              color: Theme.of(context).primaryColor,
+                                            ),
                                           ),
                                         ),
                                       ),
+
+                                      /// MATERIAL
+                                      fixedDataCell(
+                                        "${item.materialName}\n(${item.scaleName})",
+                                        160,
+                                        alignment: Alignment.centerLeft,
+                                      ),
                                     ],
                                   ),
-                                ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    /// SCROLLABLE SECTION
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: SizedBox(
+                          width: 600,
+                          child: Column(
+                            children: [
+
+                              /// HEADER
+                              Container(
+                                height: 50,
+                                color: Theme.of(context).primaryColor,
+                                child: Row(
+                                  children: [
+
+                                    headerCell("Qty"),
+                                    headerCell("Data\nRate"),
+                                    headerCell("PO\nRate"),
+                                    headerCell("PO\nAmt"),
+                                    headerCell("GST%"),
+                                    headerCell("GST\nAmt"),
+                                    headerCell("Net\nAmt"),
+
+                                  ],
+                                ),
                               ),
-                            );
-                          },
+
+                              /// DATA
+                              Expanded(
+                                child: ListView.builder(
+                                  controller: rightController,
+                                  itemCount: pendingListController
+                                      .onclickPendingListDet.length,
+                                  itemBuilder: (context, index) {
+
+                                    var item = pendingListController
+                                        .onclickPendingListDet[index];
+
+                                    return Container(
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+
+                                          dataCell(
+                                            item.Poqty.toString(),
+                                          ),
+                                          dataCell("0.0"),
+                                          dataCell(
+                                            item.rate.toString(),
+                                          ),
+
+                                          dataCell(
+                                            item.amount.toString(),
+                                          ),
+
+                                          dataCell(
+                                            item.GSTPer.toString(),
+                                          ),
+
+                                          dataCell(
+                                            item.GSTAmt.toString(),
+                                          ),
+
+                                          dataCell(
+
+                                            item.netAmount.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            // Expanded(
-            //   child: SingleChildScrollView(
-            //     scrollDirection: Axis.horizontal,
-            //
-            //     child: SizedBox(
-            //       width: 620,
-            //
-            //       child: Column(
-            //         children: [
-            //
-            //           /// TABLE HEADER
-            //           Container(
-            //             color: Theme.of(context).primaryColor,
-            //             padding: EdgeInsets.symmetric(
-            //                 vertical: 12),
-            //
-            //             child: Row(
-            //               children: [
-            //
-            //                 headerCell("Material Name", 120),
-            //
-            //                 // headerCell("Unit\nPrice", 60),
-            //
-            //                 headerCell("Qty", 60),
-            //
-            //                 headerCell("PO\nRate", 60),
-            //
-            //                 headerCell("PO\nAmt", 60),
-            //
-            //                 headerCell("GST %", 60),
-            //
-            //                 headerCell("GST\nAmt", 60),
-            //
-            //                 headerCell("Net\nAmt", 60),
-            //
-            //                 headerCell("Data\nRate", 60),
-            //
-            //                 // headerCell("Action", 80),
-            //               ],
-            //             ),
-            //           ),
-            //
-            //           /// LIST
-            //           Expanded(
-            //             child: ListView.builder(
-            //               itemCount: pendingListController
-            //                   .onclickPendingListDet.length,
-            //
-            //               itemBuilder: (context, index) {
-            //
-            //                 var item =
-            //                 pendingListController
-            //                     .onclickPendingListDet[index];
-            //
-            //                 return Container(
-            //                   padding: EdgeInsets.symmetric(
-            //                     vertical: 12,
-            //                   ),
-            //
-            //                   decoration: BoxDecoration(
-            //                     border: Border(
-            //                       bottom: BorderSide(
-            //                         color: Colors.grey.shade300,
-            //                       ),
-            //                     ),
-            //                   ),
-            //
-            //                   child: Row(
-            //                     children: [
-            //
-            //                       /// MATERIAL
-            //                       dataCell(
-            //                         "${item.materialName.toString()} ( ${item.scaleName} )",
-            //                         120,
-            //                       ),
-            //
-            //                       /// UNIT PRICE
-            //                       // dataCell(
-            //                       //   "₹ ${item.rate}",
-            //                       //   60,
-            //                       // ),
-            //
-            //                       /// QTY
-            //                       dataCell(
-            //                         item.Poqty.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// PO RATE
-            //                       dataCell(
-            //                         item.rate.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// PO AMT
-            //                       dataCell(
-            //                         item.amount.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// GST %
-            //                       dataCell(
-            //                         item.GSTPer.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// GST AMT
-            //                       dataCell(
-            //                         item.GSTAmt.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// NET AMT
-            //                       dataCell(
-            //                         item.netAmount.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// DATA RATE
-            //                       dataCell(
-            //                         "0.0",
-            //                         // item.rate.toString() ==
-            //                         //     "null"
-            //                         //     ? "-"
-            //                         //     : item.rate.toString(),
-            //                         60,
-            //                       ),
-            //
-            //                       /// ACTION
-            //                       SizedBox(
-            //                         width: 80,
-            //
-            //                         child: InkWell(
-            //                           onTap: () {
-            //
-            //                             pendingListController
-            //                                 .poapprovalSupplierlist(
-            //                               context,
-            //                               item.materialId,
-            //                               item.materialName
-            //                                   .toString(),
-            //                               item.scaleName.toString(),
-            //                             );
-            //                             },
-            //
-            //                           child: Icon(
-            //                             Icons
-            //                                 .arrow_circle_right_outlined,
-            //                             color: Theme.of(context).primaryColor,
-            //                             size: 28,
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 );
-            //               },
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
+              )
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     scrollDirection: Axis.horizontal,
+              //
+              //     child: SizedBox(
+              //       width: 750,
+              //
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //
+              //           /// HEADER
+              //           Container(
+              //             color: Theme.of(context).primaryColor,
+              //
+              //             child: Table(
+              //               border: TableBorder(
+              //                 verticalInside: BorderSide(
+              //                   color: Colors.white24,
+              //                 ),
+              //               ),
+              //
+              //               columnWidths: {
+              //
+              //                 /// MATERIAL NAME BIGGER
+              //                 0: FixedColumnWidth(150),
+              //
+              //                 /// ALL SAME WIDTH
+              //                 1: FixedColumnWidth(75),
+              //                 2: FixedColumnWidth(75),
+              //                 3: FixedColumnWidth(75),
+              //                 4: FixedColumnWidth(75),
+              //                 5: FixedColumnWidth(75),
+              //                 6: FixedColumnWidth(75),
+              //                 7: FixedColumnWidth(75),
+              //                 8: FixedColumnWidth(75),
+              //               },
+              //
+              //               children: [
+              //
+              //                 TableRow(
+              //                   children: [
+              //
+              //                     tableHeader("Material Name"),
+              //
+              //                     tableHeader("Qty"),
+              //
+              //                     tableHeader("PO\nRate"),
+              //
+              //                     tableHeader("PO\nAmt"),
+              //
+              //                     tableHeader("GST %"),
+              //
+              //                     tableHeader("GST\nAmt"),
+              //
+              //                     tableHeader("Net\nAmt"),
+              //
+              //                     tableHeader("Data\nRate"),
+              //
+              //                     tableHeader(""),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //
+              //           /// LIST
+              //           Expanded(
+              //             child: ListView.builder(
+              //               itemCount: pendingListController
+              //                   .onclickPendingListDet.length,
+              //
+              //               itemBuilder: (context, index) {
+              //
+              //                 var item =
+              //                 pendingListController
+              //                     .onclickPendingListDet[index];
+              //
+              //                 return Container(
+              //
+              //                   decoration: BoxDecoration(
+              //                     border: Border(
+              //                       bottom: BorderSide(
+              //                         color: Colors.grey.shade300,
+              //                       ),
+              //                     ),
+              //                   ),
+              //
+              //                   child: Table(
+              //                     border: TableBorder(
+              //                       verticalInside: BorderSide(
+              //                         color: Colors.grey.shade300,
+              //                       ),
+              //                     ),
+              //
+              //                     columnWidths: {
+              //
+              //                       /// MATERIAL NAME BIGGER
+              //                       0: FixedColumnWidth(150),
+              //
+              //                       /// ALL SAME WIDTH
+              //                       1: FixedColumnWidth(75),
+              //                       2: FixedColumnWidth(75),
+              //                       3: FixedColumnWidth(75),
+              //                       4: FixedColumnWidth(75),
+              //                       5: FixedColumnWidth(75),
+              //                       6: FixedColumnWidth(75),
+              //                       7: FixedColumnWidth(75),
+              //                       8: FixedColumnWidth(75),
+              //                     },
+              //
+              //                     children: [
+              //
+              //                       TableRow(
+              //                         children: [
+              //
+              //                           tableCell(
+              //                             "${item.materialName} "
+              //                                 "(${item.scaleName})"
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.Poqty.toString()
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.rate.toString()
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.amount.toString()
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.GSTPer.toString()
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.GSTAmt.toString()
+              //                           ),
+              //
+              //                           tableCell(
+              //                             item.netAmount.toString()
+              //                           ),
+              //
+              //                           tableCell("0.0"),
+              //
+              //                           Padding(
+              //                             padding: EdgeInsets.all(8),
+              //
+              //                             child: InkWell(
+              //                               onTap: () {
+              //
+              //                                 pendingListController
+              //                                     .poapprovalSupplierlist(
+              //                                   context,
+              //                                   item.materialId,
+              //                                   item.materialName
+              //                                       .toString(),
+              //                                   item.scaleName
+              //                                       .toString(),
+              //                                 );
+              //                               },
+              //
+              //                               child: Icon(
+              //                                 Icons
+              //                                     .arrow_circle_right_outlined,
+              //
+              //                                 color:
+              //                                 Theme.of(context)
+              //                                     .primaryColor,
+              //                               ),
+              //                             ),
+              //                           ),
+              //                         ],
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+
+
+
+
+
+
+
+
+
+
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     scrollDirection: Axis.horizontal,
+              //
+              //     child: SizedBox(
+              //       width: 620,
+              //
+              //       child: Column(
+              //         children: [
+              //
+              //           /// TABLE HEADER
+              //           Container(
+              //             color: Theme.of(context).primaryColor,
+              //             padding: EdgeInsets.symmetric(
+              //                 vertical: 12),
+              //
+              //             child: Row(
+              //               children: [
+              //
+              //                 headerCell("Material Name", 120),
+              //
+              //                 // headerCell("Unit\nPrice", 60),
+              //
+              //                 headerCell("Qty", 60),
+              //
+              //                 headerCell("PO\nRate", 60),
+              //
+              //                 headerCell("PO\nAmt", 60),
+              //
+              //                 headerCell("GST %", 60),
+              //
+              //                 headerCell("GST\nAmt", 60),
+              //
+              //                 headerCell("Net\nAmt", 60),
+              //
+              //                 headerCell("Data\nRate", 60),
+              //
+              //                 // headerCell("Action", 80),
+              //               ],
+              //             ),
+              //           ),
+              //
+              //           /// LIST
+              //           Expanded(
+              //             child: ListView.builder(
+              //               itemCount: pendingListController
+              //                   .onclickPendingListDet.length,
+              //
+              //               itemBuilder: (context, index) {
+              //
+              //                 var item =
+              //                 pendingListController
+              //                     .onclickPendingListDet[index];
+              //
+              //                 return Container(
+              //                   padding: EdgeInsets.symmetric(
+              //                     vertical: 12,
+              //                   ),
+              //
+              //                   decoration: BoxDecoration(
+              //                     border: Border(
+              //                       bottom: BorderSide(
+              //                         color: Colors.grey.shade300,
+              //                       ),
+              //                     ),
+              //                   ),
+              //
+              //                   child: Row(
+              //                     children: [
+              //
+              //                       /// MATERIAL
+              //                       dataCell(
+              //                         "${item.materialName.toString()} ( ${item.scaleName} )",
+              //                         120,
+              //                       ),
+              //
+              //                       /// UNIT PRICE
+              //                       // dataCell(
+              //                       //   "₹ ${item.rate}",
+              //                       //   60,
+              //                       // ),
+              //
+              //                       /// QTY
+              //                       dataCell(
+              //                         item.Poqty.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// PO RATE
+              //                       dataCell(
+              //                         item.rate.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// PO AMT
+              //                       dataCell(
+              //                         item.amount.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// GST %
+              //                       dataCell(
+              //                         item.GSTPer.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// GST AMT
+              //                       dataCell(
+              //                         item.GSTAmt.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// NET AMT
+              //                       dataCell(
+              //                         item.netAmount.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// DATA RATE
+              //                       dataCell(
+              //                         "0.0",
+              //                         // item.rate.toString() ==
+              //                         //     "null"
+              //                         //     ? "-"
+              //                         //     : item.rate.toString(),
+              //                         60,
+              //                       ),
+              //
+              //                       /// ACTION
+              //                       SizedBox(
+              //                         width: 80,
+              //
+              //                         child: InkWell(
+              //                           onTap: () {
+              //
+              //                             pendingListController
+              //                                 .poapprovalSupplierlist(
+              //                               context,
+              //                               item.materialId,
+              //                               item.materialName
+              //                                   .toString(),
+              //                               item.scaleName.toString(),
+              //                             );
+              //                             },
+              //
+              //                           child: Icon(
+              //                             Icons
+              //                                 .arrow_circle_right_outlined,
+              //                             color: Theme.of(context).primaryColor,
+              //                             size: 28,
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget fixedHeaderCell(
+      String text,
+      double width,
+      ) {
+    return Container(
+      width: width,
+      height: 50,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.white24,
+          ),
+        ),
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget fixedDataCell(
+      String text,
+      double width, {
+        Alignment alignment = Alignment.center,
+      }) {
+    return Container(
+      width: width,
+      height: 70,
+      padding: const EdgeInsets.all(6),
+      alignment: alignment,
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: Text(
+        text,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Widget headerCell(String text) {
+    return Container(
+      width: 85,
+      height: 50,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.white24,
+          ),
+        ),
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget dataCell(String text) {
+    return Container(
+      width: 85,
+      height: 60,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -2885,63 +3221,6 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     );
   }
 
-  Widget headerCell(String title, double width) {
-    return Container(
-      width: width,
-      height: 50,
-
-      alignment: Alignment.center,
-
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: Colors.white24,
-            width: 1,
-          ),
-        ),
-      ),
-
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 13,
-        ),
-      ),
-    );
-  }
-
-  Widget dataCell(String value, double width) {
-    return Container(
-      width: width,
-      height: 40,
-
-      alignment: Alignment.center,
-
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: Colors.grey.shade300,
-            width: 0.8,
-          ),
-        ),
-      ),
-
-      padding: EdgeInsets.symmetric(horizontal: 6),
-
-      child: Text(
-        value,
-        textAlign: TextAlign.center,
-
-        style: TextStyle(
-          fontSize: 13,
-        ),
-      ),
-    );
-  }
 
   Widget buildInfoRow(
       String title,
@@ -3107,7 +3386,6 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                   Expanded(
                     child: TextButton(
                         onPressed: () async {
-                          pendingListController.checkColor = 1;
                           pendingListController.getPoAprovalDetList.value = [];
                           await pendingListController.poAproval_buttonApi(context, widget.heading.toString(),id: widget.id);
                           Navigator.pop(context);
@@ -3409,41 +3687,44 @@ class _PendingPo_Approvel_PopupState extends State<PendingPo_Approvel_Popup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.heading.toString(),
-                      // "Po Approval",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
-                  ],
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading.toString(),
+                        // "Po Approval",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
                 ),
-              ),
 
-              ListDetails(context),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -3630,41 +3911,44 @@ class _WorkOrderDetState extends State<WorkOrderDet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.heading.toString(),
-                      // "Po Approval",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Lable_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
-                  ],
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading.toString(),
+                        // "Po Approval",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Lable_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
                 ),
-              ),
 
-              ListDetails(context),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -3791,44 +4075,47 @@ class _DirectTransVerifyDetState extends State<DirectTransVerifyDet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        widget.heading.toString(),
-                        /// "Direct TransferVerification",
-                        style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE, fontWeight: FontWeight.bold),
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          widget.heading.toString(),
+                          /// "Direct TransferVerification",
+                          style: TextStyle(fontSize: RequestConstant.Lable_Font_SIZE, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "Back",
-                            style: TextStyle(color: Colors.grey, fontSize: 18),
-                          )),
-                    )
-                  ],
+                      Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Back",
+                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                            )),
+                      )
+                    ],
+                  ),
                 ),
-              ),
 
-              ListDetails(context),
+                ListDetails(context),
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
   Widget ListDetails(BuildContext context){
     return Container(
@@ -3910,38 +4197,41 @@ class _PendingList_SiteVerifyPopupState extends State<PendingList_SiteVerifyPopu
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.heading,
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
-                  ],
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
                 ),
-              ),
-              ListDetails(context),
-            ],
-          ),
-        ));
+                ListDetails(context),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -4050,68 +4340,71 @@ class _StoreTeansferPendingState extends State<StoreTeansferPending> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Text(widget.URL,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Lable_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Back",
+                              style: TextStyle(color: Colors.grey, fontSize: 18),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       flex: 4,
-                      child: Text(widget.URL,
-                        style: TextStyle(
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
                     Expanded(
                       flex: 2,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "Back",
-                            style: TextStyle(color: Colors.grey, fontSize: 18),
-                          )),
-                    )
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
+                Divider(),
+                ListDetails(context),
 
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
-              ListDetails(context),
-
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -4235,38 +4528,41 @@ class _PendingList_InwardPopupState extends State<PendingList_InwardPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Inward Pending",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
-                  ],
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Inward Pending",
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
                 ),
-              ),
-              ListDetails(context),
-            ],
-          ),
-        ));
+                ListDetails(context),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -4392,69 +4688,72 @@ class _PendingList_TransferPending_PopupState extends State<PendingList_Transfer
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.heading.toString(),
-                      style: TextStyle(
-                          fontSize: RequestConstant.Lable_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading.toString(),
+                        style: TextStyle(
+                            fontSize: RequestConstant.Lable_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
                         child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
-                  ],
-                ),
-              ),
-
-              Container(
-                margin: const EdgeInsets.only(left: 16, right: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.ProjectName.toString(),
-                        style: TextStyle(
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold),
+                          widget.ProjectName.toString(),
+                          style: TextStyle(
+                              fontSize: RequestConstant.Lable_Font_SIZE,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.right,
-                        widget.ReqNo.toString(),
-                        style: TextStyle(
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          textAlign: TextAlign.right,
+                          widget.ReqNo.toString(),
+                          style: TextStyle(
+                              fontSize: RequestConstant.Lable_Font_SIZE,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              Divider(),
+                Divider(),
 
-              ListDetails(context),
-            ],
-          ),
-        ));
+                ListDetails(context),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){
@@ -4662,64 +4961,67 @@ class _QuoteDetPopupState extends State<QuoteDetPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Setmybackground,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading.toString(),
+                        style: TextStyle(
+                            fontSize: RequestConstant.Lable_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.heading.toString(),
-                      style: TextStyle(
-                          fontSize: RequestConstant.Lable_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Back",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
                   ],
                 ),
-              ),
+                Divider(),
 
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                        margin: EdgeInsets.only(left: 15, bottom: 10),
-                        child: Text(widget.ProjectName,
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.only( bottom: 10),
-                        child: Text(widget.ReqNo.toString(),
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
-                          ),)),
-                  ),
-                ],
-              ),
-              Divider(),
+                ListDetails(context),
 
-              ListDetails(context),
-
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 
   Widget ListDetails(BuildContext context){

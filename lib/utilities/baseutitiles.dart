@@ -191,6 +191,39 @@ class BaseUtitiles {
     }
   }
 
+  static filterSearchNMRResults(String value,list)  {
+    dummyListData.value.clear();
+    if (value.isNotEmpty) {
+      list.value.forEach((item) {
+        if (item.entryDate.toString().toLowerCase().contains(value) ||
+            item.entryDate.toString().toUpperCase().contains(value) ||
+            item.workNo.toString().toLowerCase().contains(value) ||
+            item.workNo.toString().toUpperCase().contains(value) ||
+            item.fromDate.toString().toLowerCase().contains(value) ||
+            item.fromDate.toString().toUpperCase().contains(value) ||
+            item.toDate.toString().toLowerCase().contains(value) ||
+            item.toDate.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.siteName.toString().toLowerCase().contains(value) ||
+            item.siteName.toString().toUpperCase().contains(value) ||
+            item.subContractorName.toString().toLowerCase().contains(value) ||
+            item.subContractorName.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value) ||
+            item.status.toString().toLowerCase().contains(value) ||
+            item.status.toString().toUpperCase().contains(value))
+        {
+          dummyListData.value.add(item);
+        }
+      });
+      return dummyListData.value;
+    }
+    else {
+      return list.value;
+    }
+  }
+
   static List<Result> filterSearchResults_BOQRevised(
       String value,
       RxList<Result> originalList,
@@ -307,12 +340,18 @@ class BaseUtitiles {
             item.workDate.toString().toUpperCase().contains(value) ||
             item.workNo.toString().toLowerCase().contains(value) ||
             item.workNo.toString().toUpperCase().contains(value) ||
-            item.project.toString().toLowerCase().contains(value) ||
-            item.project.toString().toUpperCase().contains(value) ||
-            item.subconName.toString().toLowerCase().contains(value) ||
-            item.subconName.toString().toUpperCase().contains(value) ||
-            item.preparedbyName.toString().toLowerCase().contains(value) ||
-            item.preparedbyName.toString().toUpperCase().contains(value)
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.siteName.toString().toLowerCase().contains(value) ||
+            item.siteName.toString().toUpperCase().contains(value) ||
+            item.subcontractorName.toString().toLowerCase().contains(value) ||
+            item.subcontractorName.toString().toUpperCase().contains(value) ||
+            item.entryTypeDesc.toString().toLowerCase().contains(value) ||
+            item.entryTypeDesc.toString().toUpperCase().contains(value) ||
+            item.status.toString().toLowerCase().contains(value) ||
+            item.status.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value)
         )
         {
           dummyListData.value.add(item);
@@ -325,25 +364,22 @@ class BaseUtitiles {
     }
   }
 
-  static filterSearchResults_billGenerationDirect(String value,list)  {
+  static filterSearchResults_AdvReqVoclist(String value,list)  {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
       list.value.forEach((item) {
-        if (item.workDate.toString().toLowerCase().contains(value) ||
-            item.workDate.toString().toUpperCase().contains(value) ||
-            item.workNo.toString().toLowerCase().contains(value) ||
-            item.workNo.toString().toUpperCase().contains(value) ||
-            item.subconName.toString().toLowerCase().contains(value) ||
-            item.subconName.toString().toUpperCase().contains(value) ||
-            item.project.toString().toLowerCase().contains(value) ||
-            item.project.toString().toUpperCase().contains(value) ||
-            item.fdate.toString().toLowerCase().contains(value) ||
-            item.fdate.toString().toUpperCase().contains(value) ||
-            item.tdate.toString().toLowerCase().contains(value) ||
-            item.tdate.toString().toUpperCase().contains(value) ||
-            item.siteName.toString().toLowerCase().contains(value) ||
-            item.siteName.toString().toUpperCase().contains(value)
-        )
+        if (item.advanceReqVoucherDate.toString().contains(value) ||
+            item.advanceReqVoucherNo.toString().toLowerCase().contains(value) ||
+            item.advanceReqVoucherNo.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.accountName.toString().toLowerCase().contains(value) ||
+            item.accountName.toString().toUpperCase().contains(value) ||
+            item.actualVoucherAmount.toString().contains(value) ||
+            item.accountPayForName.toString().toLowerCase().contains(value) ||
+            item.accountPayForName.toString().toUpperCase().contains(value) ||
+            item.status.toString().toLowerCase().contains(value) ||
+            item.status.toString().toUpperCase().contains(value))
         {
           dummyListData.value.add(item);
         }
@@ -354,6 +390,40 @@ class BaseUtitiles {
       return  list.value;
     }
   }
+
+  static filterSearchResults_billGenerationDirect(
+      String value,
+      List list,
+      ) {
+    dummyListData.clear();
+
+    if (value.isNotEmpty) {
+      for (var item in list) {
+        if (item.workDate.toString().toLowerCase().contains(value) ||
+            item.workDate.toString().toUpperCase().contains(value) ||
+            item.workNo.toString().toLowerCase().contains(value) ||
+            item.workNo.toString().toUpperCase().contains(value) ||
+            item.subContractorName.toString().toLowerCase().contains(value) ||
+            item.subContractorName.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.fromWorkDate.toString().toLowerCase().contains(value) ||
+            item.fromWorkDate.toString().toUpperCase().contains(value) ||
+            item.toWorkDate.toString().toLowerCase().contains(value) ||
+            item.toWorkDate.toString().toUpperCase().contains(value) ||
+            item.siteName.toString().toLowerCase().contains(value) ||
+            item.siteName.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value) ) {
+          dummyListData.add(item);
+        }
+      }
+      return dummyListData;
+    } else {
+      return list;
+    }
+  }
+
 
   static filterSearchResults_SubcontAttend(String value,list)  {
     dummyListData.value.clear();
@@ -617,6 +687,20 @@ class BaseUtitiles {
             item.siteName.toString().toLowerCase().contains(value) ||
             item.siteName.toString().toUpperCase().contains(value) ||
 
+            item.advanceReqVoucherNo.toString().contains(value) ||
+            item.advanceReqVoucherDate.toString().contains(value) ||
+            item.advanceReqVoucherAmount.toString().contains(value) ||
+            item.accountName.toString().toLowerCase().contains(value) ||
+            item.accountName.toString().toUpperCase().contains(value) ||
+            item.accountTypeName.toString().toLowerCase().contains(value) ||
+            item.accountTypeName.toString().toUpperCase().contains(value) ||
+            item.Payfor.toString().toLowerCase().contains(value) ||
+            item.Payfor.toString().toUpperCase().contains(value) ||
+            item.advanceReqVoucherType.toString().toLowerCase().contains(value) ||
+            item.advanceReqVoucherType.toString().toUpperCase().contains(value) ||
+            item.preparedName.toString().toLowerCase().contains(value) ||
+            item.preparedName.toString().toUpperCase().contains(value) ||
+
 
 
             item.transferEntryDate.toString().toLowerCase().contains(value) ||
@@ -702,6 +786,54 @@ class BaseUtitiles {
             item.SubcontractName.toString().toLowerCase().contains(value) ||
             item.SubcontractName.toString().toUpperCase().contains(value) ||
 
+            item.entryNo.toString().toLowerCase().contains(value) ||
+            item.entryNo.toString().toUpperCase().contains(value) ||
+            item.entryDate.toString().toLowerCase().contains(value) ||
+            item.entryDate.toString().toUpperCase().contains(value) ||
+            item.billNo.toString().toLowerCase().contains(value) ||
+            item.billNo.toString().toUpperCase().contains(value) ||
+            item.SubcontName.toString().toLowerCase().contains(value) ||
+            item.SubcontName.toString().toUpperCase().contains(value) ||
+            item.billType.toString().toLowerCase().contains(value) ||
+            item.billType.toString().toUpperCase().contains(value) ||
+            item.billStatus.toString().toLowerCase().contains(value) ||
+            item.billStatus.toString().toUpperCase().contains(value) ||
+            item.netPayAmount.toString().toLowerCase().contains(value) ||
+            item.netPayAmount.toString().toUpperCase().contains(value) ||
+            item.reviseNo.toString().toLowerCase().contains(value) ||
+            item.reviseNo.toString().toUpperCase().contains(value) ||
+            item.qCount.toString().toLowerCase().contains(value) ||
+            item.qCount.toString().toUpperCase().contains(value) ||
+            item.preparebyname.toString().toLowerCase().contains(value) ||
+            item.preparebyname.toString().toUpperCase().contains(value) ||
+            item.siteVoucherAmount.toString().toLowerCase().contains(value) ||
+            item.siteVoucherAmount.toString().toUpperCase().contains(value) ||
+            item.payMode.toString().toLowerCase().contains(value) ||
+            item.payMode.toString().toUpperCase().contains(value) ||
+            item.payfor.toString().toLowerCase().contains(value) ||
+            item.payfor.toString().toUpperCase().contains(value) ||
+            item.accountName.toString().toLowerCase().contains(value) ||
+            item.accountName.toString().toUpperCase().contains(value) ||
+            item.accountTypeName.toString().toLowerCase().contains(value) ||
+            item.accountTypeName.toString().toUpperCase().contains(value) ||
+            item.vocdate.toString().toLowerCase().contains(value) ||
+            item.vocdate.toString().toUpperCase().contains(value) ||
+            item.siteVoucherNo.toString().toLowerCase().contains(value) ||
+            item.siteVoucherNo.toString().toUpperCase().contains(value) ||
+            item.labourAttendanceDate.toString().toLowerCase().contains(value) ||
+            item.labourAttendanceDate.toString().toUpperCase().contains(value) ||
+            item.labourAttendanceNo.toString().toLowerCase().contains(value) ||
+            item.labourAttendanceNo.toString().toUpperCase().contains(value) ||
+            item.totNos.toString().toLowerCase().contains(value) ||
+            item.totNos.toString().toUpperCase().contains(value) ||
+            item.totAmt.toString().toLowerCase().contains(value) ||
+            item.totAmt.toString().toUpperCase().contains(value) ||
+            item.subcontractName.toString().toLowerCase().contains(value) ||
+            item.subcontractName.toString().toUpperCase().contains(value) ||
+
+
+
+
             item.approveByName.toString().toLowerCase().contains(value) ||
             item.approveByName.toString().toUpperCase().contains(value)
 
@@ -717,22 +849,25 @@ class BaseUtitiles {
     }
   }
 
-  static filterSearchResultsStaffVouchers(String value,list)  {
+  static filterSearchResultsSiteVouchers(String value,list)  {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
       list.value.forEach((item) {
-        if (item.vocNo.toString().toLowerCase().contains(value) ||
-            item.vocNo.toString().toUpperCase().contains(value) ||
-            item.staff.toString().toLowerCase().contains(value) ||
-        item.staff.toString().toUpperCase().contains(value) ||
-            item.vocDate.toString().toLowerCase().contains(value) ||
-        item.vocDate.toString().toUpperCase().contains(value) ||
-            item.accName.toString().toLowerCase().contains(value) ||
-        item.accName.toString().toUpperCase().contains(value) ||
-            item.accType.toString().toLowerCase().contains(value) ||
-        item.accType.toString().toUpperCase().contains(value) ||
-            item.vocAmt.toString().toLowerCase().contains(value) ||
-        item.vocAmt.toString().toUpperCase().contains(value))
+        if (
+            item.siteVoucherNo.toString().toLowerCase().contains(value) ||
+            item.siteVoucherNo.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.siteVoucherDate.toString().toLowerCase().contains(value) ||
+            item.siteVoucherDate.toString().toUpperCase().contains(value) ||
+            item.accountName.toString().toLowerCase().contains(value) ||
+            item.accountName.toString().toUpperCase().contains(value) ||
+            item.accountTypeName.toString().toLowerCase().contains(value) ||
+            item.accountTypeName.toString().toUpperCase().contains(value) ||
+            item.siteVoucherAmount.toString().toLowerCase().contains(value) ||
+            item.siteVoucherAmount.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value))
         {
           dummyListData.value.add(item);
         }
@@ -740,9 +875,39 @@ class BaseUtitiles {
       return  dummyListData.value;
     }
     else {
-      return  list.value;
+      return  list;
     }
   }
+
+  static filterSearchResultsStaffVouchers(String value,list)  {
+    dummyListData.value.clear();
+    if (value.isNotEmpty) {
+      list.value.forEach((item) {
+        if (
+        item.staffVocNo.toString().toLowerCase().contains(value) ||
+            item.staffVocNo.toString().toUpperCase().contains(value) ||
+            item.employeeName.toString().toLowerCase().contains(value) ||
+            item.employeeName.toString().toUpperCase().contains(value) ||
+            item.vocDate.toString().toLowerCase().contains(value) ||
+            item.vocDate.toString().toUpperCase().contains(value) ||
+            item.accountName.toString().toLowerCase().contains(value) ||
+            item.accountName.toString().toUpperCase().contains(value) ||
+            item.accountType.toString().toLowerCase().contains(value) ||
+            item.accountType.toString().toUpperCase().contains(value) ||
+            item.amount.toString().toLowerCase().contains(value) ||
+            item.amount.toString().toUpperCase().contains(value)
+           )
+        {
+          dummyListData.value.add(item);
+        }
+      });
+      return  dummyListData.value;
+    }
+    else {
+      return  list;
+    }
+  }
+
 
   static filterSearchResultstoProjectName(String value,list)  {
     dummyListData.value.clear();
@@ -833,8 +998,22 @@ class BaseUtitiles {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
       list.value.forEach((item) {
-        if (item.employee.toString().toLowerCase().contains(value) ||
-            item.employee.toString().toUpperCase().contains(value))
+        if (
+            item.entryDate.toString().toLowerCase().contains(value) ||
+            item.entryDate.toString().toUpperCase().contains(value) ||
+            item.requisitionNo.toString().toLowerCase().contains(value) ||
+            item.requisitionNo.toString().toUpperCase().contains(value) ||
+            item.requisitionTypeDesc.toString().toLowerCase().contains(value) ||
+            item.requisitionTypeDesc.toString().toUpperCase().contains(value) ||
+            item.staffName.toString().toLowerCase().contains(value) ||
+            item.staffName.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.status.toString().toLowerCase().contains(value) ||
+            item.status.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value)
+        )
         {
           dummyListData.value.add(item);
         }
@@ -889,6 +1068,38 @@ class BaseUtitiles {
       list.forEach((item) {
         if (item.company.toString().toLowerCase().contains(value) ||
             item.company.toString().toUpperCase().contains(value))
+        {
+          dummyListData.value.add(item);
+        }
+      });
+      return  dummyListData.value;
+    }
+    else {
+      return  list;
+    }
+  }
+
+  static subcontLabAttendPopupAlert(String value,list)  {
+    dummyListData.value.clear();
+    if (value.isNotEmpty) {
+      list.forEach((item) {
+        if (item.labourAttendanceDate.toString().contains(value) ||
+            item.labourAttendanceNo.toString().contains(value) ||
+            item.labourCount.toString().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value)  ||
+            item.siteName.toString().toLowerCase().contains(value) ||
+            item.siteName.toString().toUpperCase().contains(value)  ||
+            item.subContractorName.toString().toLowerCase().contains(value) ||
+            item.subContractorName.toString().toUpperCase().contains(value)  ||
+            item.workTypName.toString().toLowerCase().contains(value) ||
+            item.workTypName.toString().toUpperCase().contains(value)  ||
+            item.billStatusDesc.toString().toLowerCase().contains(value) ||
+            item.billStatusDesc.toString().toUpperCase().contains(value)  ||
+            item.employeeName.toString().toLowerCase().contains(value) ||
+            item.employeeName.toString().toUpperCase().contains(value)  ||
+            item.appType.toString().toLowerCase().contains(value) ||
+            item.appType.toString().toUpperCase().contains(value))
         {
           dummyListData.value.add(item);
         }
@@ -1008,11 +1219,11 @@ class BaseUtitiles {
     if (value.isNotEmpty) {
       list.forEach((item) {
         if (item.material.toString().toLowerCase().contains(value) ||
-            item.material.toString().toUpperCase().contains(value)
-            // item.balqty.toString().toLowerCase().contains(value) ||
-            // item.balqty.toString().toUpperCase().contains(value) ||
-            // item.scale.toString().toLowerCase().contains(value) ||
-            // item.scale.toString().toUpperCase().contains(value)
+            item.material.toString().toUpperCase().contains(value) ||
+            item.balqty.toString().toLowerCase().contains(value) ||
+            item.balqty.toString().toUpperCase().contains(value) ||
+            item.scale.toString().toLowerCase().contains(value) ||
+            item.scale.toString().toUpperCase().contains(value)
         )
         {
           dummyListData.value.add(item);
@@ -1048,7 +1259,13 @@ class BaseUtitiles {
     if (value.isNotEmpty) {
       list.forEach((item) {
         if (item.labourName.toString().toLowerCase().contains(value) ||
-            item.labourName.toString().toUpperCase().contains(value))
+            item.labourName.toString().toUpperCase().contains(value)  ||
+            item.categoryName.toString().toLowerCase().contains(value)  ||
+            item.categoryName.toString().toUpperCase().contains(value)  ||
+            item.wages.toString().toLowerCase().contains(value)  ||
+            item.wages.toString().toUpperCase().contains(value)  ||
+            item.wages.toString().contains(value)
+        )
         {
           dummyListData.value.add(item);
         }
@@ -1216,23 +1433,6 @@ class BaseUtitiles {
     }
   }
 
-  // static companyPopupAlert(String value,list)  {
-  //   dummyListData.value.clear();
-  //   if (value.isNotEmpty) {
-  //     list.forEach((item) {
-  //       if (item.company.toString().toLowerCase().contains(value) ||
-  //           item.company.toString().toUpperCase().contains(value))
-  //       {
-  //         dummyListData.value.add(item);
-  //       }
-  //     });
-  //     return  dummyListData.value;
-  //   }
-  //   else {
-  //     return  list;
-  //   }
-  // }
-
   static accTypePopupAlert(String value,list)  {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
@@ -1337,10 +1537,22 @@ class BaseUtitiles {
         if (item.date.toString().contains(value) ||
             item.projectName.toString().toLowerCase().contains(value) ||
             item.projectName.toString().toUpperCase().contains(value) ||
-            item.staffName.toString().toLowerCase().contains(value) ||
-            item.staffName.toString().toUpperCase().contains(value) ||
-            item.type.toString().toLowerCase().contains(value) ||
-            item.type.toString().toUpperCase().contains(value) ||
+            item.requisitionType.toString().toLowerCase().contains(value) ||
+            item.requisitionType.toString().toUpperCase().contains(value) ||
+            item.StaffName.toString().toLowerCase().contains(value) ||
+            item.StaffName.toString().toUpperCase().contains(value) ||
+            item.empName.toString().toLowerCase().contains(value) ||
+            item.empName.toString().toUpperCase().contains(value) ||
+            item.requisitionNo.toString().toLowerCase().contains(value) ||
+            item.requisitionNo.toString().toUpperCase().contains(value) ||
+            item.LeaveReason.toString().toLowerCase().contains(value) ||
+            item.LeaveReason.toString().toUpperCase().contains(value) ||
+            item.leaveFromDate.toString().toLowerCase().contains(value) ||
+            item.leaveFromDate.toString().toUpperCase().contains(value) ||
+            item.leaveToDate.toString().toLowerCase().contains(value) ||
+            item.leaveToDate.toString().toUpperCase().contains(value) ||
+            item.totalLeaveDays.toString().toLowerCase().contains(value) ||
+            item.totalLeaveDays.toString().toUpperCase().contains(value) ||
             item.no.toString().toUpperCase().contains(value)
         )
         {
@@ -1412,6 +1624,35 @@ class BaseUtitiles {
             item.quotecount.toString().toLowerCase().contains(value) ||
             item.quotecount.toString().toUpperCase().contains(value);
       }).toList();
+    }
+  }
+
+  static companyNMRLabPopupAlert(String value,list)  {
+    dummyListData.value.clear();
+    if (value.isNotEmpty) {
+      list.forEach((item) {
+        if (item.NMRLabourAttendanceNo.toString().toLowerCase().contains(value) ||
+            item.NMRLabourAttendanceNo.toString().toUpperCase().contains(value) ||
+            item.NMRLabourAttendanceDate1.toString().toLowerCase().contains(value) ||
+            item.NMRLabourAttendanceDate1.toString().toUpperCase().contains(value) ||
+            item.ProjectName.toString().toLowerCase().contains(value) ||
+            item.ProjectName.toString().toUpperCase().contains(value) ||
+            item.SiteName.toString().toLowerCase().contains(value) ||
+            item.SiteName.toString().toUpperCase().contains(value) ||
+            item.subcontractName.toString().toLowerCase().contains(value) ||
+            item.subcontractName.toString().toUpperCase().contains(value) ||
+            item.createdByName.toString().toLowerCase().contains(value) ||
+            item.createdByName.toString().toUpperCase().contains(value) ||
+            item.Labcount.toString().contains(value)
+        )
+        {
+          dummyListData.value.add(item);
+        }
+      });
+      return  dummyListData.value;
+    }
+    else {
+      return  list;
     }
   }
 

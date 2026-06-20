@@ -94,7 +94,7 @@ dependencies:
   camera: ^0.10.5+2
   image: ^3.3.0
   new_version_plus: ^0.0.11
-  speech_to_text: ^6.6.0
+  signalr_netcore: ^0.1.7+2-nullsafety.3
 
 dev_dependencies:
   flutter_test:

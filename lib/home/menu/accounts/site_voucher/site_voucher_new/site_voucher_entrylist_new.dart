@@ -135,7 +135,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(1900),
-                                  lastDate: DateTime(2100),
+                                  lastDate: DateTime.now(),
                                   builder: (context, child) {
                                     return Theme(data: Theme.of(context).copyWith(
                                       colorScheme: ColorScheme.light(
@@ -237,6 +237,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor),
                         onPressed: () async {
+                          editingController.text = "";
                           await siteVoucher_Controller.getSiteVoc_EntryList();
                         },
                         child: const Center(
@@ -285,7 +286,10 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                           },
                           textInputAction: TextInputAction.search,
                           onChanged: (value) {
-                            siteVoucher_Controller.SiteVocEtyList.value = BaseUtitiles.filterSearchResultsStaffVouchers(value, siteVoucher_Controller.SiteVocEtyList);
+                            setState(() {
+                              siteVoucher_Controller.SiteVocEtyList.value = BaseUtitiles.filterSearchResultsSiteVouchers(value, siteVoucher_Controller.main_entryList);
+
+                            });
                           },
                         ),
                       ),
@@ -450,7 +454,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                   flex: 8,
                                   child: Text(
                                     siteVoucher_Controller.SiteVocEtyList.value[index].status,
-                                    style:  TextStyle(color:siteVoucher_Controller.SiteVocEtyList.value[index].status=="Approved"?Colors.green:Colors.red),
+                                    style:  TextStyle(color:siteVoucher_Controller.SiteVocEtyList.value[index].status=="Approved"?Colors.green:Colors.black),
                                   ),
                                 ),
                               ],
@@ -615,7 +619,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                                                         .SiteVocEtyList
                                                                       .value[index]
                                                                       .id,
-                                                                  context);
+                                                                  context,"Resubmit");
                                                             }),
                                                       ),
                                                       Container(

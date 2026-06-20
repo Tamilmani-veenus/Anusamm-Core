@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auto_yrwise_no_controller.dart';
+import '../controller/billgeneration_boq_controller.dart';
 import '../controller/billgenerationdirect_controller.dart';
 import '../controller/inward_pending_controller.dart';
 import '../controller/nmrweeklybill_controller.dart';
@@ -18,6 +19,8 @@ class BillType_Alert extends StatefulWidget {
 class _BillType_AlertState extends State<BillType_Alert> {
 
   BillGenerationDirectController billGenerationDirectController = Get.put(BillGenerationDirectController());
+  BillGenerationBoqController billGenerationBoqController=Get.put(BillGenerationBoqController());
+
 
   List<String> list = ["Company","Client"];
 
@@ -50,10 +53,16 @@ class _BillType_AlertState extends State<BillType_Alert> {
                           if(index==0){
                             billGenerationDirectController.DirectBillTypeText.text="Company";
                             billGenerationDirectController.directBillTypeID.value="C";
+                            billGenerationBoqController.DirectBillTypeText.text = "Company";
+                            billGenerationBoqController.directBillTypeID.value="C";
+
                           }
                           else{
                             billGenerationDirectController.DirectBillTypeText.text="Client";
                             billGenerationDirectController.directBillTypeID.value="I";
+                            billGenerationBoqController.DirectBillTypeText.text="Client";
+                            billGenerationBoqController.directBillTypeID.value="C";
+
                           }
 
                            Navigator.pop(context);

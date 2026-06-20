@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../app_theme/app_colors.dart';
-import '../../../../commonpopup/billtype_alert.dart';
 import '../../../../commonpopup/entry_type_alert.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
 import '../../../../controller/auto_yrwise_no_controller.dart';
@@ -15,7 +14,6 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'bill_generation_boq_itemlist.dart';
 
 
@@ -51,54 +49,28 @@ class _Bill_Generation_Boq_EntryScreenState_Site
 
       if (billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT || billGenerationBoqController.saveButton.value == RequestConstant.VERIFY || billGenerationBoqController.saveButton.value == RequestConstant.APPROVAL) {
         billGenerationBoqController.bill_editListApiDatas.forEach((element) {
+
           billGenerationBoqController.workid = element.id!;
-          billGenerationBoqController.autoYearWiseNoController.text =
-              element.workNo.toString();
-          billGenerationBoqController.billentryDateController.text =
-              element.workDate.toString();
+          billGenerationBoqController.autoYearWiseNoController.text = element.workNo.toString();
+          billGenerationBoqController.billentryDateController.text = element.workDate.toString();
           projectController.projectname.text = element.projectName.toString();
           projectController.selectedProjectId.value = element.projectId;
           siteController.Sitename.text = element.siteName.toString();
           siteController.selectedsiteId.value = element.siteId;
-          subcontractorController.Subcontractorname.text =
-              element.subContName.toString();
-          subcontractorController.selectedSubcontId.value = element.subContId;
+          dailyWrkDone_DPR_Controller.TypeSubcontractorname.text = element.subContName.toString();
+          dailyWrkDone_DPR_Controller.TypeSubcontId.value = element.subContId;
           billGenerationBoqController.DirectBillTypeText.text = element.billTypeDesc;
           billGenerationBoqController.directBillTypeID.value = element.billType;
+          billGenerationBoqController.entryTypeController.text = element.entryType == "D" ? "DIRECT" : "BOQ";
+          billGenerationBoqController.entryType.value = element.entryType;
           subcontractorController.InvoiceNo.text = element.billNo.toString();
-          billGenerationBoqController.billInvoiceDateController.text =
-              element.workDate.toString();
+          billGenerationBoqController.billInvoiceDateController.text = element.workDate.toString();
           billGenerationBoqController.billPaymentWkDateController.text = element.paymentDate;
-
           subcontractorController.selectedWorkOrderId.value =element.workOrderId;
           subcontractorController.WorkOrderNo.text =element.workOrderNo == null ? "--SELECT--":element.workOrderNo;
-          billGenerationBoqController.FromdateController.text =
-              element.fromWorkDate.toString();
-          billGenerationBoqController.TodateController.text =
-              element.toWorkDate.toString();
-
-          billGenerationBoqController.RemarksController.text =
-              element.remarks.toString();
-          billGenerationBoqController.billamount.text =
-              element.netBillAmount.toString();
-          billGenerationBoqController.tobededadv.text =
-              element.actualAdvanceAmount.toString();
-          billGenerationBoqController.Creditamt.text =
-              element.creditAmount.toString();
-          billGenerationBoqController.Debitamt.text =
-              element.debitAmount.toString();
-          billGenerationBoqController.CreditRemarksController.text =
-              element.creditRemarks.toString();
-          billGenerationBoqController.DebitRemarksController.text =
-              element.debitRemarks.toString();
-          billGenerationBoqController.to_be_dection_advance =
-              element.advanceAmount.toString();
-          billGenerationBoqController.Advded.text =
-              element.advanceAmount.toString();
-          billGenerationBoqController.Roundoff.text =
-              element.roundOff.toString();
-          billGenerationBoqController.netpayamt.text =
-              element.netPayAmount.toString();
+          billGenerationBoqController.FromdateController.text = element.fromWorkDate.toString();
+          billGenerationBoqController.TodateController.text = element.toWorkDate.toString();
+          billGenerationBoqController.RemarksController.text = element.remarks.toString();
         });
       }
       if (billGenerationBoqController.saveButton.value == RequestConstant.SUBMIT) {
@@ -114,13 +86,13 @@ class _Bill_Generation_Boq_EntryScreenState_Site
         siteController.selectedsiteId.value = 0;
         dailyWrkDone_DPR_Controller.TypeSubcontractorname.text = "--SELECT--";
         dailyWrkDone_DPR_Controller.TypeSubcontId.value=0;
-        billGenerationBoqController.DirectBillTypeText.text = "--SELECT--";
-        billGenerationBoqController.directBillTypeID.value = "0";
+        billGenerationBoqController.DirectBillTypeText.text = "Company";
+        billGenerationBoqController.directBillTypeID.value = "C";
         billGenerationBoqController.entryTypeController.text = "BOQ";
         billGenerationBoqController.entryType.value = "B";
         subcontractorController.WorkOrderNo.text = "--SELECT--";
-        billGenerationBoqController.FromdateController.text = "2026-04-01";
-        billGenerationBoqController.TodateController.text = "2027-05-01";
+        billGenerationBoqController.FromdateController.text = BaseUtitiles.initiateCurrentDateFormat();
+        billGenerationBoqController.TodateController.text = BaseUtitiles.initiateCurrentDateFormat();
         billGenerationBoqController.billInvoiceDateController.text = BaseUtitiles.initiateCurrentDateFormat();
         subcontractorController.InvoiceNo.text="";
         billGenerationBoqController.billPaymentWkDateController
@@ -129,7 +101,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
         billGenerationBoqController.to_be_dection_advance = "0";
         billGenerationBoqController.saveButton.value = RequestConstant.SUBMIT;
         billGenerationBoqController.billgen_itemlistTable_Delete();
-        billGenerationBoqController.ItemGetTableListdata.value.clear();
+        billGenerationBoqController.ItemGetTableListdata.value=[];
         billGenerationBoqController.billamount.text = "0.0";
         billGenerationBoqController.Creditamt.text = "0.0";
         billGenerationBoqController.Debitamt.text = "0.0";
@@ -320,11 +292,15 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                                 child: ConstIcons.projectName),
                           ),
                           onTap: () async {
-                            await projectController.getProjectList();
+                            if(billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT){
+                            }
+                            else{
+                              await projectController.getProjectList();
                             if(mounted) {
                               bottomsheetControllers.ProjectName(context,
                                   projectController.getdropDownvalue.value);
-                            }},
+                            }}
+                            },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
                               return '\u26A0 ${RequestConstant.VALIDATE}';
@@ -366,10 +342,14 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                                 child: ConstIcons.siteName),
                           ),
                           onTap: () {
-                            setState(() {
-                              bottomsheetControllers.SiteName(context,
-                                  siteController.getSiteDropdownvalue.value);
-                            });
+                            if(billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT){
+                            }else{
+                              setState(() {
+                                bottomsheetControllers.SiteName(context,
+                                    siteController.getSiteDropdownvalue.value);
+                              });
+                            }
+
                           },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
@@ -412,8 +392,12 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                                 child: ConstIcons.subcontractorName),
                           ),
                           onTap: () async {
-                            await dailyWrkDone_DPR_Controller.dpr_getSubcotType();
-                            dailyWrkDone_DPR_Controller.SubcontractorName(context, dailyWrkDone_DPR_Controller.dpr_subcontractorList.value);
+                            if(billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT){
+                            }
+                            else
+                            {await dailyWrkDone_DPR_Controller.dpr_getSubcotType();
+                            dailyWrkDone_DPR_Controller.SubcontractorName(context, dailyWrkDone_DPR_Controller.dpr_subcontractorList.value);}
+
                           },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
@@ -425,6 +409,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       ),
                     ),
                   ),
+
                   Container(
                     margin: EdgeInsets.only(top: 5, left: 10, right: 10),
                     child: Card(
@@ -457,7 +442,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                                 child: ConstIcons.types),
                           ),
                           onTap: () {
-                            if(dailyWrkDone_DPR_Controller.saveButton.value==RequestConstant.APPROVAL){
+                            if(billGenerationBoqController.saveButton.value==RequestConstant.APPROVAL){
 
                             }
                             else{
@@ -867,7 +852,16 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                                 fromDate: billGenerationBoqController.FromdateController.text,
                                 toDate: billGenerationBoqController.TodateController.text);
                             bottomsheetControllers.WorkOrderName(context,
-                                subcontractorController.getdpDnWrkOrderValue.value,type: "BILL BOQ",todate:  billGenerationBoqController.TodateController.text);
+                                subcontractorController.getdpDnWrkOrderValue.value,type: "BILL BOQ",
+                                todate:  billGenerationBoqController.TodateController.text);
+                          },
+                          validator: (value)
+                          {
+                            if(value == "--SELECT--" || value == "--Select--")
+                              {
+                                return '\u26A0 ${RequestConstant.VALIDATE}';
+                              }
+                            return null;
                           },
 
                         ),
@@ -944,10 +938,20 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       setState(() {
                         if(_formKey.currentState!.validate()){
                           _formKey.currentState!.save();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Bill_Generation_Boq_Itemlist()));
+                          // if(billGenerationBoqController.bill_itemList.isEmpty)
+                          // {
+                          //   BaseUtitiles.showToast("No BOQ data found for the selected criteria.");
+                          // }
+                          // else
+                          //   {
+                          billGenerationBoqController.tobededadv.addListener(() {
+                            billGenerationBoqController.updateAdvanceReadOnly();
+                          });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Bill_Generation_Boq_Itemlist()));
+                            // }
                         }
                       });
                     },

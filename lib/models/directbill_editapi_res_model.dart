@@ -56,7 +56,7 @@ class Result {
   String? fromWorkDate;
   String? toWorkDate;
   String? billNo;
-  double? netBillAmount;
+  double? billAmount;
   double? finalBillAmount;
   double? netPayAmount;
   double? roundOff;
@@ -108,7 +108,7 @@ class Result {
     this.fromWorkDate,
     this.toWorkDate,
     this.billNo,
-    this.netBillAmount,
+    this.billAmount,
     this.finalBillAmount,
     this.netPayAmount,
     this.roundOff,
@@ -161,7 +161,7 @@ class Result {
     fromWorkDate: json["fromWorkDate"],
     toWorkDate: json["toWorkDate"],
     billNo: json["billNo"],
-    netBillAmount: json["netBillAmount"],
+    billAmount: json["netBillAmount"],
     finalBillAmount: json["finalBillAmount"],
     netPayAmount: json["netPayAmount"],
     roundOff: json["roundOff"],
@@ -214,7 +214,7 @@ class Result {
     "fromWorkDate": fromWorkDate,
     "toWorkDate": toWorkDate,
     "billNo": billNo,
-    "netBillAmount": netBillAmount,
+    "netBillAmount": billAmount,
     "finalBillAmount": finalBillAmount,
     "netPayAmount": netPayAmount,
     "roundOff": roundOff,
@@ -308,10 +308,10 @@ class SubContractorWorkQtyDet {
   String? workType;
   double? actualQty;
   double? actualAmount;
-  double? totalQty;
+  double? totalqty;
   String? qtysClosed;
-  double? balanceBillQty;
-  double? currentBillQty;
+  double? balbillqty;
+  double? CurBillQty;
   double? balanceQty;
   int? partRateStatus;
   dynamic? boqCode;
@@ -334,10 +334,10 @@ class SubContractorWorkQtyDet {
     this.workType,
     this.actualQty,
     this.actualAmount,
-    this.totalQty,
+    this.totalqty,
     this.qtysClosed,
-    this.balanceBillQty,
-    this.currentBillQty,
+    this.balbillqty,
+    this.CurBillQty,
     this.balanceQty,
     this.partRateStatus,
     this.boqCode,
@@ -361,10 +361,10 @@ class SubContractorWorkQtyDet {
     workType: json["workType"],
     actualQty: json["actualQty"],
     actualAmount: json["actualAmount"],
-    totalQty: json["totalQty"],
+    totalqty: json["totalQty"],
     qtysClosed: json["qtysClosed"],
-    balanceBillQty: json["balanceBillQty"],
-    currentBillQty: json["currentBillQty"],
+    balbillqty: json["balanceBillQty"],
+    CurBillQty: json["currentBillQty"],
     balanceQty: json["balanceQty"],
     partRateStatus: json["partRateStatus"],
     boqCode: json["boqCode"],
@@ -388,10 +388,10 @@ class SubContractorWorkQtyDet {
     "workType": workType,
     "actualQty": actualQty,
     "actualAmount": actualAmount,
-    "totalQty": totalQty,
+    "totalQty": totalqty,
     "qtysClosed": qtysClosed,
-    "balanceBillQty": balanceBillQty,
-    "currentBillQty": currentBillQty,
+    "balanceBillQty": balbillqty,
+    "currentBillQty": CurBillQty,
     "balanceQty": balanceQty,
     "partRateStatus": partRateStatus,
     "boqCode": boqCode,

@@ -229,6 +229,7 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
                             style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                             onPressed: () {
                               setState(() {
+                                editingController.text = "";
                                 dailyWrkDone_DPRNEW_Controller.dpr_New_getEntryList();
                               });
                             },
@@ -280,7 +281,7 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
                             textInputAction: TextInputAction.search,
                             onChanged: (value) {
                               setState(() {
-                                dailyWrkDone_DPR_Controller.searchentryList.value= BaseUtitiles.filterSearchResults_dprlist(value,dailyWrkDone_DPR_Controller.dpr_entryList);
+                                dailyWrkDone_DPRNEW_Controller.dpr_New_entryList.value= BaseUtitiles.filterSearchResults_dprlist(value,dailyWrkDone_DPR_Controller.searchentryList);
                               });
                             },
                           ),
@@ -309,8 +310,8 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
             child: Obx(
                   () => ListView.builder(
                   shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom:BaseUtitiles.getheightofPercentage(context, 10) ),
+                      physics: BouncingScrollPhysics(),
                       itemCount: dailyWrkDone_DPRNEW_Controller.dpr_New_entryList.value.length,
                   itemBuilder: (context, index) {
                     return Container(

@@ -135,7 +135,7 @@ class _SubAttendanceSiteEntryListState
                                   color: Colors.grey,
                                   fontSize: RequestConstant.Lable_Font_SIZE),
                               prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
+                              BoxConstraints(minWidth: 0, minHeight: 0),
                               prefixIcon: Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 8),
@@ -154,12 +154,12 @@ class _SubAttendanceSiteEntryListState
                                           primary: Theme.of(context).primaryColor,
                                           onPrimary: Colors.white,
                                           onSurface:
-                                              Colors.black, // body text color
+                                          Colors.black, // body text color
                                         ),
                                         textButtonTheme: TextButtonThemeData(
                                           style: TextButton.styleFrom(
                                             primary:
-                                                Colors.black, // button text color
+                                            Colors.black, // button text color
                                           ),
                                         ),
                                       ),
@@ -201,7 +201,7 @@ class _SubAttendanceSiteEntryListState
                                   color: Colors.grey,
                                   fontSize: RequestConstant.Lable_Font_SIZE),
                               prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
+                              BoxConstraints(minWidth: 0, minHeight: 0),
                               prefixIcon: Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 8),
@@ -222,12 +222,12 @@ class _SubAttendanceSiteEntryListState
                                           onPrimary: Colors.white,
                                           // header text color
                                           onSurface:
-                                              Colors.black, // body text color
+                                          Colors.black, // body text color
                                         ),
                                         textButtonTheme: TextButtonThemeData(
                                           style: TextButton.styleFrom(
                                             primary:
-                                                Colors.black, // button text color
+                                            Colors.black, // button text color
                                           ),
                                         ),
                                       ),
@@ -251,18 +251,19 @@ class _SubAttendanceSiteEntryListState
                             primary: Theme.of(context).primaryColor),
                         onPressed: () async {
                           setState(() {
+                            editingController.text = "";
                             dailyEntryController.getAttenEntryList();
                           });
                         },
                         child: const Center(
                             child: Padding(
-                          padding: EdgeInsets.only(top: 13, bottom: 13),
-                          child: Text("SHOW",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: RequestConstant.App_Font_SIZE,
-                                  fontWeight: FontWeight.bold)),
-                        ))),
+                              padding: EdgeInsets.only(top: 13, bottom: 13),
+                              child: Text("SHOW",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: RequestConstant.App_Font_SIZE,
+                                      fontWeight: FontWeight.bold)),
+                            ))),
                   ],
                 ),
               ),
@@ -329,483 +330,488 @@ class _SubAttendanceSiteEntryListState
             child: SizedBox(
               height: BaseUtitiles.getheightofPercentage(context, 68),
               child: Obx(() => ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: dailyEntryController.Entrylist.value.length,
-                    itemBuilder: (context, index) {
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: dailyEntryController.Entrylist.value.length,
+                  itemBuilder: (context, index) {
 
-                      return Container(
-                        margin: const EdgeInsets.only(left: 3, right: 3),
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.all(3),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(left: 5),
-                                          width: BaseUtitiles.getWidthtofPercentage(context, 50),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  margin: const EdgeInsets.only(left: 5, right: 3),
-                                                  child: ConstIcons.list_date),
-                                              Text(
-                                                dailyEntryController.Entrylist.value[index].labourAttendanceDate.toString(),
-                                                style: TextStyle(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
+                    return Container(
+                      margin: const EdgeInsets.only(left: 3, right: 3),
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.all(3),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 5),
+                                        width: BaseUtitiles.getWidthtofPercentage(context, 50),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                margin: const EdgeInsets.only(left: 5, right: 3),
+                                                child: ConstIcons.list_date),
+                                            Text(
+                                              dailyEntryController.Entrylist.value[index].labourAttendanceDate.toString(),
+                                              style: TextStyle(
+                                                  color: Theme.of(context).primaryColor,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 10),
+                                    child: Text(
+                                      dailyEntryController.Entrylist.value[index].labourAttendanceNo.toString(),
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
                                     ),
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 10),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 5, left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
                                       child: Text(
-                                        dailyEntryController.Entrylist.value[index].labourAttendanceNo.toString(),
-                                        style: const TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 5, left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Project ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          dailyEntryController.Entrylist.value[index].projectName.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 2, left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Site ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          dailyEntryController.Entrylist.value[index].siteName.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 2, left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "SubCont ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          dailyEntryController.Entrylist.value[index].subContractorName.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 2, left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Labours",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          "${dailyEntryController.Entrylist.value[index].totNos} Nos" ,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                // const SizedBox(height: 5),
-                                // Row(
-                                //   children: [
-                                //     Container(
-                                //       margin: const EdgeInsets.only(left: 10),
-                                //       child: const Text(""),
-                                //     ),
-                                //     Expanded(
-                                //         flex: 3,
-                                //         child: Text(
-                                //           "Shift Type",
-                                //           style: TextStyle(
-                                //             fontWeight: FontWeight.bold,
-                                //             color: Colors.black,
-                                //           ),
-                                //         )),
-                                //     Expanded(
-                                //         flex: 8,
-                                //         child: Text(
-                                //           dailyEntryController
-                                //               .Entrylist.value[index].workshift
-                                //               .toString(),
-                                //           style: const TextStyle(
-                                //             color: Colors.black,
-                                //           ),
-                                //         )),
-                                //   ],
-                                // ),
+                                        "Project ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        dailyEntryController.Entrylist.value[index].projectName.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 2, left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Site ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        dailyEntryController.Entrylist.value[index].siteName.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(top: 2, left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "SubCont ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        dailyEntryController.Entrylist.value[index].subContractorName.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 2, left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Labours",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        "${dailyEntryController.Entrylist.value[index].totNos} Nos" ,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              // const SizedBox(height: 5),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       margin: const EdgeInsets.only(left: 10),
+                              //       child: const Text(""),
+                              //     ),
+                              //     Expanded(
+                              //         flex: 3,
+                              //         child: Text(
+                              //           "Shift Type",
+                              //           style: TextStyle(
+                              //             fontWeight: FontWeight.bold,
+                              //             color: Colors.black,
+                              //           ),
+                              //         )),
+                              //     Expanded(
+                              //         flex: 8,
+                              //         child: Text(
+                              //           dailyEntryController
+                              //               .Entrylist.value[index].workshift
+                              //               .toString(),
+                              //           style: const TextStyle(
+                              //             color: Colors.black,
+                              //           ),
+                              //         )),
+                              //   ],
+                              // ),
 
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Status",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y" ? "Approved" : "Unapproved" ,
-                                          style: TextStyle(
-                                            color: dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y" ? Colors.green :  Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Status",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        dailyEntryController.Entrylist.value[index].appType ,
+                                        style: TextStyle(
+                                          color: dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y" ? Colors.green :  Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
 
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    const Expanded(
-                                        flex: 4,
-                                        child: Text(
-                                          "Work Type",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 5,
-                                        child: Text(
-                                          // dailyEntryController.Entrylist.value[index].workType.toString() == 'NMR'
-                                          //     ? 'Claimable NMR'
-                                          //     : dailyEntryController.Entrylist.value[index].workType.toString() == 'NO-WORK'
-                                          //     ? 'No Work'
-                                          //     : dailyEntryController.Entrylist.value[index].workType.toString()=='RATE'?'Daily attendance':
-                                          dailyEntryController.Entrylist.value[index].workTypeName.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Amount",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "₹ ${dailyEntryController
-                                              .Entrylist.value[index].totAmt}",
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Work Type",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        // dailyEntryController.Entrylist.value[index].workType.toString() == 'NMR'
+                                        //     ? 'Claimable NMR'
+                                        //     : dailyEntryController.Entrylist.value[index].workType.toString() == 'NO-WORK'
+                                        //     ? 'No Work'
+                                        //     : dailyEntryController.Entrylist.value[index].workType.toString()=='RATE'?'Daily attendance':
+                                        dailyEntryController.Entrylist.value[index].workTypeName.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
 
-                                const Divider(thickness: 1),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      child: const Text(""),
-                                    ),
-                                    // Expanded(
-                                    //     flex: 3,
-                                    //     child: Text(
-                                    //       "Subcontractor",
-                                    //       style: TextStyle(
-                                    //           fontWeight: FontWeight.bold,
-                                    //           color: Colors.black),
-                                    //     )),
-                                    // Expanded(
-                                    //     flex: 6,
-                                    //     child: Text(
-                                    //       dailyEntryController
-                                    //           .Entrylist.value[index].subconName
-                                    //           .toString(),
-                                    //       style: TextStyle(color: Colors.black),
-                                    //     )),
-                                    const Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Prepared By :",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                    Expanded(
-                                        flex: 6,
-                                        child: Text(
-                                          dailyEntryController
-                                              .Entrylist.value[index].employeeName
-                                              .toString(),
-                                          // +  " | " +
-                                          // dailyEntryController.Entrylist
-                                          //     .value[index].workshift
-                                          //     .toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Amount",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        "₹ ${dailyEntryController
+                                            .Entrylist.value[index].totAmt}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
 
-                                    Expanded(
-                                        flex: 2,
-                                        child: IconButton(
-                                            onPressed: () {
-                                              DLRId = dailyEntryController.Entrylist[index].id;
+                              const Divider(thickness: 1),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  // Expanded(
+                                  //     flex: 3,
+                                  //     child: Text(
+                                  //       "Subcontractor",
+                                  //       style: TextStyle(
+                                  //           fontWeight: FontWeight.bold,
+                                  //           color: Colors.black),
+                                  //     )),
+                                  // Expanded(
+                                  //     flex: 6,
+                                  //     child: Text(
+                                  //       dailyEntryController
+                                  //           .Entrylist.value[index].subconName
+                                  //           .toString(),
+                                  //       style: TextStyle(color: Colors.black),
+                                  //     )),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Prepared By ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 6,
+                                      child: Text(
+                                        dailyEntryController
+                                            .Entrylist.value[index].employeeName
+                                            .toString(),
+                                        // +  " | " +
+                                        // dailyEntryController.Entrylist
+                                        //     .value[index].workshift
+                                        //     .toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )),
 
-                                              if( dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y"){
-                                                BaseUtitiles.showToast("Approved records cannot be edited or deleted");
-                                              }else{
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      // <-- SEE HERE
-                                                      borderRadius:
-                                                      BorderRadius.vertical(
-                                                          top:
-                                                          Radius.circular(
-                                                              25.0)),
+                                  Expanded(
+                                      flex: 2,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            DLRId = dailyEntryController.Entrylist[index].id;
+                                            showModalBottomSheet(
+                                                context: context,
+                                                shape: const RoundedRectangleBorder(
+                                                  // <-- SEE HERE
+                                                  borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top:
+                                                      Radius.circular(
+                                                          25.0)),
+                                                ),
+                                                builder: (context) {
+                                                  return Container(
+                                                    margin: const EdgeInsets.only(
+                                                      left: 15,
                                                     ),
-                                                    builder: (context) {
-                                                      return Container(
-                                                        margin: const EdgeInsets.only(
-                                                          left: 15,
-                                                        ),
-                                                        height: BaseUtitiles
-                                                            .getheightofPercentage(
-                                                            context, 25),
-                                                        child: Column(
+                                                    height: BaseUtitiles
+                                                        .getheightofPercentage(
+                                                        context, 25),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
                                                           mainAxisAlignment:
-                                                          MainAxisAlignment.spaceBetween,
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                           children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                              children: [
-                                                                Container(
-                                                                  margin: const EdgeInsets.only(right: 10),
-                                                                  child: Text(
-                                                                    dailyEntryController.Entrylist.value[index].labourAttendanceNo.toString(),
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                        color: Theme.of(
-                                                                            context)
-                                                                            .primaryColor),
-                                                                  ),
-                                                                ),
-                                                                IconButton(
-                                                                    onPressed: () {
-                                                                      Navigator.pop(context);
-                                                                    },
-                                                                    icon: ConstIcons.cancle)
-                                                              ],
-                                                            ),
-                                                            Visibility(
-                                                              visible: commanController.editMode.value == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: const Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .lightGreen,
-                                                                        child:
-                                                                        Padding(
-                                                                          padding:
-                                                                          EdgeInsets.all(
-                                                                              8),
-                                                                          child:
-                                                                          Icon(
-                                                                            Icons
-                                                                                .edit,
-                                                                            color: Colors
-                                                                                .white,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width: 5),
-                                                                      Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            fontSize:
-                                                                            15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    dailyEntryController.deleteSubcontDetTableDatas();
-                                                                    dailyEntryController.readListdata.value=[];
-                                                                    dailyEntryController.getAttendanceDetailsDto.value=[];
-                                                                    FocusScope.of(context).unfocus();
-                                                                    await dailyEntryController.subContEntryList_EditApi(dailyEntryController.Entrylist.value[index].id, context);
-                                                                  }),
-                                                            ),
                                                             Container(
-                                                                margin: const EdgeInsets.only(right: 20),
-                                                                child: const Divider(thickness: 1)),
-                                                            Visibility(
-                                                              visible: commanController.deleteMode.value == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: const Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .red,
-                                                                        child:
-                                                                        Padding(
-                                                                          padding:
-                                                                          EdgeInsets.all(
-                                                                              8),
-                                                                          child:
-                                                                          Icon(
-                                                                            Icons
-                                                                                .delete_forever,
-                                                                            color: Colors
-                                                                                .white,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width: 5),
-                                                                      Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            fontSize:
-                                                                            15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    dailyEntryController
-                                                                        .DeleteAlert(
-                                                                        context,
-                                                                        index);
-                                                                  }),
+                                                              margin: const EdgeInsets.only(right: 10),
+                                                              child: Text(
+                                                                dailyEntryController.Entrylist.value[index].labourAttendanceNo.toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                    color: Theme.of(
+                                                                        context)
+                                                                        .primaryColor),
+                                                              ),
                                                             ),
-                                                            const SizedBox(height: 20)
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                icon: ConstIcons.cancle)
                                                           ],
                                                         ),
-                                                      );
-                                                    });
-                                              }
+                                                        Visibility(
+                                                          visible: commanController.editMode.value == 1 ? true : false,
+                                                          child: InkWell(
+                                                              child: const Row(
+                                                                children: [
+                                                                  Card(
+                                                                    color: Colors
+                                                                        .lightGreen,
+                                                                    child:
+                                                                    Padding(
+                                                                      padding:
+                                                                      EdgeInsets.all(
+                                                                          8),
+                                                                      child:
+                                                                      Icon(
+                                                                        Icons
+                                                                            .edit,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  Text(
+                                                                    "Edit",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        fontSize:
+                                                                        15),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              onTap: () async {
+                                                                dailyEntryController.deleteSubcontDetTableDatas();
+                                                                dailyEntryController.readListdata.value=[];
+                                                                dailyEntryController.getAttendanceDetailsDto.value=[];
+                                                                FocusScope.of(context).unfocus();
+                                                                await dailyEntryController.subContEntryList_EditApi(dailyEntryController.Entrylist.value[index].id,true, context);
+                                                              }),
+                                                        ),
+                                                        Container(
+                                                            margin: const EdgeInsets.only(right: 20),
+                                                            child: const Divider(thickness: 1)),
+                                                        Visibility(
+                                                          visible: commanController.deleteMode.value == 1 ? true : false,
+                                                          child: InkWell(
+                                                              child: const Row(
+                                                                children: [
+                                                                  Card(
+                                                                    color: Colors
+                                                                        .red,
+                                                                    child:
+                                                                    Padding(
+                                                                      padding:
+                                                                      EdgeInsets.all(
+                                                                          8),
+                                                                      child:
+                                                                      Icon(
+                                                                        Icons
+                                                                            .delete_forever,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  Text(
+                                                                    "Delete",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        fontSize:
+                                                                        15),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              onTap: () async {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                dailyEntryController
+                                                                    .DeleteAlert(
+                                                                    context,
+                                                                    index);
+                                                              }),
+                                                        ),
+                                                        const SizedBox(height: 20)
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
 
-                                            },
-                                            icon: Icon(
-                                              Icons
-                                                  .arrow_drop_down_circle_outlined,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            )))
-                                  ],
-                                ),
-                              ],
-                            ),
+                                          },
+                                          icon: Icon(
+                                            Icons
+                                                .arrow_drop_down_circle_outlined,
+                                            color: Theme.of(context)
+                                                .primaryColor,
+                                          )))
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    );
+                  }),
               ),
             ),
           ),

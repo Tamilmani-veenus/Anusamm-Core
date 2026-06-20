@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:new_version_plus/new_version_plus.dart';
+import '../../controller/accountsettings_controller.dart';
 import '../../controller/logincontroller.dart';
 import '../../signalr_service.dart';
 import '../../utilities/baseutitiles.dart';
 import '../../utilities/requestconstant.dart';
+import '../register_screen.dart';
 import 'Animations/FadeAnimation.dart';
 
 class SignInPage extends StatefulWidget {
@@ -39,6 +41,8 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   LoginController loginController = Get.put(LoginController());
+  AccountSetingController accountSetingController = Get.put(AccountSetingController());
+
 
   final kInnerDecoration = BoxDecoration(
     color: Colors.white,
@@ -58,6 +62,8 @@ class _SignInPageState extends State<SignInPage> {
     loginController.password_controller.clear();
     loginController.username_controller.clear();
     SignInPage.checkVersion(context);
+    accountSetingController.getCheckApprovalLevel();
+
     super.initState();
   }
 
@@ -246,7 +252,33 @@ class _SignInPageState extends State<SignInPage> {
                           }
                         },
                       )),
-
+                  // Obx(
+                  //     ()=> Visibility(
+                  //     visible: accountSetingController.checkApprovalLevelData.any(
+                  //           (item) =>
+                  //       item["screenName"] == "IOS Check" &&
+                  //           item["isApproval"] == true,
+                  //     ),
+                  //     child: FadeAnimation(1.8,
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: [
+                  //             const Text("New User!",
+                  //                 style: TextStyle(
+                  //                     fontSize: 14,
+                  //                     fontWeight: FontWeight.bold,
+                  //                     color: Colors.indigo)),
+                  //             TextButton(onPressed: (){
+                  //               Get.to(()=>RegisterScreen());
+                  //             }, child: Text("Register Here"))
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: BaseUtitiles.getheightofPercentage(context, 4)),
                   FadeAnimation(
                     1.8,

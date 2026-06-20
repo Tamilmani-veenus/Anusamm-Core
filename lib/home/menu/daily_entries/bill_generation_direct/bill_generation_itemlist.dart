@@ -362,7 +362,6 @@ class _Bill_Generation_ItemlistState extends State<Bill_Generation_Itemlist> {
                   ),
                   onTap: () {
                     setState(() {
-                      // billGenerationDirectController.deductionPaymentCalculation();
                       Navigator.push(
                           context,
                           MaterialPageRoute(

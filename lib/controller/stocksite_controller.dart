@@ -159,7 +159,7 @@ class StockSiteController extends GetxController{
 
 
   Future getProjectwiseshow(type) async {
-    getStockList.clear();
+    getStockList.value=[];
 
       final value = await ReportsProvider().stockReportProvider(
         reportsController.selectedProjectId.value,
@@ -189,7 +189,7 @@ class StockSiteController extends GetxController{
   }
 
 
-  Future getProjectDetailisList(BuildContext context, String pName) async {
+  Future getProjectDetailList(BuildContext context, String pName) async {
     projectDetailsList.value.clear();
     final value = await ReportsProvider.getProject_Details_List(
         reportsController.selectedProjectId.value,
@@ -254,21 +254,6 @@ class StockSiteController extends GetxController{
     Subheadername.text=materiaDropdownName.value;
   }
 
-  Future getMaterialShowList() async {
-    materialWiseShowList.value.clear();
-    await ReportsProvider.getMaterialWise_Show_List(
-        loginController.user.value.userId!,
-        loginController.user.value.userType!,
-        matDropdowntId.value,
-        materialSubDropdowntId.value,matHeadDropdowntId.value
-    ).then((value)async{
-      if(value.isNotEmpty){
-        materialWiseShowList.value=value;
-        return materialWiseShowList.value;
-      } else {
-        Fluttertoast.showToast(msg: "No details found");
-      }
-    });
-  }
+
 
 }

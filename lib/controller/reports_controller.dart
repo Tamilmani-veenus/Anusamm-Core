@@ -45,7 +45,7 @@ class ReportsController extends GetxController{
   RxList getMaterialdropDownvalue = [].obs;
   RxInt materialDropdowntId = 0.obs;
   RxString materiaDropdownName = "".obs;
-
+  RxBool validateProject = false.obs;
 
   //-------------Get Projects Reports---------------
 
@@ -145,23 +145,6 @@ class ReportsController extends GetxController{
   ///--------ReqLeaveType Report-------
   RxList ReqLevList = [].obs;
 
-  Future getReqLeave(StaffId,cmpId,frDate,toDate,levType) async {
-    ReqLevList.value.clear();
-    await ReportsProvider.reqSlipReportProvider(
-      StaffId,cmpId,frDate,toDate,levType,
-      loginController.user.value.userType!,
-    ).then((value)  {
-      if (value != null && value.length > 0) {
-        ReqLevList.value = value;
-        print('ReqLeaveTypeReport ::${ReqLevList.value}');
-        update();
-        return ReqLevList.value;
-      }else{
-        BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
-      }
-    });
-    return ReqLevList.value;
-  }
 
 
 

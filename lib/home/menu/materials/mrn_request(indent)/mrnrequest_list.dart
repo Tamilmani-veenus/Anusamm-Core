@@ -265,6 +265,7 @@ class _MRN_RequestIndent_EntrylistState
                                 primary: Theme.of(context).primaryColor),
                             onPressed: () async {
                               setState(() {
+                                editingController.text = "";
                                 mrn_request_controller.getMrn_Req_EntryList();
                               });
                             },
@@ -425,7 +426,7 @@ class _MRN_RequestIndent_EntrylistState
                                         child: Text(""),
                                       ),
                                       Expanded(
-                                          flex: 2,
+                                          flex: 3,
                                           child: Text(
                                             "Project",
                                             style: TextStyle(
@@ -456,7 +457,7 @@ class _MRN_RequestIndent_EntrylistState
                                         child: Text(""),
                                       ),
                                       Expanded(
-                                          flex: 2,
+                                          flex: 3,
                                           child: Text(
                                             "Site",
                                             style: TextStyle(
@@ -487,7 +488,7 @@ class _MRN_RequestIndent_EntrylistState
                                         child: Text(""),
                                       ),
                                       Expanded(
-                                          flex: 2,
+                                          flex: 3,
                                           child: Text(
                                             "Due Date",
                                             style: TextStyle(
@@ -518,7 +519,7 @@ class _MRN_RequestIndent_EntrylistState
                                         child: Text(""),
                                       ),
                                       Expanded(
-                                          flex: 2,
+                                          flex: 3,
                                           child: Text(
                                             "Req Type",
                                             style: TextStyle(
@@ -545,15 +546,15 @@ class _MRN_RequestIndent_EntrylistState
                                         child: Text(""),
                                       ),
                                       Expanded(
-                                          flex: 2,
+                                          flex: 3,
                                           child: Text(
-                                            "Prepared By :",
+                                            "Prepared By",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),
                                           )),
                                       Expanded(
-                                          flex: 4,
+                                          flex: 6,
                                           child: Text(
                                             mrn_request_controller.MrnReqEtyList
                                                 .value[index].Preparedby
@@ -562,7 +563,7 @@ class _MRN_RequestIndent_EntrylistState
                                                 TextStyle(color: Colors.black),
                                           )),
                                       Expanded(
-                                          flex: 1,
+                                          flex: 2,
                                           child: IconButton(
                                               onPressed: () {
                                                 showModalBottomSheet(

@@ -389,7 +389,8 @@ class Consumption_Controller extends GetxController {
         BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');
         BaseUtitiles.popMultiple(context, count: 2);
       }
-    } else {
+    }
+    else {
       BaseUtitiles.showToast("Something went wrong..");
       BaseUtitiles.popMultiple(context, count: 2);
     }

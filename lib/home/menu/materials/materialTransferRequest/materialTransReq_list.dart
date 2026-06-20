@@ -235,6 +235,7 @@ class _MatTransReqListState extends State<MatTransReqList> {
                                     primary: Theme.of(context).primaryColor),
                                 onPressed: () async {
                                   setState(() {
+                                    editingController.text = "";
                                     materialTransferReqController.getListMatTransReq();
                                   });
                                 },

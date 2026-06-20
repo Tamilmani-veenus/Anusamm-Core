@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:anusamm/controller/pendinglistcontroller.dart';
+
 import '../controller/projectcontroller.dart';
 import '../controller/sitecontroller.dart';
 import '../home/menu/main_menu/boq_revised/boq_additems.dart';
+import '../home/menu/main_menu/boq_revised/boq_approval_det.dart';
 import '../home/menu/main_menu/boq_revised/boq_revised_entry.dart';
 import '../home/menu/main_menu/boq_revised/boq_revised_entrylist.dart';
 import '../provider/boq_revised_provider.dart';
@@ -19,7 +24,7 @@ class Boq_Revised_Controller extends GetxController {
   ProjectController projectController = Get.put(ProjectController());
   SiteController siteController = Get.put(SiteController());
   LoginController loginController = Get.put(LoginController());
-
+  PendingListController pendingListController = Get.put(PendingListController());
   final boq_autoYearWiseNoController = TextEditingController();
   final boq_dateController = TextEditingController();
   final boq_remarksController = TextEditingController();
@@ -28,9 +33,11 @@ class Boq_Revised_Controller extends GetxController {
   final entryList_todateController = TextEditingController();
   RxList Boq_entryList = [].obs;
   RxList main_entryList = [].obs;
+  RxList approvalGetByIdList = [].obs;
   RxList<Result> Boq_ItemList = <Result>[].obs;
   RxList<Result> Boq_MainItemList = <Result>[].obs;
-
+  TextEditingController qtyController = TextEditingController();
+  TextEditingController remarksController = TextEditingController();
   late List<bool> isChecked;
 
   var itemTableModel = BoqItemlist();
@@ -50,6 +57,7 @@ class Boq_Revised_Controller extends GetxController {
   late List<BoqItemlist> updateListDatas = <BoqItemlist>[];
   late List<BoqItemlist> deleteModelList = <BoqItemlist>[];
   RxList<BoqReviseDet> getBoqDetList = <BoqReviseDet>[].obs;
+  RxList<BoqReviseDet> getBoqApproveDetList = <BoqReviseDet>[].obs;
   RxList Boqitem_itemview_GetDbList = [].obs;
   int reviseId = 0;
 
@@ -99,30 +107,72 @@ class Boq_Revised_Controller extends GetxController {
     }
   }
 
-  //---------Item List--------
-
-  Future getItemList(BuildContext context) async {
-    Boq_MainItemList.value=[];
-    Boq_ItemList.value=[];
-    var response = await BoqRevised_Provider.getRevisedItemlist(
-        reviseId,
-        projectController.selectedProjectId.value,
-        siteController.selectedsiteId.value,
-        siteController.selectedHeadId.value);
+  Future getApprovedGetByIdList(id,context) async {
+    approvalGetByIdList.value=[];
+    var response = await BoqRevised_Provider.getApprovalDetList(id);
     if (response != null) {
       if (response.success == true) {
-        if(response.result!.isNotEmpty) {
-          Boq_ItemList.value = response.result!;
-          Boq_MainItemList.value = response.result!;
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Boq_AddItems()));
+        approvalGetByIdList.value = [response.result];
+        if(approvalGetByIdList.isNotEmpty) {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> BOQ_Approve_Det_List(
+            entryNo: approvalGetByIdList[0].reviseNo,
+            entryDate: approvalGetByIdList[0].reviseDate,
+            projectName: approvalGetByIdList[0].projectName,
+            siteName: approvalGetByIdList[0].siteName,
+          )));
         }
         else {
           BaseUtitiles.showToast("No Data Found");
         }
       }  else {
+        BaseUtitiles.showToast(response.message ?? 'Something went wrong..');
+      }
+    } else {
+      BaseUtitiles.showToast("Something Went Wrong...");
+    }
+  }
+
+  //---------Item List--------
+
+  Future getItemList(BuildContext context) async {
+    Boq_MainItemList.value = [];
+    Boq_ItemList.value = [];
+
+    var response = await BoqRevised_Provider.getRevisedItemlist(
+      reviseId,
+      projectController.selectedProjectId.value,
+      siteController.selectedsiteId.value,
+      siteController.selectedHeadId.value,
+    );
+
+    if (response != null) {
+      if (response.success == true) {
+        if (response.result!.isNotEmpty) {
+
+          bool hasLevel3Items = response.result!.any(
+                (headItem) => headItem.subItems?.any(
+                  (subItem) => subItem.level3Items?.isNotEmpty == true,
+            ) == true,
+          );
+
+          if (!hasLevel3Items) {
+            BaseUtitiles.showToast("No Record Found");
+            return;
+          }
+
+          Boq_ItemList.value = response.result!;
+          Boq_MainItemList.value = response.result!;
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Boq_AddItems(),
+            ),
+          );
+        } else {
+          BaseUtitiles.showToast("No Data Found");
+        }
+      } else {
         BaseUtitiles.showToast(response.message ?? 'Something went wrong..');
       }
     } else {
@@ -284,7 +334,7 @@ class Boq_Revised_Controller extends GetxController {
       boqReviseDets: getBoqDet(id),
     ));
 
-    final list = await BoqRevised_Provider.SaveBoqRevisedScreenEntryAPI(body, id);
+    final list = await BoqRevised_Provider.SaveBoqRevisedScreenEntryAPI(body, id, saveButton.value);
     if (list != null ) {
       if(list["success"] == true){
         BaseUtitiles.showToast(list["message"]);
@@ -316,11 +366,78 @@ class Boq_Revised_Controller extends GetxController {
         qty: element.qty,
         remarks: "-",
         reviseQty: element.reviseQty,
+          approveStatus: "N",
+          approvedBy: int.tryParse(loginController.EmpId()),
+          boQcode: "0"
       )
       );
     }
     return getBoqDetList;
   }
+
+  Future ApproveBoqRevisedScreen(BuildContext context, data) async {
+    String body = boqRevisedSaveRequestToJson(BoqRevisedSaveRequest(
+      id: data.id,
+      reviseNo: data.reviseNo,
+      reviseDate: data.reviseDate,
+      projectId: data.projectId,
+      siteId: data.siteId,
+      remarks: data.remarks,
+      measureHeadItemId: data.measureHeadItemId,
+      createdBy: data.createdBy,
+      createdDt: data.createdDt,
+      boqReviseDets: getBoqApproveDet(data.boqReviseDets),
+    ));
+    final decodedJson = jsonDecode(body);
+
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    final prettyJson = encoder.convert(decodedJson);
+
+    debugPrint(prettyJson, wrapWidth: 1024);
+
+    final list = await BoqRevised_Provider.SaveBoqRevisedScreenEntryAPI(body, data.id, "Approve");
+    if (list != null ) {
+      if(list["success"] == true){
+        BaseUtitiles.showToast(list["message"]);
+        await pendingListController.getPendingList();
+        clearDatas();
+        BaseUtitiles.popMultiple(context, count: 3);
+      }
+      else {
+        BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');
+        BaseUtitiles.popMultiple(context, count: 2);
+      }
+    } else {
+      BaseUtitiles.showToast("Something went wrong..");
+      BaseUtitiles.popMultiple(context, count: 2);
+    }
+  }
+
+  List<BoqReviseDet>? getBoqApproveDet(data) {
+    getBoqApproveDetList.value=[];
+    for (var element in data) {
+      if (element.isCheck == true) {
+        getBoqApproveDetList.add(BoqReviseDet(
+            id: element.id,
+            boqReviseMasId: element.boqReviseMasId,
+            measureHeadItemId: element.measureHeadItemId,
+            measureSubItemId: element.measureSubItemId,
+            measureLevel3ItemId: element.measureLevel3ItemId,
+            scaleId: element.scaleId,
+            rate: element.rate,
+            qty: double.tryParse(element.qtyController.text),
+            remarks: element.remarksController.text ==""? "-" : element.remarksController.text,
+            reviseQty: element.reviseQty,
+            approveStatus: "Y",
+            approvedBy: int.tryParse(loginController.EmpId()),
+            boQcode: element.boQcode
+        )
+        );
+      }
+    }
+    return getBoqApproveDetList;
+  }
+
 
   // ---------Edit Call API----------
 
@@ -448,6 +565,14 @@ class Boq_Revised_Controller extends GetxController {
         ?.forEach((element) {
 
       if (element.level3ItemId == id) {
+        element.isCheck = value;
+      }
+    });
+  }
+
+  setCheckApproval(int id, bool value) {
+    approvalGetByIdList[0].boqReviseDets.forEach((element) {
+      if (element.id == id) {
         element.isCheck = value;
       }
     });

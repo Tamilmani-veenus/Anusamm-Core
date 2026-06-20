@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import '../apimanager/apimanager.dart';
 
+import '../models/boq_approval_det_model.dart';
 import '../models/boqrevised_itemlist_model.dart';
 import '../models/boqrevisededitresponse.dart';
 import '../models/boqrevisedentrylist_model.dart';
@@ -27,6 +28,17 @@ class BoqRevised_Provider{
     }
   }
 
+  static Future<ApproveDetResponse?> getApprovalDetList(id) async {
+    try {
+      var value = await ApiManager.getAPICall(
+          "${ApiConstant.GET_APP_DET_LIST}?id=$id");
+      return approveDetResponseFromJson(value);
+    } catch (error) {
+      print(error);
+      return null;
+    }
+  }
+
   //-----Itemlist--
   static Future<BoqRevisedItemResponse?> getRevisedItemlist(int? reviseId,int? pid, int? sid, int? headItemId) async {
     try {
@@ -40,14 +52,16 @@ class BoqRevised_Provider{
   }
   // -----------Save API------------
 
-  static SaveBoqRevisedScreenEntryAPI(String body, int reviseId) async {
+  static SaveBoqRevisedScreenEntryAPI(String body, int reviseId, saveButton) async {
     try {
       var response;
 
-      if (reviseId != 0) {
+      if (saveButton==RequestConstant.RESUBMIT) {
         response = await ApiManager.putUpdateAPIButton("${ApiConstant.PUT_BOQREVISED_UPDATE_API}?id=$reviseId", body);
-      } else {
+      } else if (saveButton==RequestConstant.SUBMIT) {
         response = await ApiManager.postAPICall(ApiConstant.BOQREVISED_SAVE, body);
+      } else{
+        response = await ApiManager.putUpdateAPIButton("${ApiConstant.PUT_BOQREVISED_APPROVE_API}?id=$reviseId", body);
       }
       return jsonDecode(response);
 

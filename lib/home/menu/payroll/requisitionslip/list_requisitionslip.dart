@@ -235,6 +235,7 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                             style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                             onPressed: () async {
                               setState(() {
+                                editingController.text = "";
                                 requisitionSlipController.getRequisitionslip_EntryList();
                               });
                             },
@@ -289,7 +290,6 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                             onChanged: (value) {
                               setState(() {
                                 requisitionSlipController.ReqSlipEtyList.value = BaseUtitiles.filterSearchResultsemployee(value,requisitionSlipController.mainentrylist);
-                                // mrn_request_controller.MrnReqEtyList.value = BaseUtitiles.filterSearchResults_MRNRequestIndent(value,mrn_request_controller.mainEtyList);
                               });
                             },
                           ),
@@ -448,6 +448,73 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                           )),
                                     ],
                                   ),
+                                  requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ?
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Time" : "OnDuty\nTime",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,),
+                                              )),
+                                          Expanded(
+                                              flex: 9,
+                                              child: Text(
+
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromTime} - ${requisitionSlipController.ReqSlipEtyList.value[index].permissionToTime}" ,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ):SizedBox(),
+                                  SizedBox(height: 5,),
+
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Date" :
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ? "OnDuty\nDate" :
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" ? "Leave Date" : "Compansate Date",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,),
+                                              )),
+                                          Expanded(
+                                              flex: 9,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O"?
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromDate}" :
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].leaveFromDate} - ${requisitionSlipController.ReqSlipEtyList.value[index].leaveToDate}",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
                                   SizedBox(height: 5,),
                                   Row(
                                     children: <Widget>[

@@ -13,6 +13,7 @@ import '../../../../controller/auto_yrwise_no_controller.dart';
 import '../../../../controller/bottomsheet_Controllers.dart';
 import '../../../../controller/companycontroller.dart';
 import '../../../../controller/dailyentries_controller.dart';
+import '../../../../controller/logincontroller.dart';
 import '../../../../controller/projectcontroller.dart';
 import '../../../../controller/sitecontroller.dart';
 import '../../../../controller/subcontcontroller.dart';
@@ -22,6 +23,7 @@ import '../../../../utilities/requestconstant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../punch_in_out/Image_galleryScreen.dart';
 import '../../../punch_in_out/camera_screen.dart';
 
 class SubattendanceSiteEntry extends StatefulWidget {
@@ -43,6 +45,8 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
       Get.put(AutoYearWiseNoController());
   BottomsheetControllers bottomsheetControllers =
       Get.put(BottomsheetControllers());
+  LoginController loginController = Get.put(LoginController());
+
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -227,6 +231,8 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       return null;
                                     },
                                     onTap: () async {
+                                      if(loginController.user.value.userType == "S"){}
+                                      else{
                                         var Entrydate = await showDatePicker(
                                             context: context,
                                             initialDate: DateTime.now(),
@@ -263,7 +269,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                                 .AttendDateController.text =
                                             BaseUtitiles.selectDateFormat(
                                                 Entrydate!);
-                                      }
+                                      }}
                                   ),
                                 ),
                               ),
@@ -598,6 +604,11 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       Fluttertoast.showToast(
                                           msg: "No Work can't add Image");
                                     } else {
+                                      // showDialog(
+                                      //     context: context,
+                                      //     builder: (BuildContext context) {
+                                      //       return const ImageGalleryPopup_Alert(imageUrl: "DLR");
+                                      //     });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

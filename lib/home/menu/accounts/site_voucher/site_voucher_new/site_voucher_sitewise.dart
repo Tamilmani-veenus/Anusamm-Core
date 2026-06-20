@@ -25,7 +25,6 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
   BottomsheetControllers bottomsheetControllers = Get.put(BottomsheetControllers());
   final SiteController siteController=Get.put(SiteController());
   CommonVoucherController commonVoucherController=Get.put(CommonVoucherController());
-  AdvanceReqVoucherController advanceReqVoucherController=Get.put(AdvanceReqVoucherController());
 
 
   @override
@@ -47,65 +46,65 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Scaffold(
-        backgroundColor: Setmybackground,
-        bottomNavigationBar: Container(
-          height: BaseUtitiles.getheightofPercentage(context, 4),
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: InkWell(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20,right: 20),
-                    height: BaseUtitiles.getheightofPercentage(context, 4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color:  Colors.white,
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          backgroundColor: Setmybackground,
+          bottomNavigationBar: Container(
+            height: BaseUtitiles.getheightofPercentage(context, 4),
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20,right: 20),
+                      height: BaseUtitiles.getheightofPercentage(context, 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color:  Colors.white,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text("Reset",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
+                            color:  Theme.of(context).primaryColor),
+                      ),
                     ),
-                    alignment: Alignment.center,
-                    child: Text("Reset",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                          color:  Theme.of(context).primaryColor),
-                    ),
-                  ),
-                  onTap: (){
-                      Navigator.pop(context);
-                  },
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20 , right: 20),
-                    height: BaseUtitiles.getheightofPercentage(context, 4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text( "OK",  style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                        color:   Colors.white),),
-                  ),
-                  onTap: () async {
-                    if(_formKey.currentState!.validate()){
-                      _formKey.currentState!.save();
-                      await siteVoucher_Controller.Sitevoucher_Save_DB(context);
-                      await siteVoucher_Controller.getsitevoucherTablesDatas();
-                      siteVoucher_Controller.netamountCalculation();
-                    }
+                    onTap: (){
+                        Navigator.pop(context);
                     },
+                  ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20 , right: 20),
+                      height: BaseUtitiles.getheightofPercentage(context, 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text( "OK",  style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
+                          color:   Colors.white),),
+                    ),
+                    onTap: () async {
+                      if(_formKey.currentState!.validate()){
+                        _formKey.currentState!.save();
+                        await siteVoucher_Controller.Sitevoucher_Save_DB(context);
+                        await siteVoucher_Controller.getsitevoucherTablesDatas();
+                        siteVoucher_Controller.netamountCalculation();
+                      }
+                      },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
+          body: SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(height: 40),
@@ -275,7 +274,7 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                                     }
                                   },
                                   validator: (value) {
-                                    if (value!.isEmpty || value == 0.00 || value == 0 || value == "0.0") {
+                                    if (value!.isEmpty || value == "0.00" || value == "0" || value == "0.") {
                                       return '\u26A0 Required';
                                     }
                                     return null;
@@ -443,8 +442,8 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                     ],
                   ),
                 ],
-              ),
-            )
+              )
+          ),
         ),
       ),
     );

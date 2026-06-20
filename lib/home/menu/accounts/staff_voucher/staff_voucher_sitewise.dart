@@ -27,7 +27,6 @@ class _staff_voucher_sitewiseState extends State<staff_voucher_sitewise> {
   BottomsheetControllers bottomsheetControllers = Get.put(BottomsheetControllers());
   final SiteController siteController=Get.put(SiteController());
   CommonVoucherController commonVoucherController=Get.put(CommonVoucherController());
-  AdvanceReqVoucherController advanceReqVoucherController=Get.put(AdvanceReqVoucherController());
   SiteVoucher_Controller siteVoucher_Controller = Get.put(SiteVoucher_Controller());
 
   @override

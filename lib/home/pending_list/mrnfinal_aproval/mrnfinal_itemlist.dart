@@ -105,9 +105,7 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                     height: BaseUtitiles.getheightofPercentage(context, 4),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: mrnFinalApprovalController.checkColor == 0
-                          ? Theme.of(context).primaryColor
-                          : Colors.white,
+                      color:  Theme.of(context).primaryColor
                     ),
                     alignment: Alignment.center,
                     child: Text(
@@ -115,13 +113,12 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: RequestConstant.Lable_Font_SIZE,
-                          color: mrnFinalApprovalController.checkColor == 0
-                              ? Colors.white
-                              : Theme.of(context).primaryColor),
+                          color: Colors.white
+                             ),
                     ),
                   ),
                   onTap: () {
-                    mrnFinalApprovalController.checkColor = 0;
+
                     if (check()) {
                       BaseUtitiles.showToast("Please select FromProject Name");
                     } else {

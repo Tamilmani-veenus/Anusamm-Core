@@ -404,24 +404,6 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                           const SizedBox(height: 20,),
                         ],
                       )),
-                      // Text(
-                      //   SignalRService().isSignalRConnected()
-                      //       ? "Connected"
-                      //       : "Disconnected",
-                      // ),
-                      //
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     SignalRService().startLocalMaintenanceTest();
-                      //   },
-                      //   child:Text("Start Maintenance Test"),
-                      // ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     SignalRService().stopLocalMaintenanceTest();
-                      //   },
-                      //   child:Text("stop Maintenance Test"),
-                      // ),
 
                           Obx(() {
                             return punchInController.punchTypeList.isNotEmpty
