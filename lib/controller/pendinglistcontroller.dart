@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../commonpopup/pendinglistdet_alert.dart';
 import '../commonpopup/po_suppliernamelist_alert.dart';
 import '../commonpopup/transferackmateriallist_alert.dart';
@@ -46,6 +48,7 @@ class PendingListController extends GetxController {
 
 
   RxString mrn_preapproval_autoYrsWise = "".obs;
+  RxString purchaseOrderNo = "".obs;
 
   RxList<OnClickListResult> addSubcontNmrListvalue =
       <OnClickListResult>[].obs;
@@ -89,6 +92,23 @@ class PendingListController extends GetxController {
       }
       else {
         BaseUtitiles.showToast(response.message ?? 'Something went wrong..');
+      }
+    } else {
+      BaseUtitiles.showToast("Something went wrong..");
+    }
+  }
+
+  Future getPurcharseOrderNo(projectId) async {
+    purchaseOrderNo.value="";
+    var entryDate=DateFormat('yyyy/MM/dd').format(DateTime.now());
+    var response = await PendingListProvider.getPurchaseOrderNo(projectId,entryDate);
+    if (response != null) {
+      if(response["success"]==true) {
+        purchaseOrderNo.value = response["entryAutoNo"];
+        print("purchaseOrderNo....${purchaseOrderNo.value}");
+      }
+      else {
+        BaseUtitiles.showToast(response["message"] ?? 'Something went wrong..');
       }
     } else {
       BaseUtitiles.showToast("Something went wrong..");
@@ -760,7 +780,7 @@ class PendingListController extends GetxController {
   }
 
   Future quotVerifyAprovalbuttonApi(context,int id,type,{quoteMasId}) async {
-    final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId);
+    final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId,purchaseOrderNo.value);
     print("Quote Approve :: $response");
     if(response!=null){
       if(response["success"]==true){

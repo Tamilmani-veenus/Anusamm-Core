@@ -2499,7 +2499,7 @@ class BottomsheetControllers {
                               margin: EdgeInsets.only(left: 10),
                               alignment: Alignment.center,
                               child: Text(
-                                type == "staffVoucher" || type == "punchReport"
+                                type == "staffVoucher"
                                     ? list[index].employeeName
                                     : list[index].staffName,
                                 textAlign: TextAlign.center,
@@ -2512,10 +2512,9 @@ class BottomsheetControllers {
                               staffController.selectedstaffId.value =
                                   list[index].id;
                               staffController.Staffname.text =
-                                  type == "staffVoucher" ||
-                                          type == "punchReport"
-                                      ? list[index].employeeName.toString()
-                                      : list[index].staffName.toString();
+                              type == "staffVoucher"
+                                  ? list[index].employeeName.toString()
+                                  : list[index].staffName.toString();
                               searchcontroller.text = "";
                               Navigator.pop(context);
                             },
