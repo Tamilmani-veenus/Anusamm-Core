@@ -13,9 +13,6 @@ class AccountSetingController  extends GetxController {
   final repassword_controller = TextEditingController();
   final password_controller = TextEditingController();
 
-  RxList checkApprovalLevelData = [].obs;
-
-
   changePasswordDetails(BuildContext context) async {
     Map<String, String> body = {
       "newPassword": password_controller.text.trim(),
@@ -40,21 +37,4 @@ class AccountSetingController  extends GetxController {
     }
   }
 
-  Future getCheckApprovalLevel() async {
-    checkApprovalLevelData.value = [];
-    var response = await Mrn_Req_provider.getCheckApprovalLevel();
-    if (response != null) {
-      if (response["success"] == true) {
-        if (response["result"]!.isNotEmpty) {
-          checkApprovalLevelData.value = response["result"];
-        } else {
-          BaseUtitiles.showToast('No Data Found');
-        }
-      } else {
-        BaseUtitiles.showToast(response["message"] ?? 'Something went wrong..');
-      }
-    } else {
-      BaseUtitiles.showToast("Something went wrong..");
-    }
-  }
 }

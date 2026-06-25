@@ -2,7 +2,7 @@ import 'dart:io';
 
 class ApiConfig {
   // static const String LIVE_ENDPOINT_CORE = "http://192.168.0.250:8080/";  //local
-  static const String LIVE_ENDPOINT_CORE = "http://49.204.233.151:8080/";
+  static const String LIVE_ENDPOINT_CORE = "http://49.204.233.151:8080/";    //local
 
   // static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "VeenusAPI/";
   static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "AnusammAPI/";
@@ -12,6 +12,7 @@ class ApiConfig {
 
 
   static Future<void> initializeUrl() async {
+
     final isLive = await _isEndpointLive(Uri.parse(LIVE_ENDPOINT_CORE).host);
     if (isLive) {
       APIURL_CORE = "${LIVE_ENDPOINT_CORE}AnusammAPI/";
@@ -45,17 +46,21 @@ class ApiConstant{
   static String POSTREGISTRATIONSAVEAPI = BASE_URL_CORE + "api/Admin/UserCreation";
 
   static String PENDINGLISTAPI = BASE_URL_CORE + "api/Menu/GetMobilePendingList";
+  static String REQNOLISTAPI = BASE_URL_CORE + "api/MaterialPurOrdMas/GetReqMasDataByPO";
   static String GETMRNFINALAPROVALAPI = BASE_URL_CORE + "api/MaterialPreApprovalRequest/GetFinalApproveMasById";
   static String GETMRPREAPROVALAPI = BASE_URL_CORE + "api/MaterialPreApprovalRequest/GetTobeApprovalByIDS";
   static String GETPROJECTDROPDOWNLIST = BASE_URL_CORE + "api/GenericMaster/GetProjectBasedOnUserAllocation";
+  static String GETPROJECTREPORTLIST = BASE_URL_CORE + "api/GenericMaster/GetCompanyWiseProject";
 
   static String GETFROMPROAGAINSTMRNLIST = BASE_URL_CORE + "api/MaterialTransfer/FromPrject";
   static String GETFROMSITELIST = BASE_URL_CORE + "api/StoreTransferPending/GetSiteDRP";
   static String GETREPORTPROJECTDROPDOWNLIST = BASE_URL_CORE + "api/GenericMaster/GetProjects";
   static String GETREPORTMATERIALDROPDOWNLIST = BASE_URL_CORE + "api/GenericMaster/GetMaterials";
+  static String GETALLMATERIALDROPDOWNLIST = BASE_URL_CORE + "api/GenericMaster/GetAllMaterial";
   static String GETSUBCONTRACTLIST = BASE_URL_CORE + "api/GenericMaster/GetSubContractorByProject";
 
   static String GETSUBCONTRACTLISTRPT = BASE_URL_CORE + "api/BOQReports/GetAllActiveSubContractorName";
+  static String GETCOMPANYLISTRPT = BASE_URL_CORE + "api/GenericMaster/GetCompany";
   static String GETWRKORDERNOLIST = BASE_URL_CORE + "api/SubContractorWorkQty/GetWorkOrderNoDd";
   static String GETBOQWRKORDERNOLIST = BASE_URL_CORE + "api/SubContractorWorkQtyBOQ/GetWorkOrderNoDd";
   static String GETINVOICENOLIST = BASE_URL_CORE + "api/SubContractorNMRBill/GetBillNo";
@@ -64,6 +69,7 @@ class ApiConstant{
   static String TOSITEDROPDWONLISTAPI = BASE_URL_CORE + "api/GenericMaster/GetToSitesByFrSiteDd";
   static String GETMRNREPORTSLISTAPI = BASE_URL_CORE + "api/MaterialReqOrdMas/GetAllMRNReportViewListMas";
   static String GETINWARDREPORTSLISTAPI = BASE_URL_CORE + "api/MaterialInward/GetInwardRepViewListMas";
+  static String GETREQTRACKERLISTAPI = BASE_URL_CORE + "api/AdminReports/MRNRequestTracker";
   static String GETDPRLISTAPI = BASE_URL_CORE + "api/DailyEntriesReports/GetDPRNewReportMasMob";
   static String GETONCLICK_PENDINGLISTAPI = BASE_URL_CORE + "api/CommonFile/GetPendingRecords";
   static String MRNONITEMSELCT = BASE_URL_CORE + "api/MaterialReqOrdMas/GetAllMRNReportViewListDet";
@@ -334,6 +340,7 @@ class ApiConstant{
   static String SITE_VOC_IMAGE_DELETE = BASE_URL_CORE + "api/SiteVoucher/DeleteSitVoucherImg";
   static String DPR_IMAGE_DELETE = BASE_URL_CORE + "api/SubContractorDailyWork/DeleteDPRImage";
   static String DELETE_MATERIALREQPREINDENT_ENTRYLIST_API = BASE_URL_CORE + "api/SiteRequest/DeletePreIndent";
+
   static String ACCOUNTDELETION = BASE_URL_CORE + "api/IOSUser/DeleteAccount";
 
 

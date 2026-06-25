@@ -625,7 +625,8 @@ class _Bill_Generation_Boq_EntrylistState_Site
                                                                 billGenerationBoqController.ItemGetTableListdata.clear();
                                                                 billGenerationBoqController.bill_editListApiDatas.value.clear();
                                                                 FocusScope.of(context).unfocus();
-                                                                await billGenerationBoqController.directBillEntryList_EditApi(billGenerationBoqController.bill_entryList.value[index].id,context,"ReSubmit",true);
+                                                                await billGenerationBoqController.directBillEntryList_EditApi(
+                                                                    billGenerationBoqController.bill_entryList.value[index].id,context,"ReSubmit",true);
 
                                                               }),
 

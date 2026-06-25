@@ -1295,6 +1295,7 @@
 //   }
 // }
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
@@ -2402,7 +2403,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                         ),
 
                         child: Padding(
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(10),
 
                           child: Column(
                             crossAxisAlignment:
@@ -2420,7 +2421,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                 ),
                               ),
 
-                              SizedBox(height: 15),
+                              SizedBox(height: 10),
 
                               buildInfoRow(
                                 "Project",
@@ -2453,7 +2454,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                       ),
                     ),
 
-                    SizedBox(width: 10),
+                    SizedBox(width: 3),
 
                     /// PURCHASE INFO CARD
                     Expanded(
@@ -2504,6 +2505,8 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                               ),
                             ],
                           ),
+
+
                         ),
                       ),
                     ),
@@ -2511,6 +2514,56 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                 ),
               ),
 
+              SizedBox(height: 10),
+              Obx(() {
+                final reqNos = pendingListController.reqNoList
+                    .map((e) => e["ReqOrdNo"].toString().trim())
+                    .toList();
+
+                List<String> rows = [];
+                for (int i = 0; i < reqNos.length; i += 2) {
+                  if (i + 1 < reqNos.length) {
+                    rows.add("${reqNos[i]}, ${reqNos[i + 1]}");
+                  } else {
+                    rows.add(reqNos[i]);
+                  }
+                }
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Text(
+                        "  Req No :",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: rows.map((row) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              row ?? "-",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                );
+              }),
               SizedBox(height: 15),
               /// HORIZONTAL SCROLL AREA
 
@@ -2599,11 +2652,12 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                             },
                                             child: Icon(
                                               Icons.search,
-                                              size: 20,
+                                              size: 25,
                                               color: Theme.of(context).primaryColor,
                                             ),
                                           ),
                                         ),
+
                                       ),
 
                                       /// MATERIAL
@@ -3241,7 +3295,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
 
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 11,
+              fontSize: 12,
             ),
           ),
         ),
@@ -3261,7 +3315,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
             value,
 
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 12,
             ),
           ),
         ),

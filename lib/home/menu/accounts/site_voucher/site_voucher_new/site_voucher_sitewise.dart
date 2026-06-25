@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../../app_theme/app_colors.dart';
 import '../../../../../constants/ui_constant/icons_const.dart';
@@ -248,6 +249,11 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
                                   keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
                                   controller: siteVoucher_Controller.DetAmount,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
                                   cursorColor: Colors.black,
@@ -306,6 +312,11 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
                                   keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
                                   controller: siteVoucher_Controller.Tds,
                                   cursorColor: Colors.black,
                                   style: TextStyle(color: Colors.black),

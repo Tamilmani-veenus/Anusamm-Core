@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../app_theme/app_colors.dart';
@@ -122,7 +123,27 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                     if (check()) {
                       BaseUtitiles.showToast("Please select FromProject Name");
                     } else {
-                      SubmitAlert(context);
+                      bool hasInvalid = false;
+                      for (int i = 0; i < mrnFinalApprovalController.MaterialFinalAppr_itemview_GetDbList.length; i++) {
+                        final controller = mrnFinalApprovalController.ApprQty_ListController[i];
+                        final text = controller.text.trim();
+
+                        if (text.isEmpty) {
+                          hasInvalid = true;
+                          break;
+                        }
+
+                        final value = double.tryParse(text);
+                        if (value == null || value <= 0) {
+                          hasInvalid = true;
+                          break;
+                        }
+                      }
+                      if (hasInvalid) {
+                        BaseUtitiles.showToast("App Qty Should Not be Zero or Empty");
+                      } else {
+                        SubmitAlert(context);
+                      }
                     }
                   },
                 ),
@@ -417,6 +438,11 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                                             keyboardType:
                                             TextInputType.numberWithOptions(
                                                 decimal: true),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                RegExp(r'^\d+\.?\d{0,2}'),
+                                              ),
+                                            ],
                                             decoration: InputDecoration(
                                               contentPadding:
                                               EdgeInsets.fromLTRB(

@@ -54,7 +54,7 @@ class SupplierController extends GetxController {
 
   Future getInwardtList() async {
     getSupplierListData.value.clear();
-    final value = await ReportsProvider.getInward_Report_List(reportsController.selectedProjectId.value,reportsController.selectedsiteId.value,reportsController.selectedsuppliertId.value,FromdateController.text,TodateController.text);
+    final value = await ReportsProvider.getInward_Report_List(reportsController.selectedProjectId.value,reportsController.selectedsiteId.value,reportsController.selectedsuppliertId.value,FromdateController.text,TodateController.text,reportsController.materialDropdowntId.value);
     if (value != null) {
       if(value.success == true){
         if(value.result!.isNotEmpty) {

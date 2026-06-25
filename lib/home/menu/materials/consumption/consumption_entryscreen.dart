@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../../app_theme/app_colors.dart';
@@ -898,6 +899,11 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                                    textAlign: TextAlign.center,
                                    controller: consumption_controller.Itemlist_UsageqtyControllers[index],
                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                   inputFormatters: [
+                                     FilteringTextInputFormatter.allow(
+                                       RegExp(r'^\d+\.?\d{0,2}'),
+                                     ),
+                                   ],
                                    decoration: InputDecoration(
                                      labelText: 'Usage Quantity',
                                      labelStyle: const TextStyle(color: Colors.black),

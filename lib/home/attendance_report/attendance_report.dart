@@ -142,11 +142,19 @@ class _AttendanceReportState extends State<AttendanceReport> {
                                 ),
                               ),
                               onTap: () async {
+
+                                DateTime today = DateTime.now();
+                                DateTime initialDate = today.subtract(const Duration(days: 7));
+
+                                if (initialDate.isBefore(DateTime(1900))) {
+                                  initialDate = DateTime(1900);
+                                }
+
                                 var Frdate = await showDatePicker(
                                     context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2010),
-                                    lastDate: DateTime.now(),
+                                    initialDate: initialDate,
+                                    firstDate: DateTime(1900),
+                                    lastDate: today,
                                     builder: (context, child) {
                                       return Theme(
                                         data: Theme.of(context).copyWith(
@@ -218,6 +226,8 @@ class _AttendanceReportState extends State<AttendanceReport> {
                                               Theme.of(context).primaryColor)),
                                 ),
                                 onTap: () async {
+                                  DateTime today = DateTime.now();
+                                  DateTime fromDate = DateTime.parse(siteController.FromdateController.text);
                                   var Todate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
@@ -296,7 +306,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         ),
                         onTap: () async {
                           await reportsController.getReportProjectList(
-                              type: "attendance Rpt");
+                              type: "attendance Rpt",Url: "Report");
                           if (mounted) {
                             bottomsheetControllers.projectNameReport(
                                 context,
@@ -399,7 +409,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                           await subcontractorController.getSubcontList(context,
                               reportsController.selectedProjectId.value,
                               reportsController.selectedsiteId.value,
-                              subcontractorController.checkScreen);
+                              subcontractorController.checkScreen,Url:"Report");
                           if (mounted) {
                             bottomsheetControllers.SubcontractorName(context, subcontractorController.getdropDownvalue.value);
 
@@ -410,7 +420,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         },
                         validator: (value) {
                           if (value!.isEmpty || value == "--Select--") {
-                            return '\u26A0 Please select Subcontractor name.';
+                            return '\u26A0 Required';
                           }
                           return null;
                         },
@@ -458,7 +468,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
                         },
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return '\u26A0 Please select work type';
+                            return '\u26A0 Required';
                           }
                           return null;
                         },
@@ -595,7 +605,7 @@ class _AttendanceReportState extends State<AttendanceReport> {
 
   Widget ListDetails() {
     return Container(
-      height: BaseUtitiles.getheightofPercentage(context, 50),
+      height: BaseUtitiles.getheightofPercentage(context, 36),
       child: Column(
         children: [
           Expanded(
@@ -788,13 +798,13 @@ class _AttendanceReportState extends State<AttendanceReport> {
                                           attendanceController.attendanceDatas
                                                       .value[index].WorkType ==
                                                   'NMR'
-                                              ? 'Claimable NMR'
+                                              ? 'NMR'
                                               : attendanceController
                                                           .attendanceDatas
                                                           .value[index]
                                                           .WorkType ==
                                                       'RATE'
-                                                  ? 'Daily attendance'
+                                                  ? 'RATE'
                                                   : attendanceController
                                                       .attendanceDatas
                                                       .value[index]

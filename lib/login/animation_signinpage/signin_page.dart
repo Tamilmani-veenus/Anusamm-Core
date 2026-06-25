@@ -62,8 +62,7 @@ class _SignInPageState extends State<SignInPage> {
     loginController.password_controller.clear();
     loginController.username_controller.clear();
     SignInPage.checkVersion(context);
-    accountSetingController.getCheckApprovalLevel();
-
+    // mrn_request_controller.getCheckApprovalLevel();
     super.initState();
   }
 

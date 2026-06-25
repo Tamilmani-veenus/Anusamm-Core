@@ -8,6 +8,7 @@ import '../models/inward_report_list_model.dart';
 import '../models/materialwise_materialdropdown_model.dart';
 import '../models/materialwise_showlist_model.dart';
 import '../models/mrnlist_reports_model.dart';
+import '../models/mrnreq_tracker_reportmodel.dart';
 import '../models/onitem_attendance_selct_model.dart';
 import '../models/onitem_dpr_select_model.dart';
 import '../models/onitem_inward_select_model.dart';
@@ -33,10 +34,10 @@ class ReportsProvider{
 
   //-----------Get Project Reports--------------------
 
-  static Future<MaterialWiseMaterialDropdownResponse?> getReportMrnMaterial() async {
+  static Future<MaterialWiseMaterialDropdownResponse?> getReportMrnMaterial(type) async {
     try {
       final response =
-      await ApiManager.getAPICall(ApiConstant.GETREPORTMATERIALDROPDOWNLIST);
+      await ApiManager.getAPICall(type=="mrnReqTracker"?ApiConstant.GETALLMATERIALDROPDOWNLIST:ApiConstant.GETREPORTMATERIALDROPDOWNLIST);
       print("response...${response}");
       return materialWiseMaterialDropdownResponseFromJson(response);
     } catch (error,e) {
@@ -91,23 +92,16 @@ class ReportsProvider{
     }
   }
 
-  /// ------------ **************** ------- Reports List View ------------ **************** -------------------
-
-  // static Future<List<WklyReportResponse>> getNMRreportList(int projectId,int subId,String frdate,String todate) async {
-  //   var data = null;
-  //   await ApiManager.getAPICall(ApiConstant.GETNMRREPORT+"?PrjId=$projectId&SubId=$subId&FrDate=$frdate&ToDate=$todate").then((value) {
-  //     print("WklyReportList:"+value);
-  //     data = wklyReportResponseFromJson(value);
-  //     if (data!=null&& data.length>0) {
-  //       return data;
-  //     }
-  //   }, onError: (error) {
-  //     print(error);
-  //     print("Error == $error");
-  //     BaseUtitiles.showToast('Something went wrong..');
-  //   });
-  //   return data;
-  // }
+  static Future getCompanyReports() async {
+    try {
+      final response = await ApiManager.getAPICall(ApiConstant.GETCOMPANYLISTRPT);
+      print("response...${response}");
+      return jsonDecode(response);
+    } catch (error) {
+      print("Error == $error");
+      return null;
+    }
+  }
 
   static Future<AttendanceReportListResponse?> getAttendancereportList(int projectId,int siteId,int subId,String frdate,String todate,String workType) async {
     try {
@@ -174,10 +168,10 @@ class ReportsProvider{
   }
 
 
-  static Future<MrnListReportsResponse?> getMrn_Report_List(int projectId,int siteId,String frdate,String todate) async {
+  static Future<MrnListReportsResponse?> getMrn_Report_List(int projectId,int siteId,String frdate,String todate,int matId) async {
     try {
       final response =
-      await ApiManager.getAPICall(ApiConstant.GETMRNREPORTSLISTAPI + "?fromDate=$frdate&toDate=$todate&ProjectId=$projectId&SiteId=$siteId");
+      await ApiManager.getAPICall(ApiConstant.GETMRNREPORTSLISTAPI + "?fromDate=$frdate&toDate=$todate&ProjectId=$projectId&SiteId=$siteId&MaterialId=$matId");
       print("response...${response}");
       return mrnListReportsResponseFromJson(response);
     } catch (error,e) {
@@ -187,11 +181,24 @@ class ReportsProvider{
     }
   }
 
-
-  static Future<InwardReportListResponse?> getInward_Report_List(int projectId,int siteId,int subId,String frdate,String todate) async {
+  static Future<MrnReqTrackerListModel?> getMrnReqTrackerRptList(int projectId,int siteId,int materialId,String frdate,String todate) async {
     try {
       final response =
-      await ApiManager.getAPICall(ApiConstant.GETINWARDREPORTSLISTAPI+"?ProjectId=$projectId&SiteId=$siteId&SupplierId=$subId&fromDate=$frdate&toDate=$todate");
+      await ApiManager.getAPICall(ApiConstant.GETREQTRACKERLISTAPI + "?projectId=$projectId&siteId=$siteId&materialId=$materialId&fromDate=$frdate&toDate=$todate");
+      print("response...${response}");
+      return mrnReqTrackerListModelFromJson(response);
+    } catch (error,e) {
+      print("Error == $error");
+      print("ERROR....${e}");
+      return null;
+    }
+  }
+
+
+  static Future<InwardReportListResponse?> getInward_Report_List(int projectId,int siteId,int subId,String frdate,String todate,int matId) async {
+    try {
+      final response =
+      await ApiManager.getAPICall(ApiConstant.GETINWARDREPORTSLISTAPI+"?ProjectId=$projectId&SiteId=$siteId&SupplierId=$subId&fromDate=$frdate&toDate=$todate&MaterialId=$matId");
       print("response...${response}");
       return inwardReportListResponseFromJson(response);
     } catch (error,e) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -832,6 +833,11 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                                       : false,
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
                                   controller: siteVoucher_Controller.Amount,
                                   cursorColor: Colors.black,
                                   style: const TextStyle(color: Colors.black),

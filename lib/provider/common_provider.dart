@@ -29,10 +29,10 @@ import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 
 class CommonProvider {
-  static Future<ProjectDropdownListResponse?> getproject() async {
+  static Future<ProjectDropdownListResponse?> getproject({type,companyId}) async {
     try {
       final response =
-          await ApiManager.getAPICall(ApiConstant.GETPROJECTDROPDOWNLIST);
+          await ApiManager.getAPICall(type=="mrnReqTracker"?ApiConstant.GETPROJECTREPORTLIST+"?CompanyId=$companyId":ApiConstant.GETPROJECTDROPDOWNLIST);
       print("response...${response}");
       return projectDropdownListResponseFromJson(response);
     } catch (error) {
@@ -521,7 +521,6 @@ class CommonProvider {
       return null;
     }
   }
-
 
   static Future<MateriallistResponse?> getmaterial(
       bool requestType, projectId, siteId) async {

@@ -1311,14 +1311,19 @@ class BaseUtitiles {
   //   }
   // }
 
-  static empNameamePopupAlert(String value, List list) {
+  static empNameamePopupAlert(String value, List list,type) {
 
     if (value.isEmpty) {
       return list;
     }
 
     return list.where((item) {
-      return item.employeeName
+      return type == "staffVoucher"
+          ? item.employeeName
+          .toString()
+          .toLowerCase()
+          .contains(value.toLowerCase())
+          : item.staffName
           .toString()
           .toLowerCase()
           .contains(value.toLowerCase());

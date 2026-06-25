@@ -34,10 +34,10 @@ Future<void> main() async {
   await SessionStorage.init();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyBwZalJ5eOMzalHaiTne5j_sm1dOn9BDHE",
-          appId: "1:548143423324:android:308c52c8c2e71e1e0beb99",
-          messagingSenderId: "548143423324",
-          projectId: "anusamm-3d8ae"));
+          apiKey: "AIzaSyCWpFVl9QxNZlfNWgyOzEVNq6xjnc2AZ-k",
+          appId: "1:677951071137:android:63203a73e5ff0d8e5fe1e0",
+          messagingSenderId: "677951071137",
+          projectId: "vrindhavana-b14fe"));
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
   await Get.putAsync(() async => ConnectivityService());

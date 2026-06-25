@@ -13,10 +13,10 @@ class QuoteApproveAlert extends StatefulWidget {
   final int? pId;
   QuoteApproveAlert(
       {Key? key,
-      required this.heading,
-      required this.id,
-      required this.no,
-      required this.pId})
+        required this.heading,
+        required this.id,
+        required this.no,
+        required this.pId})
       : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class QuoteApproveAlert extends StatefulWidget {
 
 class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
   PendingListController pendingListController =
-      Get.put(PendingListController());
+  Get.put(PendingListController());
 
   @override
   void initState() {
@@ -42,16 +42,16 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
         children: [
           const Expanded(
               child: Text(
-            'Choose Supplier',
-            style: TextStyle(fontSize: 14),
-          )),
+                'Choose Supplier',
+                style: TextStyle(fontSize: 14),
+              )),
           Expanded(
               child: Text(
-            textAlign: TextAlign.right,
-            widget.no.toString(),
-            style:
+                textAlign: TextAlign.right,
+                widget.no.toString(),
+                style:
                 TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
-          )),
+              )),
         ],
       ),
       content: SizedBox(
@@ -125,103 +125,103 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
     return Container(
       height: 400,
       child: Obx(() => ListView.builder(
-            padding: EdgeInsets.zero,
-            physics: BouncingScrollPhysics(), // Smooth scrolling effect
-            itemCount: pendingListController.supplierList.length,
-            itemBuilder: (context, supplierIndex) {
-              return Container(
-                color: Setmybackground,
-                margin: EdgeInsets.only(bottom: 2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        padding: EdgeInsets.zero,
+        physics: BouncingScrollPhysics(), // Smooth scrolling effect
+        itemCount: pendingListController.supplierList.length,
+        itemBuilder: (context, supplierIndex) {
+          return Container(
+            color: Setmybackground,
+            margin: EdgeInsets.only(bottom: 2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Checkbox(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(2.0),
-                          ),
-                          side: MaterialStateBorderSide.resolveWith(
+                    Checkbox(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0),
+                      ),
+                      side: MaterialStateBorderSide.resolveWith(
                             (states) => BorderSide(
-                              width: 1.0,
-                              color: Theme.of(context).primaryColor,
+                          width: 1.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      checkColor: Colors.white,
+                      activeColor: Theme.of(context).primaryColor,
+                      onChanged: (value) {
+                        setState(() {
+                          pendingListController.supplierList.forEach(
+                                  (supplier) => supplier.isChecked = false);
+                          pendingListController.setCheck(
+                              pendingListController
+                                  .supplierList[supplierIndex].id,
+                              value!);
+                          pendingListController.supplierList[supplierIndex]
+                              .isChecked = value;
+                          pendingListController.checkboxval =
+                              pendingListController
+                                  .supplierList[supplierIndex].isChecked;
+                        });
+                      },
+                      value: pendingListController
+                          .supplierList[supplierIndex].isChecked,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 3),
+                          width: BaseUtitiles.getWidthtofPercentage(
+                              context, 45),
+                          child: Text(
+                            pendingListController
+                                .supplierList[supplierIndex]
+                                .supplierName ??
+                                "-",
+                            style: TextStyle(
+                              fontSize: RequestConstant.ALERT_Font_SIZE,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          checkColor: Colors.white,
-                          activeColor: Theme.of(context).primaryColor,
-                          onChanged: (value) {
-                            setState(() {
-                              pendingListController.supplierList.forEach(
-                                  (supplier) => supplier.isChecked = false);
-                              pendingListController.setCheck(
-                                  pendingListController
-                                      .supplierList[supplierIndex].id,
-                                  value!);
-                              pendingListController.supplierList[supplierIndex]
-                                  .isChecked = value;
-                              pendingListController.checkboxval =
-                                  pendingListController
-                                      .supplierList[supplierIndex].isChecked;
-                            });
-                          },
-                          value: pendingListController
-                              .supplierList[supplierIndex].isChecked,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 3),
-                              width: BaseUtitiles.getWidthtofPercentage(
-                                  context, 45),
-                              child: Text(
-                                pendingListController
-                                        .supplierList[supplierIndex]
-                                        .supplierName ??
-                                    "-",
-                                style: TextStyle(
-                                  fontSize: RequestConstant.ALERT_Font_SIZE,
-                                  fontWeight: FontWeight.bold,
+                        Container(
+                          margin: EdgeInsets.only(top: 5, left: 3),
+                          child: Row(
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize:
+                                      RequestConstant.Lable_Font_SIZE),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text:
+                                      "Net Amt: ${pendingListController.supplierList[supplierIndex].netAmount ?? "-"}",
+                                      style: TextStyle(
+                                        color:
+                                        Theme.of(context).primaryColor,
+                                        fontSize:
+                                        RequestConstant.App_Font_SIZE,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5, left: 3),
-                              child: Row(
-                                children: <Widget>[
-                                  RichText(
-                                    text: TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize:
-                                              RequestConstant.Lable_Font_SIZE),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text:
-                                              "Net Amt: ${pendingListController.supplierList[supplierIndex].netAmount ?? "-"}",
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize:
-                                                RequestConstant.App_Font_SIZE,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-              );
-            },
-          )),
+              ],
+            ),
+          );
+        },
+      )),
     );
   }
 }

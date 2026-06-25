@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1194,6 +1195,11 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                           .EntrySCreenNosControllers[index],
                                       cursorColor: Colors.black,
                                       keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d+\.?\d{0,2}'),
+                                        ),
+                                      ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
                                         contentPadding:

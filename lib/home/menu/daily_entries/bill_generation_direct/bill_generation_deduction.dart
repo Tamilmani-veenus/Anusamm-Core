@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
 import '../../../../controller/auto_yrwise_no_controller.dart';
@@ -184,6 +185,11 @@ class _Bill_Generation_direct_deductionState
                                 AutovalidateMode.onUserInteraction,
 
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 controller:
                                 billGenerationDirectController.materialDebitamt,
                                 cursorColor: Colors.black,
@@ -350,6 +356,11 @@ class _Bill_Generation_direct_deductionState
                                   }
                                 },
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 controller:
                                     billGenerationDirectController.Creditamt,
                                 cursorColor: Colors.black,
@@ -512,6 +523,11 @@ class _Bill_Generation_direct_deductionState
                                   }
                                 },
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 controller:
                                     billGenerationDirectController.Debitamt,
                                 cursorColor: Colors.black,
@@ -803,6 +819,11 @@ class _Bill_Generation_direct_deductionState
                                   }
                                 },
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 controller:
                                 billGenerationDirectController.Roundoff,
                                 cursorColor: Colors.black,
@@ -899,6 +920,11 @@ class _Bill_Generation_direct_deductionState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                                 controller:
