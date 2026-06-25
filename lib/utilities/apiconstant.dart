@@ -178,6 +178,7 @@ class ApiConstant{
   static String GET_SITEREQ_VERIFY_PEND_LIST = BASE_URL_CORE + "api/SiteRequest/GetAllPreIndentVerifyPendingDetails";
   static String GET_SITEREQ_APPROVAL_PEND_LIST = BASE_URL_CORE + "api/SiteRequest/GetAllTobePreIndentApproval";
   static String GET_SUPPLIER_QUOTE_APPROVAL_LIST = BASE_URL_CORE + "api/MaterialQuote/GetSupplierQuoteApproval";
+  static String GET_PURCHASE_ORDER_NO_API = BASE_URL_CORE + "api/GenericMaster/GetAutoNoBasedOnEntryDate";
 
   static String GET_PENDING_QUOTE_LIST = BASE_URL_CORE + "api/MaterialQuote/GetPendingQuote";
   static String GET_VERIFY_QUOTE_LIST = BASE_URL_CORE + "api/MaterialQuote/GetQuoteVerificationPending";

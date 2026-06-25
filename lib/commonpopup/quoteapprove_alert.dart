@@ -11,16 +11,21 @@ class QuoteApproveAlert extends StatefulWidget {
   final int? id;
   final String no;
   final int? pId;
-  QuoteApproveAlert({Key? key, required this.heading, required this.id, required this.no, required this.pId}) : super(key: key);
-
+  QuoteApproveAlert(
+      {Key? key,
+      required this.heading,
+      required this.id,
+      required this.no,
+      required this.pId})
+      : super(key: key);
 
   @override
   State<QuoteApproveAlert> createState() => _QuoteApproveAlertState();
 }
 
 class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
-  PendingListController pendingListController = Get.put(PendingListController());
-
+  PendingListController pendingListController =
+      Get.put(PendingListController());
 
   @override
   void initState() {
@@ -35,10 +40,18 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Expanded(child: Text('Choose Supplier', style: TextStyle(fontSize: 14),)),
-          Expanded(child: Text(
+          const Expanded(
+              child: Text(
+            'Choose Supplier',
+            style: TextStyle(fontSize: 14),
+          )),
+          Expanded(
+              child: Text(
             textAlign: TextAlign.right,
-            widget.no.toString(), style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),)),
+            widget.no.toString(),
+            style:
+                TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+          )),
         ],
       ),
       content: SizedBox(
@@ -80,12 +93,14 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
                   onTap: () async {
                     pendingListController.getQuoteDetList.value.clear();
                     if (pendingListController.checkboxval == true) {
-                      await pendingListController
-                          .quotVerifyAprovalbuttonApi(
-                          context,
-                          widget.id!,"Approve",quoteMasId: pendingListController.quoteid.value);
+                      if (await BaseUtitiles.checkNetworkAndShowLoader(
+                          context)) {
+                        await pendingListController.quotVerifyAprovalbuttonApi(
+                            context, widget.id!, "Approve",
+                            quoteMasId: pendingListController.quoteid.value);
+                      }
                     } else {
-                      BaseUtitiles.showToast( "Please select supplier");
+                      BaseUtitiles.showToast("Please select supplier");
                     }
                   },
                   child: Text(
@@ -99,7 +114,6 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
@@ -107,94 +121,107 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
     );
   }
 
-  Widget listDetails(){
+  Widget listDetails() {
     return Container(
       height: 400,
       child: Obx(() => ListView.builder(
-        padding: EdgeInsets.zero,
-        physics: BouncingScrollPhysics(), // Smooth scrolling effect
-        itemCount: pendingListController.supplierList.length,
-        itemBuilder: (context, supplierIndex) {
-          return Container(
-            color: Setmybackground,
-            margin: EdgeInsets.only(bottom: 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
+            padding: EdgeInsets.zero,
+            physics: BouncingScrollPhysics(), // Smooth scrolling effect
+            itemCount: pendingListController.supplierList.length,
+            itemBuilder: (context, supplierIndex) {
+              return Container(
+                color: Setmybackground,
+                margin: EdgeInsets.only(bottom: 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Checkbox(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0),
-                      ),
-                      side: MaterialStateBorderSide.resolveWith(
+                    Row(
+                      children: <Widget>[
+                        Checkbox(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          side: MaterialStateBorderSide.resolveWith(
                             (states) => BorderSide(
-                          width: 1.0,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      checkColor: Colors.white,
-                      activeColor: Theme.of(context).primaryColor,
-                      onChanged: (value) {
-                        setState(() {
-                          pendingListController.supplierList.forEach((supplier) => supplier.isChecked = false);
-                          pendingListController.setCheck(pendingListController.supplierList[supplierIndex].id, value!);
-                          pendingListController.supplierList[supplierIndex].isChecked = value;
-                          pendingListController.checkboxval = pendingListController.supplierList[supplierIndex].isChecked;
-                        });
-                      },
-                      value: pendingListController.supplierList[supplierIndex].isChecked,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 3),
-                          width: BaseUtitiles.getWidthtofPercentage(context, 45),
-                          child: Text(
-                            pendingListController.supplierList[supplierIndex].supplierName ?? "-",
-                            style: TextStyle(
-                              fontSize: RequestConstant.ALERT_Font_SIZE,
-                              fontWeight: FontWeight.bold,
+                              width: 1.0,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          checkColor: Colors.white,
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged: (value) {
+                            setState(() {
+                              pendingListController.supplierList.forEach(
+                                  (supplier) => supplier.isChecked = false);
+                              pendingListController.setCheck(
+                                  pendingListController
+                                      .supplierList[supplierIndex].id,
+                                  value!);
+                              pendingListController.supplierList[supplierIndex]
+                                  .isChecked = value;
+                              pendingListController.checkboxval =
+                                  pendingListController
+                                      .supplierList[supplierIndex].isChecked;
+                            });
+                          },
+                          value: pendingListController
+                              .supplierList[supplierIndex].isChecked,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5, left: 3),
-                          child: Row(
-                            children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: "Net Amt: ${pendingListController.supplierList[supplierIndex].netAmount ?? "-"}",
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: RequestConstant.App_Font_SIZE,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 3),
+                              width: BaseUtitiles.getWidthtofPercentage(
+                                  context, 45),
+                              child: Text(
+                                pendingListController
+                                        .supplierList[supplierIndex]
+                                        .supplierName ??
+                                    "-",
+                                style: TextStyle(
+                                  fontSize: RequestConstant.ALERT_Font_SIZE,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 5, left: 3),
+                              child: Row(
+                                children: <Widget>[
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              RequestConstant.Lable_Font_SIZE),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text:
+                                              "Net Amt: ${pendingListController.supplierList[supplierIndex].netAmount ?? "-"}",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize:
+                                                RequestConstant.App_Font_SIZE,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          );
-        },
-      )
-      ),
+              );
+            },
+          )),
     );
   }
-
 }
-
