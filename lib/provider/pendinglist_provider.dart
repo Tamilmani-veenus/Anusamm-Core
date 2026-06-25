@@ -36,23 +36,23 @@ class PendingListProvider {
     }
   }
 
-  static Future<MrnPreApprovalResponse?> getMRNPreApprovalPendingList() async {
+  static Future getReqNoList(reqId) async {
     try {
-      final response = await ApiManager.getAPICall(
-          ApiConstant.GET_MRNPREAPPROVAL_PENDINGLIST);
+      final response = await ApiManager.getAPICall(ApiConstant.REQNOLISTAPI + "?Id=$reqId&mode=PO");
 
-      return mrnPreApprovalResponseFromJson(response);
+      return jsonDecode(response);
     } catch (error) {
       print("Error == $error");
       return null;
     }
   }
 
-  static Future getPurchaseOrderNo(projectId,entryDate) async {
+  static Future<MrnPreApprovalResponse?> getMRNPreApprovalPendingList() async {
     try {
       final response = await ApiManager.getAPICall(
-          ApiConstant.GET_PURCHASE_ORDER_NO_API + "?projectId=$projectId&fieldName=PurchaseOrdNo&tableName=MaterialPurchaseOrderMaster&formName=MaterialPurOrdMas&EntryDate=$entryDate");
-      return jsonDecode(response);
+          ApiConstant.GET_MRNPREAPPROVAL_PENDINGLIST);
+
+      return mrnPreApprovalResponseFromJson(response);
     } catch (error) {
       print("Error == $error");
       return null;
@@ -555,15 +555,26 @@ class PendingListProvider {
       final response = await ApiManager.putAPICall(type == "Submit"
           ? "${ApiConstant.PUT_PENDING_QUOTE_API}?reqmasId=$reqmasId"
           : type == "Verify"
-              ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=false&Remarks=$verifyRemarks&quoteMasId=0&PurchaseOrderNo=$purchaseOrderNo"
-              : type == "Approve"
-                  ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=true&Remarks=&quoteMasId=$quoteMasId&PurchaseOrderNo=$purchaseOrderNo"
-                  : "${ApiConstant.PUT_QUOTE_REVERT_API}?reqmasId=$reqmasId&remarks=$revertRemarks");
+          ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=false&Remarks=$verifyRemarks&quoteMasId=0&PurchaseOrderNo=$purchaseOrderNo"
+          : type == "Approve"
+          ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=true&Remarks=&quoteMasId=$quoteMasId&PurchaseOrderNo=$purchaseOrderNo"
+          : "${ApiConstant.PUT_QUOTE_REVERT_API}?reqmasId=$reqmasId&remarks=$revertRemarks");
 
       return jsonDecode(response);
     } catch (error) {
       print("Error: $error");
       return null; // ✅ important
+    }
+  }
+
+  static Future getPurchaseOrderNo(projectId,entryDate) async {
+    try {
+      final response = await ApiManager.getAPICall(
+          ApiConstant.GET_PURCHASE_ORDER_NO_API + "?projectId=$projectId&fieldName=PurchaseOrdNo&tableName=MaterialPurchaseOrderMaster&formName=MaterialPurOrdMas&EntryDate=$entryDate");
+      return jsonDecode(response);
+    } catch (error) {
+      print("Error == $error");
+      return null;
     }
   }
 

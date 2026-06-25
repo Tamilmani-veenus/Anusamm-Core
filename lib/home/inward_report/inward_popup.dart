@@ -46,7 +46,7 @@ class inwardPopup extends StatelessWidget {
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    height: BaseUtitiles.getheightofPercentage(context, 14),
+                    height: BaseUtitiles.getheightofPercentage(context, 8),
                     child: Card(
                       color: Colors.white,
                       elevation: 3,

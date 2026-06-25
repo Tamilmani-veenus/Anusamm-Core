@@ -605,7 +605,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                                                 billGenerationDirectController.ItemGetTableListdata.clear();
                                                                 billGenerationDirectController.bill_editListApiDatas.value.clear();
                                                                 FocusScope.of(context).unfocus();
-                                                                await billGenerationDirectController.directBillEntryList_EditApi(billGenerationDirectController.bill_entryList.value[index].id,context,"ReSubmit");
+                                                                await billGenerationDirectController.directBillEntryList_EditApi(billGenerationDirectController.bill_entryList.value[index].id,context,"ReSubmit",true);
 
                                                               }),
 

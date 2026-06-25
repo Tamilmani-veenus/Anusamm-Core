@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../../../../home/menu/accounts/staff_voucher/staff_voucher_sitewise.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
 import '../../../../controller/bottomsheet_Controllers.dart';
@@ -836,6 +838,11 @@ class _Subcont_Nmr_EntryScreenState_Site
                                           : false,
                                   keyboardType: TextInputType.numberWithOptions(
                                       decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
                                   controller:
                                       staffVoucher_Controller.TotalAmount,
                                   cursorColor: Colors.black,

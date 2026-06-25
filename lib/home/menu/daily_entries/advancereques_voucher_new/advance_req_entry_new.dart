@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../../app_theme/app_colors.dart';
@@ -510,53 +511,54 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 3, left: 10, bottom: 5),
-                          child: TextFormField(
-                            autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                            readOnly:
-                            advanceReqVoucherController_new.saveButton.value == RequestConstant.RESUBMIT || advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL
-                                ? true
-                                : commonVoucherController.VoucherTypeController.text == "Site Petty Cash"
-                                ? true
-                                : false,
-                            controller: commonVoucherController.namethrough,
-                            cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              border: InputBorder.none,
-                              labelText: "Name Through",
-                              labelStyle: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: RequestConstant.Lable_Font_SIZE),
-                              prefixIconConstraints:
-                              BoxConstraints(minWidth: 0, minHeight: 0),
-                              prefixIcon: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 8),
-                                  child: ConstIcons.namethrough),
-                            ),
-                            onTap: () {
-                              if (commonVoucherController
-                                  .VoucherTypeController.text ==
-                                  "Site Petty Cash") {
-                                Fluttertoast.showToast(
-                                    msg:
-                                    "Voc type is site petty cash so can't access");
-                              }
-                            },
-                            validator: (value) {
-                              if (commonVoucherController
-                                  .VoucherTypeController.text !=
-                                  "Site Petty Cash") {
-                                if (value!.isEmpty ||
-                                    value == "--Select--" ||
-                                    value == "--SELECT--") {
-                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                          child: Obx(()=>
+                             TextFormField(
+                              autovalidateMode:
+                              AutovalidateMode.onUserInteraction,
+                              readOnly: advanceReqVoucherController_new.saveButton.value == RequestConstant.RESUBMIT || advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL
+                                  ? true
+                                  : commonVoucherController.VocType.value=="P"
+                                  ? true
+                                  : false,
+                              controller: commonVoucherController.namethrough,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Name Through",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.namethrough),
+                              ),
+                              onTap: () {
+                                if (commonVoucherController
+                                    .VoucherTypeController.text ==
+                                    "Site Petty Cash") {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                      "Voc type is site petty cash so can't access");
                                 }
-                                return null;
-                              }
-                            },
+                              },
+                              validator: (value) {
+                                if (commonVoucherController
+                                    .VoucherTypeController.text !=
+                                    "Site Petty Cash") {
+                                  if (value!.isEmpty ||
+                                      value == "--Select--" ||
+                                      value == "--SELECT--") {
+                                    return '\u26A0 ${RequestConstant.VALIDATE}';
+                                  }
+                                  return null;
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -637,56 +639,62 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 3, left: 10, bottom: 5),
-                                child: TextFormField(
-                                  autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                                  readOnly: commonVoucherController
-                                      .VoucherTypeController.text ==
-                                      "Site Petty Cash"
-                                      ? false
-                                      : true,
-                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                  controller: advanceReqVoucherController_new
-                                      .entry_amount,
-                                  cursorColor: Colors.black,
-                                  style: TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "Amount",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize:
-                                        RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints: BoxConstraints(
-                                        minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 8),
-                                        child: ConstIcons.amount),
+                                child: Obx(()=>
+                                  TextFormField(
+                                    autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                    readOnly: commonVoucherController.VocType.value ==
+                                        "P"
+                                        ? false
+                                        : true,
+                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d+\.?\d{0,2}'),
+                                      ),
+                                    ],
+                                    controller: advanceReqVoucherController_new
+                                        .entry_amount,
+                                    cursorColor: Colors.black,
+                                    style: TextStyle(color: Colors.black),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      border: InputBorder.none,
+                                      labelText: "Amount",
+                                      labelStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize:
+                                          RequestConstant.Lable_Font_SIZE),
+                                      prefixIconConstraints: BoxConstraints(
+                                          minWidth: 0, minHeight: 0),
+                                      prefixIcon: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                          child: ConstIcons.amount),
+                                    ),
+                                    validator: (value) {
+                                      if ((value!.isEmpty || value == '0.0') &&
+                                          commonVoucherController
+                                              .VoucherTypeController.text ==
+                                              "Site Petty Cash") {
+                                        return '\u26A0 ${RequestConstant.VALIDATE}';
+                                      }
+                                      return null;
+                                    },
+                                    onTap: () {
+                                      if (commonVoucherController
+                                          .VoucherTypeController.text ==
+                                          "Site Petty Cash") {
+                                        advanceReqVoucherController_new
+                                            .entry_amount.text ==
+                                            "0.0"
+                                            ? advanceReqVoucherController_new
+                                            .entry_amount.text = ""
+                                            : advanceReqVoucherController_new
+                                            .entry_amount.text;
+                                      }
+                                    },
                                   ),
-                                  validator: (value) {
-                                    if ((value!.isEmpty || value == '0.0') &&
-                                        commonVoucherController
-                                            .VoucherTypeController.text ==
-                                            "Site Petty Cash") {
-                                      return '\u26A0 ${RequestConstant.VALIDATE}';
-                                    }
-                                    return null;
-                                  },
-                                  onTap: () {
-                                    if (commonVoucherController
-                                        .VoucherTypeController.text ==
-                                        "Site Petty Cash") {
-                                      advanceReqVoucherController_new
-                                          .entry_amount.text ==
-                                          "0.0"
-                                          ? advanceReqVoucherController_new
-                                          .entry_amount.text = ""
-                                          : advanceReqVoucherController_new
-                                          .entry_amount.text;
-                                    }
-                                  },
                                 ),
                               ),
                             ),
@@ -1255,6 +1263,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                                             fontSize: 15),
                                       ),
                                     ),
+                                    (advanceReqVoucherController_new.saveButton.value == RequestConstant.RESUBMIT || advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL)?SizedBox():
                                     Expanded(
                                       child: InkWell(
                                         child: Container(
@@ -1451,6 +1460,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                                             fontSize: 15),
                                       ),
                                     ),
+                                    (advanceReqVoucherController_new.saveButton.value == RequestConstant.RESUBMIT || advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL)?SizedBox():
                                     Expanded(
                                       child: InkWell(
                                         child: Container(
@@ -1650,6 +1660,11 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                                             .amount_ListControllers[
                                         index],
                                         keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'),
+                                          ),
+                                        ],
                                         decoration: InputDecoration(
                                           contentPadding:
                                           EdgeInsets.fromLTRB(

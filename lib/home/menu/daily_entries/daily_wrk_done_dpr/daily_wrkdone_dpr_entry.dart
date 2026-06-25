@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -1074,6 +1075,11 @@ Widget ListDetails(BuildContext context, ScrollController scrollController) {
                             textAlign: TextAlign.center,
                             controller: dailyWrkDone_DPR_Controller.Itemlist_CurrentQtyControllers[index],
                             keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,2}'),
+                              ),
+                            ],
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                               focusedBorder: OutlineInputBorder(

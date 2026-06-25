@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../app_theme/app_colors.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
@@ -835,6 +836,11 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                                         textAlign: TextAlign.center,
                                         controller: boq_revised_controller.Addwork_qtyControllers[index],
                                         keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'),
+                                          ),
+                                        ],
                                         decoration: InputDecoration(
                                           contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                                           focusedBorder: OutlineInputBorder(

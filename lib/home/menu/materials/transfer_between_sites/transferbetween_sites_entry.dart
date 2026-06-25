@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'transferbetween_sites_additems.dart';
@@ -1042,6 +1043,11 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                           textAlign: TextAlign.center,
                                           controller: transferBt_Site_Controller.Itemlist_TransQty_ListController[index],
                                           keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d+\.?\d{0,2}'),
+                                            ),
+                                          ],
                                           decoration: InputDecoration(
                                             contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0,0.0),
                                             focusedBorder: OutlineInputBorder(

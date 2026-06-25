@@ -1,29 +1,29 @@
-import 'package:url_launcher/url_launcher.dart';
-import '../../../../controller/attendancecontroller.dart';
-import '../../../../controller/projectcontroller.dart';
-import '../../../../controller/sitecontroller.dart';
-import '../../../../controller/subcontcontroller.dart';
-import '../../../../utilities/baseutitiles.dart';
-import '../../../../utilities/requestconstant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../app_theme/app_colors.dart';
 import '../../constants/ui_constant/icons_const.dart';
+import '../../controller/accountsettings_controller.dart';
+import '../../controller/attendancecontroller.dart';
 import '../../controller/bottomsheet_Controllers.dart';
-import '../../controller/comman_controller.dart';
 import '../../controller/logincontroller.dart';
+import '../../controller/mrn_request_indent_controller.dart';
+import '../../controller/projectcontroller.dart';
 import '../../controller/reports_controller.dart';
-import '../../utilities/apiconstant.dart';
-import '../pdf_generate/pdf_model/pdfmodel.dart';
+import '../../controller/sitecontroller.dart';
+import '../../controller/subcontcontroller.dart';
+import '../../utilities/baseutitiles.dart';
+import '../../utilities/requestconstant.dart';
+import 'mrn_reqtracker_popup.dart';
 
-class MRNReport extends StatefulWidget {
-  const MRNReport({Key? key}) : super(key: key);
+class MRN_ReqTracker_Report extends StatefulWidget {
+  const MRN_ReqTracker_Report({super.key});
 
   @override
-  State<MRNReport> createState() => _MRNReportState();
+  State<MRN_ReqTracker_Report> createState() => _MRN_ReqTracker_ReportState();
 }
 
-class _MRNReportState extends State<MRNReport> {
+class _MRN_ReqTracker_ReportState extends State<MRN_ReqTracker_Report> {
   final ProjectController projectController=Get.put(ProjectController());
   final SubcontractorController subcontractorController=Get.put(SubcontractorController());
   final AttendanceController attendanceController=Get.put(AttendanceController());
@@ -31,30 +31,30 @@ class _MRNReportState extends State<MRNReport> {
   LoginController loginController=Get.put(LoginController());
   ReportsController reportsController = Get.put(ReportsController());
   BottomsheetControllers bottomsheetControllers = Get.put(BottomsheetControllers());
+  AccountSetingController accountSetingController = Get.put(AccountSetingController());
+  MRN_Request_Controller mrn_request_controller = Get.put(MRN_Request_Controller());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     var duration = const Duration(seconds: 0);
     Future.delayed(duration, () async {
-      siteController.FromdateController.clear();
-      siteController.TodateController.clear();
-      siteController.mrnListValue.value=[];
+      siteController.mrnReqTrackerListValue.value=[];
       DateTime currentDate = DateTime.now();
       DateTime oneWeekBefore = currentDate.subtract(const Duration(days: 7));
-      siteController.FromdateController.text=oneWeekBefore.toString().substring(0, 10);
-      siteController.TodateController.text=currentDate.toString().substring(0,10);
-
+      siteController.FromdateController.text = oneWeekBefore.toString().substring(0, 10);
+      siteController.TodateController.text = currentDate.toString().substring(0, 10);
       reportsController.projectname.text = "--ALL--";
       reportsController.selectedProjectId.value = 0;
       reportsController.sitename.text = "--ALL--";
       reportsController.selectedsiteId.value = 0;
+      reportsController.companyName.text = "--ALL--";
+      reportsController.selectedCompanyId.value = 0;
       reportsController.Subheadername.text = "--ALL--";
-
+      reportsController.materialDropdowntId.value = 0;
     });
     super.initState();
   }
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +68,16 @@ class _MRNReportState extends State<MRNReport> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-      
+
                 SizedBox(height: 40),
-      
+
                 Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "MRN Report",
+                        "MRN - Request Tracker",
                         style: TextStyle(
                             fontSize: RequestConstant.Heading_Font_SIZE,
                             fontWeight: FontWeight.bold),
@@ -93,7 +93,7 @@ class _MRNReportState extends State<MRNReport> {
                     ],
                   ),
                 ),
-      
+
                 Container(
                   margin: EdgeInsets.only(top: 3, left: 10, right: 10),
                   child: Row(
@@ -132,39 +132,41 @@ class _MRNReportState extends State<MRNReport> {
                                 ),
                                 onTap: () async {
                                   DateTime today = DateTime.now();
+
                                   DateTime initialDate = today.subtract(const Duration(days: 7));
 
                                   if (initialDate.isBefore(DateTime(1900))) {
                                     initialDate = DateTime(1900);
                                   }
-                                  var Frdate = await showDatePicker(
-                                      context: context,
-                                      initialDate: initialDate,
-                                      firstDate: DateTime(1900),
-                                      lastDate: today,
-                                      builder: (context, child) {
-                                        return Theme(data: Theme.of(context).copyWith(
+
+                                  DateTime? frDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: initialDate,
+                                    firstDate: DateTime(1900),
+                                    lastDate: today,
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
                                           colorScheme: ColorScheme.light(
-                                            primary: Theme.of(context).primaryColor, // header background color
-                                            onPrimary: Colors.white, // header text color
-                                            onSurface: Colors.black, // body text color
+                                            primary: Theme.of(context).primaryColor,
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.black,
                                           ),
                                           textButtonTheme: TextButtonThemeData(
                                             style: TextButton.styleFrom(
-                                              primary: Colors.black, // button text color
+                                              foregroundColor: Colors.black, // Use foregroundColor instead of primary
                                             ),
                                           ),
                                         ),
-                                          child: child!,
-                                        );
-                                      });
-                                  siteController.FromdateController.text = Frdate.toString().substring(0, 10);
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Select Date';
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+
+                                  if (frDate != null) {
+                                    siteController.FromdateController.text =
+                                        frDate.toString().substring(0, 10);
                                   }
-                                  return null;
                                 },
                               ),
                             ),
@@ -205,37 +207,30 @@ class _MRNReportState extends State<MRNReport> {
                                 onTap: () async {
                                   DateTime today = DateTime.now();
                                   DateTime fromDate = DateTime.parse(siteController.FromdateController.text);
-                                  var Frdate = await showDatePicker(
-                                      context: context,
-                                      initialDate: today.isBefore(fromDate) ? fromDate : today,
-                                      firstDate: fromDate,
-                                      lastDate:  DateTime.now(),
-                                      builder: (context, child) {
-                                        return Theme(data: Theme.of(context).copyWith(
+
+                                  DateTime? toDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: today.isBefore(fromDate) ? fromDate : today,
+                                    firstDate: fromDate,
+                                    lastDate: DateTime.now(), // or DateTime(2100)
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
                                           colorScheme: ColorScheme.light(
-                                            primary: Theme.of(context).primaryColor, // header background color
-                                            onPrimary: Colors.white, // header text color
-                                            onSurface: Colors.black, // body text color
-                                          ),
-                                          textButtonTheme: TextButtonThemeData(
-                                            style: TextButton.styleFrom(
-                                              primary: Colors.black, // button text color
-                                            ),
+                                            primary: Theme.of(context).primaryColor,
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.black,
                                           ),
                                         ),
-                                          child: child!,
-                                        );
-                                      });
-                                  if (Frdate != null) {
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+
+                                  if (toDate != null) {
                                     siteController.TodateController.text =
-                                        Frdate.toString().substring(0, 10);
+                                        toDate.toString().substring(0, 10);
                                   }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Select Date';
-                                  }
-                                  return null;
                                 },
                               ),
                             ),
@@ -245,7 +240,48 @@ class _MRNReportState extends State<MRNReport> {
                     ],
                   ),
                 ),
-      
+
+                Container(
+                  margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.white70, width: 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 3,
+                    child: Padding(
+                      padding:
+                      const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: reportsController.companyName,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          labelText: "Company Name",
+                          labelStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: RequestConstant.Lable_Font_SIZE),
+                          prefixIconConstraints:
+                          BoxConstraints(minWidth: 0, minHeight: 0),
+                          prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              child: ConstIcons.billType
+
+                          ),
+                        ),
+                        onTap: () async {
+                          await reportsController.getCompanyReportList();
+                          bottomsheetControllers.CompanyName(context, reportsController.getCompanyDropDownvalue.value,type: "mrnReqTracker");
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+
                 Container(
                   margin: EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Card(
@@ -275,26 +311,18 @@ class _MRNReportState extends State<MRNReport> {
                               padding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 8),
                               child: ConstIcons.projectName
-      
+
                           ),
                         ),
                         onTap: () async {
-                          await reportsController.getReportProjectList(Url: "Report");
-                              if(mounted){
-                                bottomsheetControllers.projectNameReport(context, reportsController.getProjectdropDownvalue.value);
-                              }},
-                        validator: (value) {
-                          if (value!.isEmpty || value == "--Select--") {
-                            return '\u26A0 Required.';
-                          }
-                          return null;
+                          await reportsController.getReportProjectList(type: "mrnReqTracker");
+                          bottomsheetControllers.projectNameReport(context, reportsController.getProjectdropDownvalue.value);
                         },
-      
                       ),
                     ),
                   ),
                 ),
-      
+
                 Container(
                   margin: EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Card(
@@ -328,20 +356,9 @@ class _MRNReportState extends State<MRNReport> {
                           ),
                         ),
                         onTap: () async {
-                          await siteController.subcontEntry_siteDropdowntList(
-                              context, 0,
-                              type: "Report");
-                          if (mounted) {
-                            bottomsheetControllers.siteNameReport(context,
-                                siteController.getSiteDropdownvalue.value);
-                          }
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '\u26A0 Required';
-                          }
-                          return null;
-                        },
+                          await siteController.subcontEntry_siteDropdowntList(context, 0,type: "Report");
+                          bottomsheetControllers.siteNameReport(context, siteController.getSiteDropdownvalue.value);
+                          },
 
                       ),
                     ),
@@ -381,114 +398,58 @@ class _MRNReportState extends State<MRNReport> {
                           ),
                         ),
                         onTap: () async {
-                          await reportsController.getReportMaterialList();
-                          if(mounted) {
-                            bottomsheetControllers.MRNMaterialName(context,
-                                reportsController.getMaterialdropDownvalue
-                                    .value);
-                          }
+                          await reportsController.getReportMaterialList(type:"mrnReqTracker");
+                          bottomsheetControllers.MRNMaterialName(context, reportsController.getMaterialdropDownvalue.value);
                         },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '\u26A0 Required.';
-                          }
-                          return null;
-                        },
-
                       ),
                     ),
                   ),
                 ),
-      
+
                 Container(
                   margin: EdgeInsets.only(top: 10,),
                   child: IntrinsicHeight(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-      
+
                         InkWell(
                           child: Container(
                             margin: EdgeInsets.only(left: 20, right: 20, top: 10),
                             height: BaseUtitiles.getheightofPercentage(context, 4),
+                            width: BaseUtitiles.getWidthtofPercentage(context, 18),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: siteController.checkColor == 0
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
+                              color:  Theme.of(context).primaryColor
                             ),
                             alignment: Alignment.center,
-                            child:
-                            Padding(
+                            child: Padding(
                               padding: const EdgeInsets.all(5),
-                              child: Text("List View",
+                              child: Text("Show",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: RequestConstant.Lable_Font_SIZE,
-                                    color: siteController.checkColor == 0
-                                        ? Colors.white
-                                        : Theme.of(context).primaryColor),
+                                    color: Colors.white
+                                ),
                               ),
                             ),
                           ),
                           onTap: () async {
                             if(_formKey.currentState!.validate()){
-                              siteController.mrnListValue.value=[];
-                              await siteController.getMrnReporttList();
-                            }
-                            },
-                        ),
-      
-                        VerticalDivider(
-                          color: Colors.grey.shade400,
-                          width: 5,
-                          thickness: 2,
-                          indent: 15,
-                          endIndent: 8, //Spacing at the bottom of divider.
-                        ),
-      
-                        InkWell(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-                            height: BaseUtitiles.getheightofPercentage(context, 4),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: siteController.checkColor == 0
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
-                            ),
-                            alignment: Alignment.center,
-                            child:
-                            Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Text("PDF Download",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: RequestConstant.Lable_Font_SIZE,
-                                    color: siteController.checkColor == 0
-                                        ? Colors.white
-                                        : Theme.of(context).primaryColor),
-                              ),
-                            ),
-                          ),
-                          onTap: () async {
-                            if(_formKey.currentState!.validate()){
-                              await download(reportsController.selectedProjectId.value,reportsController.materialDropdowntId.value,siteController.FromdateController.text,siteController.TodateController.text);
+                              siteController.mrnReqTrackerListValue.value=[];
+                              await siteController.getMrnReqTrackerList();
                             }
                           },
                         ),
-      
                       ],
                     ),
                   ),
                 ),
-      
-      
-                SizedBox(height: BaseUtitiles.getheightofPercentage(context, 2),),
-      
+
+                SizedBox(height: BaseUtitiles.getheightofPercentage(context, 2)),
+
                 ListDetails(),
-      
-      
+
               ],
             ),
           ),
@@ -497,24 +458,24 @@ class _MRNReportState extends State<MRNReport> {
     );
   }
 
-  download(int pId,int mId,String fdate,String todate){
-    launch("${ApiConfig.WebURL}mobile-mrn-report?fromDate=$fdate&toDate=$todate&projectId=$pId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
-    print("${ApiConfig.WebURL}mobile-mrn-report?fromDate=$fdate&toDate=$todate&projectId=$pId&materialId=$mId&access_token=${loginController.user.value.accessToken}");
-  }
-
   Widget ListDetails(){
     return Container(
-      height:BaseUtitiles.getheightofPercentage(context,45),
+      height:BaseUtitiles.getheightofPercentage(context,38),
       width: BaseUtitiles.getWidthtofPercentage(context,100),
       child: Obx(()=>ListView.builder(
-        padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: ScrollPhysics(),
-          itemCount: siteController.mrnListValue.value.length,
+          padding: EdgeInsets.zero,
+          itemCount: siteController.mrnReqTrackerListValue.value.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: (){
-                siteController.OnItemsSelected(siteController.mrnListValue.value[index].id,siteController.mrnListValue.value[index].reqNo,context);
+              onTap: () async {
+                await mrn_request_controller.getCheckApprovalLevel();
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return mrnReqTrackerPopup(list: siteController.mrnReqTrackerListValue[index], approvalLevelList:mrn_request_controller.checkApprovalLevelData);
+                    });
               },
               child: Container(
                 margin: EdgeInsets.only(left: 3, right: 3, top: 5, bottom: 5),
@@ -538,16 +499,16 @@ class _MRNReportState extends State<MRNReport> {
                                 children: [
                                   ConstIcons.list_date,
                                   Text(
-                                    siteController.mrnListValue.value[index].reqDate.toString(),
+                                    siteController.mrnReqTrackerListValue.value[index].mrnDate??"-",
                                     style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
-                              Text(siteController.mrnListValue.value[index].reqNo.toString(),style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
+                              Text(siteController.mrnReqTrackerListValue.value[index].mrnNo??"-",style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),),
                             ],
                           ),
                         ),
-                        SizedBox(height: 3,),
+                        SizedBox(height: 5,),
                         Row(
                           children: [
                             Expanded(
@@ -555,9 +516,9 @@ class _MRNReportState extends State<MRNReport> {
                                 child: Text("Project Name",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
 
                             Expanded(
-                              flex: 3,
+                              flex: 4,
                               child: Text(
-                                siteController.mrnListValue.value[index].projectName.toString(),style: TextStyle(color: Colors.black),
+                                siteController.mrnReqTrackerListValue.value[index].projectName??"-",style: TextStyle(color: Colors.black),
                               ),
                             ),
                           ],
@@ -570,9 +531,9 @@ class _MRNReportState extends State<MRNReport> {
                                 child: Text("Site Name",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
 
                             Expanded(
-                              flex: 3,
+                              flex: 4,
                               child: Text(
-                                siteController.mrnListValue.value[index].siteName.toString(),style: TextStyle(color: Colors.black),
+                                siteController.mrnReqTrackerListValue.value[index].siteName??"-",style: TextStyle(color: Colors.black),
                               ),
                             ),
                           ],
@@ -582,33 +543,17 @@ class _MRNReportState extends State<MRNReport> {
                           children: [
                             Expanded(
                                 flex: 2,
-                                child: Text("Request Type",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                child: Text("Material Name",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
 
                             Expanded(
-                              flex: 3,
+                              flex: 4,
                               child: Text(
-                                siteController.mrnListValue.value[index].requestType=="PO"?"General Items":"Asset Materials",style: const TextStyle(color: Colors.black),
+                                siteController.mrnReqTrackerListValue.value[index].material??"-",style: const TextStyle(color: Colors.black),
                               ),
                             ),
                           ],
                         ),
                         SizedBox(height: 3,),
-                        Row(
-                          children: [
-                            Expanded(
-                                flex: 2,
-                                child: Text("Status",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
-
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                siteController.mrnListValue.value[index].status.toString().toUpperCase(),
-                                style:  siteController.mrnListValue.value[index].status.toString() == "APPROVED" ? TextStyle(color: Colors.green, fontWeight: FontWeight.bold) : TextStyle(color: Colors.red, fontWeight: FontWeight.bold) ,
-                              ),
-                            ),
-                          ],
-                        ),
-
                       ],
                     ),
                   ),
@@ -620,5 +565,4 @@ class _MRNReportState extends State<MRNReport> {
     );
 
   }
-
 }

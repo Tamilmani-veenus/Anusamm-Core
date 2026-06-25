@@ -9,6 +9,8 @@ import '../provider/common_provider.dart';
 import '../provider/reports_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:anusamm/models/mrnreq_tracker_reportmodel.dart';
+import '../models/sitedropdownresponse_model.dart';
 
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
@@ -39,6 +41,7 @@ class SiteController extends GetxController {
   final FromdateController = TextEditingController();
   final TodateController = TextEditingController();
   RxList mrnListValue = [].obs;
+  RxList<ReqTrackResult> mrnReqTrackerListValue = <ReqTrackResult>[].obs;
   List<PdfListModel> getMNRList_Pdf = <PdfListModel>[];
   RxList selctListDatas = [].obs;
   int checkColor = 0;
@@ -63,6 +66,14 @@ class SiteController extends GetxController {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           getSiteDropdownvalue.value = value.result!;
+          if(type == "Report")
+            {
+              getSiteDropdownvalue.value.insert(
+                0,
+                Result(siteId: 0, siteName: "--ALL--"),
+              );
+            }
+
         } else {
           BaseUtitiles.showToast(value.message ?? "No Data Found");
         }
@@ -120,11 +131,34 @@ class SiteController extends GetxController {
         reportsController.selectedProjectId.value,
         reportsController.selectedsiteId.value,
         FromdateController.text,
-        TodateController.text);
+        TodateController.text,reportsController.materialDropdowntId.value);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           mrnListValue.value = value.result!;
+        } else {
+          BaseUtitiles.showToast(value.message ?? "No Data Found");
+        }
+      } else {
+        BaseUtitiles.showToast(value.message ?? "Something went wrong..");
+      }
+    } else {
+      BaseUtitiles.showToast("Something went wrong..");
+    }
+  }
+
+  Future getMrnReqTrackerList() async {
+    mrnReqTrackerListValue.value=[];
+    final value = await ReportsProvider.getMrnReqTrackerRptList(
+        reportsController.selectedProjectId.value,
+        reportsController.selectedsiteId.value,
+        reportsController.materialDropdowntId.value,
+        FromdateController.text,
+        TodateController.text);
+    if (value != null) {
+      if (value.success == true) {
+        if (value.result!.isNotEmpty) {
+          mrnReqTrackerListValue.value = value.result!;
         } else {
           BaseUtitiles.showToast(value.message ?? "No Data Found");
         }

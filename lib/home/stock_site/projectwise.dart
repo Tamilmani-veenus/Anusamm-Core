@@ -99,7 +99,7 @@ class _PrjectWiseState extends State<PrjectWise> {
                                 child: ConstIcons.projectName),
                           ),
                           onTap: () async {
-                            await reportsController.getReportProjectList();
+                            await reportsController.getReportProjectList(Url: "Report");
                             bottomsheetControllers.projectNameReport(context, reportsController.getProjectdropDownvalue.value);
                           },
                           validator: (value) {
@@ -188,7 +188,7 @@ class _PrjectWiseState extends State<PrjectWise> {
                         controller: stockSiteController.materialHeadName,
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           border: InputBorder.none,
                           labelText: "Material Head Item",
@@ -201,11 +201,14 @@ class _PrjectWiseState extends State<PrjectWise> {
                           prefixIcon: Padding(
                             padding:
                                 EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                            child: ConstIcons.siteName,
+                            child: Icon(
+                              Icons.widgets,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                         onTap: () async {
-                          await stockSiteController.getMaterialHeadReportList();
+                          await stockSiteController.getMaterialHeadReportList(Url: "Report");
                           if (mounted) {
                             bottomsheetControllers.materialHeadItem(context, stockSiteController.getmaterialHeadDropDownvalue.value);
                           }
@@ -229,7 +232,7 @@ class _PrjectWiseState extends State<PrjectWise> {
                         controller: stockSiteController.Materialsubname,
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           border: InputBorder.none,
                           labelText: "Material Sub Item",
@@ -240,10 +243,10 @@ class _PrjectWiseState extends State<PrjectWise> {
                               BoxConstraints(minWidth: 0, minHeight: 0),
                           prefixIcon: Padding(
                               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                              child: ConstIcons.siteName),
+                              child: Icon(Icons.format_list_bulleted,color: Theme.of(context).primaryColor),),
                         ),
                         onTap: () async {
-                          await stockSiteController.getProjectWiseSubmatList(stockSiteController.matHeadDropdowntId.value);
+                          await stockSiteController.getProjectWiseSubmatList(stockSiteController.matHeadDropdowntId.value,Url: "Report");
 
                           if (mounted) {
                             bottomsheetControllers.MaterialSubItem(context, stockSiteController.matHeadDropdowntId.value, stockSiteController.getmaterialSubdropDownvalue.value);

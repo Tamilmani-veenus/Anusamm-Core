@@ -70,7 +70,6 @@ class BottomsheetControllers {
       Get.put(AdvanceReqVoucherController_new());
   BillGenerationBoqController billGenerationBoqController =
       Get.put(BillGenerationBoqController());
-  final CompanyController companyController = Get.put(CompanyController());
   CashBookStaffController cashBookStaffController =
       Get.put(CashBookStaffController());
   TransferBW_project_Controller transferBW_project_Controller =
@@ -2451,7 +2450,7 @@ class BottomsheetControllers {
                         textInputAction: TextInputAction.search,
                         onChanged: (value) {
                           list = BaseUtitiles.empNameamePopupAlert(value,
-                              staffController.getStaffDropdownvalue.value);
+                              staffController.getStaffDropdownvalue.value,type);
                         },
                       ),
                     ),
@@ -2532,6 +2531,7 @@ class BottomsheetControllers {
       },
     );
   }
+
 
   BankName(context, list) {
     searchcontroller.text = "";
@@ -2885,7 +2885,7 @@ class BottomsheetControllers {
                               list[index].materialSubName.toString();
                           stockSiteController.matDropdowntId.value =
                               list[index].id;
-                          // await stockSiteController.getmaterialDropdowntList(stockSiteController.matDropdowntId.value);
+                          reportsController.Subheadername.text = "--ALL--";
                           searchcontroller.text = "";
                           Navigator.pop(context);
                         },
@@ -3005,9 +3005,9 @@ class BottomsheetControllers {
                             stockSiteController.matHeadDropdowntId.value =
                                 list[index].id;
                             stockSiteController.Materialsubname.text =
-                                "--All--";
+                                "--ALL--";
                             reportsController.materialDropdowntId.value = 0;
-                            reportsController.Subheadername.text = "--All--";
+                            reportsController.Subheadername.text = "--ALL--";
                             stockSiteController.materialSubDropdowntId.value =
                                 0;
                             stockSiteController.materialWiseShowList.value = [];
@@ -3084,7 +3084,7 @@ class BottomsheetControllers {
                   child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: Text(
-                      "Sub Items",
+                      "Materials",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold),
@@ -3137,8 +3137,7 @@ class BottomsheetControllers {
                                             RequestConstant.ALERT_Font_SIZE,
                                         fontWeight: FontWeight.bold),
                                   )),
-                              Divider(
-                                  color: Theme.of(context).primaryColorLight)
+                              Divider()
                             ],
                           ),
                         ],
@@ -3280,7 +3279,7 @@ class BottomsheetControllers {
 
   //-----Company Name ---------------
 
-  CompanyName(context, list) {
+  CompanyName(context, list, {type}) {
     searchcontroller.text = "";
     showModalBottomSheet(
       context: context,
@@ -3368,7 +3367,7 @@ class BottomsheetControllers {
                           margin: EdgeInsets.only(left: 10),
                           alignment: Alignment.center,
                           child: Text(
-                            list[index].company.toString(),
+                  type=="mrnReqTracker"?list[index]["companyName"].toString():list[index].company.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: RequestConstant.Lable_Font_SIZE,
@@ -3376,18 +3375,30 @@ class BottomsheetControllers {
                           ),
                         ),
                         onTap: () async {
-                          companycontroller.CompanyName.text =
-                              list[index].company.toString();
-                          companycontroller.selectedCompanyId.value =
-                              list[index].companyid;
-                          await companycontroller.getProjectList_CompanyWise(
-                              context, 0);
-                          // await expensesController.getSupplierOS_ExpensesList();
-                          // await expensesController.totalAmt();
-                          // await expensesController.getSubcontractor_ExpensesList();
-                          expensesController.update();
+                          if(type=="mrnReqTracker"){
+                            reportsController.companyName.text=list[index]["companyName"].toString();
+                            reportsController.selectedCompanyId.value=list[index]["id"];
+                            reportsController.projectname.text = "--ALL--";
+                            reportsController.selectedProjectId.value = 0;
+                            reportsController.sitename.text = "--ALL--";
+                            reportsController.selectedsiteId.value = 0;
+                            reportsController.Subheadername.text = "--ALL--";
+                            reportsController.materialDropdowntId.value = 0;
+                            siteController.mrnReqTrackerListValue.value=[];
+                          }
+                          else {
+                            companycontroller.CompanyName.text =
+                                list[index].company.toString();
+                            companycontroller.selectedCompanyId.value =
+                                list[index].companyid;
+                            await companycontroller.getProjectList_CompanyWise(
+                                context, 0);
+                            // await expensesController.getSupplierOS_ExpensesList();
+                            // await expensesController.totalAmt();
+                            // await expensesController.getSubcontractor_ExpensesList();
+                            expensesController.update();
+                          }
                           searchcontroller.text = "";
-
                           Navigator.pop(context);
                         },
                       ),

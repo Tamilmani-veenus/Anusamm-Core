@@ -40,7 +40,7 @@ class _AccountSettingsState extends State<AccountSettings> {
   void initState() {
     accountSetingController.password_controller.clear();
     accountSetingController.repassword_controller.clear();
-    accountSetingController.getCheckApprovalLevel();
+    // accountSetingController.getCheckApprovalLevel();
     super.initState();
   }
 

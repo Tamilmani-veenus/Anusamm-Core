@@ -25,7 +25,6 @@ import 'package:get/get.dart';
 
 import '../pdf_generate/pdf_model/pdfmodel.dart';
 import '../pdf_generate/pdf_openfilepath.dart';
-import 'dpr_reportpdf.dart';
 
 class DPRReport extends StatefulWidget {
   const DPRReport({Key? key}) : super(key: key);
@@ -268,7 +267,7 @@ class _DPRReportState extends State<DPRReport> {
                           ),
                         ),
                         onTap: () async {
-                          await reportsController.getReportProjectList();
+                          await reportsController.getReportProjectList(type: "Report");
                             bottomsheetControllers.projectNameReport(context, reportsController.getProjectdropDownvalue.value);
                         },
                       ),

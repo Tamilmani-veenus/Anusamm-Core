@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../../home/stock_site/projectwise.dart';
 import 'package:flutter/material.dart';
 import '../../app_theme/app_colors.dart';
+import '../../controller/reports_controller.dart';
 import '../../controller/stocksite_controller.dart';
 import 'materialwise.dart';
 
@@ -99,6 +100,8 @@ class _StockSiteState extends State<StockSite>
 
   final StockSiteController stockSiteController =
   Get.put(StockSiteController());
+  ReportsController reportsController = Get.put(ReportsController());
+
 
   @override
   void initState() {
@@ -109,6 +112,7 @@ class _StockSiteState extends State<StockSite>
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         stockSiteController.getStockList.value = [];
+        reportsController.Subheadername.text="--ALL--";
       }
     });
   }
