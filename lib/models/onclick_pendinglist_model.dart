@@ -41,6 +41,7 @@ class OnClickListResult {
   int? ReqOrdMasId;
   int? PONo;
   int? PoId;
+  int? CompanyId;
   String? requisitionNo;
   String? advanceReqVoucherDate;
   String? advanceReqVoucherNo;
@@ -83,6 +84,7 @@ class OnClickListResult {
   String? accType;
   String? supplierName;
   String? suppliername;
+  String? SupplierContactNo;
   String? supplier;
   String? prepareby;
   String? preparedBy;
@@ -258,6 +260,7 @@ class OnClickListResult {
     this.accType,
     this.supplierName,
     this.suppliername,
+    this.SupplierContactNo,
     this.supplier,
     this.prepareby,
     this.preparedBy,
@@ -313,6 +316,7 @@ class OnClickListResult {
     this.dcNo,
     this.vehicleno,
     this.vehicleName,
+    this.CompanyId,
     this.staffName,
     this.StaffName,
     this.staffId,
@@ -434,6 +438,7 @@ class OnClickListResult {
     accType: json["Acc_type"],
     supplierName: json["SupplierName"],
     suppliername: json["supplierName"],
+    SupplierContactNo: json["SupplierContactNo"],
     supplier: json["supplier"],
     preparedBy: json["PreparedBy"],
     preparedby: json["Preparedby"],
@@ -458,7 +463,7 @@ class OnClickListResult {
     SubcontName: json["subcontractorName"],
     subContractor: json["subContractorName"],
     totNos: json["TotNos"],
-    totAmt: json["TotNos"],
+    totAmt: json["TotAmt"],
     Payfor: json["Payfor"] ?? json["payFor"],
     ProjectId: json["ProjectId"],
     projId: json["projectId"],
@@ -488,6 +493,7 @@ class OnClickListResult {
     dcNo: json["dcNo"],
     vehicleno: json["vehicleno"],
     vehicleName: json["vehicleName"],
+    CompanyId: json["CompanyId"],
     entryType: json["entryType"],
     staffName: json["StaffName"],
     StaffName: json["staffName"],
@@ -615,6 +621,7 @@ class OnClickListResult {
     "Acc_type": accType,
     "SupplierName": supplierName,
     "supplierName": suppliername,
+    "SupplierContactNo": SupplierContactNo,
     "supplier": supplier,
     "PreparedBy": preparedBy,
     "Preparedby": preparedby,
@@ -638,7 +645,7 @@ class OnClickListResult {
     "subcontractorName": SubcontName,
     "subContractorName": subContractor,
     "TotNos": totNos,
-    "TotNos": totAmt,
+    "TotAmt": totAmt,
     "Payfor": Payfor,
     "ProjectId": ProjectId,
     "SiteId": SiteId,
@@ -662,6 +669,7 @@ class OnClickListResult {
     "dcNo": dcNo,
     "vehicleno": vehicleno,
     "vehicleName": vehicleName,
+    "CompanyId": CompanyId,
     "entryType": entryType,
     "requisitionType": requisitionType,
     "StaffName":staffName,

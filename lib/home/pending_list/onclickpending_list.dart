@@ -5703,6 +5703,35 @@ class _InwardPendingState extends State<InwardPending> {
                                           Expanded(
                                               flex: 3,
                                               child: Text(
+                                                "Supplier Contact No",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                pendingListController.mainlist
+                                                    .value[index].SupplierContactNo
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
                                                 "PreparedBy",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -16525,11 +16554,8 @@ class _QuoteVerifyandApprovalState extends State<QuoteVerifyandApproval> {
                                                             no: pendingListController
                                                                 .mainlist[index]
                                                                 .reqOrdNo,
-                                                            pId:
-                                                            pendingListController
-                                                                .mainlist[
-                                                            index]
-                                                                .ProjectID,
+                                                            pId: pendingListController.mainlist[index].ProjectID,
+                                                            companyId: pendingListController.mainlist[index].CompanyId,
                                                           );
                                                         },
                                                       );

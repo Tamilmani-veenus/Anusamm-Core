@@ -11,12 +11,16 @@ class QuoteApproveAlert extends StatefulWidget {
   final int? id;
   final String no;
   final int? pId;
+  final int? companyId;
+
   QuoteApproveAlert(
       {Key? key,
         required this.heading,
         required this.id,
         required this.no,
-        required this.pId})
+        required this.pId,
+        required this.companyId,
+      })
       : super(key: key);
 
   @override
@@ -97,7 +101,9 @@ class _QuoteApproveAlertState extends State<QuoteApproveAlert> {
                           context)) {
                         await pendingListController.quotVerifyAprovalbuttonApi(
                             context, widget.id!, "Approve",
-                            quoteMasId: pendingListController.quoteid.value);
+                            quoteMasId: pendingListController.quoteid.value,
+                          companyId: widget.companyId
+                        );
                       }
                     } else {
                       BaseUtitiles.showToast("Please select supplier");

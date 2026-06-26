@@ -801,8 +801,8 @@ class PendingListController extends GetxController {
     }
   }
 
-  Future quotVerifyAprovalbuttonApi(context,int id,type,{quoteMasId}) async {
-    final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId,purchaseOrderNo.value);
+  Future quotVerifyAprovalbuttonApi(context,int id,type,{quoteMasId,companyId}) async {
+    final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId,purchaseOrderNo.value,companyId);
     print("Quote Approve :: $response");
     if(response!=null){
       if(response["success"]==true){
