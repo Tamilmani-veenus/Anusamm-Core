@@ -211,7 +211,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                           child: TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode: AutovalidateMode.always,
                             readOnly: true,
                             controller: staffController.Staffname,
                             cursorColor: Colors.black,
@@ -260,7 +260,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                           padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             readOnly: true,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode: AutovalidateMode.always,
                             controller: reportsController.projectname,
                             cursorColor: Colors.black,
                             style: const TextStyle(color: Colors.black),
@@ -388,7 +388,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: false,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.LeaveReason,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -560,7 +560,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: true,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.Totaldays,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -636,7 +636,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: false,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.LeaveReason,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -808,7 +808,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: false,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.Totaldays,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -886,7 +886,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                         top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: false,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.Reason,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -987,7 +987,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                             padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                             child: TextFormField(
                                               readOnly: true,
-                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              autovalidateMode: AutovalidateMode.always,
                                               controller: requisitionSlipController.Fromtime,
                                               cursorColor: Colors.black,
                                               style: const TextStyle(color: Colors.black),
@@ -1031,7 +1031,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                             padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                             child: TextFormField(
                                               readOnly: true,
-                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              autovalidateMode: AutovalidateMode.always,
                                               controller: requisitionSlipController.Totime,
                                               cursorColor: Colors.black,
                                               style: const TextStyle(color: Colors.black),
@@ -1082,7 +1082,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.RequiredHrs,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1122,7 +1122,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.RequiredMins,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1165,7 +1165,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: true,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.TotalHrs,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -1219,7 +1219,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                     padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: false,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.Reason,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),
@@ -1320,7 +1320,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.Fromtime,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1364,7 +1364,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.Totime,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1415,7 +1415,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.RequiredHrs,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1455,7 +1455,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                               child: TextFormField(
                                                 readOnly: true,
-                                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                autovalidateMode: AutovalidateMode.always,
                                                 controller: requisitionSlipController.RequiredMins,
                                                 cursorColor: Colors.black,
                                                 style: const TextStyle(color: Colors.black),
@@ -1498,7 +1498,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                         top: 3, left: 10, bottom: 5),
                                     child: TextFormField(
                                       readOnly: true,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode: AutovalidateMode.always,
                                       controller: requisitionSlipController.TotalHrs,
                                       cursorColor: Colors.black,
                                       style: const TextStyle(color: Colors.black),

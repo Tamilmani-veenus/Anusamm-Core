@@ -435,30 +435,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                     )),
                               ],
                             ),
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(top: 5, left: 10),
-                                  child: Text(""),
-                                ),
-                                Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "Status",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    )),
-                                Expanded(
-                                  flex: 8,
-                                  child: Text(
-                                    siteVoucher_Controller.SiteVocEtyList.value[index].status,
-                                    style:  TextStyle(color:siteVoucher_Controller.SiteVocEtyList.value[index].status=="Approved"?Colors.green:Colors.black),
-                                  ),
-                                ),
-                              ],
-                            ),
+
                             Row(
                               children: <Widget>[
                                 Container(
@@ -483,6 +460,30 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                 ),
                               ],
                             ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(top: 5, left: 10),
+                                  child: Text(""),
+                                ),
+                                Expanded(
+                                    flex: 3,
+                                    child: Text(
+                                      "Prepared By",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    )),
+                                Expanded(
+                                    flex: 8,
+                                    child: Text(
+                                      siteVoucher_Controller.SiteVocEtyList.value[index].createdName.toString(),
+                                      style: TextStyle(color: Colors.black),
+                                    )
+                                ),
+                              ],
+                            ),
                             const Divider(thickness: 1),
                             Row(
                               children: <Widget>[
@@ -493,15 +494,15 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                 const Expanded(
                                     flex: 2,
                                     child: Text(
-                                      "Prepared By",
+                                      "Status",
                                       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                     )),
                                 Expanded(
                                     flex: 4,
                                     child: Text(
-                                      siteVoucher_Controller.SiteVocEtyList.value[index].createdName.toString(),
-                                      style: TextStyle(color: Colors.black),
-                                    )),
+                                      siteVoucher_Controller.SiteVocEtyList.value[index].status,
+                                      style:  TextStyle(color:siteVoucher_Controller.SiteVocEtyList.value[index].status=="Approved"?Colors.green:Colors.black),
+                                    ),),
                                 Expanded(
                                     flex: 1,
                                     child: IconButton(

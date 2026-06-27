@@ -162,7 +162,7 @@ class _advance_sitewisepayment_newState
                           const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                       child: TextFormField(
                         autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
+                        AutovalidateMode.always,
                         readOnly: true,
                         controller: siteController.Sitename,
                         cursorColor: Colors.black,
@@ -210,7 +210,7 @@ class _advance_sitewisepayment_newState
                           const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                       child: TextFormField(
                         autovalidateMode:
-                        AutovalidateMode.onUserInteraction,
+                        AutovalidateMode.always,
                         readOnly: true,
                         controller:
                             commonVoucherController.detVoucherTypeController,
@@ -264,7 +264,7 @@ class _advance_sitewisepayment_newState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                                 keyboardType: TextInputType.numberWithOptions(
                                     decimal: true),
                                 controller: advanceReqVoucherController_new

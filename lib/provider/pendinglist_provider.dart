@@ -550,12 +550,12 @@ class PendingListProvider {
   }
 
   static Future quoteVerifyApprovalApi(
-      int reqmasId, type, verifyRemarks,revertRemarks, quoteMasId, purchaseOrderNo,companyId) async {
+      int reqmasId, type, verifyRemarks,revertRemarks, quoteMasId, purchaseOrderNo, companyId) async {
     try {
       final response = await ApiManager.putAPICall(type == "Submit"
           ? "${ApiConstant.PUT_PENDING_QUOTE_API}?reqmasId=$reqmasId"
           : type == "Verify"
-          ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=false&Remarks=$verifyRemarks&quoteMasId=0&PurchaseOrderNo=$purchaseOrderNo"
+          ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=false&Remarks=$verifyRemarks&quoteMasId=0&PurchaseOrderNo=0"
           : type == "Approve"
           ? "${ApiConstant.PUT_QUOTE_VERIFY_APPROVAL_API}?reqmasId=$reqmasId&isApprove=true&Remarks=&quoteMasId=$quoteMasId&companyId=$companyId&PurchaseOrderNo=$purchaseOrderNo"
           : "${ApiConstant.PUT_QUOTE_REVERT_API}?reqmasId=$reqmasId&remarks=$revertRemarks");
@@ -567,10 +567,11 @@ class PendingListProvider {
     }
   }
 
-  static Future getPurchaseOrderNo(projectId,entryDate) async {
+  static Future getPurchaseOrderNo(id,entryDate,type) async {
     try {
-      final response = await ApiManager.getAPICall(
-          ApiConstant.GET_PURCHASE_ORDER_NO_API + "?projectId=$projectId&fieldName=PurchaseOrdNo&tableName=MaterialPurchaseOrderMaster&formName=MaterialPurOrdMas&EntryDate=$entryDate");
+      final response = await ApiManager.getAPICall(type == "companywise"?
+          ApiConstant.GET_PURCHASE_ORDER_NO_COMPANYWISE_API + "?CompanyId=$id&fieldName=PurchaseOrdNo&tableName=materialPurchaseordermaster&formName=MaterialPurOrdMas&EntryDate=$entryDate":
+          ApiConstant.GET_PURCHASE_ORDER_NO_API + "?projectId=$id&fieldName=PurchaseOrdNo&tableName=MaterialPurchaseOrderMaster&formName=MaterialPurOrdMas&EntryDate=$entryDate");
       return jsonDecode(response);
     } catch (error) {
       print("Error == $error");

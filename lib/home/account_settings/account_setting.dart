@@ -142,7 +142,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                             )),
                             const SizedBox(height: 20,),
                             TextFormField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               obscureText: isObscureNewPassword,
                               cursorColor: Colors.black,
                               controller: accountSetingController.password_controller,
@@ -184,7 +184,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                             ),
                             const SizedBox(height: 20),
                             TextFormField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               obscureText: isObscureConfirmPassword,
                               cursorColor: Colors.black,
                               controller: accountSetingController.repassword_controller,

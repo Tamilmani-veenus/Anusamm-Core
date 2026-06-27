@@ -304,7 +304,7 @@ class _BOQ_Approve_Det_ListState extends State<BOQ_Approve_Det_List> {
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                              AutovalidateMode.always,
                               readOnly: false,
                               controller: det.qtyController,
                               cursorColor: Colors.black,
@@ -350,7 +350,7 @@ class _BOQ_Approve_Det_ListState extends State<BOQ_Approve_Det_List> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                              AutovalidateMode.always,
                               readOnly: false,
                               controller: det.remarksController,
                               cursorColor: Colors.black,

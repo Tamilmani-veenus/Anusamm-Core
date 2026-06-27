@@ -290,7 +290,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: projectController.projectname,
                                 cursorColor: Colors.black,
@@ -340,7 +340,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: siteController.Sitename,
                                 cursorColor: Colors.black,
@@ -389,7 +389,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: dailyWrkDone_DPR_Controller.entryTypeController,
                                 cursorColor: Colors.black,
@@ -443,7 +443,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: dailyWrkDone_DPR_Controller.TypeSubcontractorname,
                                 cursorColor: Colors.black,
@@ -503,7 +503,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: siteController.headNameController,
                                 cursorColor: Colors.black,
@@ -587,7 +587,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 controller: dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController,
                                 cursorColor: Colors.black,
                                 style: const TextStyle(color: Colors.black),

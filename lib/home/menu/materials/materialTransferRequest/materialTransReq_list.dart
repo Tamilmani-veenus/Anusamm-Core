@@ -428,7 +428,7 @@ class _MatTransReqListState extends State<MatTransReqList> {
                                 const Expanded(
                                     flex: 3,
                                     child: Text(
-                                      "Status",
+                                      "Prepared By  ",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -437,10 +437,8 @@ class _MatTransReqListState extends State<MatTransReqList> {
                                 Expanded(
                                     flex: 8,
                                     child: Text(
-                                      materialTransferReqController.matTransReqList.value[index].status.toString(),
-                                      style: TextStyle(
-                                        color:   materialTransferReqController.matTransReqList.value[index].status.toString() == "Verified" ? Colors.green : materialTransferReqController.matTransReqList.value[index].status.toString() == "Approved" ? Colors.green : Colors.black,
-                                      ),
+                                      materialTransferReqController.matTransReqList.value[index].createdName.toString(),
+                                      style: TextStyle(color: Colors.black),
                                     )),
                               ],
                             ),
@@ -455,17 +453,20 @@ class _MatTransReqListState extends State<MatTransReqList> {
                                 const Expanded(
                                     flex: 2,
                                     child: Text(
-                                      "Prepared By  ",
+                                      "Status",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
                                     )),
                                 Expanded(
                                     flex: 4,
-                                    child: Text(
-                                      materialTransferReqController.matTransReqList.value[index].createdName.toString(),
-                                      style: TextStyle(color: Colors.black),
-                                    )),
+                                    child:  Text(
+                                      materialTransferReqController.matTransReqList.value[index].status.toString(),
+                                      style: TextStyle(
+                                        color:   materialTransferReqController.matTransReqList.value[index].status.toString() == "Verified" ? Colors.green : materialTransferReqController.matTransReqList.value[index].status.toString() == "Approved" ? Colors.green : Colors.black,
+                                      ),
+                                    )
+                                    ),
                                 Expanded(
                                     flex: 1,
                                     child: IconButton(

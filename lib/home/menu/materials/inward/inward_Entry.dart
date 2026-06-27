@@ -264,7 +264,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: inward_controller.InwardProjectNameText,
                           cursorColor: Colors.black,
@@ -308,7 +308,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: inward_controller.InwardSiteNameText,
                           cursorColor: Colors.black,
@@ -355,7 +355,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: inward_controller.InwardSupplierNameText,
                           cursorColor: Colors.black,
@@ -402,7 +402,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           controller: inward_controller.InwardInvoiceNoText,
                           cursorColor: Colors.black,
                           style: TextStyle(color: Colors.black),
@@ -505,7 +505,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           // keyboardType: TextInputType.number,
                           controller: inward_controller.InwardDCNoText,
                           cursorColor: Colors.black,
@@ -611,7 +611,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: inward_controller.InwardTypeText,
                           cursorColor: Colors.black,
@@ -658,7 +658,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: inward_controller.InwardNoText,
                           cursorColor: Colors.black,
@@ -703,7 +703,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           controller: inward_controller.InwardVechileNoText,
                           cursorColor: Colors.black,
                           style: TextStyle(color: Colors.black),
@@ -745,7 +745,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           controller: inward_controller.InwardDriverNameText,
                           cursorColor: Colors.black,
                           style: const TextStyle(color: Colors.black),
@@ -825,7 +825,7 @@ class _InwardState extends State<Inward_entry> {
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           controller: inward_controller.InwardRemarksText,
                           cursorColor: Colors.black,
                           style: TextStyle(color: Colors.black),

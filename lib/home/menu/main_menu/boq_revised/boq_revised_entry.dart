@@ -221,7 +221,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: projectController.projectname,
                           cursorColor: Colors.black,
@@ -266,7 +266,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: siteController.Sitename,
                           cursorColor: Colors.black,
@@ -311,7 +311,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: siteController.headNameController,
                           cursorColor: Colors.black,
@@ -389,7 +389,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: false,
                           controller: boq_revised_controller.boq_remarksController,
                           cursorColor: Colors.black,

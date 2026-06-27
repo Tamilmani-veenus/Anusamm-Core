@@ -481,7 +481,7 @@ class _MrnPreApprovalEntryScreenState extends State<MrnPreApprovalEntryScreen> {
                     child: Padding(padding:
                       const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                       child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.always,
                         readOnly: false,
                         controller: mrnPreApprovalController.mrnpre_ApprovalremarksText,
                         cursorColor: Colors.black,

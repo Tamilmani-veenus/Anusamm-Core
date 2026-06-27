@@ -271,7 +271,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             readOnly: true,
                             controller:
                             commonVoucherController.VoucherTypeController,
@@ -327,7 +327,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             readOnly: true,
                             controller: projectController.projectname,
                             cursorColor: Colors.black,
@@ -380,7 +380,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.AccountTypename,
                             cursorColor: Colors.black,
@@ -447,7 +447,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.Accountname,
                             cursorColor: Colors.black,
@@ -514,7 +514,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                           child: Obx(()=>
                              TextFormField(
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                              AutovalidateMode.always,
                               readOnly: advanceReqVoucherController_new.saveButton.value == RequestConstant.RESUBMIT || advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL
                                   ? true
                                   : commonVoucherController.VocType.value=="P"
@@ -577,7 +577,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.payforController,
                             cursorColor: Colors.black,
@@ -642,7 +642,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                                 child: Obx(()=>
                                   TextFormField(
                                     autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.always,
                                     readOnly: commonVoucherController.VocType.value ==
                                         "P"
                                         ? false
@@ -716,7 +716,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                            AutovalidateMode.always,
                             controller: advanceReqVoucherController_new
                                 .remarksController,
                             cursorColor: Colors.black,

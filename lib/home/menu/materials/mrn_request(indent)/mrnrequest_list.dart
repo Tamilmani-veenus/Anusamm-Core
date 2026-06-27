@@ -9,6 +9,7 @@ import '../../../../../utilities/requestconstant.dart';
 import '../../../../controller/logincontroller.dart';
 import '../../../../controller/punch_in_controller.dart';
 import '../../../../sample.dart';
+import '../../../../utilities/apiconstant.dart';
 import 'mrnrequest_entry.dart';
 
 class MRN_RequestIndent_Entrylist extends StatefulWidget {
@@ -63,11 +64,43 @@ class _MRN_RequestIndent_EntrylistState
               child: FloatingActionButton.extended(
                 onPressed: () async {
                   mrn_request_controller.saveButton.value = RequestConstant.SUBMIT;
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MRNRequest_Indent_Entry()));
 
+                  if (!AppClient.isAnusamm) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MRNRequest_Indent_Entry(),
+                      ),
+                    );
+                    return;
+                  }
+
+                  if (loginController.user.value.userType == "A" ||
+                      loginController.user.value.userType == "O") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MRNRequest_Indent_Entry(),
+                      ),
+                    );
+                    return;
+                  }
+
+                  await punchInController.getNetworkTime();
+
+                  if (punchInController.dayName == "Tuesday" ||
+                      punchInController.dayName == "Wednesday") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MRNRequest_Indent_Entry(),
+                      ),
+                    );
+                  } else {
+                    BaseUtitiles.showToast(
+                      "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
+                    );
+                  }
                 },
                 label: Text(
                   "Add",

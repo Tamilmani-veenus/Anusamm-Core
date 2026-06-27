@@ -27,17 +27,18 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppClient.init();
+  print("Package Name: ${AppClient.packageName}");
   await ApiConfig.initializeUrl();
   await Upgrader.clearSavedSettings();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp],
-  );
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp],);
   await SessionStorage.init();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyCWpFVl9QxNZlfNWgyOzEVNq6xjnc2AZ-k",
-          appId: "1:677951071137:android:63203a73e5ff0d8e5fe1e0",
-          messagingSenderId: "677951071137",
-          projectId: "vrindhavana-b14fe"));
+          apiKey: "AIzaSyBwZalJ5eOMzalHaiTne5j_sm1dOn9BDHE",
+          appId: "1:548143423324:android:308c52c8c2e71e1e0beb99",
+          messagingSenderId: "548143423324",
+          projectId: "anusamm-3d8ae"));
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
   await Get.putAsync(() async => ConnectivityService());

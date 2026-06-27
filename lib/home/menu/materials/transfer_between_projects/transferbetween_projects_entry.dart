@@ -328,7 +328,7 @@ class _TrasferBetweenProjects_EntryState
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: fromprojectController.fromprojectname,
                               cursorColor: Colors.black,
@@ -396,7 +396,7 @@ class _TrasferBetweenProjects_EntryState
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: fromsiteController.FromSitename,
                               cursorColor: Colors.black,
@@ -457,7 +457,7 @@ class _TrasferBetweenProjects_EntryState
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: projectController.projectnameAll,
                               cursorColor: Colors.black,
@@ -651,7 +651,7 @@ class _TrasferBetweenProjects_EntryState
                                       top: 3, left: 10, bottom: 5),
                                   child: TextFormField(
                                     autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.always,
                                     controller: transferBW_project_Controller
                                         .vechicleNoText,
                                     cursorColor: Colors.black,
@@ -701,7 +701,7 @@ class _TrasferBetweenProjects_EntryState
                                       top: 3, left: 10, bottom: 5),
                                   child: TextFormField(
                                     autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.always,
                                     // keyboardType: TextInputType.number,
                                     controller:
                                         transferBW_project_Controller.dcNoText,
@@ -867,7 +867,7 @@ class _TrasferBetweenProjects_EntryState
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               controller:
                                   transferBW_project_Controller.remarksText,
                               cursorColor: Colors.black,

@@ -36,14 +36,6 @@ class _Bill_Generation_Boq_EntrylistState_Site
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus &&
-            currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus?.unfocus();
-        }
-      },
-      child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&
@@ -300,7 +292,6 @@ class _Bill_Generation_Boq_EntrylistState_Site
             ),
           ),
         ),
-      ),
     );
   }
 

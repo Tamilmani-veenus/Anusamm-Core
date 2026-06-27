@@ -145,7 +145,7 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                         child: TextFormField(
                           readOnly: true,
                           controller: siteController.Sitename,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           cursorColor: Colors.black,
                           style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(
@@ -192,7 +192,7 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                         child: TextFormField(
                           readOnly: true,
                           controller: commonVoucherController.detVoucherTypeController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           cursorColor: Colors.black,
                           style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(
@@ -255,7 +255,7 @@ class _Site_Voucher_SitewiseState extends State<Site_Voucher_Sitewise> {
                                     ),
                                   ],
                                   controller: siteVoucher_Controller.DetAmount,
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   cursorColor: Colors.black,
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(

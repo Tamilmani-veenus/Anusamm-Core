@@ -130,7 +130,7 @@ class _Bill_Generation_direct_deductionState
                         padding:
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: billGenerationDirectController.billamount,
                           cursorColor: Colors.black,
@@ -182,7 +182,7 @@ class _Bill_Generation_direct_deductionState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
 
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
@@ -334,7 +334,7 @@ class _Bill_Generation_direct_deductionState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.always,
                                 onTap: () {
                                   if (billGenerationDirectController
                                               .Creditamt.text !=
@@ -501,7 +501,7 @@ class _Bill_Generation_direct_deductionState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.always,
                                 onTap: () {
                                   if (billGenerationDirectController
                                               .Debitamt.text !=
@@ -797,7 +797,7 @@ class _Bill_Generation_direct_deductionState
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                                 onTap: () {
                                   if (billGenerationDirectController
                                       .Roundoff.text !=
@@ -926,7 +926,7 @@ class _Bill_Generation_direct_deductionState
                                   ),
                                 ],
                                 autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                                 controller:
                                 billGenerationDirectController.netpayamt,
                                 cursorColor: Colors.black,

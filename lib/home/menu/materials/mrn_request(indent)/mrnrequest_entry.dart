@@ -458,7 +458,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller:
                                   mrn_request_controller.ReqTypeController,
@@ -516,7 +516,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                             padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: projectController.projectname,
                               cursorColor: Colors.black,
@@ -578,7 +578,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: siteController.Sitename,
                               cursorColor: Colors.black,
@@ -676,7 +676,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: false,
                               controller:
                                   mrn_request_controller.RemarksController,
@@ -1206,7 +1206,7 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                       width: BaseUtitiles.getWidthtofPercentage(context, 20),
                                       child:
                                       TextFormField(
-                                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        autovalidateMode: AutovalidateMode.always,
                                         onTap: () {
                                           if (mrn_request_controller.Addwork_qtyControllers[index].text != "" && mrn_request_controller.Addwork_qtyControllers[index].text != "0" && mrn_request_controller.Addwork_qtyControllers[index].text != "0.0") {
                                               return;

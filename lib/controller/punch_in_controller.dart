@@ -38,6 +38,7 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
   String? currentTime = "";
   String? currentDate = "";
   String? networkTime = "";
+  String? dayName = "";
   List<Result>? todayPunchInList = [];
   List<EmployeeTiming>? punchFilterList = [];
   RxList punchFilterRxList = [].obs;
@@ -87,8 +88,10 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
     currentTime = DateFormat('hh:mm:ss a').format(now);
     currentDate = DateFormat('yyyy-MM-dd').format(now);
     networkTime = DateFormat('dd-MM-yyyy hh:mm a').format(now);
+    dayName = DateFormat('EEEE').format(now);
     print("Current time (via NTP): $currentTime");
     print("Current date (via NTP): $currentDate");
+    print("Current date (via NTP): $dayName");
   }
 
   getProjectPunchInSts() async {

@@ -19,12 +19,12 @@ class OnclickPendingListResponse {
 
   factory OnclickPendingListResponse.fromJson(Map<String, dynamic> json) {
     return OnclickPendingListResponse(
-      success: json["success"],
-      result: json["result"] is List
-          ? List<OnClickListResult>.from(
-          json["result"].map((x) => OnClickListResult.fromJson(x)))
-          : [],
-      message: json["message"]// 👈 if string like "No Records Found"
+        success: json["success"],
+        result: json["result"] is List
+            ? List<OnClickListResult>.from(
+            json["result"].map((x) => OnClickListResult.fromJson(x)))
+            : [],
+        message: json["message"]// 👈 if string like "No Records Found"
     );
   }
 
@@ -403,8 +403,8 @@ class OnClickListResult {
     NMRLabourAttendanceDate1: json["NMRLabourAttendanceDate1"],
     Labcount: json["Labcount"],
     ReqOrdNo: json["ReqOrdNo"],
-      reviseNo: json["reviseNo"],
-      reviseDate: json["reviseDate"],
+    reviseNo: json["reviseNo"],
+    reviseDate: json["reviseDate"],
     labourAttendanceNo: json["LabourAttendanceNo"],
     labourAttendanceDate: json["LabourAttendanceDate"],
     reqOrdDate: json["reqOrdDate"],
@@ -448,8 +448,8 @@ class OnClickListResult {
     prepareby: json["preparedby"],
     appRemarks: json["appRemarks"],
     preparedByName: json["Prepared_by"],
-      preparebyname: json["PreparedByName"],
-      preparedByBOQ: json["preparedBy"],
+    preparebyname: json["PreparedByName"],
+    preparedByBOQ: json["preparedBy"],
     netAmt: json["NetAmt"],
     netAmount: json["NetAmount"],
     frProjectName: json["FrProjectName"],
@@ -541,12 +541,12 @@ class OnClickListResult {
     SubcontractName: json["subcontractName"],
     entryName: json["entryName"],
     verifiedBy: json["verifedName"],
-      materialReqOrdMasId: json["materialReqOrdMasId"],
-      reqDueDate: json["reqDueDate"],
-      qCount: json["qCount"],
-      createdBy: json["createdBy"],
-      employeeId: json["employeeId"],
-      quoteRemarks: json["quoteRemarks"],
+    materialReqOrdMasId: json["materialReqOrdMasId"],
+    reqDueDate: json["reqDueDate"],
+    qCount: json["qCount"],
+    createdBy: json["createdBy"],
+    employeeId: json["employeeId"],
+    quoteRemarks: json["quoteRemarks"],
     workNo: json["workNo"],
     workDate: json["workDate"],
     workId: json["workId"],

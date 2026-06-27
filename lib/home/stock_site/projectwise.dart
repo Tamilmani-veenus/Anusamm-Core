@@ -81,7 +81,7 @@ class _PrjectWiseState extends State<PrjectWise> {
                           controller: reportsController.projectname,
                           cursorColor: Colors.black,
                           autovalidateMode: reportsController.validateProject.value
-                              ? AutovalidateMode.onUserInteraction
+                              ? AutovalidateMode.always
                               : AutovalidateMode.disabled,
                           style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(
@@ -134,7 +134,7 @@ class _PrjectWiseState extends State<PrjectWise> {
                           controller: reportsController.sitename,
                           cursorColor: Colors.black,
                           autovalidateMode: reportsController.validateProject.value
-                              ? AutovalidateMode.onUserInteraction
+                              ? AutovalidateMode.always
                               : AutovalidateMode.disabled,
                           style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(

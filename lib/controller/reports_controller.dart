@@ -162,16 +162,24 @@ class ReportsController extends GetxController{
 
   //------------Get Company Reports----------
 
-  Future getCompanyReportList() async {
+  Future getCompanyReportList({type}) async {
     getCompanyDropDownvalue.value=[];
     final value = await ReportsProvider.getCompanyReports();
     if (value != null ) {
       if(value["success"] == true) {
         getCompanyDropDownvalue.value = value["result"];
-        getCompanyDropDownvalue.insert(0, {
-          "id": 0,
-          "companyName": "--ALL--",
-        });
+        if(type=="MRNReqTracker") {
+          getCompanyDropDownvalue.insert(0, {
+            "id": 0,
+            "companyName": "--ALL--",
+          });
+        }
+        else{
+          getCompanyDropDownvalue.insert(0, {
+            "id": 0,
+            "companyName": "--SELECT--",
+          });
+        }
       }else {
         BaseUtitiles.showToast(value["message"] ?? 'Something went wrong..');
       }

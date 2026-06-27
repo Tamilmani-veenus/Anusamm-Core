@@ -36,7 +36,6 @@ class PendingListController extends GetxController {
   LoginController loginController = Get.put(LoginController());
   RxList pendingList_datas = [].obs;
   RxList reqNoList = [].obs;
-  RxList<QuoteDet> getQuoteDetList = <QuoteDet>[].obs;
   final revertRemarks = TextEditingController();
   final verifyRemarks = TextEditingController();
 
@@ -98,10 +97,10 @@ class PendingListController extends GetxController {
     }
   }
 
-  Future getPurcharseOrderNo(projectId) async {
+  Future getPurcharseOrderNo(Id,{type}) async {
     purchaseOrderNo.value="";
     var entryDate=DateFormat('yyyy/MM/dd').format(DateTime.now());
-    var response = await PendingListProvider.getPurchaseOrderNo(projectId,entryDate);
+    var response = await PendingListProvider.getPurchaseOrderNo(Id,entryDate,type);
     if (response != null) {
       if(response["success"]==true) {
         purchaseOrderNo.value = response["entryAutoNo"];
@@ -801,8 +800,8 @@ class PendingListController extends GetxController {
     }
   }
 
-  Future quotVerifyAprovalbuttonApi(context,int id,type,{quoteMasId,companyId}) async {
-    final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId,purchaseOrderNo.value,companyId);
+  Future quotVerifyAprovalbuttonApi(context,int id,type,{companyId,quoteMasId}) async {
+     final response = await PendingListProvider.quoteVerifyApprovalApi(id,type,verifyRemarks.text,revertRemarks.text,quoteMasId,purchaseOrderNo.value,companyId);
     print("Quote Approve :: $response");
     if(response!=null){
       if(response["success"]==true){

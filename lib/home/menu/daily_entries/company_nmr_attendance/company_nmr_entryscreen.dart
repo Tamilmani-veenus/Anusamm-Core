@@ -328,7 +328,7 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: projectController.projectname,
                             cursorColor: Colors.black,
@@ -383,7 +383,7 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: siteController.Sitename,
                             cursorColor: Colors.black,
@@ -437,7 +437,7 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller:
                                 subcontractorController.Subcontractorname,
@@ -495,7 +495,7 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                           child: TextFormField(
                             readOnly: true,
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             controller:
                                 dailyEntriesController.WorkTypeTextController,
                             cursorColor: Colors.black,
@@ -552,7 +552,7 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: false,
                             controller: companyNmrAttendanceController
                                 .Company_EntryRemarks,

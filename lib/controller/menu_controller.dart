@@ -43,6 +43,7 @@ import '../models/report_list_model.dart';
 import '../provider/menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import 'advance_reqvoucher_new_controller.dart';
 import 'boqrevised_controller.dart';
@@ -184,14 +185,47 @@ class Menu_Controller extends GetxController {
   }
 
 
- MaterialScreen(String value, BuildContext context) {
+ MaterialScreen(String value, BuildContext context) async {
     if (value == "MRN Request (Indent)") {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MRN_RequestIndent_Entrylist()));
+      if (!AppClient.isAnusamm) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MRN_RequestIndent_Entrylist(),
+          ),
+        );
+        return;
+      }
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => MRN_Request_Indent(0)),
-      // );
+      if (loginController.user.value.userType == "A" ||
+          loginController.user.value.userType == "O") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MRN_RequestIndent_Entrylist(),
+          ),
+        );
+        return;
+      }
+
+      await punchInController.getNetworkTime();
+
+      if (punchInController.dayName == "Tuesday" ||
+          punchInController.dayName == "Wednesday") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MRN_RequestIndent_Entrylist(),
+          ),
+        );
+      } else {
+        BaseUtitiles.showToast(
+          "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
+        );
+      }
+      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MRN_RequestIndent_Entrylist()));
+
+
 
     }
     else if (value == "Site Request (Issue Slip)") {

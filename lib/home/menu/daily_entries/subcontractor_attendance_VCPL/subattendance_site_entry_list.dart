@@ -516,32 +516,7 @@ class _SubAttendanceSiteEntryListState
                               //   ],
                               // ),
 
-                              const SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    child: const Text(""),
-                                  ),
-                                  const Expanded(
-                                      flex: 3,
-                                      child: Text(
-                                        "Status",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      )),
-                                  Expanded(
-                                      flex: 8,
-                                      child: Text(
-                                        dailyEntryController.Entrylist.value[index].appType ,
-                                        style: TextStyle(
-                                          color: dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y" ? Colors.green :  Colors.black,
-                                        ),
-                                      )),
-                                ],
-                              ),
+
 
                               const SizedBox(height: 5),
                               Row(
@@ -603,6 +578,39 @@ class _SubAttendanceSiteEntryListState
                                 ],
                               ),
                               const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: const Text(""),
+                                  ),
+                                  const Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Prepared By ",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 8,
+                                      child:  Text(
+                                        dailyEntryController
+                                            .Entrylist.value[index].employeeName
+                                            .toString(),
+                                        // +  " | " +
+                                        // dailyEntryController.Entrylist
+                                        //     .value[index].workshift
+                                        //     .toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
 
                               const Divider(thickness: 1),
                               Row(
@@ -630,7 +638,7 @@ class _SubAttendanceSiteEntryListState
                                   const Expanded(
                                       flex: 3,
                                       child: Text(
-                                        "Prepared By ",
+                                        "Status",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
@@ -638,16 +646,10 @@ class _SubAttendanceSiteEntryListState
                                       )),
                                   Expanded(
                                       flex: 6,
-                                      child: Text(
-                                        dailyEntryController
-                                            .Entrylist.value[index].employeeName
-                                            .toString(),
-                                        // +  " | " +
-                                        // dailyEntryController.Entrylist
-                                        //     .value[index].workshift
-                                        //     .toString(),
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                                      child:Text(
+                                        dailyEntryController.Entrylist.value[index].appType ,
+                                        style: TextStyle(
+                                          color: dailyEntryController.Entrylist.value[index].approveStatus.toString() == "Y" ? Colors.green :  Colors.black,
                                         ),
                                       )),
 

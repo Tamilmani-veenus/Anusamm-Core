@@ -92,134 +92,133 @@ class _Subcont_NMR_EntryListScreenState_Site
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3),
-                    child: Row(
+                    child: Row(                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                       children: [
-                        Expanded(
-                          child: Container(
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller: billGenerationDirectController.EntrylistFrDate,
-                                  cursorColor: Colors.black,
-                                  style: TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "From Date",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 8),
-                                        child: ConstIcons.date),
-                                  ),
-                                  onTap: () async {
-                                    billGenerationDirectController.bill_entryList.clear();
-                                    var Frdate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime.now(),builder: (context, child) {
-                                      return Theme(data: Theme.of(context).copyWith(
-                                        colorScheme: ColorScheme.light(
-                                          primary: Theme.of(context).primaryColor, // header background color
-                                          onPrimary: Colors.white, // header text color
-                                          onSurface: Colors.black, // body text color
-                                        ),
-                                        textButtonTheme: TextButtonThemeData(
-                                          style: TextButton.styleFrom(
-                                            primary: Colors.black, // button text color
-                                          ),
+                        Container(
+                          width: BaseUtitiles.getWidthtofPercentage(context, 38),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white70, width: 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: TextFormField(
+                                readOnly: true,
+                                controller: billGenerationDirectController.EntrylistFrDate,
+                                cursorColor: Colors.black,
+                                style: TextStyle(color: Colors.black),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  border: InputBorder.none,
+                                  labelText: "From Date",
+                                  labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: RequestConstant.Lable_Font_SIZE),
+                                  prefixIconConstraints:
+                                  BoxConstraints(minWidth: 0, minHeight: 0),
+                                  prefixIcon: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 8),
+                                      child: ConstIcons.date),
+                                ),
+                                onTap: () async {
+                                  billGenerationDirectController.bill_entryList.clear();
+                                  var Frdate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime.now(),builder: (context, child) {
+                                    return Theme(data: Theme.of(context).copyWith(
+                                      colorScheme: ColorScheme.light(
+                                        primary: Theme.of(context).primaryColor, // header background color
+                                        onPrimary: Colors.white, // header text color
+                                        onSurface: Colors.black, // body text color
+                                      ),
+                                      textButtonTheme: TextButtonThemeData(
+                                        style: TextButton.styleFrom(
+                                          primary: Colors.black, // button text color
                                         ),
                                       ),
-                                        child: child!,
-                                      );
-                                    });
-                                    billGenerationDirectController.EntrylistFrDate.text = Frdate.toString().substring(0, 10);
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Select Date';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                    ),
+                                      child: child!,
+                                    );
+                                  });
+                                  billGenerationDirectController.EntrylistFrDate.text = Frdate.toString().substring(0, 10);
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Select Date';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller: billGenerationDirectController.EntrylistToDate,
-                                  cursorColor: Colors.black,
-                                  style: TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "ToDate",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 8),
-                                        child: ConstIcons.date),
-                                  ),
-                                  onTap: () async {
-                                    billGenerationDirectController.bill_entryList.clear();
-                                    var Todate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime(2100),
-                                        builder: (context, child) {
-                                          return Theme(data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
-                                              primary: Theme.of(context).primaryColor, // header background color
-                                              onPrimary: Colors.white, // header text color
-                                              onSurface: Colors.black, // body text color
-                                            ),
-                                            textButtonTheme: TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                primary: Colors.black, // button text color
-                                              ),
+                        Container(
+                          width: BaseUtitiles.getWidthtofPercentage(context, 38),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white70, width: 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: TextFormField(
+                                readOnly: true,
+                                controller: billGenerationDirectController.EntrylistToDate,
+                                cursorColor: Colors.black,
+                                style: TextStyle(color: Colors.black),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  border: InputBorder.none,
+                                  labelText: "ToDate",
+                                  labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: RequestConstant.Lable_Font_SIZE),
+                                  prefixIconConstraints:
+                                  BoxConstraints(minWidth: 0, minHeight: 0),
+                                  prefixIcon: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 8),
+                                      child: ConstIcons.date),
+                                ),
+                                onTap: () async {
+                                  billGenerationDirectController.bill_entryList.clear();
+                                  var Todate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2100),
+                                      builder: (context, child) {
+                                        return Theme(data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: Theme.of(context).primaryColor, // header background color
+                                            onPrimary: Colors.white, // header text color
+                                            onSurface: Colors.black, // body text color
+                                          ),
+                                          textButtonTheme: TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              primary: Colors.black, // button text color
                                             ),
                                           ),
-                                            child: child!,
-                                          );
-                                        });
-                                    billGenerationDirectController.EntrylistToDate.text =
-                                        Todate.toString().substring(0, 10);
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Select Date';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                        ),
+                                          child: child!,
+                                        );
+                                      });
+                                  billGenerationDirectController.EntrylistToDate.text =
+                                      Todate.toString().substring(0, 10);
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Select Date';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                           ),
@@ -333,37 +332,42 @@ class _Subcont_NMR_EntryListScreenState_Site
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-
-
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
-
                                         Container(
-                                          width: BaseUtitiles.getWidthtofPercentage(context, 50),
+                                          width: BaseUtitiles
+                                              .getWidthtofPercentage(
+                                              context, 50),
                                           child: Row(
                                             children: [
                                               Container(
-                                                  margin: EdgeInsets.only(left:5,right: 5),
-                                                  child: ConstIcons.list_date),
+                                                margin: EdgeInsets.only(
+                                                    left: 5, right: 3),
+                                                child: ConstIcons.list_date,
+                                              ),
                                               Text(
-                                                billGenerationDirectController.bill_entryList.value[index].workDate.toString(),
+                                                  billGenerationDirectController.bill_entryList.value[index].workDate.toString(),
                                                 style: TextStyle(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontWeight: FontWeight.bold),
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontWeight:
+                                                    FontWeight.bold),
                                               ),
                                             ],
                                           ),
                                         )
                                       ],
                                     ),
-                                    Expanded(
-                                      flex: 1,
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
                                       child: Text(
-                                        billGenerationDirectController.bill_entryList.value[index].workNo.toString(),
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                          billGenerationDirectController.bill_entryList.value[index].workNo.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     )
                                   ],
@@ -499,6 +503,32 @@ class _Subcont_NMR_EntryListScreenState_Site
                                   ],
                                 ),
 
+                                SizedBox(height: 5),
+
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: 2, left: 10),
+                                      child: Text(""),
+                                    ),
+                                    Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          "Preparedby",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,),
+                                        )),
+                                    Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                          billGenerationDirectController.bill_entryList.value[index].createdName.toString(),
+                                          style: TextStyle(
+                                            color: Colors.black,),
+                                        )),
+                                  ],
+                                ),
+
                                 Divider(thickness: 1),
 
                                 Row(
@@ -510,7 +540,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                     Expanded(
                                         flex: 3,
                                         child: Text(
-                                          "Preparedby",
+                                          "Status",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
@@ -518,8 +548,8 @@ class _Subcont_NMR_EntryListScreenState_Site
                                     Expanded(
                                         flex: 5,
                                         child: Text(
-                                          billGenerationDirectController.bill_entryList.value[index].createdName.toString(),
-                                          style: TextStyle(color: Colors.black),
+                                          billGenerationDirectController.bill_entryList.value[index].status.toString(),
+                                          style: TextStyle(color: billGenerationDirectController.bill_entryList.value[index].status== "Approved"?Colors.green:Colors.black),
                                         )),
                                     Expanded(
                                         flex: 1,

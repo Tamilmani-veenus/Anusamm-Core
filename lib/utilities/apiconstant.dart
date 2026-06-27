@@ -1,4 +1,17 @@
 import 'dart:io';
+import 'package:package_info_plus/package_info_plus.dart';
+
+class AppClient {
+  static late String packageName;
+
+  static Future<void> init() async {
+    final info = await PackageInfo.fromPlatform();
+    packageName = info.packageName;
+  }
+
+  static bool get isAnusamm => packageName == "com.veenus.anusamm";
+  static bool get isVrindhavana => packageName == "com.veenus.vrindhavana";
+}
 
 class ApiConfig {
   // static const String LIVE_ENDPOINT_CORE = "http://192.168.0.250:8080/";  //local
@@ -7,6 +20,7 @@ class ApiConfig {
   // static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "VeenusAPI/";
   static const String DEFAULT_BASE_URL_CORE = LIVE_ENDPOINT_CORE + "AnusammAPI/";
   static late final String APIURL_CORE;
+
   static late final String WebURL;
   static String BASE_URL_CORE = APIURL_CORE;
 
@@ -185,6 +199,7 @@ class ApiConstant{
   static String GET_SITEREQ_APPROVAL_PEND_LIST = BASE_URL_CORE + "api/SiteRequest/GetAllTobePreIndentApproval";
   static String GET_SUPPLIER_QUOTE_APPROVAL_LIST = BASE_URL_CORE + "api/MaterialQuote/GetSupplierQuoteApproval";
   static String GET_PURCHASE_ORDER_NO_API = BASE_URL_CORE + "api/GenericMaster/GetAutoNoBasedOnEntryDate";
+  static String GET_PURCHASE_ORDER_NO_COMPANYWISE_API = BASE_URL_CORE + "api/GenericMaster/GetAutoNoCompanyWiseWithYearPo";
 
   static String GET_PENDING_QUOTE_LIST = BASE_URL_CORE + "api/MaterialQuote/GetPendingQuote";
   static String GET_VERIFY_QUOTE_LIST = BASE_URL_CORE + "api/MaterialQuote/GetQuoteVerificationPending";

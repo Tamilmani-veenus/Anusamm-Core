@@ -342,7 +342,7 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: fromprojectController.fromprojectname,
                             cursorColor: Colors.black,
@@ -405,7 +405,7 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: fromsiteController.FromSitename,
                             cursorColor: Colors.black,
@@ -460,7 +460,7 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: projectController.projectnameAll,
                             cursorColor: Colors.black,
@@ -555,7 +555,7 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             controller:
                                 materialTransferReqController.remarksText,
                             cursorColor: Colors.black,

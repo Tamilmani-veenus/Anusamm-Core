@@ -239,7 +239,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                               readOnly: true,
                               controller: projectController.projectname,
                               cursorColor: Colors.black,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               style: const TextStyle(color: Colors.black),
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.zero,
@@ -288,7 +288,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                               readOnly: true,
                               controller: siteController.Sitename,
                               cursorColor: Colors.black,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               style: const TextStyle(color: Colors.black),
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.zero,
@@ -335,7 +335,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                             child: TextFormField(
                               readOnly: true,
                               controller: subcontractorController.Subcontractorname,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               cursorColor: Colors.black,
                               style: const TextStyle(color: Colors.black),
                               decoration: const InputDecoration(
@@ -382,7 +382,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                             const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               controller: subcontractorController.InvoiceNo,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               cursorColor: Colors.black,
                               style: const TextStyle(color: Colors.black),
                               decoration: const InputDecoration(

@@ -272,7 +272,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: projectController.projectname,
                           cursorColor: Colors.black,
@@ -322,7 +322,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: siteController.Sitename,
                           cursorColor: Colors.black,
@@ -372,7 +372,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: dailyWrkDone_DPR_Controller.TypeSubcontractorname,
                           cursorColor: Colors.black,
@@ -422,7 +422,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: billGenerationBoqController.entryTypeController,
                           cursorColor: Colors.black,
@@ -607,7 +607,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: subcontractorController.InvoiceNo,
                           cursorColor: Colors.black,
@@ -825,7 +825,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: true,
                           controller: subcontractorController.WorkOrderNo,
                           cursorColor: Colors.black,
@@ -879,7 +879,7 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           controller: billGenerationBoqController.RemarksController,
                           cursorColor: Colors.black,
                           style: const TextStyle(color: Colors.black),
