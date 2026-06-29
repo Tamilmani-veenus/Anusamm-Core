@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import '../constants/storage_constant.dart';
 import '../controller/logincontroller.dart';
 import '../controller/punch_in_controller.dart';

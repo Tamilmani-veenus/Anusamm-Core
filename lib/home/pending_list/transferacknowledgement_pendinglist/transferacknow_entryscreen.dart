@@ -411,7 +411,7 @@ class _TransferAcknow_EntryScreenState extends State<TransferAcknow_EntryScreen>
                           child: Padding(
                             padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                             child: TextFormField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               readOnly: true,
                               controller: fromsiteController.FromSitename,
                               cursorColor: Colors.black,

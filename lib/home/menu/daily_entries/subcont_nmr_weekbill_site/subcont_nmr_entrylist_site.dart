@@ -530,7 +530,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                       const Expanded(
                                           flex: 3,
                                           child: Text(
-                                            "Status",
+                                            "Prepared By",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,),
@@ -538,8 +538,8 @@ class _Subcont_NMR_EntryListScreenState_Site
                                       Expanded(
                                           flex: 6,
                                           child: Text(
-                                            nmrWklyController.NmrEtyList.value[index].status.toString(),
-                                            style: TextStyle(color: nmrWklyController.NmrEtyList.value[index].status.toString() == "Approved" ? Colors.green : Colors.black),
+                                            nmrWklyController.NmrEtyList.value[index].createdName.toString(),
+                                            style: TextStyle(color: Colors.black),
                                           )),
                                     ],
                                   ),
@@ -553,7 +553,7 @@ class _Subcont_NMR_EntryListScreenState_Site
                                       const Expanded(
                                           flex: 4,
                                           child: Text(
-                                            "Prepared By",
+                                            "Status",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,),
@@ -561,8 +561,8 @@ class _Subcont_NMR_EntryListScreenState_Site
                                       Expanded(
                                           flex: 6,
                                           child: Text(
-                                            nmrWklyController.NmrEtyList.value[index].createdName.toString(),
-                                            style: TextStyle(color: Colors.black),
+                                            nmrWklyController.NmrEtyList.value[index].status.toString(),
+                                            style: TextStyle(color: nmrWklyController.NmrEtyList.value[index].status.toString() == "Approved" ? Colors.green : Colors.black),
                                           )),
                                       Expanded(
                                           flex: 2,

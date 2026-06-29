@@ -73,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding:
                         const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           readOnly: false,
                           controller: loginController.userName,
                           validator: (userName) {
@@ -114,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           obscureText: _isObscure,
                           cursorColor: Colors.black,
                           controller: loginController.password,
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.always,
                           obscureText: _isObscure,
                           cursorColor: Colors.black,
                           controller: loginController.conformPassword,

@@ -274,7 +274,7 @@ class _MRN_ReqTracker_ReportState extends State<MRN_ReqTracker_Report> {
                           ),
                         ),
                         onTap: () async {
-                          await reportsController.getCompanyReportList();
+                          await reportsController.getCompanyReportList(type: "MRNReqTracker");
                           bottomsheetControllers.CompanyName(context, reportsController.getCompanyDropDownvalue.value,type: "mrnReqTracker");
                         },
                       ),

@@ -249,7 +249,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller:
                                 commonVoucherController.VoucherTypeController,
@@ -301,7 +301,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: projectController.projectname,
                             cursorColor: Colors.black,
@@ -348,7 +348,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.AccountTypename,
                             cursorColor: Colors.black,
@@ -398,7 +398,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.Accountname,
                             cursorColor: Colors.black,
@@ -624,7 +624,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                           padding: const EdgeInsets.only(
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode: AutovalidateMode.always,
                             controller: commonVoucherController.namethrough,
                             cursorColor: Colors.black,
                             style: TextStyle(color: Colors.black),
@@ -666,7 +666,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.AccPayforname,
                             cursorColor: Colors.black,
@@ -715,7 +715,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             readOnly: true,
                             controller: commonVoucherController.voucherPaidForm,
                             cursorColor: Colors.black,
@@ -770,7 +770,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                                     top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
                                   autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                      AutovalidateMode.always,
                                   readOnly: true,
                                   controller:
                                       commonVoucherController.Paymodename,
@@ -896,7 +896,7 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                               top: 3, left: 10, bottom: 5),
                           child: TextFormField(
                             autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.always,
                             controller: siteVoucher_Controller.Remarks,
                             cursorColor: Colors.black,
                             style: TextStyle(color: Colors.black),

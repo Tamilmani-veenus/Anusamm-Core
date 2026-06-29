@@ -293,7 +293,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: projectController.projectname,
                               cursorColor: Colors.black,
@@ -347,7 +347,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller: siteController.Sitename,
                               cursorColor: Colors.black,
@@ -401,7 +401,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: true,
                               controller:
                                   subcontractorController.Subcontractorname,
@@ -457,7 +457,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                             child: TextFormField(
                               readOnly: true,
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               controller:
                                   dailyEntriesController.WorkTypeTextController,
                               cursorColor: Colors.black,
@@ -512,7 +512,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.always,
                               readOnly: false,
                               controller:
                                   dailyEntriesController.RemarksController,

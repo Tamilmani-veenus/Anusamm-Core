@@ -303,7 +303,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                              AutovalidateMode.always,
                               readOnly: true,
                               controller:
                               mrnRequest_PreIndent_Controller.ReqTypeController,
@@ -362,7 +362,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                             child: TextFormField(
                               readOnly: true,
                               controller: projectController.projectname,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               cursorColor: Colors.black,
                               style: TextStyle(color: Colors.black),
                               decoration: InputDecoration(
@@ -414,7 +414,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                             child: TextFormField(
                               readOnly: true,
                               controller: siteController.Sitename,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.always,
                               cursorColor: Colors.black,
                               style: TextStyle(color: Colors.black),
                               decoration: InputDecoration(

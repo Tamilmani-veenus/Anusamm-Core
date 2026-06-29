@@ -173,7 +173,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                       padding:
                                       const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                       child: TextFormField(
-                                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        autovalidateMode: AutovalidateMode.always,
                                         readOnly: true,
                                         controller: transferBt_Site_Controller.autoyrwiseText,
                                         cursorColor: Colors.black,
@@ -285,7 +285,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   readOnly: true,
                                   controller: projectController.projectname,
                                   cursorColor: Colors.black,
@@ -336,7 +336,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   readOnly: true,
                                   controller: fromsiteController.FromSitename,
                                   cursorColor: Colors.black,
@@ -386,7 +386,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   readOnly: true,
                                   controller: siteController.Sitename,
                                   cursorColor: Colors.black,
@@ -438,7 +438,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                   child: TextFormField(
-                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.always,
                                     readOnly: true,
                                     controller: transferBt_Site_Controller.ReqNoText,
                                     cursorColor: Colors.black,
@@ -482,7 +482,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   readOnly: true,
                                   controller: subcontractorController.Subcontractorname,
                                   cursorColor: Colors.black,
@@ -528,7 +528,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   readOnly: true,
                                   controller: transferBt_Site_Controller.prearedbyText,
                                   cursorColor: Colors.black,
@@ -573,7 +573,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                 padding:
                                 const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                                 child: TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.always,
                                   controller: transferBt_Site_Controller.remarksText,
                                   cursorColor: Colors.black,
                                   style: const TextStyle(color: Colors.black),

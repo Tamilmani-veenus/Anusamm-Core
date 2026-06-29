@@ -29,6 +29,7 @@ import '../../controller/mrn_preapproval_controller.dart';
 import '../../controller/mrn_request_indent_controller.dart';
 import '../../controller/mrnrequest_preIndent_controller.dart';
 import '../../controller/preapproval_controller.dart';
+import '../../controller/reports_controller.dart';
 import '../../controller/requisitionslip_controller.dart';
 import '../../controller/requisitionslip_controller_new.dart';
 import '../../controller/sitevoucher_controller.dart';
@@ -5692,33 +5693,38 @@ class _InwardPendingState extends State<InwardPending> {
                                               )),
                                         ],
                                       ),
-                                      SizedBox(height: 5),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
+                                      if (AppClient.isAnusamm)
+                                        Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(height: 5),
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    top: 5, left: 10),
+                                                child: Text(""),
+                                              ),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    "Supplier Contact No",
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 8,
+                                                  child: Text(
+                                                    pendingListController.mainlist
+                                                        .value[index].SupplierContactNo
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                  )),
+                                            ],
                                           ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Supplier Contact No",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                pendingListController.mainlist
-                                                    .value[index].SupplierContactNo
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
                                         ],
                                       ),
                                       SizedBox(height: 5),
@@ -14199,7 +14205,7 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                     child: TextFormField(
                                                       autovalidateMode:
                                                           AutovalidateMode
-                                                              .onUserInteraction,
+                                                              .always,
                                                       cursorColor:
                                                           Theme.of(context)
                                                               .primaryColor,
@@ -16089,6 +16095,7 @@ class _QuoteVerifyandApprovalState extends State<QuoteVerifyandApproval> {
   PendingListController pendingListController =
   Get.put(PendingListController());
   LoginController loginController = Get.put(LoginController());
+  ReportsController reportsController = Get.put(ReportsController());
 
   @override
   void initState() {
@@ -16096,6 +16103,8 @@ class _QuoteVerifyandApprovalState extends State<QuoteVerifyandApproval> {
     pendingListController.pendingmainlist.value = widget.onclickPendingListData;
     pendingListController.verifyRemarks.text = "-";
     pendingListController.revertRemarks.text = "-";
+    reportsController.companyName.text = "--SELECT--";
+    reportsController.selectedCompanyId.value = 0;
 
     super.initState();
   }
@@ -16519,27 +16528,15 @@ class _QuoteVerifyandApprovalState extends State<QuoteVerifyandApproval> {
                                                 flex: 4,
                                                 child: InkWell(
                                                   onTap: () async {
-                                                    await pendingListController
-                                                        .getPurcharseOrderNo(widget
-                                                        .checkheading ==
-                                                        "QUOTE VERIFICATION PENDING"
-                                                        ? pendingListController
-                                                        .mainlist[index]
-                                                        .ProjectId
-                                                        : pendingListController
-                                                        .mainlist[index]
-                                                        .projId);
-                                                    if (widget.checkheading ==
-                                                        "QUOTE VERIFICATION PENDING") {
-                                                      verifyAndApproveAlert(
-                                                          context, index);
+                                                    if (widget.checkheading == "QUOTE VERIFICATION PENDING") {
+                                                      verifyAndApproveAlert(context, index);
                                                     } else {
-                                                      await pendingListController
-                                                          .getQuoteSupplierlist(
-                                                          pendingListController
-                                                              .mainlist[
-                                                          index]
-                                                              .id!);
+                                                      await pendingListController.getQuoteSupplierlist(pendingListController.mainlist[index].id!);
+                                                      if(AppClient.isVrindhavana) {
+                                                        reportsController.companyName.text = "--SELECT--";
+                                                        reportsController.selectedCompanyId.value = 0;
+                                                        await reportsController.getCompanyReportList();
+                                                      }
                                                       showDialog(
                                                         context: context,
                                                         builder: (BuildContext
@@ -16554,8 +16551,11 @@ class _QuoteVerifyandApprovalState extends State<QuoteVerifyandApproval> {
                                                             no: pendingListController
                                                                 .mainlist[index]
                                                                 .reqOrdNo,
-                                                            pId: pendingListController.mainlist[index].ProjectID,
-                                                            companyId: pendingListController.mainlist[index].CompanyId,
+                                                            pId:
+                                                            pendingListController
+                                                                .mainlist[
+                                                            index]
+                                                                .projId, companyId: AppClient.isVrindhavana? 0 :  pendingListController.mainlist[index].CompanyId,
                                                           );
                                                         },
                                                       );

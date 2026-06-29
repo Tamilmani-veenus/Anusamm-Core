@@ -151,7 +151,7 @@ class _staff_voucher_sitewiseState extends State<staff_voucher_sitewise> {
                       child: TextFormField(
                         readOnly: true,
                         controller: projectController.projectname,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.always,
                         cursorColor: Colors.black,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
@@ -197,7 +197,7 @@ class _staff_voucher_sitewiseState extends State<staff_voucher_sitewise> {
                       child: TextFormField(
                         readOnly: true,
                         controller: siteController.Sitename,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.always,
                         cursorColor: Colors.black,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
@@ -244,7 +244,7 @@ class _staff_voucher_sitewiseState extends State<staff_voucher_sitewise> {
                       child: TextFormField(
                         readOnly: true,
                         controller: commonVoucherController.detVoucherTypeController,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.always,
                         cursorColor: Colors.black,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
@@ -307,7 +307,7 @@ class _staff_voucher_sitewiseState extends State<staff_voucher_sitewise> {
                                   ),
                                 ],
                                 controller: staffVoucher_Controller.DetAmount,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 cursorColor: Colors.black,
                                 style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(

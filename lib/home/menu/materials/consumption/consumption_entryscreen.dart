@@ -249,7 +249,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: projectController.projectname,
                                 cursorColor: Colors.black,
@@ -301,7 +301,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: siteController.Sitename,
                                 cursorColor: Colors.black,
@@ -355,7 +355,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: subcontractorController.Subcontractorname,
                                 cursorColor: Colors.black,
@@ -398,7 +398,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                               padding:
                               const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 readOnly: true,
                                 controller: consumption_controller.expenseTypeController,
                                 cursorColor: Colors.black,
@@ -486,7 +486,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.always,
                                 controller: consumption_controller.Consum_RemarksController,
                                 cursorColor: Colors.black,
                                 style: const TextStyle(color: Colors.black),
