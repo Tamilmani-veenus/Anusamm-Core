@@ -1,18 +1,6 @@
 import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class AppClient {
-  static late String packageName;
-
-  static Future<void> init() async {
-    final info = await PackageInfo.fromPlatform();
-    packageName = info.packageName;
-  }
-
-  static bool get isAnusamm => packageName == "com.veenus.anusamm";
-  static bool get isVrindhavana => packageName == "com.veenus.vrindhavana";
-}
-
 class ApiConfig {
   // static const String LIVE_ENDPOINT_CORE = "http://192.168.0.250:8080/";  //local
   static const String LIVE_ENDPOINT_CORE = "http://49.204.233.151:8080/";    //local
@@ -46,6 +34,18 @@ class ApiConfig {
       return false;
     }
   }
+}
+
+class AppClient {
+  static late String packageName;
+
+  static Future<void> init() async {
+    final info = await PackageInfo.fromPlatform();
+    packageName = info.packageName;
+  }
+
+  static bool get isAnusamm => packageName == "com.veenus.anusamm";
+  static bool get isVrindhavana => packageName == "com.veenus.vrindhavana";
 }
 
 class ApiConstant{
