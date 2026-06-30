@@ -883,9 +883,9 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                             Fluttertoast.showToast(msg: "Please add labour details");
                           } else {
                             bool hasInvalid = false;
+                            bool isWageNotSet = false;
 
                             for (int i = 0; i < dailyEntriesController.readListdata.length; i++) {
-
                               final nosText = dailyEntriesController
                                   .EntrySCreenNosControllers[i]
                                   .text
@@ -901,15 +901,21 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                   .text
                                   .trim();
 
+                              final amtText = dailyEntriesController
+                                  .NetAmtController[i]
+                                  .text
+                                  .trim();
+
                               final double nosValue = double.tryParse(nosText) ?? 0;
                               final double morOtValue = double.tryParse(morOtText) ?? 0;
                               final double eveOtValue = double.tryParse(eveOtText) ?? 0;
+                              final double amtValue = double.tryParse(amtText) ?? 0;
 
+                              if (amtValue <= 0) {
+                                isWageNotSet = true;
+                              }
 
-                              if (nosValue <= 0 &&
-                                  morOtValue <= 0 &&
-                                  eveOtValue <= 0) {
-
+                              if (nosValue <= 0 && morOtValue <= 0 && eveOtValue <= 0) {
                                 hasInvalid = true;
                                 break;
                               }
@@ -918,6 +924,10 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                             if (hasInvalid) {
                               BaseUtitiles.showToast(
                                 "Please enter either Nos, MOR OT Hrs, or EVE OT Hrs.",
+                              );
+                            } else if (isWageNotSet) {
+                              BaseUtitiles.showToast(
+                                "Please set the wages for the subcontractor category.",
                               );
                             } else {
                               SubmitAlert(context);

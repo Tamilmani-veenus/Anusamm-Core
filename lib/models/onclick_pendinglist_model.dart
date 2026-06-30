@@ -92,7 +92,7 @@ class OnClickListResult {
   String? preparedByName;
   String? Preparedbyname;
   String? preparebyname;
-  String? preparedByBOQ;
+  dynamic preparedByBOQ;
   String? preparedName;
   int? preparedByid;
   double? netAmt;

@@ -223,10 +223,6 @@ class Menu_Controller extends GetxController {
           "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
         );
       }
-      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MRN_RequestIndent_Entrylist()));
-
-
-
     }
     else if (value == "Site Request (Issue Slip)") {
       Navigator.push(context, MaterialPageRoute(builder: (context) => MRNRequest_PreIndent_List()),);
