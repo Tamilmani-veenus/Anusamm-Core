@@ -17,7 +17,8 @@ import 'package:get/get.dart';
 import '../pdf_generate/pdf_model/pdfmodel.dart';
 
 class AttendanceReport extends StatefulWidget {
-  const AttendanceReport({Key? key}) : super(key: key);
+  final String heading;
+  const AttendanceReport({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<AttendanceReport> createState() => _AttendanceReportState();
@@ -84,13 +85,15 @@ class _AttendanceReportState extends State<AttendanceReport> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Attendance Report",
-                        style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                       Expanded(
+                         child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold,
+                          ),
+                                               ),
+                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);

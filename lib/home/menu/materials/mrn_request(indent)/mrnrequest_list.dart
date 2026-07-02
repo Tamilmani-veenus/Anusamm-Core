@@ -13,7 +13,8 @@ import '../../../../utilities/apiconstant.dart';
 import 'mrnrequest_entry.dart';
 
 class MRN_RequestIndent_Entrylist extends StatefulWidget {
-  const MRN_RequestIndent_Entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const MRN_RequestIndent_Entrylist({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<MRN_RequestIndent_Entrylist> createState() =>
@@ -64,44 +65,12 @@ class _MRN_RequestIndent_EntrylistState
               child: FloatingActionButton.extended(
                 onPressed: () async {
                   mrn_request_controller.saveButton.value = RequestConstant.SUBMIT;
-
-                  if (!AppClient.isAnusamm) {
-                    Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MRNRequest_Indent_Entry(),
+                        builder: (context) => MRNRequest_Indent_Entry(heading: widget.heading),
                       ),
-                    );
-                    return;
-                  }
-
-                  if (loginController.user.value.userType == "A" ||
-                      loginController.user.value.userType == "O") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MRNRequest_Indent_Entry(),
-                      ),
-                    );
-                    return;
-                  }
-
-                  await punchInController.getNetworkTime();
-
-                  if (punchInController.dayName == "Tuesday" ||
-                      punchInController.dayName == "Wednesday") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MRNRequest_Indent_Entry(),
-                      ),
-                    );
-                  } else {
-                    BaseUtitiles.showToast(
-                      "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
-                    );
-                  }
-                },
+                    );},
                 label: Text(
                   "Add",
                   style: TextStyle(
@@ -129,7 +98,7 @@ class _MRN_RequestIndent_EntrylistState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "MRN Request (Indent)",
+                        widget.heading,
                         style: TextStyle(
                             fontSize: RequestConstant.Heading_Font_SIZE,
                             fontWeight: FontWeight.bold),
@@ -716,6 +685,7 @@ class _MRN_RequestIndent_EntrylistState
                                                                         mrn_request_controller
                                                                             .MrnReqEtyList[index]
                                                                             .siteid,
+                                                                        widget.heading,
                                                                         context);
                                                                   }),
                                                             ),

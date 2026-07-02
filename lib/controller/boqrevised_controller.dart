@@ -465,7 +465,7 @@ class Boq_Revised_Controller extends GetxController {
     return savedatas;
   }
 
-  Future BoqrevisedList_EditApi(int reviseId, BuildContext context,status) async {
+  Future BoqrevisedList_EditApi(int reviseId,String MenuName, BuildContext context,status) async {
     BoqRevised_EditListApiValue.value=[];
     var response = await BoqRevised_Provider.Boq_RevisedList_editAPI(reviseId,status);
     if (response != null) {
@@ -477,7 +477,7 @@ class Boq_Revised_Controller extends GetxController {
           getItemTablesDatas();
           return Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Boq_Revised_EntryScreen()),
+            MaterialPageRoute(builder: (context) => Boq_Revised_EntryScreen(heading: MenuName,)),
           );
         }
         else {

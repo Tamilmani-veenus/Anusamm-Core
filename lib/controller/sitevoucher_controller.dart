@@ -310,7 +310,7 @@ class SiteVoucher_Controller extends GetxController {
     return savedatas;
   }
 
-  Future SiteVoucher_List_EditApi(int VocId, BuildContext context,Url) async {
+  Future SiteVoucher_List_EditApi(int VocId,String MenuName, BuildContext context,Url) async {
     Sitevoucher_EditListApiValue.value = [];
     await Sitevoucher_provider.Sitevoucher_entryList_editAPI(VocId)
         .then((value) async {
@@ -329,7 +329,7 @@ class SiteVoucher_Controller extends GetxController {
           await Sitevoucher_entrylist_editSaveDetTable();
           await getsitevoucherTablesDatas();
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => SiteVoucher_EntryScreen()));
+              context, MaterialPageRoute(builder: (context) => SiteVoucher_EntryScreen(heading: MenuName,)));
         } else {
           BaseUtitiles.showToast(value.message ?? 'Something went wrong..');
         }

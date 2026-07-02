@@ -130,14 +130,18 @@ class DailyEntriesController extends GetxController {
                 ? "0"
                 : OtHrsController[i].value.text);
         subContDetModel.MrgOtAmt = OtHrsController[i].value.text != ""
-            ? (element.wages / 8) * subContDetModel.MrgOtHrs!
+            ? double.parse(
+            (((element.wages / 8) * subContDetModel.MrgOtHrs!)
+                .toStringAsFixed(2)))
             : 0.0;
         subContDetModel.EvgOtHrs = 0.0;
         subContDetModel.EvgOtAmt = 0.0;
         subContDetModel.EvgExtrsAmt = 0.0;
         subContDetModel.netAmt =
-        (element.wages * (double.tryParse(NosControllers[i].text) ?? 0) +
-            subContDetModel.MrgOtAmt);
+            double.parse(
+                ((element.wages * (double.tryParse(NosControllers[i].text) ?? 0) +
+                    subContDetModel.MrgOtAmt!)
+                    .toStringAsFixed(2)));
         readListdata.value.forEach((element) {
           if (element.siteId == subContDetModel.siteId &&
               element.catId == subContDetModel.catId) {
@@ -258,12 +262,12 @@ class DailyEntriesController extends GetxController {
           double.parse(MrngOtHrsControllers[index].value.text != ""
               ? MrngOtHrsControllers[index].value.text
               : "0"))
-          .toString();
+          .toStringAsFixed(2);
       EvgOtAmtControllers[index].text = ((readListdata[index].wages / 8) *
           double.parse(EvgOtHrsControllers[index].value.text != ""
               ? EvgOtHrsControllers[index].value.text
               : "0"))
-          .toString();
+          .toStringAsFixed(2);
 
       // NetAmtController[index].text = (readListdata[index].wages * double.parse(EntrySCreenNosControllers[index].value.text != ""
       //     ? EntrySCreenNosControllers[index].value.text : "0")).toString();
@@ -286,11 +290,10 @@ class DailyEntriesController extends GetxController {
               : "0") +
           double.parse(
               EvgOtAmtControllers[index].text != "" ? EvgOtAmtControllers[index].text : "0"))
-          .toString();
+          .toStringAsFixed(2);
     }
     updateSubcontDetValue();
   }
-
   clearDatas() {
     deleteSubcontDetTableDatas();
     readListdata.value.clear();
@@ -439,7 +442,7 @@ class DailyEntriesController extends GetxController {
         attendId);
   }
 
-  Future subContEntryList_EditApi(int attendId, status, BuildContext context,
+  Future subContEntryList_EditApi(int attendId, status,String MenuName, BuildContext context,
       {String? type}) async {
     var response =
     await SubContAttendanceProvider.subcont_entryList_editAPI(attendId,status);
@@ -453,7 +456,7 @@ class DailyEntriesController extends GetxController {
           return Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => SubattendanceSiteEntry()));
+                  builder: (context) => SubattendanceSiteEntry(heading: MenuName,)));
         } else {
           BaseUtitiles.showToast("No Data Found");
         }

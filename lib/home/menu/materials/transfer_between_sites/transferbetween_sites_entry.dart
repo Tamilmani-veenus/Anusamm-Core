@@ -19,7 +19,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class TransferBetweenSites_Entry extends StatefulWidget {
-  const TransferBetweenSites_Entry({Key? key}) : super(key: key);
+  final String heading;
+  const TransferBetweenSites_Entry({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<TransferBetweenSites_Entry> createState() => _TransferBetweenSites_EntryState();
@@ -139,11 +140,13 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Transfer Between Sites",
-                                  style: TextStyle(
-                                      fontSize: RequestConstant.Heading_Font_SIZE,
-                                      fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    widget.heading,
+                                    style: TextStyle(
+                                        fontSize: RequestConstant.Heading_Font_SIZE,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                                 TextButton(
                                     onPressed: () {
@@ -362,7 +365,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                       if (mounted) {
                                         bottomsheetControllers.FromSiteName(context,
                                             transferBt_Site_Controller.saveButton.value == RequestConstant.PENDINGLIST ? "STORE TRANSFER" : "Transfer Between Sites",
-                                            siteController.getSiteDropdownvalue.value);
+                                            siteController.getSiteDropdownvalue.value,MenuName: widget.heading);
                                       }},
                                   validator: (value) {
                                     if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
@@ -1007,6 +1010,11 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                           textAlign: TextAlign.center,
                                           controller: transferBt_Site_Controller.Itemlist_stockQty_ListController[index],
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d+\.?\d{0,2}'),
+                                            ),
+                                          ],
                                           decoration: InputDecoration(
                                             contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0,0.0),
                                             focusedBorder: OutlineInputBorder(

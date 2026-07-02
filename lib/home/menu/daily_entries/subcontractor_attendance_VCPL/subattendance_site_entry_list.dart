@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 
 class SubAttendanceSiteEntryList extends StatefulWidget {
-  const SubAttendanceSiteEntryList({Key? key}) : super(key: key);
+  final String heading;
+  const SubAttendanceSiteEntryList({Key? key, required this.heading}) : super(key: key);
 
   @override
   State<SubAttendanceSiteEntryList> createState() =>
@@ -62,7 +63,7 @@ class _SubAttendanceSiteEntryListState
                 dailyEntryController.imageFiles.value=[];
                 dailyEntryController.deleteSubcontDetTableDatas();
                 dailyEntryController.saveButton.value = RequestConstant.SUBMIT;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SubattendanceSiteEntry()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SubattendanceSiteEntry(heading: widget.heading,)));
               });
             },
             label: const Text("Add",
@@ -90,11 +91,13 @@ class _SubAttendanceSiteEntryListState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "SubContractor Attendance",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     TextButton(
                         onPressed: () {
@@ -542,7 +545,7 @@ class _SubAttendanceSiteEntryListState
                                         //     : dailyEntryController.Entrylist.value[index].workType.toString() == 'NO-WORK'
                                         //     ? 'No Work'
                                         //     : dailyEntryController.Entrylist.value[index].workType.toString()=='RATE'?'Daily attendance':
-                                        dailyEntryController.Entrylist.value[index].workTypeName.toString(),
+                                        dailyEntryController.Entrylist.value[index].workTypeName.toString().toUpperCase(),
                                         style: const TextStyle(
                                           color: Colors.black,
                                         ),
@@ -744,7 +747,9 @@ class _SubAttendanceSiteEntryListState
                                                                 dailyEntryController.readListdata.value=[];
                                                                 dailyEntryController.getAttendanceDetailsDto.value=[];
                                                                 FocusScope.of(context).unfocus();
-                                                                await dailyEntryController.subContEntryList_EditApi(dailyEntryController.Entrylist.value[index].id,true, context);
+                                                                await dailyEntryController.subContEntryList_EditApi(
+                                                                    dailyEntryController.Entrylist.value[index].id,true, widget.heading,
+                                                                    context);
                                                               }),
                                                         ),
                                                         Container(

@@ -816,7 +816,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
     dprNewGetMSRreadListdata.value.clear();
   }
 
-  Future Dpr_New_EntryList_EditApi(int workid, BuildContext context) async {
+  Future Dpr_New_EntryList_EditApi(int workid,String MenuName,BuildContext context) async {
     dprNew_EditApiList.value=[];
     var response = await DPR_New_Provider.dpr_New_entryList_editAPI(workid);
     if (response != null) {
@@ -831,7 +831,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
           await getLabourTablesDatas();
           await dprNew_EditMesurmentTableSave();
           await getMesurmentTablesDatas();
-          return Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry_New()),);
+          return Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry_New(heading: MenuName,)),);
         } else {
           BaseUtitiles.showToast("No Data Found");
         }

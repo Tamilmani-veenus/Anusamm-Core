@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:anusamm/home/menu/daily_entries/subcont_nmr_weekbill_site/subcont_nmr_deduction_site.dart';
 import '../../../../app_theme/app_colors.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
@@ -15,7 +16,8 @@ import 'package:get/get.dart';
 
 
 class Subcont_Nmr_EntryScreen_Site extends StatefulWidget {
-  const Subcont_Nmr_EntryScreen_Site({Key? key}) : super(key: key);
+  final String heading;
+  const Subcont_Nmr_EntryScreen_Site({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Subcont_Nmr_EntryScreen_Site> createState() => _Subcont_Nmr_EntryScreenState_Site();
@@ -104,11 +106,14 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("NMR Weekly Bill - Generation",
-                              style: TextStyle(
-                                  fontSize: RequestConstant.Heading_Font_SIZE,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                             Expanded(
+                               child: Text(
+                                 widget.heading,
+                                style: TextStyle(
+                                    fontSize: nmrWklyController.saveButton.value == RequestConstant.VERIFY || nmrWklyController.saveButton.value == RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
+                                    fontWeight: FontWeight.bold),
+                                                           ),
+                             ),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -987,6 +992,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                                         readOnly: true,
                                         cursorColor: Colors.black,
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'),
+                                          ),
+                                        ],
                                         textAlign: TextAlign.center,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.fromLTRB(
@@ -1071,6 +1081,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                                         style: TextStyle(color: Colors.black),
                                         cursorColor: Colors.black,
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'),
+                                          ),
+                                        ],
                                         textAlign: TextAlign.center,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.fromLTRB(
@@ -1123,6 +1138,11 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                                         style: TextStyle(color: Colors.black),
                                         cursorColor: Colors.black,
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'),
+                                          ),
+                                        ],
                                         textAlign: TextAlign.center,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.fromLTRB(

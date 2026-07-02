@@ -1,3 +1,5 @@
+import 'package:anusamm/utilities/apiconstant.dart';
+
 import '../../../../app_theme/app_colors.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
 import '../../../../controller/billgenerationdirect_controller.dart';
@@ -146,7 +148,7 @@ class _Subcont_NMR_DeductionState_Site
                     ),
                   ),
                 ),
-
+                !AppClient.isRKCPL ?
                 Container(
                   margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Card(
@@ -237,7 +239,7 @@ class _Subcont_NMR_DeductionState_Site
                       ),
                     ),
                   ),
-                ),
+                ) : SizedBox(),
 
                 Row(
                   children: [

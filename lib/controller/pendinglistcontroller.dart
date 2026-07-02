@@ -538,7 +538,7 @@ class PendingListController extends GetxController {
   }
 
   Future PendingPoDetDetails(String Url, int RID, String Reqno,
-      String Projectname, BuildContext context) async {
+      String Projectname, BuildContext context,{String? heading}) async {
     onclickPendingListDet.clear();
     var response = await PendingListProvider.getOnclickDetProvider(Url, RID);
     if (response != null ) {
@@ -564,14 +564,23 @@ class PendingListController extends GetxController {
                   list: onclickPendingListDet,
                   ReqNo: Reqno,
                   ProjectName: Projectname,
+                ))) :Url == "PENDING PO [AGENCY]" || Url == "PENDING PO [TRADER]" || Url == "PENDING PO [SUPPLIER]" ?
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PendingList_PoSupTradAgenPopup(
+                  list: onclickPendingListDet,
+                  ReqNo: Reqno,
+                  ProjectName: Projectname,
+                  heading: heading!,
                 ))) :
-        Url == "INWARD PENDING" ?
+        Url == "INWARD PENDING" || Url == "INWARD PENDING - WO"?
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => PendingList_InwardPopup(
                   list: onclickPendingListDet,
-                  ReqNo: Reqno,
+                  ReqNo: Reqno, heading: Url,
                 ))) :  Url == "STORE TRANSFER PENDING" ?
         Navigator.push(
             context,
@@ -997,6 +1006,18 @@ class PendingListController extends GetxController {
                           heading: entryTypeName!,
                           checkheading: name)),
             )
+                : name == "PENDING PO [SUPPLIER]" || name == "PENDING PO [AGENCY]" || name == "PENDING PO [TRADER]"
+                ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      PendingPOSupTradAgen(
+                          onclickPendingListData:
+                          onclickPendingListData,
+                          heading: entryTypeName!,
+                          checkheading: name)),
+            )
+
                 : name == "MRN DECISION PENDING"
                 ? Navigator.push(
               context,
@@ -1138,8 +1159,7 @@ class PendingListController extends GetxController {
                   onclickPendingListData: onclickPendingListData,
                   heading: entryTypeName!,checkheading: name)),
             )
-                : name ==
-                "INWARD PENDING"
+                : name == "INWARD PENDING" || name == "INWARD PENDING - WO"
                 ? Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => InwardPending(

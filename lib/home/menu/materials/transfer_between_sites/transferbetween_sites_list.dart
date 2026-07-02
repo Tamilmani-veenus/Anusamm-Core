@@ -10,7 +10,8 @@ import '../../../../utilities/requestconstant.dart';
 
 
 class TransferBetweenSites_Entrylist extends StatefulWidget {
-  const TransferBetweenSites_Entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const TransferBetweenSites_Entrylist({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<TransferBetweenSites_Entrylist> createState() => _TransferBetweenSites_EntrylistState();
@@ -58,7 +59,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
               child: FloatingActionButton.extended(
                 onPressed: (){
                   transferBt_Site_Controller.saveButton.value = RequestConstant.SUBMIT;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TransferBetweenSites_Entry()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TransferBetweenSites_Entry(heading: widget.heading,)));
                 },
                 label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
                 icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -74,11 +75,13 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                         "Transfer Between Sites",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                          widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {
@@ -536,7 +539,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                                                                   transferBt_Site_Controller.entryList.value[index].fromProjectId,
                                                                     transferBt_Site_Controller.entryList.value[index].toSiteId,
                                                                     transferBt_Site_Controller.entryList.value[index].fromSiteid,
-                                                                    transferBt_Site_Controller.entryList.value[index].id,context);
+                                                                    transferBt_Site_Controller.entryList.value[index].id,widget.heading,context);
                                                               }),
                                                         ),
                                                         Container(

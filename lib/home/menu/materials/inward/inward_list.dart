@@ -9,7 +9,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class Inward_ListScreen extends StatefulWidget {
-  const Inward_ListScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Inward_ListScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Inward_ListScreen> createState() => _Inward_ListScreenState();
@@ -25,17 +26,11 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
 
   @override
   void initState() {
-    setState(() {
-      inward_controller.inwardEtyList.value.clear();
-      inward_controller.mainEtyList.value.clear();
-    });
-    // BaseUtitiles.showToast("Please Wait...");
     DateTime currentDate = DateTime.now();
     DateTime lastDayOfMonth = new DateTime(currentDate.year, currentDate.month - 1, 0);
     inward_controller.InwardEntrylistFrDate.text = lastDayOfMonth.toString().substring(0, 10);
     inward_controller.InwardEntrylistToDate.text = currentDate.toString().substring(0, 10);
     inward_controller.getInward_EntryList();
-    inward_controller.inwardEtyList.value = inward_controller.mainEtyList.value;
     super.initState();
   }
 
@@ -78,11 +73,13 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Inward",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                               onPressed: () {
@@ -222,10 +219,8 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                 style: ElevatedButton.styleFrom(
                                     primary: Theme.of(context).primaryColor),
                                 onPressed: () async {
-                                  setState(() {
                                     editingController.text = "";
                                     inward_controller.getInward_EntryList();
-                                  });
                                 },
                                 child: Center(
                                     child: Padding(
@@ -372,7 +367,7 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                     Expanded(
                                         flex: 8,
                                         child: Text(
-                                          inward_controller.inwardEtyList[index].selectedNo.toString() ,
+                                          inward_controller.inwardEtyList[index].selectedNo.toString(),
                                           style: TextStyle(
                                             color: Colors.black,
                                           ),
@@ -398,6 +393,54 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                         flex: 8,
                                         child: Text(
                                           inward_controller.inwardEtyList[index].supplierName.toString(),
+                                          style: TextStyle(
+                                            color: Colors.black,),
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: 5, left: 10),
+                                      child: Text(""),
+                                    ),
+                                    Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          "Project",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,),
+                                        )),
+                                    Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                          inward_controller.inwardEtyList[index].projectName.toString(),
+                                          style: TextStyle(
+                                            color: Colors.black,),
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(top: 5, left: 10),
+                                      child: Text(""),
+                                    ),
+                                    Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          "Type",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,),
+                                        )),
+                                    Expanded(
+                                        flex: 8,
+                                        child: Text(
+                                            inward_controller.inwardEtyList[index].inwType.toString().trim()=="O"?"Against Rental WO":"Against PO",
                                           style: TextStyle(
                                             color: Colors.black,),
                                         )),
@@ -531,7 +574,11 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                                                     inward_controller.getInwardDetList.clear();
                                                                     inward_controller.editListApiDatas.value.clear();
                                                                     FocusScope.of(context).unfocus();
-                                                                    await inward_controller.EntryList_EditApi(  inward_controller.inwardEtyList[index].id,  inward_controller.inwardEtyList[index].inwType.trim(),context);
+                                                                    await inward_controller.EntryList_EditApi(
+                                                                        inward_controller.inwardEtyList[index].id,
+                                                                        inward_controller.inwardEtyList[index].inwType.trim(),
+                                                                        inward_controller.inwardEtyList[index].inwType.toString().trim()=="O"?"Inward Pending - WO":"Inward Pending",
+                                                                        context);
                                                                   }),
                                                             ),
                                                             Container(

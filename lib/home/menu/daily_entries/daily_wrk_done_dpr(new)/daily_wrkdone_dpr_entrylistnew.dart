@@ -10,7 +10,8 @@ import 'package:get/get.dart';
 import 'daily_wrkdone_dpr_entrynew.dart';
 
 class DailyWork_done_DPR_EntryListNew extends StatefulWidget {
-  const DailyWork_done_DPR_EntryListNew({Key? key}) : super(key: key);
+  final String heading;
+  const DailyWork_done_DPR_EntryListNew({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<DailyWork_done_DPR_EntryListNew> createState() => _DailyWork_done_DPR_EntryListNewState();
@@ -51,7 +52,7 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
             child: FloatingActionButton.extended(
               onPressed: (){
                 dailyWrkDone_DPRNEW_Controller.saveButton.value=RequestConstant.SUBMIT;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry_New()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry_New(heading: widget.heading,)));
               },
               label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
               icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -69,11 +70,13 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Daily Work Done DPR NMR",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {
@@ -605,7 +608,10 @@ class _DailyWork_done_DPR_EntryListNewState extends State<DailyWork_done_DPR_Ent
                                                                   dailyWrkDone_DPRNEW_Controller.dprNew_EditApiList.value.clear();
                                                                   FocusScope.of(context).unfocus();
                                                                   dailyWrkDone_DPRNEW_Controller.saveButton.value=RequestConstant.RESUBMIT;
-                                                                  await dailyWrkDone_DPRNEW_Controller.Dpr_New_EntryList_EditApi(dailyWrkDone_DPRNEW_Controller.dpr_New_entryList.value[index].id,context);
+                                                                  await dailyWrkDone_DPRNEW_Controller.Dpr_New_EntryList_EditApi(
+                                                                      dailyWrkDone_DPRNEW_Controller.dpr_New_entryList.value[index].id,
+                                                                      widget.heading,
+                                                                      context);
                                                                 }),
                                                           ),
                                                           Container(

@@ -19,7 +19,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class Boq_Revised_EntryScreen extends StatefulWidget {
-  const Boq_Revised_EntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Boq_Revised_EntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Boq_Revised_EntryScreen> createState() =>
@@ -102,12 +103,14 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "BOQ - Revised",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
-                        ),
+                         Expanded(
+                           child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                                                   ),
+                         ),
                         TextButton(
                             onPressed: () {
                               Navigator.pop(context);

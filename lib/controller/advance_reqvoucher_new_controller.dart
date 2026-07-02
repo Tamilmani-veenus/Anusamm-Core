@@ -422,7 +422,7 @@ class AdvanceReqVoucherController_new extends GetxController {
   }
 
 
-  Future EntryList_EditApi(type,vocId,status,context) async {
+  Future EntryList_EditApi(type,vocId,status,String MenuName, context) async {
     editListApiDatas.value=[];
     final value = await AdvanceReqVoucherProvider.entryList_editAPI(vocId, status);
     if (value != null) {
@@ -439,7 +439,7 @@ class AdvanceReqVoucherController_new extends GetxController {
               await getItemlistTablesDatas();
             }
           }
-          return Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdvReq_voucher_New()),
+          return Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdvReq_voucher_New(heading: MenuName,)),
           );
         }
         else {

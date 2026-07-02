@@ -49,8 +49,8 @@ class _WorkTypeAlertState extends State<WorkTypeAlert> {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: ()  {
-                          dailyEntriesController.deleteSubcontDetTableDatas();
-                          dailyEntriesController.readListdata.value=[];
+                          // dailyEntriesController.deleteSubcontDetTableDatas();
+                          // dailyEntriesController.readListdata.value=[];
                           // if(index==0){
                           //   dailyEntriesController.WorkTypeTextController.text="No Work";
                           //   dailyEntriesController.Nmr_Rate.value = RequestConstant.W;

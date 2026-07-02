@@ -162,7 +162,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            MRNReport()));
+                                            MRNReport(heading: menuController.reportListDatas.value[index].menuName,)));
                               }
 
                               if (menuController.reportListDatas.value[index]
@@ -174,7 +174,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            AttendanceReport()));
+                                            AttendanceReport(heading: menuController.reportListDatas.value[index].menuName)));
                               }
 
                               if (menuController.reportListDatas.value[index]
@@ -184,7 +184,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            StockSite()));
+                                            StockSite(heading: menuController.reportListDatas.value[index].menuName)));
                               }
 
                               if (menuController.reportListDatas.value[index]
@@ -194,7 +194,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            const InwardReport()));
+                                            InwardReport(heading: menuController.reportListDatas.value[index].menuName)));
                               }
 
                               if (menuController.reportListDatas.value[index]
@@ -204,7 +204,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            DPRReport()));
+                                            DPRReport(heading: menuController.reportListDatas.value[index].menuName)));
                               }
                               if (menuController.reportListDatas.value[index]
                                       .mobileMenuName ==
@@ -230,7 +230,7 @@ class _Reports_screenState extends State<Reports_screen> {
                                   staffController.selectedstaffId.value =
                                       loginController.user.value.empId!;
                                 }
-                                Get.to(() => const PunchInOutReports());
+                                Get.to(() => PunchInOutReports(heading: menuController.reportListDatas.value[index].menuName));
                               }
                             },
                           ),

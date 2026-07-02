@@ -1038,7 +1038,7 @@ class _MrnVerficationState extends State<MrnVerfication> {
                               await mrn_request_controller
                                   .getPendingList_Alldatas(
                                       pendingListController
-                                          .mainlist.value[index].id!,
+                                          .mainlist.value[index].id!,widget.heading,
                                       context);
                             },
                             child: Container(
@@ -2094,7 +2094,7 @@ class _MrnPreApprovalState extends State<MrnPreApproval> {
                                   .clear();
                               await mrnPreApprovalController
                                   .mrnPreapprovalDetListApi(
-                                      widget.checkheading,
+                                      widget.heading,
                                       pendingListController
                                           .mainlist.value[index].id!,
                                       context);
@@ -2662,7 +2662,7 @@ class _MrnPreApproval_AMState extends State<MrnPreApproval_AM> {
                                   .clear();
                               await mrnPreApprovalController
                                   .mrnPreapprovalDetListApi(
-                                      widget.checkheading,
+                                      widget.heading,
                                       pendingListController
                                           .mainlist.value[index].id!,
                                       context);
@@ -3220,7 +3220,7 @@ class _MrnFinalApprovalState extends State<MrnFinalApproval> {
                               await mrnFinalApprovalController
                                   .mrnFinalapprovalDetListApi(
                                       pendingListController
-                                          .mainlist.value[index].id!,
+                                          .mainlist.value[index].id!,widget.heading,
                                       context);
                             },
                             child: Container(
@@ -3684,11 +3684,13 @@ class _SiteRequestVerificationState extends State<SiteRequestVerification> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.heading.toString(),
-                        style: TextStyle(
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading.toString(),
+                          style: TextStyle(
+                              fontSize: RequestConstant.Lable_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
@@ -3769,7 +3771,7 @@ class _SiteRequestVerificationState extends State<SiteRequestVerification> {
                               await mrnRequest_PreIndent_Controller
                                   .getPendingList_Alldatas(
                                       pendingListController
-                                          .mainlist.value[index].id!,
+                                          .mainlist.value[index].id!,widget.heading,
                                       context,
                                       widget.checkheading ==
                                               "SITE REQUEST VERIFICATION"
@@ -4189,7 +4191,7 @@ class _StoreTransferPendingState extends State<StoreTransferPending> {
                           print("SSSSSSSSSSSSSS");
                           transferBt_Site_Controller.getStoreTransPendingView(
                               pendingListController.mainlist[index].ReqOrdMasId,
-                              0,
+                              0,widget.heading,
                               context);
                         },
                         child: Container(
@@ -4592,7 +4594,7 @@ class _DirectTransferVerifyApproveState
                               await materialTransferReqController
                                   .matTransReqEdit(
                                       pendingListController
-                                          .mainlist.value[index].id,
+                                          .mainlist.value[index].id,widget.heading,
                                       context);
                             },
                             child: Container(
@@ -5397,6 +5399,409 @@ class _PendingPOState extends State<PendingPO> {
   }
 }
 
+class PendingPOSupTradAgen extends StatefulWidget {
+  PendingPOSupTradAgen(
+      {Key? key, required this.onclickPendingListData, required this.heading, required this.checkheading})
+      : super(key: key);
+  List<OnClickListResult> onclickPendingListData;
+  PendingListController pendingListController =
+  Get.put(PendingListController());
+  String heading;
+  String checkheading;
+
+  @override
+  State<PendingPOSupTradAgen> createState() => _PendingPOSupTradAgenState();
+}
+
+class _PendingPOSupTradAgenState extends State<PendingPOSupTradAgen> {
+  TextEditingController editingController = TextEditingController();
+  PendingListController pendingListController =
+  Get.put(PendingListController());
+
+  @override
+  void initState() {
+    setState(() {
+      widget.pendingListController.pendingmainlist.value.clear();
+      widget.pendingListController.pendingmainlist.value =
+          widget.onclickPendingListData;
+      widget.pendingListController.mainlist.value =
+          widget.onclickPendingListData;
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        await widget.pendingListController.getPendingList();
+        return true;
+      },
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus &&
+                  currentFocus.focusedChild != null) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.heading.toString(),
+                        style: TextStyle(
+                            fontSize: RequestConstant.ALERT_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width:
+                          BaseUtitiles.getWidthtofPercentage(context, 40),
+                          margin: EdgeInsets.only(top: 10, left: 15, bottom: 5),
+                          child: TextField(
+                            cursorColor: Theme.of(context).primaryColor,
+                            controller: editingController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                              hintText: "search..",
+                              hintStyle: TextStyle(color: Colors.black),
+                              isDense: true,
+                              fillColor: Setmybackground,
+                            ),
+                            onEditingComplete: () {
+                              FocusScope.of(context).unfocus();
+                              // if (onSearch != null) onSearch!(searchcontroller.text);
+                            },
+                            textInputAction: TextInputAction.search,
+                            onChanged: (value) {
+                              setState(() {
+                                pendingListController.mainlist.value =
+                                    BaseUtitiles
+                                        .filterSearchResults_PendingList(
+                                        value,
+                                        pendingListController
+                                            .pendingmainlist);
+                              });
+                            },
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Back",
+                              style:
+                              TextStyle(color: Colors.grey, fontSize: 18),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 6, right: 6),
+                    height: BaseUtitiles.getheightofPercentage(context, 80),
+                    child: Obx(() => ListView.builder(
+                        padding: EdgeInsets.only(
+                            bottom: BaseUtitiles.getheightofPercentage(
+                                context, 10)),
+                        physics: BouncingScrollPhysics(),
+                        itemCount: widget.pendingListController.mainlist.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () async {
+                              BaseUtitiles.showToast(
+                                  "PO Generation Only in Website");
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(left: 3, right: 3),
+                              child: Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.all(3),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              widget
+                                                  .pendingListController
+                                                  .mainlist
+                                                  .value[index]
+                                                  .ReqOrdNo
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 8, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                "Req Date",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                widget
+                                                    .pendingListController
+                                                    .mainlist
+                                                    .value[index]
+                                                    .ReqOrdDate
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                "Due Date",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                widget
+                                                    .pendingListController
+                                                    .mainlist
+                                                    .value[index]
+                                                    .ReqDueDate
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                "Project",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                widget
+                                                    .pendingListController
+                                                    .mainlist
+                                                    .value[index]
+                                                    .ProjectName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                "ApprovedBy",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                widget
+                                                    .pendingListController
+                                                    .mainlist
+                                                    .value[index]
+                                                    .approveName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      Divider(thickness: 1),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Text(
+                                            "Prepared By       ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Expanded(
+                                              flex: 7,
+                                              child: Text(
+                                                widget
+                                                    .pendingListController
+                                                    .mainlist
+                                                    .value[index]
+                                                    .CreatedName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          Expanded(
+                                              flex: 5,
+                                              child: InkWell(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 15),
+                                                        child: Text(
+                                                          "More",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .bold,
+                                                              color: Theme.of(
+                                                                  context)
+                                                                  .primaryColor),
+                                                        )),
+                                                    CircleAvatar(
+                                                      backgroundColor:
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                      radius: 13,
+                                                      child: Icon(
+                                                        Icons.more_vert,
+                                                        color: Setmybackground,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    print("SSSSSSSSSSS....${widget.heading}");
+                                                    pendingListController
+                                                        .PendingPoDetDetails(
+                                                        widget.checkheading,
+                                                        pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .id!,
+                                                        pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .ReqOrdNo
+                                                            .toString(),
+                                                        pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .ProjectName
+                                                            .toString(),
+                                                        context,heading:widget.heading);
+                                                  });
+                                                },
+                                              )),
+                                          SizedBox(width: 5),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        })),
+                  ),
+                  SizedBox(height: 20)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class InwardPending extends StatefulWidget {
   InwardPending(
       {Key? key, required this.onclickPendingListData, required this.heading, required this.checkheading})
@@ -5536,12 +5941,13 @@ class _InwardPendingState extends State<InwardPending> {
                               inwardPending_Controller
                                   .ItemGetTableListdata.value
                                   .clear();
-                              await inwardPending_Controller.getInward_Alldatas(
-                                  pendingListController
-                                      .mainlist.value[index].id!,
-                                  context);
+                              if(widget.checkheading=="INWARD PENDING - WO"){
+                                await inwardPending_Controller.getInwardWO_Alldatas(pendingListController.mainlist.value[index].workOrdMasId!,widget.heading, context);
+                              }else{
+                                await inwardPending_Controller.getInward_Alldatas(pendingListController.mainlist.value[index].id!,widget.heading, context);
+                              }
                               await inwardPending_Controller
-                                  .inwardpending_itemlist_SaveTable();
+                                  .inwardpending_itemlist_SaveTable(widget.checkheading);
                               await inwardPending_Controller
                                   .getItemlistTablesDatas();
                             },
@@ -5797,12 +6203,16 @@ class _InwardPendingState extends State<InwardPending> {
                                             ),
                                             child: TextButton(
                                               onPressed: () async {
+                                                await inwardPending_Controller
+                                                    .getPo_AmendmentList(
+                                                    context,
+                                                    widget.checkheading=="INWARD PENDING - WO"? pendingListController.mainlist.value[index].workOrdMasId:pendingListController.mainlist.value[index].id,
+                                                    widget.checkheading);
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) => Inward_PoAmendment(
-                                                            heading:
-                                                                "INWARD PENDING",
+                                                            heading: widget.checkheading,
                                                             ReqNo: pendingListController
                                                                 .mainlist
                                                                 .value[index]
@@ -5828,25 +6238,17 @@ class _InwardPendingState extends State<InwardPending> {
                                                                 .value[index]
                                                                 .supplierName
                                                                 .toString(),
-                                                            purOrdMasId:
-                                                                pendingListController.mainlist.value[index].id,
+                                                            purOrdMasId: widget.checkheading=="INWARD PENDING - WO"?pendingListController.mainlist.value[index].workOrdMasId!:pendingListController.mainlist.value[index].id!,
                                                             projectId: pendingListController.mainlist.value[index].ProjectID!,
                                                             siteId: pendingListController.mainlist.value[index].SiteID!,
                                                             inwdType: pendingListController.mainlist.value[index].inwType!)));
-                                                await inwardPending_Controller
-                                                    .getPo_AmendmentList(
-                                                        context,
-                                                        pendingListController
-                                                            .mainlist
-                                                            .value[index]
-                                                            .id);
                                               },
                                               child: Container(
                                                   width: BaseUtitiles
                                                       .getWidthtofPercentage(
                                                           context, 13),
-                                                  child: const Text(
-                                                    "PO AMD",
+                                                  child: Text(
+                                                    widget.checkheading=="INWARD PENDING - WO"?"WO AMD":"PO AMD",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize:
@@ -5889,23 +6291,27 @@ class _InwardPendingState extends State<InwardPending> {
                                                   ],
                                                 ),
                                                 onTap: () {
-                                                  pendingListController
-                                                      .PendingPoDetDetails(
-                                                          "INWARD PENDING",
-                                                          pendingListController
-                                                              .mainlist
-                                                              .value[index]
-                                                              .id!,
-                                                          pendingListController
-                                                              .mainlist
-                                                              .value[index]
-                                                              .PurchaseOrdNo
-                                                              .toString(),
-                                                          pendingListController
-                                                              .mainlist
-                                                              .value[index]
-                                                              .ProjectName,
-                                                          context);
+                                                    pendingListController
+                                                        .PendingPoDetDetails(
+                                                        widget.checkheading,
+                                                        widget.checkheading=="INWARD PENDING - WO"?pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .workOrdMasId!:pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .id!,
+                                                        pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .PurchaseOrdNo
+                                                            .toString(),
+                                                        pendingListController
+                                                            .mainlist
+                                                            .value[index]
+                                                            .ProjectName,
+                                                        context);
+
                                                 },
                                               )),
                                           SizedBox(width: 5),
@@ -6077,7 +6483,7 @@ class _SubContractorAttandanceState extends State<SubContractorAttandance> {
                               dailyEntriesController.readListdata.value = [];
                               dailyEntriesController.subContEntryList_EditApi(
                                   pendingListController.mainlist[index].id!,
-                                  false,
+                                  false,widget.heading,
                                   context,
                                   type: "approve");
                               FocusScope.of(context).unfocus();
@@ -6527,6 +6933,7 @@ class _SubContDPRApprovalState extends State<SubContDPRApproval> {
                                     .DprEntryList_EditApi(
                                         pendingListController
                                             .mainlist.value[index].id!,
+                                        widget.heading,
                                         context,
                                         1);
                               } else if (pendingListController
@@ -6541,6 +6948,7 @@ class _SubContDPRApprovalState extends State<SubContDPRApproval> {
                                     .Dpr_New_EntryList_EditApi(
                                         pendingListController
                                             .mainlist.value[index].id!,
+                                        widget.heading,
                                         context);
                               } else if (pendingListController
                                       .mainlist.value[index].DprType ==
@@ -7334,9 +7742,9 @@ class _PoVerificationState extends State<PoVerification> {
                                               margin:
                                                   EdgeInsets.only(right: 10),
                                               child: Text(
-                                                widget
-                                                    .onclickPendingListData[
-                                                        index]
+                                                pendingListController
+                                                    .mainlist
+                                                    .value[index]
                                                     .purchaseOrdNo
                                                     .toString(),
                                                 style: TextStyle(
@@ -7366,8 +7774,9 @@ class _PoVerificationState extends State<PoVerification> {
                                             Expanded(
                                                 flex: 8,
                                                 child: Text(
-                                                  widget
-                                                      .onclickPendingListData[
+                                                  pendingListController
+                                                      .mainlist
+                                                      .value[
                                                           index]
                                                       .ProjectName
                                                       .toString(),
@@ -7397,8 +7806,9 @@ class _PoVerificationState extends State<PoVerification> {
                                             Expanded(
                                                 flex: 8,
                                                 child: Text(
-                                                  widget
-                                                      .onclickPendingListData[
+                                                  pendingListController
+                                                      .mainlist
+                                                      .value[
                                                           index]
                                                       .SiteName
                                                       .toString(),
@@ -7428,8 +7838,9 @@ class _PoVerificationState extends State<PoVerification> {
                                             Expanded(
                                                 flex: 8,
                                                 child: Text(
-                                                  widget
-                                                      .onclickPendingListData[
+                                                  pendingListController
+                                                      .mainlist
+                                                      .value[
                                                           index]
                                                       .supplier
                                                       .toString(),
@@ -7461,8 +7872,9 @@ class _PoVerificationState extends State<PoVerification> {
                                                 child: Text(
                                                   RequestConstant
                                                           .CURRENCY_SYMBOL +
-                                                      widget
-                                                          .onclickPendingListData[
+                                                      pendingListController
+                                                          .mainlist
+                                                          .value[
                                                               index]
                                                           .netAmount
                                                           .toString(),
@@ -7491,12 +7903,14 @@ class _PoVerificationState extends State<PoVerification> {
                                             Expanded(
                                                 flex: 7,
                                                 child: Text(
-                                                  widget
-                                                      .onclickPendingListData[
+                                                  pendingListController
+                                                      .mainlist
+                                                      .value[
                                                           index]
                                                       .preparedByName
-                                                      .toString() == "null" ? "-" : widget
-                                                      .onclickPendingListData[
+                                                      .toString() == "null" ? "-" : pendingListController
+                                                      .mainlist
+                                                      .value[
                                                   index]
                                                       .preparedByName
                                                       .toString(),
@@ -8347,8 +8761,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                           Container(
                                             margin: EdgeInsets.only(right: 10),
                                             child: Text(
-                                              widget
-                                                  .onclickPendingListData[index]
+                                              pendingListController
+                                                  .mainlist
+                                                  .value[index]
                                                   .PurchaseOrdNo
                                                   .toString(),
                                               style: TextStyle(
@@ -8377,8 +8792,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                widget
-                                                    .onclickPendingListData[
+                                                pendingListController
+                                                    .mainlist
+                                                    .value[
                                                         index]
                                                     .projectName
                                                     .toString(),
@@ -8408,8 +8824,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                widget
-                                                    .onclickPendingListData[
+                                                pendingListController
+                                                    .mainlist
+                                                    .value[
                                                         index]
                                                     .siteName
                                                     .toString(),
@@ -8439,8 +8856,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                widget
-                                                    .onclickPendingListData[
+                                                pendingListController
+                                                    .mainlist
+                                                    .value[
                                                         index]
                                                     .suppliername
                                                     .toString(),
@@ -8472,8 +8890,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                               child: Text(
                                                 RequestConstant
                                                         .CURRENCY_SYMBOL +
-                                                    widget
-                                                        .onclickPendingListData[
+                                                    pendingListController
+                                                        .mainlist
+                                                        .value[
                                                             index]
                                                         .netAmount
                                                         .toString(),
@@ -8503,8 +8922,9 @@ class _PoApprovalDesignState extends State<PoApprovalDesign> {
                                           Expanded(
                                               flex: 7,
                                               child: Text(
-                                                widget
-                                                    .onclickPendingListData[
+                                                pendingListController
+                                                    .mainlist
+                                                    .value[
                                                         index]
                                                     .createdName
                                                     .toString(),
@@ -9268,7 +9688,7 @@ class _TransferPendingState extends State<TransferPending> {
                                 transferBW_project_Controller
                                     .getTransPendingView(
                                         pendingListController
-                                            .mainlist.value[index].id!,
+                                            .mainlist.value[index].id!,widget.heading,
                                         context);
                               } else {
                                 transferBW_project_Controller.type.value =
@@ -9276,7 +9696,7 @@ class _TransferPendingState extends State<TransferPending> {
                                 transferBW_project_Controller
                                     .getTransferProject_Alldatas(
                                         pendingListController
-                                            .mainlist.value[index].reqMasId!,
+                                            .mainlist.value[index].reqMasId!,widget.heading,
                                         context);
                               }
                             },
@@ -11191,7 +11611,8 @@ class _CompanyLbrAtendanceState extends State<CompanyLbrAtendance> {
                     children: [
                       Expanded(
                         child: Text(
-                          "COMPANY LABOUR ATTENDANCE \nAPPROVAL PENDING",
+                          widget.heading,
+                          // "COMPANY LABOUR ATTENDANCE \nAPPROVAL PENDING",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: RequestConstant.Lable_Font_SIZE,
@@ -11271,7 +11692,7 @@ class _CompanyLbrAtendanceState extends State<CompanyLbrAtendance> {
                               companyNmrAttendanceController.cmpNmr_getDbDetList
                                   .clear();
                               await companyNmrAttendanceController.entryList_EditApi(
-                                  pendingListController.mainlist.value[index].id,false,"Approve",
+                                  pendingListController.mainlist.value[index].id,false,"Approve",widget.heading,
                                   context);
                             },
                             child: Container(
@@ -13233,7 +13654,7 @@ class _AdvanceReqAprovalState extends State<AdvanceReqAproval> {
                                 advanceReqVoucherController_new.ItemGetTableListdata.clear();
                                 FocusScope.of(context).unfocus();
                                 await advanceReqVoucherController_new.EntryList_EditApi("approve",
-                                    widget.onclickPendingListData[index].voucherId, false, context);
+                                    widget.onclickPendingListData[index].voucherId, false,widget.heading,context);
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 3, right: 3),
@@ -17000,7 +17421,7 @@ class _NMRBillVerificationState extends State<NMRBillVerification> {
                               onTap: () async {
                                 await nmrWklyController.NmrEntryList_EditApi(
                                     pendingListController
-                                        .mainlist.value[index].workId,
+                                        .mainlist.value[index].workId,widget.heading,
                                     context,
                                     widget.checkheading == "BILL VERIFICATION - NMR"
                                         ? "Verify"
@@ -17464,6 +17885,7 @@ class _BillDirectVerificationState extends State<BillDirectVerification> {
                                     .directBillEntryList_EditApi(
                                         pendingListController
                                             .mainlist.value[index].id,
+                                        widget.heading,
                                         context,
                                         widget.checkheading ==
                                                 "BILL VERIFICATION - DIRECT"
@@ -18257,6 +18679,7 @@ class _BillBoqVerificationState extends State<BillBoqVerification> {
                                                 .mainlist.value[index].workId
                                             : pendingListController
                                                 .mainlist.value[index].id,
+                                        widget.heading,
                                         context,
                                         widget.checkheading ==
                                                 "BILL VERIFICATION - BOQ"
@@ -18728,7 +19151,7 @@ class _SiteVoucherApprovalState extends State<SiteVoucherApproval> {
                             return InkWell(
                               onTap: () async {
                                 vocId = pendingListController.mainlist.value[index].id;
-                                await siteVoucher_Controller.SiteVoucher_List_EditApi(pendingListController.mainlist.value[index].id,context,"Approval");
+                                await siteVoucher_Controller.SiteVoucher_List_EditApi(pendingListController.mainlist.value[index].id,widget.heading,context,"Approval");
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 3, right: 3),

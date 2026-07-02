@@ -488,34 +488,37 @@ class BaseUtitiles {
     }
   }
 
-  static filterSearchResults_Inward(String value,list)  {
+  static filterSearchResults_Inward(String value, list) {
     dummyListData.value.clear();
+
     if (value.isNotEmpty) {
+      final search = value.toLowerCase();
+
       list.value.forEach((item) {
-        if (item.entryDate.toString().toLowerCase().contains(value) ||
-            item.entryDate.toString().toUpperCase().contains(value)  ||
-            item.selectedNo.toString().toLowerCase().contains(value) ||
-            item.selectedNo.toString().toUpperCase().contains(value) ||
-            item.inwardNo.toString().toLowerCase().contains(value) ||
-            item.inwardNo.toString().toUpperCase().contains(value) ||
-            item.supplierName.toString().toLowerCase().contains(value) ||
-            item.supplierName.toString().toUpperCase().contains(value) ||
-            item.invoiceNo.toString().toLowerCase().contains(value) ||
-            item.invoiceNo.toString().toUpperCase().contains(value) ||
-            item.siteName.toString().toLowerCase().contains(value) ||
-            item.siteName.toString().toUpperCase().contains(value)
-        )
-        {
+
+        String inwTypeText =
+        item.inwType.toString().trim() == "O"
+            ? "Against Rental WO"
+            : "Against PO";
+
+        if (item.entryDate.toString().toLowerCase().contains(search) ||
+            item.selectedNo.toString().toLowerCase().contains(search) ||
+            item.inwardNo.toString().toLowerCase().contains(search) ||
+            item.supplierName.toString().toLowerCase().contains(search) ||
+            item.invoiceNo.toString().toLowerCase().contains(search) ||
+            item.siteName.toString().toLowerCase().contains(search) ||
+            item.projectName.toString().toLowerCase().contains(search) ||
+            inwTypeText.toLowerCase().contains(search)) {
+
           dummyListData.value.add(item);
         }
       });
-      return  dummyListData.value;
-    }
-    else {
-      return  list.value;
+
+      return dummyListData.value;
+    } else {
+      return list.value;
     }
   }
-
 
   static filterSearchResults_InwardPending(String value,list)  {
     dummyListData.value.clear();
@@ -678,6 +681,8 @@ class BaseUtitiles {
             item.preparedBy.toString().toUpperCase().contains(value) ||
             item.supplierName.toString().toLowerCase().contains(value) ||
             item.supplierName.toString().toUpperCase().contains(value) ||
+            item.suppliername.toString().toLowerCase().contains(value) ||
+            item.suppliername.toString().toUpperCase().contains(value) ||
             item.siteName.toString().toLowerCase().contains(value) ||
             item.siteName.toString().toUpperCase().contains(value) ||
             item.netAmt.toString().toLowerCase().contains(value) ||
@@ -728,7 +733,8 @@ class BaseUtitiles {
 
             item.Preparedbyname.toString().toLowerCase().contains(value) ||
             item.Preparedbyname.toString().toUpperCase().contains(value) ||
-
+            item.preparedByName.toString().toLowerCase().contains(value) ||
+            item.preparedByName.toString().toUpperCase().contains(value) ||
             item.createdName.toString().toLowerCase().contains(value) ||
             item.createdName.toString().toUpperCase().contains(value) ||
 
@@ -833,9 +839,13 @@ class BaseUtitiles {
 
 
 
-
-            item.approveByName.toString().toLowerCase().contains(value) ||
-            item.approveByName.toString().toUpperCase().contains(value)
+            item.PurchaseOrdDate.toString().contains(value) ||
+            item.ProjectName.toString().toLowerCase().contains(value) ||
+            item.ProjectName.toString().toUpperCase().contains(value)  ||
+            item.purchaseOrdNo.toString().toLowerCase().contains(value) ||
+            item.purchaseOrdNo.toString().toUpperCase().contains(value) ||
+            item.SupplierContactNo.toString().contains(value)  ||
+            item.delaydays.toString().contains(value)
 
         )
         {

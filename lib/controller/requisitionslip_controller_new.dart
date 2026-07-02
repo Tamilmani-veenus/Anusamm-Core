@@ -235,7 +235,7 @@ class  RequisitionSlipControllerNew extends GetxController{
     }
   }
 
-  Future Requisitionslip_EditApi(int reqId, BuildContext context, status) async {
+  Future Requisitionslip_EditApi(int reqId,String MenuName, BuildContext context, status) async {
     ReqSlipEditList.value=[];
     var response = await RequisitionslipProvider.Requisitionslip_editAPI(reqId,status);
     if (response != null) {
@@ -245,7 +245,7 @@ class  RequisitionSlipControllerNew extends GetxController{
           saveButton.value=RequestConstant.RESUBMIT;
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => RequisitionSlip_Entry())
+              MaterialPageRoute(builder: (context) => RequisitionSlip_Entry(heading: MenuName,))
           );
         } else {
           BaseUtitiles.showToast("No Data Found");

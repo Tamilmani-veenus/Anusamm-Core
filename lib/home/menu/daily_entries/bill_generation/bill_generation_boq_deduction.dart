@@ -711,6 +711,11 @@ class _Bill_Generation_Boq_deductionState
                                 TextFormField(
                                   readOnly: billGenerationBoqController.isAdvanceReadOnly.value,
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
                                   controller: billGenerationBoqController.Advded,
                                   cursorColor: Colors.black,
                                   style: const TextStyle(color: Colors.black),
@@ -1041,6 +1046,11 @@ class _Bill_Generation_Boq_deductionState
                                   child: TextFormField(
                                     controller: billGenerationBoqController.percentControllers[index],
                                     keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d+\.?\d{0,2}'),
+                                      ),
+                                    ],
                                     cursorColor: Colors.black,
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(

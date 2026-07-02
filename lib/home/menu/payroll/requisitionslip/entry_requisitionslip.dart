@@ -13,7 +13,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class RequisitionSlip_Entry extends StatefulWidget {
-  const RequisitionSlip_Entry({super.key});
+  final String heading;
+  const RequisitionSlip_Entry({super.key,required this.heading});
 
   @override
   State<RequisitionSlip_Entry> createState() => _RequisitionSlip_EntryState();
@@ -118,12 +119,14 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Staff L & P Slip",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
-                          ),
+                           Expanded(
+                             child: Text(
+                             widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                                                       ),
+                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);

@@ -10,7 +10,8 @@ import '../../../../utilities/baseutitiles.dart';
 import 'bill_generationdirect_entry.dart';
 
 class Bill_Generation_direct_Entrylist extends StatefulWidget {
-  const Bill_Generation_direct_Entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const Bill_Generation_direct_Entrylist({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Bill_Generation_direct_Entrylist> createState() =>
@@ -58,7 +59,7 @@ class _Subcont_NMR_EntryListScreenState_Site
             floatingActionButton: FloatingActionButton.extended(
               onPressed: (){
               billGenerationDirectController.saveButton.value = RequestConstant.SUBMIT;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Bill_Generation_EntryScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Bill_Generation_EntryScreen(heading: widget.heading,)));
               },
               label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
               icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -73,11 +74,13 @@ class _Subcont_NMR_EntryListScreenState_Site
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Direct - Bill",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {
@@ -92,8 +95,8 @@ class _Subcont_NMR_EntryListScreenState_Site
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 3),
-                    child: Row(                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
                           width: BaseUtitiles.getWidthtofPercentage(context, 38),
@@ -635,7 +638,10 @@ class _Subcont_NMR_EntryListScreenState_Site
                                                                 billGenerationDirectController.ItemGetTableListdata.clear();
                                                                 billGenerationDirectController.bill_editListApiDatas.value.clear();
                                                                 FocusScope.of(context).unfocus();
-                                                                await billGenerationDirectController.directBillEntryList_EditApi(billGenerationDirectController.bill_entryList.value[index].id,context,"ReSubmit",true);
+                                                                await billGenerationDirectController.directBillEntryList_EditApi(
+                                                                    billGenerationDirectController.bill_entryList.value[index].id,
+                                                                    widget.heading,
+                                                                    context,"ReSubmit",true);
 
                                                               }),
 

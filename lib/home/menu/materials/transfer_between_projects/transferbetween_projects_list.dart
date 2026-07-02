@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:anusamm/utilities/apiconstant.dart';
 import 'transferbetween_projects_entry.dart';
 import '../../../../app_theme/app_colors.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
@@ -10,7 +11,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class TransferBtweenProjects_Entrylist extends StatefulWidget {
-  const TransferBtweenProjects_Entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const TransferBtweenProjects_Entrylist({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<TransferBtweenProjects_Entrylist> createState() =>
@@ -51,7 +53,7 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
         top: false,
         child: Scaffold(
             backgroundColor: Setmybackground,
-            floatingActionButton: Obx(
+            floatingActionButton: !AppClient.isRKCPL?Obx(
               () => Visibility(
                 visible: commanController.addMode.value == 1 ? true : false,
                 child: FloatingActionButton.extended(
@@ -63,7 +65,7 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                TrasferBetweenProjects_Entry()));
+                                TrasferBetweenProjects_Entry(heading: widget.heading,)));
                   },
                   label: Text(
                     "Add",
@@ -81,7 +83,7 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
               ),
-            ),
+            ):SizedBox(),
             body: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -91,11 +93,13 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Transfer Between Projects",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                             widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                               onPressed: () {
@@ -720,7 +724,7 @@ class _TransferBtweenProjects_EntrylistState extends State<TransferBtweenProject
                                                                             .TRPEtyList
                                                                             .value[
                                                                         index]
-                                                                            .transferId,
+                                                                            .transferId,widget.heading,
                                                                         context);
                                                                   }),
                                                             ),

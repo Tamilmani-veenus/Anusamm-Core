@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -303,6 +304,11 @@ class _BOQ_Approve_Det_ListState extends State<BOQ_Approve_Det_List> {
                                 top: 3, left: 10, bottom: 5),
                             child: TextFormField(
                               keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d+\.?\d{0,2}'),
+                                ),
+                              ],
                               autovalidateMode:
                               AutovalidateMode.always,
                               readOnly: false,

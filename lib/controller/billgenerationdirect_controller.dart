@@ -796,7 +796,7 @@ class BillGenerationDirectController extends GetxController {
   }
 
   Future directBillEntryList_EditApi(
-      int workid, BuildContext context, Url,bool checksts) async {
+      int workid, String MenuName, BuildContext context, Url,bool checksts) async {
     bill_editListApiDatas.value = [];
     final value =
         await DirectBillGenerateProvider.directBill_entryList_editAPI(workid,checksts);
@@ -816,7 +816,7 @@ class BillGenerationDirectController extends GetxController {
           return Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => Bill_Generation_EntryScreen()),
+                builder: (context) => Bill_Generation_EntryScreen(heading: MenuName,)),
           );
         } else {
           BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);

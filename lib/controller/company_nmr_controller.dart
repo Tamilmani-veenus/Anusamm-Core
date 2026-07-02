@@ -257,7 +257,7 @@ class CompanyNmrAttendanceController extends GetxController{
     });
   }
 
-  Future entryList_EditApi(int reqId,status,type, BuildContext context) async {
+  Future entryList_EditApi(int reqId,status,type,String MenuName, BuildContext context) async {
     EditListApiValue.value=[];
     var response = await CompanyNmrAttendance_Provider.Company_NmrList_EditAPI(reqId,status);
     if (response != null) {
@@ -271,7 +271,7 @@ class CompanyNmrAttendanceController extends GetxController{
           return Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => Company_nmr_entryscreen()),
+                builder: (context) => Company_nmr_entryscreen(heading: MenuName,)),
           );
         } else {
           BaseUtitiles.showToast("No Data Found");

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:anusamm/controller/auto_yrwise_no_controller.dart';
@@ -15,7 +16,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class MaterialTransReqEntry extends StatefulWidget {
-  const MaterialTransReqEntry({super.key});
+  final String heading;
+  const MaterialTransReqEntry({super.key,required this.heading});
 
   @override
   State<MaterialTransReqEntry> createState() => _MaterialTransReqEntryState();
@@ -212,13 +214,15 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Material Transfer Request",
-                            style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                           Expanded(
+                             child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                fontSize:materialTransferReqController.saveButton.value == RequestConstant.VERIFY || materialTransferReqController.saveButton.value == RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold,
+                              ),
+                                                       ),
+                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -819,6 +823,11 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                                                             index],
                                                     keyboardType:
                                                         TextInputType.number,
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter.allow(
+                                                        RegExp(r'^\d+\.?\d{0,2}'),
+                                                      ),
+                                                    ],
                                                     decoration: InputDecoration(
                                                       contentPadding:
                                                           const EdgeInsets

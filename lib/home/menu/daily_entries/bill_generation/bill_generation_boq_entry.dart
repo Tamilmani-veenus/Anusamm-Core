@@ -18,7 +18,8 @@ import 'bill_generation_boq_itemlist.dart';
 
 
 class Bill_Generation_Boq_EntryScreen extends StatefulWidget {
-  const Bill_Generation_Boq_EntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Bill_Generation_Boq_EntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Bill_Generation_Boq_EntryScreen> createState() =>
@@ -145,11 +146,13 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Bill Generation - BOQ",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {

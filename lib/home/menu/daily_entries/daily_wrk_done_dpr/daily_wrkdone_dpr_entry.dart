@@ -35,7 +35,8 @@ import '../../../punch_in_out/camera_screen.dart';
 
 
 class DailyWork_done_DPR_Entry extends StatefulWidget {
-  const DailyWork_done_DPR_Entry({Key? key}) : super(key: key);
+  final String heading;
+  const DailyWork_done_DPR_Entry({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<DailyWork_done_DPR_Entry> createState() => _DailyWork_done_DPR_EntryState();
@@ -126,13 +127,15 @@ class _DailyWork_done_DPR_EntryState extends State<DailyWork_done_DPR_Entry> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Daily Work Done - DPR",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                           Expanded(
+                             child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold,
+                              ),
+                                                       ),
+                           ),
                           TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
@@ -998,6 +1001,11 @@ Widget ListDetails(BuildContext context, ScrollController scrollController) {
                               textAlign: TextAlign.center,
                               controller: dailyWrkDone_DPR_Controller.Itemlist_RateControllers[index],
                               keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d+\.?\d{0,2}'),
+                                ),
+                              ],
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                                 focusedBorder: OutlineInputBorder(
