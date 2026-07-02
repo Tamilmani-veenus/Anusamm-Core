@@ -15,7 +15,8 @@ import '../../../utilities/requestconstant.dart';
 import 'mrnfinal_itemlist.dart';
 
 class MrnfinalEntryScreen extends StatefulWidget {
-  const MrnfinalEntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const MrnfinalEntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<MrnfinalEntryScreen> createState() => _MrnfinalEntryScreenState();
@@ -117,11 +118,13 @@ class _MrnfinalEntryScreenState extends State<MrnfinalEntryScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "MRN Final Approval",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {

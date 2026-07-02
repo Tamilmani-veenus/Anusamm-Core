@@ -28,7 +28,8 @@ import '../../../../../utilities/requestconstant.dart';
 import '../../../../punch_in_out/camera_screen.dart';
 
 class SiteVoucher_EntryScreen extends StatefulWidget {
-  const SiteVoucher_EntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const SiteVoucher_EntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<SiteVoucher_EntryScreen> createState() =>
@@ -149,11 +150,13 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Site Voucher",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                             widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                               onPressed: () {

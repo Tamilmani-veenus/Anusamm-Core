@@ -329,7 +329,7 @@ class StaffVoucher_Controller extends GetxController {
     return savedatas;
   }
 
-  Future StaffvoucherEntryList_EditApi(int VocId, BuildContext context) async {
+  Future StaffvoucherEntryList_EditApi(int VocId,String MenuName, BuildContext context) async {
     Sitevoucher_EditListApiValue.value = [];
     final value = await StaffVoucher_provider.SitevoucherSite_entryList_editAPI(VocId);
     if (value != null) {
@@ -341,7 +341,7 @@ class StaffVoucher_Controller extends GetxController {
           await getstaffvouchersiteTablesDatas();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Staff_Voucher_EntryScreen()),
+            MaterialPageRoute(builder: (context) => Staff_Voucher_EntryScreen(heading: MenuName,)),
           );
         } else {
           BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);

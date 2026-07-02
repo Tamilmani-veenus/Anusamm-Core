@@ -11,7 +11,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'advance_req_entry_new.dart';
 
 class AdvReq_Voucher_EntryList_new extends StatefulWidget {
-  const AdvReq_Voucher_EntryList_new({Key? key}) : super(key: key);
+  final String heading;
+  const AdvReq_Voucher_EntryList_new({Key? key, required this.heading}) : super(key: key);
 
   @override
 
@@ -45,7 +46,7 @@ class _AdvReq_Voucher_EntryList_newState extends State<AdvReq_Voucher_EntryList_
           child: FloatingActionButton.extended(
             onPressed: (){
               advanceReqVoucherController_new.saveButton.value = RequestConstant.SUBMIT;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AdvReq_voucher_New()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AdvReq_voucher_New(heading: widget.heading,)));
             },
             label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
             icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -61,11 +62,13 @@ class _AdvReq_Voucher_EntryList_newState extends State<AdvReq_Voucher_EntryList_
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Advance Requisition Voucher",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     TextButton(
                         onPressed: () {
@@ -554,7 +557,8 @@ class _AdvReq_Voucher_EntryList_newState extends State<AdvReq_Voucher_EntryList_
                                                               advanceReqVoucherController_new.ItemGetTableListdata.clear();
                                                               FocusScope.of(context).unfocus();
                                                               await advanceReqVoucherController_new.EntryList_EditApi("edit",
-                                                                  advanceReqVoucherController_new.entryList.value[index].id, true, context);
+                                                                  advanceReqVoucherController_new.entryList.value[index].id, true,
+                                                                  widget.heading,context);
                                                           }),
                                                     ),
                                                     Container(

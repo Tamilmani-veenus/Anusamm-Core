@@ -10,7 +10,8 @@ import '../../../../controller/staffvoucher_controller.dart';
 import '../../../../utilities/baseutitiles.dart';
 
 class Staff_Voucher_EntryListScreen extends StatefulWidget {
-  const Staff_Voucher_EntryListScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Staff_Voucher_EntryListScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Staff_Voucher_EntryListScreen> createState() =>
@@ -50,7 +51,7 @@ class _Staff_Voucher_EntryListScreenState
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Staff_Voucher_EntryScreen()));
+                      builder: (context) => Staff_Voucher_EntryScreen(heading: widget.heading,)));
             },
             label: Text(
               "Add",
@@ -78,11 +79,13 @@ class _Staff_Voucher_EntryListScreenState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Staff Voucher",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     TextButton(
                         onPressed: () {
@@ -581,6 +584,7 @@ class _Staff_Voucher_EntryListScreenState
                                                                           .value[
                                                                               index]
                                                                           .id,
+                                                                      widget.heading,
                                                                       context);
                                                             }),
                                                       ),

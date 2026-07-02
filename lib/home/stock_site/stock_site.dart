@@ -88,7 +88,8 @@ import 'materialwise.dart';
 // }
 
 class StockSite extends StatefulWidget {
-  const StockSite({Key? key}) : super(key: key);
+  final String heading;
+  const StockSite({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<StockSite> createState() => _StockSiteState();
@@ -133,9 +134,15 @@ class _StockSiteState extends State<StockSite>
             color: Colors.black,
           ),
           backgroundColor: Setmybackground,
-          title: const Text(
-            'Stock at Site',
-            style: TextStyle(color: Colors.black),
+          title:  Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.heading,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
           bottom: TabBar(
             controller: _tabController,

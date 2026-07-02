@@ -21,7 +21,8 @@ import '../../../../commonpopup/requesttype_alert.dart';
 import '../../../../controller/menu_controller.dart';
 
 class MRNRequest_Indent_Entry extends StatefulWidget {
-  const MRNRequest_Indent_Entry({Key? key}) : super(key: key);
+  final String heading;
+  const MRNRequest_Indent_Entry({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<MRNRequest_Indent_Entry> createState() => _MRNRequest_Indent_EntryState();
@@ -260,11 +261,13 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "MRN Request (Indent)",
-                              style: TextStyle(
-                                  fontSize: RequestConstant.Heading_Font_SIZE,
-                                  fontWeight: FontWeight.bold),
+                            Expanded(
+                              child: Text(
+                                widget.heading,
+                                style: TextStyle(
+                                    fontSize: RequestConstant.Heading_Font_SIZE,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             TextButton(
                               onPressed: () {

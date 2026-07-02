@@ -17,7 +17,8 @@ import '../../utilities/apiconstant.dart';
 import '../pdf_generate/pdf_model/pdfmodel.dart';
 
 class MRNReport extends StatefulWidget {
-  const MRNReport({Key? key}) : super(key: key);
+  final String heading;
+  const MRNReport({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<MRNReport> createState() => _MRNReportState();
@@ -76,11 +77,13 @@ class _MRNReportState extends State<MRNReport> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "MRN Report",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {

@@ -15,7 +15,8 @@ import 'entry_requisitionslip.dart';
 ///----------Requisition Slip Entry List-------------
 
 class Requisitionslip_EntryList extends StatefulWidget {
-  const Requisitionslip_EntryList({super.key});
+  final String heading;
+  const Requisitionslip_EntryList({super.key,required this.heading});
 
   @override
   State<Requisitionslip_EntryList> createState() => _Requisitionslip_EntryListState();
@@ -60,7 +61,7 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
             child: FloatingActionButton.extended(
               onPressed: (){
                 requisitionSlipController.saveButton.value=RequestConstant.SUBMIT;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RequisitionSlip_Entry()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RequisitionSlip_Entry(heading: widget.heading,)));
               },
               label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
               icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -77,11 +78,13 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Staff L & P Slip",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {
@@ -478,40 +481,35 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                         ],
                                       ),
                                     ],
-                                  ):SizedBox(),
+                                  ):SizedBox.shrink(),
                                   SizedBox(height: 5,),
 
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Date" :
-                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ? "OnDuty\nDate" :
-                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" ? "Leave Date" : "Compansate Date",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,),
-                                              )),
-                                          Expanded(
-                                              flex: 9,
-                                              child: Text(
-                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O"?
-                                                "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromDate}" :
-                                                "${requisitionSlipController.ReqSlipEtyList.value[index].leaveFromDate} - ${requisitionSlipController.ReqSlipEtyList.value[index].leaveToDate}",
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(""),
                                       ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Date" :
+                                            requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ? "OnDuty\nDate" :
+                                            requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" ? "Leave Date" : "Compansate Date",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,),
+                                          )),
+                                      Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O"?
+                                            "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromDate}" :
+                                            "${requisitionSlipController.ReqSlipEtyList.value[index].leaveFromDate} - ${requisitionSlipController.ReqSlipEtyList.value[index].leaveToDate}",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          )),
                                     ],
                                   ),
 
@@ -525,7 +523,7 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                       Expanded(
                                           flex: 3,
                                           child: Text(
-                                            "Status",
+                                            "Prepared By",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),
@@ -533,8 +531,7 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                       Expanded(
                                           flex: 9,
                                           child: Text(
-                                            requisitionSlipController.ReqSlipEtyList.value[index].status.toString(),
-                                            style: TextStyle(color:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Approved"?Colors.green:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Rejected"? Colors.red:Colors.black),
+                                            requisitionSlipController.ReqSlipEtyList.value[index].createdName.toString(),
                                           )),
                                     ],
                                   ),
@@ -548,16 +545,18 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                       Expanded(
                                           flex: 3,
                                           child: Text(
-                                            "Prepared By",
+                                            "Status",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),
                                           )),
                                       Expanded(
                                           flex: 7,
-                                          child: Text(
-                                            requisitionSlipController.ReqSlipEtyList.value[index].createdName.toString(),
-                                          )),
+                                          child:Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].status.toString(),
+                                            style: TextStyle(color:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Approved"?Colors.green:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Rejected"? Colors.red:Colors.black),
+                                          )
+                                          ),
                                       Expanded(
                                           flex: 2,
                                           child: IconButton(
@@ -626,7 +625,10 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                                                                       ],
                                                                     ),
                                                                     onTap: () async {
-                                                                        await requisitionSlipController.Requisitionslip_EditApi(requisitionSlipController.ReqSlipEtyList[index].id, context, true);
+                                                                        await requisitionSlipController.Requisitionslip_EditApi(
+                                                                            requisitionSlipController.ReqSlipEtyList[index].id,
+                                                                            widget.heading,
+                                                                            context, true);
                                                                         }),
                                                               ),
                                                               Container(

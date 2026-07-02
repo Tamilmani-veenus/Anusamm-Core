@@ -172,7 +172,7 @@ class DailyWrkDone_DPR_Controller extends GetxController {
   }
 
 
-  Future DprEntryList_EditApi(int workid, BuildContext context, int checkdata) async {
+  Future DprEntryList_EditApi(int workid, String MenuName, BuildContext context, int checkdata) async {
     final value = await DPRProvider.dpr_entryList_editAPI(workid);
     if (value != null) {
       if(value.success == true) {
@@ -184,7 +184,7 @@ class DailyWrkDone_DPR_Controller extends GetxController {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DailyWork_done_DPR_Entry()),
+                builder: (context) => DailyWork_done_DPR_Entry(heading:MenuName,)),
           );
         }
         else {

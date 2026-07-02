@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'boq_revised_entry.dart';
 
 class Boq_Revised_EntryList extends StatefulWidget {
-  const Boq_Revised_EntryList({Key? key}) : super(key: key);
+  final String heading;
+  const Boq_Revised_EntryList({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Boq_Revised_EntryList> createState() => _Boq_Revised_EntryListState();
@@ -48,7 +49,7 @@ class _Boq_Revised_EntryListState extends State<Boq_Revised_EntryList> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Boq_Revised_EntryScreen()));
+                      builder: (context) => Boq_Revised_EntryScreen(heading: widget.heading,)));
             },
             label: const Text(
               "Add",
@@ -76,12 +77,14 @@ class _Boq_Revised_EntryListState extends State<Boq_Revised_EntryList> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "BOQ - Revised",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
+                     Expanded(
+                       child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                                           ),
+                     ),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -520,7 +523,9 @@ class _Boq_Revised_EntryListState extends State<Boq_Revised_EntryList> {
                                                               onTap: () {
                                                                 boq_revised_controller.delete_BoqRevised_itemlist_Table();
                                                                 boq_revised_controller.Boqitem_itemview_GetDbList.value=[];
-                                                                boq_revised_controller.BoqrevisedList_EditApi(boq_revised_controller.Boq_entryList.value[index].id, context, true);
+                                                                boq_revised_controller.BoqrevisedList_EditApi(
+                                                                    boq_revised_controller.Boq_entryList.value[index].id,
+                                                                    widget.heading,context, true);
                                                                 FocusScope.of(context).unfocus();
                                                               }),
                                                         ),

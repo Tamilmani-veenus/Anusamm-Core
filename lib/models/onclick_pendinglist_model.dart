@@ -37,6 +37,7 @@ class OnclickPendingListResponse {
 
 class OnClickListResult {
   int? id;
+  int? workOrdMasId;
   int? voucherId;
   int? ReqOrdMasId;
   int? PONo;
@@ -213,6 +214,7 @@ class OnClickListResult {
 
   OnClickListResult({
     this.id,
+    this.workOrdMasId,
     this.voucherId,
     this.ReqOrdMasId,
     this.PONo,
@@ -390,6 +392,7 @@ class OnClickListResult {
 
   factory OnClickListResult.fromJson(Map<String, dynamic> json) => OnClickListResult(
     voucherId: json["voucherId"],
+    workOrdMasId: json["WorkOrdMasId"],
     id: json["id"],
     ReqOrdMasId: json["ReqOrdMasId"],
     PONo: json["PONO"],
@@ -413,7 +416,7 @@ class OnClickListResult {
     ReqDueDate: json["ReqdueDate"],
     requestType: json["requestType"],
     projectId: json["projectID"],
-    ProjectID:json["ProjectID"],
+    ProjectID:json["ProjectID"] ?? json["projectid"],
     Projectid:json["Projectid"],
     siteId: json["siteID"],
     fromProjectName: json["fromProjectName"],
@@ -441,7 +444,7 @@ class OnClickListResult {
     SupplierContactNo: json["SupplierContactNo"],
     supplier: json["supplier"],
     preparedBy: json["PreparedBy"],
-    preparedby: json["Preparedby"],
+    preparedby: json["Preparedby"] ?? json["PreparedByName"],
     preparedByid: json["PreparedById"],
     Preparedbyname: json["Preparedbyname"],
     preparedName: json["preparedByName"],
@@ -468,7 +471,7 @@ class OnClickListResult {
     ProjectId: json["ProjectId"],
     projId: json["projectId"],
     SiteId: json["SiteId"],
-    SiteID: json["SiteID"],
+    SiteID: json["SiteID"] ?? json["siteid"],
     VerifiedBy: json["VerifiedBy"],
     PreapprovedBy: json["PreapprovedBy"],
     potype: json["PoType"],
@@ -520,9 +523,9 @@ class OnClickListResult {
     totalPermissionHours: json["totalPermissionHours"],
     employeeName: json["EmployeeName"],
     empName: json["employeeName"],
-    PurchaseOrdDate: json["PurchaseOrdDate"],
-    purchaseOrdNo: json["PurchaseOrdNo"],
-    inwType: json["inw_type"],
+    PurchaseOrdDate: json["PurchaseOrdDate"] ?? json["WorkOrdDate"],
+    purchaseOrdNo: json["PurchaseOrdNo"] ?? json["WorkOrdNo"],
+    inwType: json["inw_type"] ?? json["inwType"],
     entryDate: json["entryDate"],
     entryDateMobile: json["entryDateMobile"],
     approveByName: json["ApproveByName"],
@@ -568,6 +571,7 @@ class OnClickListResult {
   Map<String, dynamic> toJson() => {
     "id": id,
     "voucherId": voucherId,
+    "WorkOrdMasId": workOrdMasId,
     "ReqOrdMasId": ReqOrdMasId,
     "PONO": PONo,
     "PoId": PoId,

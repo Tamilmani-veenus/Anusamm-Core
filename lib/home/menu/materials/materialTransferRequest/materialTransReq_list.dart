@@ -9,7 +9,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'materialTransReq_Entry.dart';
 
 class MatTransReqList extends StatefulWidget {
-  const MatTransReqList({super.key});
+  final String heading;
+  const MatTransReqList({super.key,required this.heading});
 
   @override
   State<MatTransReqList> createState() => _MatTransReqListState();
@@ -56,7 +57,7 @@ class _MatTransReqListState extends State<MatTransReqList> {
                 child: FloatingActionButton.extended(
                   onPressed: () {
                     materialTransferReqController.saveButton.value = RequestConstant.SUBMIT;
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MaterialTransReqEntry()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialTransReqEntry(heading: widget.heading,)));
                   },
                   label: Text(
                     "Add",
@@ -84,11 +85,13 @@ class _MatTransReqListState extends State<MatTransReqList> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Material Transfer Request",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                               onPressed: () {
@@ -561,7 +564,9 @@ class _MatTransReqListState extends State<MatTransReqList> {
                                                                 materialTransferReqController.getTransfferbetDetList.clear();
                                                                 materialTransferReqController.mattranReqEditListValue.value.clear();
                                                                 FocusScope.of(context).unfocus();
-                                                                await materialTransferReqController.matTransReqEdit(materialTransferReqController.matTransReqList.value[index].id, context);
+                                                                await materialTransferReqController.matTransReqEdit(
+                                                                    materialTransferReqController.matTransReqList.value[index].id,widget.heading,
+                                                                    context);
                                                               }),
                                                         ),
                                                         Container(

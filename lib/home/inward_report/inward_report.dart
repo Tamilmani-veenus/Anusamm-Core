@@ -19,7 +19,8 @@ import 'package:get/get.dart';
 import '../pdf_generate/pdf_model/pdfmodel.dart';
 
 class InwardReport extends StatefulWidget {
-  const InwardReport({Key? key}) : super(key: key);
+  final String heading;
+  const InwardReport({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<InwardReport> createState() => _InwardReportState();
@@ -83,12 +84,14 @@ class _InwardReportState extends State<InwardReport> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Inward Report",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
-                      ),
+                       Expanded(
+                         child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                                               ),
+                       ),
                       TextButton(
                           onPressed: () {
                             Navigator.pop(context);

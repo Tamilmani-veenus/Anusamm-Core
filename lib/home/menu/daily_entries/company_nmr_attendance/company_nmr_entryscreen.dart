@@ -19,7 +19,8 @@ import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class Company_nmr_entryscreen extends StatefulWidget {
-  const Company_nmr_entryscreen({Key? key}) : super(key: key);
+  final String heading;
+  const Company_nmr_entryscreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Company_nmr_entryscreen> createState() =>
@@ -182,9 +183,9 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              "Company NMR Attendance",
+                              widget.heading,
                               style: TextStyle(
-                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontSize: companyNmrAttendanceController.saveButton.value == RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),

@@ -27,7 +27,8 @@ import '../pdf_generate/pdf_model/pdfmodel.dart';
 import '../pdf_generate/pdf_openfilepath.dart';
 
 class DPRReport extends StatefulWidget {
-  const DPRReport({Key? key}) : super(key: key);
+  final String heading;
+  const DPRReport({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<DPRReport> createState() => _DPRReportState();
@@ -86,11 +87,13 @@ class _DPRReportState extends State<DPRReport> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "DPR Report",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {

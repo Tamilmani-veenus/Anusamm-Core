@@ -392,6 +392,7 @@ class _MainManusListState extends State<MainManusList> {
                               onTap: () async {
                                 menuController.MaterialScreen(
                                     menuController.subMatList[index].menuName!,
+                                    menuController.subMatList[index].dynamicMenuName!,
                                     context);
                                 menuController.formName.value =
                                     menuController.subMatList[index].menuName!;
@@ -506,6 +507,8 @@ class _MainManusListState extends State<MainManusList> {
                                 menuController.MainmenuScreen(
                                     menuController
                                         .projPlanningList[index].menuName!,
+                                    menuController.projPlanningList[index]
+                                    .dynamicMenuName!,
                                     context);
                                 menuController.formName.value = menuController
                                     .projPlanningList[index].menuName!;
@@ -971,6 +974,7 @@ class _MainManusListState extends State<MainManusList> {
                                 menuController.NavigateScreen(
                                     menuController
                                         .dailyEntryList[index].menuName!,
+                                    menuController.dailyEntryList[index].dynamicMenuName!,
                                     context);
                                 menuController.formName.value = menuController
                                     .dailyEntryList[index].menuName!;
@@ -1218,6 +1222,8 @@ class _MainManusListState extends State<MainManusList> {
                                 menuController.AccountsScreen(
                                     menuController
                                         .accountsList[index].menuName!,
+                                    menuController.accountsList[index]
+                                    .dynamicMenuName!,
                                     context);
                                 menuController.formName.value = menuController
                                     .accountsList[index].menuName!;
@@ -1321,7 +1327,8 @@ class _MainManusListState extends State<MainManusList> {
                               ),
                               onTap: () async {
                                 menuController.PayrollScreen(
-                                    menuController.payrollList[index].menuName!,
+                                    menuController.payrollList[index].menuName!,menuController.payrollList[index]
+                                    .dynamicMenuName!,
                                     context);
                                 menuController.formName.value =
                                     menuController.payrollList[index].menuName!;

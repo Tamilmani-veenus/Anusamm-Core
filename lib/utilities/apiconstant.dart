@@ -46,6 +46,7 @@ class AppClient {
 
   static bool get isAnusamm => packageName == "com.veenus.anusamm";
   static bool get isVrindhavana => packageName == "com.veenus.vrindhavana";
+  static bool get isRKCPL => packageName == "com.veenus.rkcpl";
 }
 
 class ApiConstant{
@@ -131,6 +132,8 @@ class ApiConstant{
   static String EDIT_ADVANCEREQ_API = BASE_URL_CORE + "api/AdvanceReqVoucher/GetAdvanceReqVoucherById";
   static String GETINWARD_ENTRY_LIST = BASE_URL_CORE + "api/MaterialInward/GetAllMaterialInward";
   static String GETMATERIALINWARD_ALLDATAS = BASE_URL_CORE + "api/MaterialInward/GetInwardPendingById";
+  static String GETINWARDWOMAS_ALLDATAS = BASE_URL_CORE + "api/MaterialInward/InwardWoLoadMasById";
+  static String GETINWARDWODET_ALLDATAS = BASE_URL_CORE + "api/MaterialInward/InwardWoLoadDetById";
   static String GETINWARDSTATUSCHECKAPI = BASE_URL_CORE + "api/MaterialInward/InwardMobilecheck";
   static String GETTRANSFERSTATUSCHECKAPI = BASE_URL_CORE + "api/MaterialTransfer/checkForUpdateAndDelete";
   static String GETTRANSPROJECT_ENTRY_LIST = BASE_URL_CORE + "api/MaterialTransfer/GetAllTransBetweenProject";
@@ -188,6 +191,7 @@ class ApiConstant{
   static String GET_POVERIFICATION_PENDINGLIST = BASE_URL_CORE + "api/MaterialPurOrdMas/GetPurOrdVerificationList";
   static String GET_POAPPROVAL_PENDINGLIST = BASE_URL_CORE + "api/MaterialPurOrdMas/GetAllPoAppPending";
   static String GET_INWARD_PENDINGLIST = BASE_URL_CORE + "api/MaterialInward/GetAllInwardPending";
+  static String GET_INWARDWO_PENDINGLIST = BASE_URL_CORE + "api/MaterialInward/GetInwardPendingWo";
   static String GET_TRANSFER_PENDINGLIST = BASE_URL_CORE + "api/MaterialTransfer/GetAllTransferPendingView";
   static String GET_TRANSFERREQUEST_PENDINGLIST = BASE_URL_CORE + "api/MaterialTransferRequest/GetAllTransferRequestPendingViewMTR";
   static String GET_TRANSFER_ACKNOWLEGDEMENT_LIST = BASE_URL_CORE + "api/MaterialAckMas/getAllTranferAckPending";
@@ -219,6 +223,8 @@ class ApiConstant{
   static String GETSITEVOUCHERAPPROLIST = BASE_URL_CORE + "api/SiteVoucher/GetAccountSiteVoucherToBeApproved";
   static String GETADVREQAPPROLIST = BASE_URL_CORE + "api/AdvanceReqVoucher/GetAdvanceReqToBeApproved";
   static String GETCOMPANYNMRAPPROLIST = BASE_URL_CORE + "api/NMRLabourAttendance/GetApprovalPendingNMRAttendance";
+  static String GETPO_SUPTRADERSAGEN_PENDLIST = BASE_URL_CORE + "api/MaterialPurOrdMas/GetAllPendingPOBySupplierCategory";
+
   static String GETPROJECTDROPDOWNLISTALL = BASE_URL_CORE + "api/CommonFile/GetProjectAll";
   static String GETSITE_REPORTS = BASE_URL_CORE + "api/CommonFile/GetSiteReport";
   static String GETATTENDANCEREPORTLIST = BASE_URL_CORE + "api/SubContLabourAttendance/GetDlrReportViewListMas";
@@ -230,6 +236,8 @@ class ApiConstant{
   static String GET_MATERIALREQPREINDEDNT_EDIT_API = BASE_URL_CORE + "api/SiteRequest/GetPreIndentByID";
   static String GET_PENDING_QUOTE_MORE_API = BASE_URL_CORE + "api/MaterialQuote/GetQuoteDetView";
   static String GET_STORETRANFER_MORE_API = BASE_URL_CORE + "api/StoreTransferPending/GetStoreTransferPendingView";
+  static String GET_POSUPTRADAGEN_MORE_API = BASE_URL_CORE + "api/MaterialPurOrdMas/GetPendingPoViewSubBySupplierCategory";
+
 
   static String MRN_VERIFICATION_MOREDETAILS = BASE_URL_CORE + "api/MaterialReqOrdMas/GetReqOrdMasById";
   static String MRN_PREAPPROVAL_MOREDETAILS = BASE_URL_CORE + "api/MaterialPreApprovalRequest/GetTobeApprovalByIDS";
@@ -237,6 +245,7 @@ class ApiConstant{
   static String PENDING_PO_MOREDETAILS = BASE_URL_CORE + "api/MaterialPurOrdMas/GetPendingPoViewSub";
   static String POVERIFICATION_MOREDETAILS = BASE_URL_CORE + "api/MaterialPurOrdMas/GetPurchaseOrderDetaisloadById";
   static String INWARD_MOREDETAILS = BASE_URL_CORE + "api/MaterialInward/GetInwardPendingById";
+  static String INWARDWO_MOREDETAILS = BASE_URL_CORE + "api/MaterialInward/GetInwardWoPendingMaterialList";
   static String TRANSFERPENDING_MOREDETAILS = BASE_URL_CORE + "api/MaterialTransfer/GetTransferDetails";
   static String TRANSFER_REQUESTPENDING_MOREDETAILS = BASE_URL_CORE + "api/MaterialTransferRequest/GetMTRViewAndSearch";
   static String TRANSFERACKPENDING_MOREDETAILS = BASE_URL_CORE + "api/MaterialAckMas/getByIdAckTransferPending";

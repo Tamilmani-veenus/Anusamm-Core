@@ -16,7 +16,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'advance_sitewisepayment_new.dart';
 
 class AdvReq_voucher_New extends StatefulWidget {
-  const AdvReq_voucher_New({Key? key}) : super(key: key);
+  final String heading;
+  const AdvReq_voucher_New({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<AdvReq_voucher_New> createState() => _AdvReq_voucher_NewState();
@@ -120,9 +121,9 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                         children: [
                           Expanded(
                             child: Text(
-                              "Advance Requisition Voucher",
+                              widget.heading,
                               style: TextStyle(
-                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontSize: advanceReqVoucherController_new.saveButton.value == RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),

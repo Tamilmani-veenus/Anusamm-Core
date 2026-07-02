@@ -11,7 +11,8 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'daily_wrkdone_dpr_entry.dart';
 
 class DailyWork_done_DPR_EntryList extends StatefulWidget {
-  const DailyWork_done_DPR_EntryList({Key? key}) : super(key: key);
+  final String heading;
+  const DailyWork_done_DPR_EntryList({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<DailyWork_done_DPR_EntryList> createState() => _DailyWork_done_DPR_EntryListState();
@@ -53,7 +54,7 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
               dailyWrkDone_DPR_Controller.delete_dpr_itemlist_Table();
               dailyWrkDone_DPR_Controller.dpr_itemview_DbList.value.clear();
               dailyWrkDone_DPR_Controller.saveButton.value=RequestConstant.SUBMIT;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DailyWork_done_DPR_Entry(heading: widget.heading)));
             });
             },
           label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
@@ -69,11 +70,13 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Daily Work Done DPR",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     TextButton(
                         onPressed: () {
@@ -570,7 +573,9 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                                                 dailyWrkDone_DPR_Controller.delete_dpr_itemlist_Table();
                                                                 dailyWrkDone_DPR_Controller.dpr_itemview_DbList.value.clear();
                                                                 dailyWrkDone_DPR_Controller.getDprDetList.value.clear();
-                                                                dailyWrkDone_DPR_Controller.DprEntryList_EditApi(dailyWrkDone_DPR_Controller.searchentryList.value[index].id,context,0);
+                                                                dailyWrkDone_DPR_Controller.DprEntryList_EditApi(
+                                                                    dailyWrkDone_DPR_Controller.searchentryList.value[index].id,
+                                                                    widget.heading,context,0);
                                                                 FocusScope.of(context).unfocus();
                                                                 Navigator.pop(context);
                                                               }),

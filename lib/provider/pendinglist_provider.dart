@@ -136,13 +136,12 @@ class PendingListProvider {
         response = await ApiManager.getAPICall(
             ApiConstant.GET_POVERIFICATION_PENDINGLIST);
       } else if (formName == "PO APPROVAL") {
-        response =
-            await ApiManager.getAPICall(ApiConstant.GET_POAPPROVAL_PENDINGLIST);
+        response = await ApiManager.getAPICall(ApiConstant.GET_POAPPROVAL_PENDINGLIST);
       } else if (formName == "INWARD PENDING") {
-        print("API: ${ApiConstant.GET_INWARD_PENDINGLIST}");
-        response =
-            await ApiManager.getAPICall(ApiConstant.GET_INWARD_PENDINGLIST);
-      } else if (formName == "TRANSFER PENDING") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_INWARD_PENDINGLIST);
+      } else if (formName == "INWARD PENDING - WO") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_INWARDWO_PENDINGLIST);
+      }else if (formName == "TRANSFER PENDING") {
         response =
             await ApiManager.getAPICall(ApiConstant.GET_TRANSFER_PENDINGLIST);
       } else if (formName == "TRANSFER REQUEST PENDING VIEW") {
@@ -211,6 +210,14 @@ class PendingListProvider {
       }
       else if (formName == "COMPANY LABOUR ATTENDANCE APPROVAL PENDING") {
         response = await ApiManager.getAPICall(ApiConstant.GETCOMPANYNMRAPPROLIST);
+      }
+      else if (formName == "PENDING PO [AGENCY]" || formName == "PENDING PO [TRADER]" || formName == "PENDING PO [SUPPLIER]") {
+        String supplierCategory = formName == "PENDING PO [SUPPLIER]"
+            ? "S"
+            : formName == "PENDING PO [TRADER]"
+            ? "T"
+            : "A";
+        response = await ApiManager.getAPICall("${ApiConstant.GETPO_SUPTRADERSAGEN_PENDLIST}?supplierCategory=$supplierCategory");
       }
       return onclickPendingListResponseFromJson(response);
     } catch (error, stackTrace) {
@@ -513,6 +520,9 @@ class PendingListProvider {
       } else if (Url == "INWARD PENDING") {
         response = await ApiManager.getAPICall(
             "${ApiConstant.INWARD_MOREDETAILS}?PoId=$Rid");
+      }else if (Url == "INWARD PENDING - WO") {
+        response = await ApiManager.getAPICall(
+            "${ApiConstant.INWARDWO_MOREDETAILS}?woId=$Rid");
       } else if (Url == "TRANSFER PENDING") {
         response = await ApiManager.getAPICall(
             "${ApiConstant.TRANSFERPENDING_MOREDETAILS}?reqMasId=$Rid");
@@ -540,6 +550,15 @@ class PendingListProvider {
       } else if (Url == "STORE TRANSFER PENDING") {
         response = await ApiManager.getAPICall(
             "${ApiConstant.GET_STORETRANFER_MORE_API}?ReqOrdMasId=$Rid");
+      }
+      else if (Url == "PENDING PO [AGENCY]" || Url == "PENDING PO [TRADER]" || Url == "PENDING PO [SUPPLIER]") {
+        String supplierCategory = Url == "PENDING PO [SUPPLIER]"
+            ? "S"
+            : Url == "PENDING PO [TRADER]"
+            ? "T"
+            : "A";
+        response = await ApiManager.getAPICall(
+            "${ApiConstant.GET_POSUPTRADAGEN_MORE_API}?reqMasId=$Rid&supplierCategory=$supplierCategory");
       }
       return onclickPendingDetFromJson(response);
     } catch (error, e) {

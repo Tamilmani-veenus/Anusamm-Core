@@ -13,7 +13,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'company_nmr_entryscreen.dart';
 
 class Company_nmr_entrylist extends StatefulWidget {
-  const Company_nmr_entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const Company_nmr_entrylist({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Company_nmr_entrylist> createState() => _Company_nmr_entrylistState();
@@ -60,7 +61,7 @@ class _Company_nmr_entrylistState extends State<Company_nmr_entrylist> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Company_nmr_entryscreen()));
+                          builder: (context) => Company_nmr_entryscreen(heading: widget.heading,)));
 
                 },
                 label: Text(
@@ -91,7 +92,7 @@ class _Company_nmr_entrylistState extends State<Company_nmr_entrylist> {
                     children: [
                       Expanded(
                         child: Text(
-                          "Company NMR Attendance",
+                         widget.heading,
                           style: TextStyle(
                               fontSize: RequestConstant.Heading_Font_SIZE,
                               fontWeight: FontWeight.bold),
@@ -744,6 +745,7 @@ class _Company_nmr_entrylistState extends State<Company_nmr_entrylist> {
                                                                         companyNmrAttendanceController.cmpNmr_getDbDetList.clear();
                                                                     await companyNmrAttendanceController.entryList_EditApi(
                                                                         companyNmrAttendanceController.CompanyEntrylist[index].id,true,"Edit",
+                                                                        widget.heading,
                                                                         context);
                                                                   }),
                                                             ),

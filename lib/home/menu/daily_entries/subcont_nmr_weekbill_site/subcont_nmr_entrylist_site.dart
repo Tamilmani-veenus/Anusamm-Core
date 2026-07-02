@@ -9,7 +9,8 @@ import '../../../../controller/nmrweeklybill_controller.dart';
 import '../../../../utilities/baseutitiles.dart';
 
 class Subcont_NMR_EntryListScreen_Site extends StatefulWidget {
-  const Subcont_NMR_EntryListScreen_Site({Key? key}) : super(key: key);
+  final String heading;
+  const Subcont_NMR_EntryListScreen_Site({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Subcont_NMR_EntryListScreen_Site> createState() =>
@@ -51,7 +52,7 @@ class _Subcont_NMR_EntryListScreenState_Site
             child: FloatingActionButton.extended(
               onPressed: (){
                 nmrWklyController.saveButton.value = RequestConstant.SUBMIT;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const Subcont_Nmr_EntryScreen_Site()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Subcont_Nmr_EntryScreen_Site(heading: widget.heading,)));
               },
               label: const Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
               icon: const Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -68,11 +69,13 @@ class _Subcont_NMR_EntryListScreenState_Site
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "NMR Weekly Bill - Generation",
-                        style: TextStyle(
-                            fontSize: RequestConstant.Heading_Font_SIZE,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          widget.heading,
+                          style: TextStyle(
+                              fontSize: RequestConstant.Heading_Font_SIZE,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {
@@ -638,7 +641,8 @@ class _Subcont_NMR_EntryListScreenState_Site
                                                                     ],
                                                                   ),
                                                                   onTap: () async {
-                                                                    await  nmrWklyController.NmrEntryList_EditApi(nmrWklyController.NmrEtyList.value[index].id,context,"Edit",true);
+                                                                    await  nmrWklyController.NmrEntryList_EditApi(
+                                                                        nmrWklyController.NmrEtyList.value[index].id,widget.heading,context,"Edit",true);
                                                                   }),
                                                               Container(
                                                                   margin: EdgeInsets.only(

@@ -9,7 +9,8 @@ import '../../../../../utilities/baseutitiles.dart';
 import '../../../../../utilities/requestconstant.dart';
 
 class SiteVoucher_EntryListNew extends StatefulWidget {
-  const SiteVoucher_EntryListNew({Key? key}) : super(key: key);
+  final String heading;
+  const SiteVoucher_EntryListNew({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<SiteVoucher_EntryListNew> createState() => _SiteVoucher_EntryListNewState();
@@ -49,7 +50,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SiteVoucher_EntryScreen()));
+                      builder: (context) => SiteVoucher_EntryScreen(heading: widget.heading,)));
             },
             label: const Text(
               "Add",
@@ -77,12 +78,14 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Site Voucher",
-                      style: TextStyle(
-                          fontSize: RequestConstant.Heading_Font_SIZE,
-                          fontWeight: FontWeight.bold),
-                    ),
+                     Expanded(
+                       child: Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                                           ),
+                     ),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -620,6 +623,7 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                                                         .SiteVocEtyList
                                                                       .value[index]
                                                                       .id,
+                                                                  widget.heading,
                                                                   context,"Resubmit");
                                                             }),
                                                       ),

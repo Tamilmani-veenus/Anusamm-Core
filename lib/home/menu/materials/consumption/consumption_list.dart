@@ -10,7 +10,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'consumption_entryscreen.dart';
 
 class Consumption_List extends StatefulWidget {
-  const Consumption_List({Key? key}) : super(key: key);
+  final String heading;
+  const Consumption_List({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Consumption_List> createState() => _Consumption_ListState();
@@ -64,7 +65,7 @@ class _Consumption_ListState extends State<Consumption_List> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Consumption_Entry()));
+                              builder: (context) => Consumption_Entry(heading: widget.heading,)));
                     },
                     label: Text(
                       "Add",
@@ -92,11 +93,13 @@ class _Consumption_ListState extends State<Consumption_List> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Consumption",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {
@@ -644,7 +647,7 @@ class _Consumption_ListState extends State<Consumption_List> {
                                                                         .ConsumEtyList
                                                                         .value[
                                                                             index]
-                                                                        .id,
+                                                                        .id,widget.heading,
                                                                     context);
                                                               }),
                                                         ),

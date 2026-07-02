@@ -394,6 +394,11 @@ class _Bill_Generation_Boq_ItemlistState extends State<Bill_Generation_Boq_Iteml
                                 style: const TextStyle(color: Colors.black),
                                 cursorColor: Colors.black,
                                 keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                                   focusedBorder: OutlineInputBorder(

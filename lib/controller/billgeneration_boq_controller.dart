@@ -907,7 +907,7 @@ class BillGenerationBoqController extends GetxController {
     }
   }
 
-  Future directBillEntryList_EditApi(int workid, BuildContext context,Url,status) async {
+  Future directBillEntryList_EditApi(int workid, String MenuName,BuildContext context,Url,status) async {
     bill_editListApiDatas.value=[];
     final value = await BillGenerateBoqProvider.directBill_entryList_editAPI(workid,status);
     if (value != null) {
@@ -928,7 +928,7 @@ class BillGenerationBoqController extends GetxController {
           return Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => Bill_Generation_Boq_EntryScreen()),
+                builder: (context) => Bill_Generation_Boq_EntryScreen(heading: MenuName,)),
           );
 
         }

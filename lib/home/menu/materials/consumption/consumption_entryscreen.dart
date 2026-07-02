@@ -21,7 +21,8 @@ import '../../../../utilities/requestconstant.dart';
 import 'consumption_additems.dart';
 
 class Consumption_Entry extends StatefulWidget {
-  const Consumption_Entry({Key? key}) : super(key: key);
+  final String heading;
+  const Consumption_Entry({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Consumption_Entry> createState() => _Consumption_EntryState();
@@ -119,12 +120,14 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Consumption",
-                                style: TextStyle(
-                                    fontSize: RequestConstant.Heading_Font_SIZE,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                               Expanded(
+                                 child: Text(
+                                 widget.heading,
+                                  style: TextStyle(
+                                      fontSize: RequestConstant.Heading_Font_SIZE,
+                                      fontWeight: FontWeight.bold),
+                                                               ),
+                               ),
                               TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
@@ -852,6 +855,11 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                                 textAlign: TextAlign.center,
                                    controller: consumption_controller.Itemlist_stockqtyControllers[index],
                                    keyboardType: TextInputType.number,
+                                   inputFormatters: [
+                                     FilteringTextInputFormatter.allow(
+                                       RegExp(r'^\d+\.?\d{0,2}'),
+                                     ),
+                                   ],
                                    decoration: InputDecoration(
                                      labelText: 'Stock Quantity',
                                      labelStyle: const TextStyle(color: Colors.black),

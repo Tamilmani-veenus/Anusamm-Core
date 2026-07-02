@@ -2113,6 +2113,173 @@ class _PendingList_PoPopupState extends State<PendingList_PoPopup> {
 }
 
 
+///-------------PO Supplier Trader Agencies------------
+class PendingList_PoSupTradAgenPopup extends StatefulWidget {
+  const PendingList_PoSupTradAgenPopup({Key? key, required this.list,required this.ReqNo, required this.ProjectName,required this.heading }) : super(key: key);
+  final List list;
+  final String ReqNo;
+  final String ProjectName;
+  final String heading;
+
+  @override
+  State<PendingList_PoSupTradAgenPopup> createState() => _PendingList_PoSupTradAgenPopupState();
+}
+
+class _PendingList_PoSupTradAgenPopupState extends State<PendingList_PoSupTradAgenPopup> {
+
+  PendingListController pendingListController = Get.put(PendingListController());
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+          backgroundColor: Setmybackground,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.heading,
+                        style: TextStyle(
+                            fontSize: RequestConstant.Heading_Font_SIZE,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Back",
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ))
+                    ],
+                  ),
+                ),
+
+                Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(widget.ProjectName,
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                          margin: EdgeInsets.only( bottom: 10),
+                          child: Text(widget.ReqNo.toString(),
+                            style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,
+                            ),)),
+                    ),
+                  ],
+                ),
+                Divider(),
+                ListDetails(context),
+
+              ],
+            ),
+          )),
+    );
+  }
+
+  Widget ListDetails(BuildContext context){
+    return Container(
+      height: BaseUtitiles.getheightofPercentage(context, 90),
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 15)),
+        itemCount: pendingListController.onclickPendingListDet.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.only(left: 3, right: 3),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Container(
+                margin: EdgeInsets.only(left: 10, right: 5, bottom: 10, top:5 ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("Material" + ":   ",
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                        ),
+                        Expanded(
+                            flex: 2,
+                            child: Text( pendingListController.onclickPendingListDet[index].MaterialName.toString(),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text("Qty:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                            flex: 4,
+                            child: Text( pendingListController.onclickPendingListDet[index].Qty.toString())),
+                        Expanded(
+                            flex: 2,
+                            child: Text("Scale" + ":  ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                        Expanded(
+                            flex: 4,
+                            child: Text( pendingListController.onclickPendingListDet[index].ScaleName.toString())),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text("Po Qty" + ":  ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                            flex: 4,
+                            child: Text( pendingListController.onclickPendingListDet[index].POQty.toString())),
+                        Expanded(
+                          flex: 2,
+                          child: Text("Bal Qty" + ":  ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                            flex: 4,
+                            child: Text( pendingListController.onclickPendingListDet[index].BalQty.toString())),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },),
+    );
+  }
+}
+
+
 ///-------------PendingPo Approval------------
 
 class PendingPo_Approval_Popup extends StatefulWidget {
@@ -4568,9 +4735,10 @@ class _StoreTeansferPendingState extends State<StoreTeansferPending> {
 
 //-------Inward Pending---------------
 class PendingList_InwardPopup extends StatefulWidget {
-  const PendingList_InwardPopup({Key? key, required this.list,required this.ReqNo}) : super(key: key);
+  const PendingList_InwardPopup({Key? key, required this.list,required this.ReqNo,required this.heading}) : super(key: key);
   final List list;
   final String ReqNo;
+  final String heading;
 
   @override
   State<PendingList_InwardPopup> createState() => _PendingList_InwardPopupState();
@@ -4596,7 +4764,7 @@ class _PendingList_InwardPopupState extends State<PendingList_InwardPopup> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Inward Pending",
+                        widget.heading,
                         style: TextStyle(
                             fontSize: RequestConstant.Heading_Font_SIZE,
                             fontWeight: FontWeight.bold),
@@ -4661,7 +4829,7 @@ class _PendingList_InwardPopupState extends State<PendingList_InwardPopup> {
                               )),
                           Expanded(
                               flex: 4,
-                              child: Text( pendingListController.onclickPendingListDet[index].unitName.toString())),
+                              child: Text( widget.heading=="INWARD PENDING - WO"?pendingListController.onclickPendingListDet[index].ScaleName.toString():pendingListController.onclickPendingListDet[index].unitName.toString())),
 
                           Expanded(
                               flex: 2,
@@ -4680,7 +4848,7 @@ class _PendingList_InwardPopupState extends State<PendingList_InwardPopup> {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Text("Po Qty" + ":  ",
+                            child: Text(widget.heading=="INWARD PENDING - WO"?"WO Qty:  ":"Po Qty:  ",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),

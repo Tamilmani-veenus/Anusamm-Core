@@ -18,7 +18,8 @@ import 'bill_generation_itemlist.dart';
 
 
 class Bill_Generation_EntryScreen extends StatefulWidget {
-  const Bill_Generation_EntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Bill_Generation_EntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Bill_Generation_EntryScreen> createState() =>
@@ -147,11 +148,13 @@ class _Subcont_Nmr_EntryScreenState_Site
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Direct - Bill",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {

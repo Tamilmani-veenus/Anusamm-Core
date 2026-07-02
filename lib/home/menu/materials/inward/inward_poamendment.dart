@@ -83,13 +83,11 @@ class _Inward_PoAmendmentState extends State<Inward_PoAmendment> {
                 ),
                 onTap: () async {
                   var isCheckboxSelect= inwardPending_Controller.PoAmdList.value.map((value)=>value.isCheck).toList();
-
                   if(isCheckboxSelect.contains(true)){
                     await SubmitAlert(context);
                   }else{
                     BaseUtitiles.showToast("Please select material");
                   }
-
                 },
               ),
             ],
@@ -105,8 +103,8 @@ class _Inward_PoAmendmentState extends State<Inward_PoAmendment> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Po Amendment",
+                       Text(
+                         widget.heading =="INWARD PENDING - WO"?"WO Amendment":"PO Amendment",
                         style: TextStyle(
                             fontSize: RequestConstant.Heading_Font_SIZE,
                             fontWeight: FontWeight.bold),
@@ -344,7 +342,7 @@ class _Inward_PoAmendmentState extends State<Inward_PoAmendment> {
                           if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
                             await punchInController.getNetworkTime();
                             await inwardPending_Controller.PoAmendment_ApprovalButtonsave(
-                                context, widget.purOrdMasId, widget.projectId, widget.siteId, widget.inwdType);
+                                context, widget.purOrdMasId, widget.projectId, widget.siteId, widget.inwdType, widget.heading);
                             Navigator.pop(context);
                           }
                         },

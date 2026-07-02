@@ -10,7 +10,8 @@ import '../../../../utilities/baseutitiles.dart';
 import 'bill_generation_boq_entry.dart';
 
 class Bill_Generation_Boq_Entrylist extends StatefulWidget {
-  const Bill_Generation_Boq_Entrylist({Key? key}) : super(key: key);
+  final String heading;
+  const Bill_Generation_Boq_Entrylist({Key? key, required this.heading}) : super(key: key);
 
   @override
   State<Bill_Generation_Boq_Entrylist> createState() =>
@@ -50,7 +51,7 @@ class _Bill_Generation_Boq_EntrylistState_Site
             floatingActionButton: FloatingActionButton.extended(
               onPressed: (){
                 billGenerationBoqController.saveButton.value = RequestConstant.SUBMIT;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Bill_Generation_Boq_EntryScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Bill_Generation_Boq_EntryScreen(heading: widget.heading,)));
               },
               label: Text("Add", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,),),
               icon: Icon(Icons.add, color: Colors.white, size: RequestConstant.Heading_Font_SIZE, ),
@@ -65,11 +66,13 @@ class _Bill_Generation_Boq_EntrylistState_Site
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Bill Generation - BOQ",
-                          style: TextStyle(
-                              fontSize: RequestConstant.Heading_Font_SIZE,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.heading,
+                            style: TextStyle(
+                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         TextButton(
                             onPressed: () {
@@ -308,8 +311,7 @@ class _Bill_Generation_Boq_EntrylistState_Site
                     padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
                     physics: BouncingScrollPhysics(),
                     itemCount: billGenerationBoqController.bill_entryList.value.length,
-
-                    itemBuilder: (context, index) {
+                        itemBuilder: (context, index) {
                       return Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
                         child: Card(
@@ -617,7 +619,7 @@ class _Bill_Generation_Boq_EntrylistState_Site
                                                                 billGenerationBoqController.bill_editListApiDatas.value.clear();
                                                                 FocusScope.of(context).unfocus();
                                                                 await billGenerationBoqController.directBillEntryList_EditApi(
-                                                                    billGenerationBoqController.bill_entryList.value[index].id,context,"ReSubmit",true);
+                                                                    billGenerationBoqController.bill_entryList.value[index].id,widget.heading,context,"ReSubmit",true);
 
                                                               }),
 

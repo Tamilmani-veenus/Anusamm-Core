@@ -22,7 +22,8 @@ import '../../../../commonpopup/accountnameadd_alert.dart';
 import '../../../../commonpopup/vouchertype_alert.dart';
 
 class Staff_Voucher_EntryScreen extends StatefulWidget {
-  const Staff_Voucher_EntryScreen({Key? key}) : super(key: key);
+  final String heading;
+  const Staff_Voucher_EntryScreen({Key? key,required this.heading}) : super(key: key);
 
   @override
   State<Staff_Voucher_EntryScreen> createState() =>
@@ -146,11 +147,13 @@ class _Subcont_Nmr_EntryScreenState_Site
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Staff Voucher",
-                            style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
-                                fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              widget.heading,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Heading_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           TextButton(
                               onPressed: () {
@@ -959,6 +962,11 @@ class _Subcont_Nmr_EntryScreenState_Site
                                       child: TextFormField(
                                           readOnly: true,
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d+\.?\d{0,2}'),
+                                            ),
+                                          ],
                                           controller: staffVoucher_Controller
                                               .ChequeDate,
                                           cursorColor: Colors.black,

@@ -341,7 +341,7 @@ class MaterialTransferReqController extends GetxController {
     return getTransfferbetDetList.value;
   }
 
-  Future matTransReqEdit(int transId, BuildContext context) async {
+  Future matTransReqEdit(int transId,String MenuName, BuildContext context) async {
     final value = await MaterialTransReqProvider.matTransReqeditAPI(transId);
     if (value != null) {
       if (value.success == true) {
@@ -351,7 +351,7 @@ class MaterialTransferReqController extends GetxController {
           matTransReqeditSaveDetTable();
           getItemlistTablesDatas();
           return Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => MaterialTransReqEntry()));
+              MaterialPageRoute(builder: (context) => MaterialTransReqEntry(heading: MenuName,)));
         } else {
           BaseUtitiles.showToast("No Data Found");
         }

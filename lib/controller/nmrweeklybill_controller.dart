@@ -730,7 +730,7 @@ class NMRWklyController extends GetxController {
     updateNetPay();
   }
 
-  Future NmrEntryList_EditApi(int workid, BuildContext context,from, bool checkSts) async {
+  Future NmrEntryList_EditApi(int workid,String MenuName, BuildContext context,from, bool checkSts) async {
     EditListSaveDatas.value=[];
     NmritemList.value=[];
     var response = await NMRWklyprovider.nmr_entryList_editAPI(workid,checkSts);
@@ -751,7 +751,7 @@ class NMRWklyController extends GetxController {
             return Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Subcont_Nmr_EntryScreen_Site()),
+                  builder: (context) => Subcont_Nmr_EntryScreen_Site(heading: MenuName,)),
             );
           }
         else {
