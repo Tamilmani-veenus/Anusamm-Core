@@ -460,124 +460,127 @@ class _Boq_Revised_EntryListState extends State<Boq_Revised_EntryList> {
                                                               25.0)),
                                                 ),
                                                 builder: (context) {
-                                                  return Container(
-                                                    margin: const EdgeInsets.only(
-                                                      left: 15,
-                                                    ),
-                                                    height: BaseUtitiles
-                                                        .getheightofPercentage(
-                                                            context, 25),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: const EdgeInsets.only(right: 10),
-                                                              child: Text(
-                                                                boq_revised_controller.Boq_entryList.value[index].reviseNo.toString(),
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: Theme.of(context).primaryColor),
+                                                  return SafeArea(
+                                                    top: false,
+                                                    child: Container(
+                                                      margin: const EdgeInsets.only(
+                                                        left: 15,
+                                                      ),
+                                                      height: BaseUtitiles
+                                                          .getheightofPercentage(
+                                                              context, 25),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                margin: const EdgeInsets.only(right: 10),
+                                                                child: Text(
+                                                                  boq_revised_controller.Boq_entryList.value[index].reviseNo.toString(),
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: Theme.of(context).primaryColor),
+                                                                ),
                                                               ),
-                                                            ),
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(context);
-                                                                },
-                                                                icon: ConstIcons.cancle)
-                                                          ],
-                                                        ),
-                                                        Visibility(
-                                                          visible: commanController.editMode.value == 1 ? true : false,
-                                                          child: InkWell(
-                                                              child: const Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors
-                                                                        .lightGreen,
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsets.all(8),
-                                                                      child: Icon(
-                                                                        Icons.edit,
-                                                                        color: Colors.white,
+                                                              IconButton(
+                                                                  onPressed: () {
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  icon: ConstIcons.cancle)
+                                                            ],
+                                                          ),
+                                                          Visibility(
+                                                            visible: commanController.editMode.value == 1 ? true : false,
+                                                            child: InkWell(
+                                                                child: const Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors
+                                                                          .lightGreen,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsets.all(8),
+                                                                        child: Icon(
+                                                                          Icons.edit,
+                                                                          color: Colors.white,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      width: 5),
-                                                                  Text(
-                                                                    "Edit",
-                                                                    style: TextStyle(
-                                                                        color: Colors.grey,
-                                                                        fontSize: 15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: () {
-                                                                boq_revised_controller.delete_BoqRevised_itemlist_Table();
-                                                                boq_revised_controller.Boqitem_itemview_GetDbList.value=[];
-                                                                boq_revised_controller.BoqrevisedList_EditApi(
-                                                                    boq_revised_controller.Boq_entryList.value[index].id,
-                                                                    widget.heading,context, true);
-                                                                FocusScope.of(context).unfocus();
-                                                              }),
-                                                        ),
-                                                        Container(
-                                                            margin: const
-                                                                EdgeInsets.only(
-                                                                    right: 20),
-                                                            child: const Divider(
-                                                                thickness: 1)),
-                                                        Visibility(
-                                                          visible: commanController.deleteMode.value == 1 ? true : false,
-                                                          child: InkWell(
-                                                              child: const Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsets
-                                                                              .all(8),
-                                                                      child: Icon(
-                                                                        Icons
-                                                                            .delete_forever,
-                                                                        color: Colors
-                                                                            .white,
+                                                                    SizedBox(
+                                                                        width: 5),
+                                                                    Text(
+                                                                      "Edit",
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          fontSize: 15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: () {
+                                                                  boq_revised_controller.delete_BoqRevised_itemlist_Table();
+                                                                  boq_revised_controller.Boqitem_itemview_GetDbList.value=[];
+                                                                  boq_revised_controller.BoqrevisedList_EditApi(
+                                                                      boq_revised_controller.Boq_entryList.value[index].id,
+                                                                      widget.heading,context, true);
+                                                                  FocusScope.of(context).unfocus();
+                                                                }),
+                                                          ),
+                                                          Container(
+                                                              margin: const
+                                                                  EdgeInsets.only(
+                                                                      right: 20),
+                                                              child: const Divider(
+                                                                  thickness: 1)),
+                                                          Visibility(
+                                                            visible: commanController.deleteMode.value == 1 ? true : false,
+                                                            child: InkWell(
+                                                                child: const Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors
+                                                                          .red,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsets
+                                                                                .all(8),
+                                                                        child: Icon(
+                                                                          Icons
+                                                                              .delete_forever,
+                                                                          color: Colors
+                                                                              .white,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      width: 5),
-                                                                  Text(
-                                                                    "Delete",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        fontSize:
-                                                                            15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: () async {
-                                                                Navigator.pop(
-                                                                    context);
-                                                                boq_revised_controller
-                                                                    .DeleteAlert(
-                                                                        context,
-                                                                        index);
-                                                              }),
-                                                        ),
-                                                        const SizedBox(height: 20)
-                                                      ],
+                                                                    SizedBox(
+                                                                        width: 5),
+                                                                    Text(
+                                                                      "Delete",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .grey,
+                                                                          fontSize:
+                                                                              15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  boq_revised_controller
+                                                                      .DeleteAlert(
+                                                                          context,
+                                                                          index);
+                                                                }),
+                                                          ),
+                                                          const SizedBox(height: 20)
+                                                        ],
+                                                      ),
                                                     ),
                                                   );
                                                 });

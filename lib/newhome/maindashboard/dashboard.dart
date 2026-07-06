@@ -374,17 +374,18 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             width: double.infinity,
                             height: 110,
                             decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(24),
                               ),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  purple,
-                                  blue,
-                                ],
-                              ),
+                              // gradient: LinearGradient(
+                              //   begin: Alignment.topLeft,
+                              //   end: Alignment.bottomRight,
+                              //   colors: [
+                              //     purple,
+                              //     blue,
+                              //   ],
+                              // ),
                             ),
                             child: InkWell(
                               child: Column(
@@ -446,17 +447,19 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             width: double.infinity,
                             height: 110,
                             decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .primaryColor,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(24),
                               ),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  purple,
-                                  blue,
-                                ],
-                              ),
+                              // gradient: LinearGradient(
+                              //   begin: Alignment.topLeft,
+                              //   end: Alignment.bottomRight,
+                              //   colors: [
+                              //     purple,
+                              //     blue,
+                              //   ],
+                              // ),
                             ),
                             child: InkWell(
                               child: Column(
@@ -539,14 +542,14 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                purple,
-                                blue,
-                              ],
-                            ),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //   colors: [
+                            //     purple,
+                            //     blue,
+                            //   ],
+                            // ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -602,14 +605,14 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                purple,
-                                blue,
-                              ],
-                            ),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //   colors: [
+                            //     purple,
+                            //     blue,
+                            //   ],
+                            // ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -677,14 +680,14 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                purple,
-                                blue,
-                              ],
-                            ),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //   colors: [
+                            //     purple,
+                            //     blue,
+                            //   ],
+                            // ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -762,14 +765,14 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                purple,
-                                blue,
-                              ],
-                            ),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //   colors: [
+                            //     purple,
+                            //     blue,
+                            //   ],
+                            // ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -845,14 +848,14 @@ class _Home_DashboardState extends State<Home_Dashboard> {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                purple,
-                                blue,
-                              ],
-                            ),
+                            // gradient: LinearGradient(
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //   colors: [
+                            //     purple,
+                            //     blue,
+                            //   ],
+                            // ),
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,

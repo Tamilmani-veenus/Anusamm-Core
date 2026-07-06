@@ -546,122 +546,125 @@ class _Bill_Generation_Boq_EntrylistState_Site
                                                         top: Radius.circular(25.0)),
                                                   ),
                                                   builder: (context) {
-                                                    return Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 15,
-                                                      ),
-                                                      height: BaseUtitiles
-                                                          .getheightofPercentage(
-                                                          context, 25),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(
-                                                                    right: 10),
-                                                                child: Text(
-                                                                  billGenerationBoqController.bill_entryList.value[index].workNo.toString(),
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      color: Theme.of(
-                                                                          context)
-                                                                          .primaryColor),
+                                                    return SafeArea(
+                                                      top: false,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                          left: 15,
+                                                        ),
+                                                        height: BaseUtitiles
+                                                            .getheightofPercentage(
+                                                            context, 25),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                              children: [
+                                                                Container(
+                                                                  margin: EdgeInsets.only(
+                                                                      right: 10),
+                                                                  child: Text(
+                                                                    billGenerationBoqController.bill_entryList.value[index].workNo.toString(),
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        color: Theme.of(
+                                                                            context)
+                                                                            .primaryColor),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              IconButton(
-                                                                  onPressed: () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  icon: ConstIcons.cancle)
-                                                            ],
-                                                          ),
+                                                                IconButton(
+                                                                    onPressed: () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    icon: ConstIcons.cancle)
+                                                              ],
+                                                            ),
 
-                                                          InkWell(
-                                                              child: Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors
-                                                                        .lightGreen,
-                                                                    child: Padding(
-                                                                      padding:
-                                                                      const EdgeInsets
-                                                                          .all(8),
-                                                                      child: Icon(
-                                                                        Icons.edit,
-                                                                        color: Colors
-                                                                            .white,
+                                                            InkWell(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors
+                                                                          .lightGreen,
+                                                                      child: Padding(
+                                                                        padding:
+                                                                        const EdgeInsets
+                                                                            .all(8),
+                                                                        child: Icon(
+                                                                          Icons.edit,
+                                                                          color: Colors
+                                                                              .white,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(width: 5),
-                                                                  Text(
-                                                                    "Edit",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                        Colors.grey,
-                                                                        fontSize: 15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: () async {
-                                                                billGenerationBoqController.billgen_itemlistTable_Delete();
-                                                                billGenerationBoqController.ItemGetTableListdata.clear();
-                                                                billGenerationBoqController.bill_editListApiDatas.value.clear();
-                                                                FocusScope.of(context).unfocus();
-                                                                await billGenerationBoqController.directBillEntryList_EditApi(
-                                                                    billGenerationBoqController.bill_entryList.value[index].id,widget.heading,context,"ReSubmit",true);
+                                                                    SizedBox(width: 5),
+                                                                    Text(
+                                                                      "Edit",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.grey,
+                                                                          fontSize: 15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: () async {
+                                                                  billGenerationBoqController.billgen_itemlistTable_Delete();
+                                                                  billGenerationBoqController.ItemGetTableListdata.clear();
+                                                                  billGenerationBoqController.bill_editListApiDatas.value.clear();
+                                                                  FocusScope.of(context).unfocus();
+                                                                  await billGenerationBoqController.directBillEntryList_EditApi(
+                                                                      billGenerationBoqController.bill_entryList.value[index].id,widget.heading,context,"ReSubmit",true);
 
-                                                              }),
+                                                                }),
 
-                                                          Container(
-                                                              margin: EdgeInsets.only(right: 20),
-                                                              child: Divider(thickness: 1)),
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 20),
+                                                                child: Divider(thickness: 1)),
 
-                                                          InkWell(
-                                                              child: Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors.red,
-                                                                    child: Padding(
-                                                                      padding:
-                                                                      const EdgeInsets
-                                                                          .all(8),
-                                                                      child: Icon(
-                                                                        Icons
-                                                                            .delete_forever,
-                                                                        color: Colors
-                                                                            .white,
+                                                            InkWell(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors.red,
+                                                                      child: Padding(
+                                                                        padding:
+                                                                        const EdgeInsets
+                                                                            .all(8),
+                                                                        child: Icon(
+                                                                          Icons
+                                                                              .delete_forever,
+                                                                          color: Colors
+                                                                              .white,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(width: 5),
-                                                                  Text(
-                                                                    "Delete",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                        Colors.grey,
-                                                                        fontSize: 15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: () async {
-                                                                Navigator.pop(context);
-                                                                setState(() {
-                                                                  billGenerationBoqController.DeleteAlert(context,index,true);
-                                                                });
-                                                              }),
-                                                          SizedBox(height: 20)
-                                                        ],
+                                                                    SizedBox(width: 5),
+                                                                    Text(
+                                                                      "Delete",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.grey,
+                                                                          fontSize: 15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: () async {
+                                                                  Navigator.pop(context);
+                                                                  setState(() {
+                                                                    billGenerationBoqController.DeleteAlert(context,index,true);
+                                                                  });
+                                                                }),
+                                                            SizedBox(height: 20)
+                                                          ],
+                                                        ),
                                                       ),
                                                     );
                                                   });

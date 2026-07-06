@@ -98,7 +98,7 @@ class _InwardState extends State<Inward_entry> {
           inward_controller.projectId = element.projectId;
           inward_controller.siteId = element.siteId;
           inward_controller.supId = element.supplierId;
-          inward_controller.InwardRemarksText.text = element.remarks.toString();
+          inward_controller.InwardRemarksText.text = element.remarks == null ? "" : element.remarks.toString();
         });
       }
     });
@@ -846,12 +846,12 @@ class _InwardState extends State<Inward_entry> {
                                     vertical: 8, horizontal: 8),
                                 child: ConstIcons.remarks),
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '\u26A0 ${RequestConstant.VALIDATE}';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                       ),
                     ),

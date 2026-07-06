@@ -622,7 +622,7 @@ class DailyWrkDone_DPR_Controller extends GetxController {
         billStatus:"N",
         refNo: dpr_referenceController.text.isEmpty ? "0" : dpr_referenceController.text,
         totalamt: totalNetAmount.text,
-        remarks: dpr_remarksController.text,
+        remarks: dpr_remarksController.text.isEmpty ? "-" : dpr_remarksController.text,
         createdBy: int.tryParse(loginController.EmpId()),
         createdDate: BaseUtitiles().convertToUtcIso(dpr_dateController.text),
         approveStatus: saveButton.value == RequestConstant.APPROVAL ? "Y" : "N",

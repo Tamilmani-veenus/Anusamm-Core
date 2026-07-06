@@ -509,115 +509,118 @@ class _DailyWork_done_DPR_EntryListState extends State<DailyWork_done_DPR_EntryL
                                                         top: Radius.circular(25.0)),
                                                   ),
                                                   builder: (context) {
-                                                    return Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 15,
-                                                      ),
-                                                      height: BaseUtitiles
-                                                          .getheightofPercentage(
-                                                          context, 25),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: [
-                                                              Container(
-                                                                margin: EdgeInsets.only(right: 10),
-                                                                child: Text(
-                                                                  dailyWrkDone_DPR_Controller.dpr_entryList.value[index].workNo.toString(),
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                      FontWeight.bold,
-                                                                      color: Theme.of(context).primaryColor),
+                                                    return SafeArea(
+                                                      top: false,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                          left: 15,
+                                                        ),
+                                                        height: BaseUtitiles
+                                                            .getheightofPercentage(
+                                                            context, 25),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                              children: [
+                                                                Container(
+                                                                  margin: EdgeInsets.only(right: 10),
+                                                                  child: Text(
+                                                                    dailyWrkDone_DPR_Controller.dpr_entryList.value[index].workNo.toString(),
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                        FontWeight.bold,
+                                                                        color: Theme.of(context).primaryColor),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              IconButton(
-                                                                  onPressed: () {
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  icon: ConstIcons.cancle)
-                                                            ],
-                                                          ),
-                                                          InkWell(
-                                                              child: const Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors.lightGreen,
-                                                                    child: Padding(
-                                                                      padding:
-                                                                      EdgeInsets
-                                                                          .all(8),
-                                                                      child: Icon(
-                                                                        Icons.edit,
-                                                                        color: Colors
-                                                                            .white,
+                                                                IconButton(
+                                                                    onPressed: () {
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    icon: ConstIcons.cancle)
+                                                              ],
+                                                            ),
+                                                            InkWell(
+                                                                child: const Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors.lightGreen,
+                                                                      child: Padding(
+                                                                        padding:
+                                                                        EdgeInsets
+                                                                            .all(8),
+                                                                        child: Icon(
+                                                                          Icons.edit,
+                                                                          color: Colors
+                                                                              .white,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(width: 5),
-                                                                  Text(
-                                                                    "Edit",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                        Colors.grey,
-                                                                        fontSize: 15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: () {
-                                                                dailyWrkDone_DPR_Controller.delete_dpr_itemlist_Table();
-                                                                dailyWrkDone_DPR_Controller.dpr_itemview_DbList.value.clear();
-                                                                dailyWrkDone_DPR_Controller.getDprDetList.value.clear();
-                                                                dailyWrkDone_DPR_Controller.DprEntryList_EditApi(
-                                                                    dailyWrkDone_DPR_Controller.searchentryList.value[index].id,
-                                                                    widget.heading,context,0);
-                                                                FocusScope.of(context).unfocus();
-                                                                Navigator.pop(context);
-                                                              }),
-                                                          Container(
-                                                              margin: EdgeInsets.only(right: 20),
-                                                              child: Divider(thickness: 1)),
-                                                          InkWell(
-                                                              child: const Row(
-                                                                children: [
-                                                                  Card(
-                                                                    color: Colors.red,
-                                                                    child: Padding(
-                                                                      padding:
-                                                                      EdgeInsets
-                                                                          .all(8),
-                                                                      child: Icon(
-                                                                        Icons
-                                                                            .delete_forever,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(width: 5),
-                                                                  Text(
-                                                                    "Delete",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                        Colors.grey,
-                                                                        fontSize: 15),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              onTap: ()  {
-                                                                setState(() {
+                                                                    SizedBox(width: 5),
+                                                                    Text(
+                                                                      "Edit",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.grey,
+                                                                          fontSize: 15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: () {
+                                                                  dailyWrkDone_DPR_Controller.delete_dpr_itemlist_Table();
+                                                                  dailyWrkDone_DPR_Controller.dpr_itemview_DbList.value.clear();
+                                                                  dailyWrkDone_DPR_Controller.getDprDetList.value.clear();
+                                                                  dailyWrkDone_DPR_Controller.DprEntryList_EditApi(
+                                                                      dailyWrkDone_DPR_Controller.searchentryList.value[index].id,
+                                                                      widget.heading,context,0);
+                                                                  FocusScope.of(context).unfocus();
                                                                   Navigator.pop(context);
-                                                                  dailyWrkDone_DPR_Controller.DeleteAlert(context, index);
+                                                                }),
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 20),
+                                                                child: Divider(thickness: 1)),
+                                                            InkWell(
+                                                                child: const Row(
+                                                                  children: [
+                                                                    Card(
+                                                                      color: Colors.red,
+                                                                      child: Padding(
+                                                                        padding:
+                                                                        EdgeInsets
+                                                                            .all(8),
+                                                                        child: Icon(
+                                                                          Icons
+                                                                              .delete_forever,
+                                                                          color: Colors
+                                                                              .white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(width: 5),
+                                                                    Text(
+                                                                      "Delete",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.grey,
+                                                                          fontSize: 15),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                onTap: ()  {
+                                                                  setState(() {
+                                                                    Navigator.pop(context);
+                                                                    dailyWrkDone_DPR_Controller.DeleteAlert(context, index);
 
-                                                                });
-                                                              }),
-                                                          SizedBox(height: 20)
-                                                        ],
+                                                                  });
+                                                                }),
+                                                            SizedBox(height: 20)
+                                                          ],
+                                                        ),
                                                       ),
                                                     );
                                                   });

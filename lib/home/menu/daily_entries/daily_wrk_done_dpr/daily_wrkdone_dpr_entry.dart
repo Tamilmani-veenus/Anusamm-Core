@@ -530,12 +530,12 @@ class _DailyWork_done_DPR_EntryState extends State<DailyWork_done_DPR_Entry> {
                                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                                   child: ConstIcons.remarks),
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return '\u26A0 ${RequestConstant.VALIDATE}';
-                              }
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                            //   }
+                            //   return null;
+                            // },
                           ),
                         ),
                       ),

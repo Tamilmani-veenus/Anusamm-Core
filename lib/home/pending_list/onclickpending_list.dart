@@ -37,6 +37,7 @@ import '../../controller/transfer_acknowledgment_pending_controller.dart';
 import '../../controller/transferbw_site_controller.dart';
 import '../../utilities/apiconstant.dart';
 import '../menu/materials/inward/inward_poamendment.dart';
+import '../punch_in_out/punchin_out_verify_approval.dart';
 
 class OnclickPendingList extends StatefulWidget {
   OnclickPendingList(
@@ -15503,8 +15504,8 @@ class OfficeVoucherApproval extends StatelessWidget {
   }
 }
 
-class PunchInApproval extends StatefulWidget {
-  PunchInApproval(
+class PunchInOutVerification extends StatefulWidget {
+  PunchInOutVerification(
       {Key? key, required this.onclickPendingListData, required this.heading, required this.checkheading})
       : super(key: key);
   List<OnClickListResult> onclickPendingListData;
@@ -15512,10 +15513,10 @@ class PunchInApproval extends StatefulWidget {
   String checkheading;
 
   @override
-  State<PunchInApproval> createState() => _PunchInApprovalState();
+  State<PunchInOutVerification> createState() => _PunchInOutVerificationState();
 }
 
-class _PunchInApprovalState extends State<PunchInApproval> {
+class _PunchInOutVerificationState extends State<PunchInOutVerification> {
   PendingListController pendingListController =
       Get.put(PendingListController());
   TextEditingController editingController = TextEditingController();
@@ -15636,7 +15637,28 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                         itemCount: pendingListController.mainlist.length,
                         itemBuilder: (context, index) {
                           return InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PunchVerifyApprovalScreen(
+                                id: pendingListController.mainlist[index].Id.toString(),
+                                heading: widget.checkheading,
+                                punchNo: pendingListController.mainlist[index].punchNo ?? "-",
+                                staffName: pendingListController.mainlist[index].employeeName ??"-",
+                                inLocation : pendingListController.mainlist[index].punchInLoc ??"-",
+                                inDate: pendingListController.mainlist[index].punchInDate ??"-",
+                                inTime: pendingListController.mainlist[index].inTime ??"-",
+                                outLocation: pendingListController.mainlist[index].punchOutLoc ??"-",
+                                outDate: pendingListController.mainlist[index].punchOutDate ??"-",
+                                outTime: pendingListController.mainlist[index].outTime ??"-",
+                                todayTask: pendingListController.mainlist[index].toDayTask ??"-",
+                                tommTask: pendingListController.mainlist[index].tomorrowTask ??"-",
+                                remarks: pendingListController.mainlist[index].remarks ??"-",
+                                buttonValue: widget.checkheading=="STAFF ONDUTY PUNCH IN & OUT VERIFICATION" || widget.checkheading=="STAFF NON-ALLOTED PUNCH IN & OUT VERIFICATION"?"Verify":"Approve",
+                                inNAPRemarks: pendingListController.mainlist[index].inNAPRemarks ??"-",
+                                outNAPRemarks: pendingListController.mainlist[index].outNAPRemarks ??"-",
+                                onDutyRemarks: pendingListController.mainlist[index].onDutyRemarks ??"-",
+                                type: widget.checkheading=="STAFF ONDUTY PUNCH IN & OUT VERIFICATION" || widget.checkheading=="STAFF ONDUTY PUNCH IN & OUT APPROVAL"?"Onduty":"NonAlloted",
+                              )));
+                            },
                             child: Container(
                               margin: EdgeInsets.only(left: 3, right: 3),
                               child: Card(
@@ -15652,19 +15674,23 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      // Row(
-                                      //   mainAxisAlignment: MainAxisAlignment.end,
-                                      //   children: <Widget>[
-                                      //     Container(
-                                      //       margin: EdgeInsets.only(right: 10),
-                                      //       child: Text(
-                                      //         widget.onclickPendingListData[index].no.toString(),
-                                      //         style: TextStyle(fontWeight: FontWeight.bold),
-                                      //       ),
-                                      //     ),
-                                      //   ],
-                                      // ),
-                                      SizedBox(height: 10),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              pendingListController.mainlist[index].punchNo ??"-",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Container(
@@ -15673,9 +15699,9 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                             child: Text(""),
                                           ),
                                           Expanded(
-                                              flex: 3,
+                                              flex: 4,
                                               child: Text(
-                                                "StaffName",
+                                                "Staff Name",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black,
@@ -15684,23 +15710,14 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                pendingListController
-                                                            .mainlist[index]
-                                                            .staffName
-                                                            .toString() ==
-                                                        "null"
-                                                    ? "-"
-                                                    : pendingListController
-                                                        .mainlist[index]
-                                                        .staffName
-                                                        .toString(),
+                                                pendingListController.mainlist[index].employeeName ?? "-",
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                               )),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Container(
@@ -15709,9 +15726,9 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                             child: Text(""),
                                           ),
                                           Expanded(
-                                              flex: 3,
+                                              flex: 4,
                                               child: Text(
-                                                "Date",
+                                                "PunchIn Date",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black,
@@ -15720,16 +15737,14 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                pendingListController
-                                                    .mainlist[index].date
-                                                    .toString(),
+                                                pendingListController.mainlist[index].punchInDate ?? "-",
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                               )),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Container(
@@ -15738,9 +15753,9 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                             child: Text(""),
                                           ),
                                           Expanded(
-                                              flex: 3,
+                                              flex: 4,
                                               child: Text(
-                                                "PunchIn Time",
+                                                "PunchOut Date",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black,
@@ -15749,20 +15764,15 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                DateFormat("hh:mm a").format(
-                                                    DateFormat("HH:mm:ss").parse(
-                                                        pendingListController
-                                                            .mainlist[index]
-                                                            .Time
-                                                            .toString())),
+                                                pendingListController.mainlist[index].punchOutDate ?? "-",
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                               )),
                                         ],
                                       ),
-                                      SizedBox(height: 10),
-
+                                      SizedBox(height: 5),
+                                      Divider(thickness: 1),
                                       Row(
                                         children: <Widget>[
                                           Container(
@@ -15771,37 +15781,7 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                             child: Text(""),
                                           ),
                                           Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                "Address",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 8,
-                                              child: Text(
-                                                pendingListController
-                                                    .mainlist[index].Address
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                        ],
-                                      ),
-
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Expanded(
-                                              flex: 3,
+                                              flex: 4,
                                               child: Text(
                                                 "Designation",
                                                 style: TextStyle(
@@ -15812,92 +15792,16 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                                           Expanded(
                                               flex: 8,
                                               child: Text(
-                                                pendingListController
-                                                    .mainlist[index].Designation
-                                                    .toString(),
+                                                pendingListController.mainlist[index].designationName.toString().trim(),
                                                 style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Theme.of(context).primaryColor,
+                                                    fontWeight: FontWeight.bold
                                                 ),
                                               )),
                                         ],
                                       ),
-                                      Divider(thickness: 1),
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 5, left: 10),
-                                            child: Text(""),
-                                          ),
-                                          Text(
-                                            "Remarks           ",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Expanded(
-                                              flex: 7,
-                                              child: Text(
-                                                pendingListController
-                                                    .mainlist[index].Remarks
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Checkbox(
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  5.0))),
-                                              side: MaterialStateBorderSide
-                                                  .resolveWith(
-                                                (states) => BorderSide(
-                                                  width: 1.0,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                              checkColor: Colors.white,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              // Rounded Checkbox
-                                              value: _isChecked[index],
-                                              onChanged: (val) {
-                                                setState(
-                                                  () {
-                                                    if (val == true) {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PunchInAppListvalue
-                                                          .value
-                                                          .add(
-                                                              pendingListController
-                                                                      .mainlist[
-                                                                  index]);
-                                                    } else {
-                                                      _isChecked[index] = val!;
-                                                      pendingListController
-                                                          .add_PunchInAppListvalue
-                                                          .value
-                                                          .remove(
-                                                              pendingListController
-                                                                      .mainlist[
-                                                                  index]);
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(width: 25),
-                                        ],
-                                      ),
+                                      SizedBox(height: 5),
+
                                     ],
                                   ),
                                 ),
@@ -15905,42 +15809,6 @@ class _PunchInApprovalState extends State<PunchInApproval> {
                             ),
                           );
                         }),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 20, right: 20),
-                          width:
-                              BaseUtitiles.getWidthtofPercentage(context, 20),
-                          height:
-                              BaseUtitiles.getheightofPercentage(context, 4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 3, right: 3),
-                            child: Text(
-                              RequestConstant.APPROVAL,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: RequestConstant.Lable_Font_SIZE,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        onTap: () async {
-                          pendingListController.getPunchinAprovalDetList.value =
-                              [];
-                          await pendingListController.punchInAproval_buttonApi(
-                              context, widget.checkheading.toString());
-                          await pendingListController.getPendingList();
-                        },
-                      ),
-                    ],
                   ),
                   SizedBox(height: 20)
                 ],

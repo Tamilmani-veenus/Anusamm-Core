@@ -1585,21 +1585,16 @@ class BaseUtitiles {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
       list.value.forEach((item) {
-        if (item.no.toString().toLowerCase().contains(value) ||
-            item.no.toString().toUpperCase().contains(value) ||
-            item.date.toString().toLowerCase().contains(value) ||
-            item.date.toString().toUpperCase().contains(value) ||
-            item.Address.toString().toLowerCase().contains(value) ||
-            item.Address.toString().toUpperCase().contains(value) ||
-            item.Time.toString().toLowerCase().contains(value) ||
-            item.Time.toString().toUpperCase().contains(value) ||
-            item.Designation.toString().toLowerCase().contains(value) ||
-            item.Designation.toString().toUpperCase().contains(value) ||
-            item.Remarks.toString().toLowerCase().contains(value) ||
-            item.Remarks.toString().toUpperCase().contains(value) ||
-            item.StaffName.toString().toLowerCase().contains(value)||
-            item.StaffName.toString().toUpperCase().contains(value)
-
+        if (item.punchNo.toString().toLowerCase().contains(value) ||
+            item.punchNo.toString().toUpperCase().contains(value) ||
+            item.punchInDate.toString().toLowerCase().contains(value) ||
+            item.punchInDate.toString().toUpperCase().contains(value) ||
+            item.punchOutDate.toString().toLowerCase().contains(value) ||
+            item.punchOutDate.toString().toUpperCase().contains(value) ||
+            item.designationName.toString().toLowerCase().contains(value) ||
+            item.designationName.toString().toUpperCase().contains(value) ||
+            item.employeeName.toString().toLowerCase().contains(value) ||
+            item.employeeName.toString().toUpperCase().contains(value)
         )
         {
           dummyListData.value.add(item);

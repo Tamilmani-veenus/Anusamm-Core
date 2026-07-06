@@ -94,7 +94,7 @@ class _PendingList_ScreenState extends State<PendingList_Screen> {
                                   Container(
                                     width: BaseUtitiles.getWidthtofPercentage(context, 70),
                                     margin: EdgeInsets.only(left: 10),
-                                    child: Text(pendingListController.pendingList_datas.value[index].entrytype!.toString()),
+                                    child: Text(pendingListController.pendingList_datas.value[index].entrytype!.toString(),),
                                   ),
 
                                   Container(

@@ -524,159 +524,162 @@ class _SiteVoucher_EntryListNewState extends State<SiteVoucher_EntryListNew> {
                                                     top: Radius.circular(
                                                         25.0)),),
                                               builder: (context) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    left: 15,),
-                                                  height: BaseUtitiles
-                                                      .getheightofPercentage(
-                                                      context, 25),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment
-                                                            .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            margin: EdgeInsets
-                                                                .only(
-                                                                right: 10),
-                                                            child: Text(
-                                                              siteVoucher_Controller
-                                                                  .SiteVocEtyList
-                                                                  .value[index]
-                                                                  .siteVoucherNo
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight
-                                                                      .bold,
-                                                                  color: Theme
-                                                                      .of(
-                                                                      context)
-                                                                      .primaryColor),
+                                                return SafeArea(
+                                                  top: false,
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                      left: 15,),
+                                                    height: BaseUtitiles
+                                                        .getheightofPercentage(
+                                                        context, 25),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment
+                                                          .spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                  right: 10),
+                                                              child: Text(
+                                                                siteVoucher_Controller
+                                                                    .SiteVocEtyList
+                                                                    .value[index]
+                                                                    .siteVoucherNo
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight
+                                                                        .bold,
+                                                                    color: Theme
+                                                                        .of(
+                                                                        context)
+                                                                        .primaryColor),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          IconButton(
-                                                              onPressed: () {
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                icon: ConstIcons
+                                                                    .cancle
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Visibility(
+                                                          visible: commanController
+                                                              .editMode.value == 1
+                                                              ? true
+                                                              : false,
+                                                          child: InkWell(
+                                                              child: Row(
+                                                                children: [
+                                                                  Card(
+                                                                    color: Colors
+                                                                        .lightGreen,
+                                                                    child: Padding(
+                                                                      padding:
+                                                                      const EdgeInsets
+                                                                          .all(8),
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .edit,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  Text(
+                                                                    "Edit",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        fontSize:
+                                                                        15),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              onTap: () async {
+                                                                siteVoucher_Controller
+                                                                    .Sitevoucher_itemview_GetDbList
+                                                                    .value
+                                                                    .clear();
+                                                                FocusScope.of(
+                                                                    context)
+                                                                    .unfocus();
+                                                                siteVoucher_Controller
+                                                                    .Sitevoucher_EditListApiValue
+                                                                    .clear();
+                                                                siteVoucher_Controller
+                                                                    .getSiteDetList
+                                                                    .value
+                                                                    .clear();
+                                                                await siteVoucher_Controller
+                                                                    .SiteVoucher_List_EditApi(
+                                                                    siteVoucher_Controller
+                                                                          .SiteVocEtyList
+                                                                        .value[index]
+                                                                        .id,
+                                                                    widget.heading,
+                                                                    context,"Resubmit");
+                                                              }),
+                                                        ),
+                                                        Container(
+                                                            margin: EdgeInsets
+                                                                .only(right: 20),
+                                                            child: Divider(
+                                                                thickness: 1)),
+                                                        Visibility(
+                                                          visible: commanController
+                                                              .deleteMode.value ==
+                                                              1 ? true : false,
+                                                          child: InkWell(
+                                                              child: Row(
+                                                                children: [
+                                                                  Card(
+                                                                    color:
+                                                                    Colors.red,
+                                                                    child: Padding(
+                                                                      padding:
+                                                                      const EdgeInsets
+                                                                          .all(8),
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .delete_forever,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  Text(
+                                                                    "Delete",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        fontSize:
+                                                                        15),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              onTap: () async {
                                                                 Navigator.pop(
                                                                     context);
-                                                              },
-                                                              icon: ConstIcons
-                                                                  .cancle
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Visibility(
-                                                        visible: commanController
-                                                            .editMode.value == 1
-                                                            ? true
-                                                            : false,
-                                                        child: InkWell(
-                                                            child: Row(
-                                                              children: [
-                                                                Card(
-                                                                  color: Colors
-                                                                      .lightGreen,
-                                                                  child: Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .all(8),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .edit,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    width: 5),
-                                                                Text(
-                                                                  "Edit",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                      15),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            onTap: () async {
-                                                              siteVoucher_Controller
-                                                                  .Sitevoucher_itemview_GetDbList
-                                                                  .value
-                                                                  .clear();
-                                                              FocusScope.of(
-                                                                  context)
-                                                                  .unfocus();
-                                                              siteVoucher_Controller
-                                                                  .Sitevoucher_EditListApiValue
-                                                                  .clear();
-                                                              siteVoucher_Controller
-                                                                  .getSiteDetList
-                                                                  .value
-                                                                  .clear();
-                                                              await siteVoucher_Controller
-                                                                  .SiteVoucher_List_EditApi(
-                                                                  siteVoucher_Controller
-                                                                        .SiteVocEtyList
-                                                                      .value[index]
-                                                                      .id,
-                                                                  widget.heading,
-                                                                  context,"Resubmit");
-                                                            }),
-                                                      ),
-                                                      Container(
-                                                          margin: EdgeInsets
-                                                              .only(right: 20),
-                                                          child: Divider(
-                                                              thickness: 1)),
-                                                      Visibility(
-                                                        visible: commanController
-                                                            .deleteMode.value ==
-                                                            1 ? true : false,
-                                                        child: InkWell(
-                                                            child: Row(
-                                                              children: [
-                                                                Card(
-                                                                  color:
-                                                                  Colors.red,
-                                                                  child: Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .all(8),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .delete_forever,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    width: 5),
-                                                                Text(
-                                                                  "Delete",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                      15),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            onTap: () async {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              siteVoucher_Controller
-                                                                  .DeleteAlert(
-                                                                  context,
-                                                                  index);
-                                                            }),
-                                                      ),
-                                                      SizedBox(height: 20)
-                                                    ],
+                                                                siteVoucher_Controller
+                                                                    .DeleteAlert(
+                                                                    context,
+                                                                    index);
+                                                              }),
+                                                        ),
+                                                        SizedBox(height: 20)
+                                                      ],
+                                                    ),
                                                   ),
                                                 );
                                               });

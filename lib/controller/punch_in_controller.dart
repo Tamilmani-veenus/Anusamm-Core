@@ -166,7 +166,7 @@ class PunchInController extends GetxController with StateMixin<HomeState> {
           OnPinOutAddress: punchAddress.value,
           OnPinOutLatitude: punchLat.value,
           OnPinOutLongitude: punchLon.value,
-            OnDutyRemarks: allotedStatus == "OD" ? punchOutRemarks.text : "-"
+          OnDutyRemarks: allotedStatus == "OD" ? punchOutRemarks.text : "-"
     ),
         File(punchOutImageFile.value!.path),
         context);

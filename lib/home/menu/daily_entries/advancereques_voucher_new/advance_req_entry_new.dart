@@ -94,7 +94,6 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
               element.advanceReqVoucherAmount.toString();
         });
       }
-
     });
   }
 
@@ -736,12 +735,12 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
                                       vertical: 8, horizontal: 8),
                                   child: ConstIcons.remarks),
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return '\u26A0 ${RequestConstant.VALIDATE}';
-                              }
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                            //   }
+                            //   return null;
+                            // },
                           ),
                         ),
                       ),
