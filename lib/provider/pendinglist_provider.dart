@@ -211,6 +211,18 @@ class PendingListProvider {
       else if (formName == "COMPANY LABOUR ATTENDANCE APPROVAL PENDING") {
         response = await ApiManager.getAPICall(ApiConstant.GETCOMPANYNMRAPPROLIST);
       }
+      else if (formName == "STAFF ONDUTY PUNCH IN & OUT VERIFICATION") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_ONDUTY_PUNCHINOUT_VERIFILIST);
+      }
+      else if (formName == "STAFF ONDUTY PUNCH IN & OUT APPROVAL") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_ONDUTY_PUNCHINOUT_APPRLIST);
+      }
+      else if (formName == "STAFF NON-ALLOTED PUNCH IN & OUT VERIFICATION") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_NONALLOT_PUNCHINOUT_VERIFILIST);
+      }
+      else if (formName == "STAFF NON-ALLOTED PUNCH IN & OUT APPROVAL") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_NONALLOT_PUNCHINOUT_APPRLIST);
+      }
       else if (formName == "PENDING PO [AGENCY]" || formName == "PENDING PO [TRADER]" || formName == "PENDING PO [SUPPLIER]") {
         String supplierCategory = formName == "PENDING PO [SUPPLIER]"
             ? "S"
@@ -598,20 +610,13 @@ class PendingListProvider {
     }
   }
 
-  static Future PunchInAprovalAPI(body, context) async {
-    var ratingRes = null;
-    await ApiManager.putUpdateAPIButton(ApiConstant.PUT_POAPPROVAL_API, body)
-        .then((value) {
-      var response ;
-      // = dprItemscreenSaveResponseFromJson(value);
-      if (response.RetString != null) {
-        ratingRes = response.RetString;
-        BaseUtitiles.showToast(ratingRes);
-        return Navigator.pop(context);
-      }
-    }, onError: (error) {
-      print(error);
-      BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG);
-    });
+  static Future PunchInAprovalAPI(id, status) async {
+    try {
+      final response = await ApiManager.postCall(ApiConstant.PUNCH_IN_VERIFY_APPROVE + "id=$id&IsVerification=$status");
+      return jsonDecode(response);
+    } catch (error) {
+      print("Error == $error");
+      return null;
+    }
   }
 }

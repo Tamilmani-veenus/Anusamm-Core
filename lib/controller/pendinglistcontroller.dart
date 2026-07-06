@@ -164,22 +164,19 @@ class PendingListController extends GetxController {
     return getPoAprovalDetList.value;
   }
 
-
-
-
-  Future punchInAproval_buttonApi(BuildContext context, String Urlname) async {
-    String body = punchInapprovalApiResmodelToJson(PunchInapprovalApiResmodel(
-      urlName: Urlname.toString(),
-      userId: loginController.EmpId(),
-      deviceName: BaseUtitiles.deviceName,
-      approvalDet: getPunchinAprovalDetList.value.length == 0
-          ? getPunchInApprovalDet()
-          : getPunchinAprovalDetList.value,
-    ));
-    if (add_PunchInAppListvalue.isNotEmpty) {
-      await PendingListProvider.PunchInAprovalAPI(body, context);
+  Future punchInVerifyApprovalApi(id,status,context) async {
+    var response = await PendingListProvider.PunchInAprovalAPI(id,status);
+    if (response != null) {
+      if (response["success"] == true) {
+        await getPendingList();
+        BaseUtitiles.popMultiple(context, count: 4);
+      } else {
+        BaseUtitiles.popMultiple(context, count: 4);
+        BaseUtitiles.showToast(response["message"] ?? 'Something went wrong..');
+      }
     } else {
-      BaseUtitiles.showToast("Please select a list");
+      BaseUtitiles.popMultiple(context, count: 4);
+      BaseUtitiles.showToast("Something went wrong..");
     }
   }
 
@@ -1264,10 +1261,10 @@ class PendingListController extends GetxController {
                   onclickPendingListData: onclickPendingListData,
                   heading: entryTypeName!,checkheading: name)),
             )
-                : name == "STAFF ONDUTY PUNCHIN APPROVAL"
+                : name == "STAFF ONDUTY PUNCH IN & OUT VERIFICATION" || name =="STAFF ONDUTY PUNCH IN & OUT APPROVAL" || name =="STAFF NON-ALLOTED PUNCH IN & OUT VERIFICATION"|| name=="STAFF NON-ALLOTED PUNCH IN & OUT APPROVAL"
                 ? Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PunchInApproval(
+              MaterialPageRoute(builder: (context) => PunchInOutVerification(
                   onclickPendingListData: onclickPendingListData,
                   heading: entryTypeName!,checkheading: name)),
             ) : name ==

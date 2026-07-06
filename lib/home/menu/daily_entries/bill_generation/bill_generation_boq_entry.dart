@@ -397,8 +397,8 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                           onTap: () async {
                             if(billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT){
                             }
-                            else
-                            {await dailyWrkDone_DPR_Controller.dpr_getSubcotType();
+                            else {
+                              await dailyWrkDone_DPR_Controller.dpr_getSubcotType();
                             dailyWrkDone_DPR_Controller.SubcontractorName(context, dailyWrkDone_DPR_Controller.dpr_subcontractorList.value);}
 
                           },
@@ -896,12 +896,12 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                             prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
                             prefixIcon: Padding(padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8), child: ConstIcons.remarks),
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '\u26A0 ${RequestConstant.VALIDATE}';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                       ),
                     ),

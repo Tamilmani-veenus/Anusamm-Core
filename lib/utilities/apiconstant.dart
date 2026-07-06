@@ -14,7 +14,6 @@ class ApiConfig {
 
 
   static Future<void> initializeUrl() async {
-
     final isLive = await _isEndpointLive(Uri.parse(LIVE_ENDPOINT_CORE).host);
     if (isLive) {
       APIURL_CORE = "${LIVE_ENDPOINT_CORE}AnusammAPI/";
@@ -224,6 +223,11 @@ class ApiConstant{
   static String GETADVREQAPPROLIST = BASE_URL_CORE + "api/AdvanceReqVoucher/GetAdvanceReqToBeApproved";
   static String GETCOMPANYNMRAPPROLIST = BASE_URL_CORE + "api/NMRLabourAttendance/GetApprovalPendingNMRAttendance";
   static String GETPO_SUPTRADERSAGEN_PENDLIST = BASE_URL_CORE + "api/MaterialPurOrdMas/GetAllPendingPOBySupplierCategory";
+  static String GET_ONDUTY_PUNCHINOUT_VERIFILIST = BASE_URL_CORE + "api/PunchInandOut/GetAllOnDutyverificationpending";
+  static String GET_NONALLOT_PUNCHINOUT_VERIFILIST = BASE_URL_CORE + "api/PunchInandOut/GetAllPunchinandoutverificationpending";
+  static String GET_ONDUTY_PUNCHINOUT_APPRLIST = BASE_URL_CORE + "api/PunchInandOut/GetAllOnDutyApprovepending";
+  static String GET_NONALLOT_PUNCHINOUT_APPRLIST = BASE_URL_CORE + "api/PunchInandOut/GetAllPunchinandoutApprovepending";
+
 
   static String GETPROJECTDROPDOWNLISTALL = BASE_URL_CORE + "api/CommonFile/GetProjectAll";
   static String GETSITE_REPORTS = BASE_URL_CORE + "api/CommonFile/GetSiteReport";
@@ -327,6 +331,7 @@ class ApiConstant{
   static String PUT_MRNPREAPPROVAL_APPROVE_API = BASE_URL_CORE + "api/MaterialPreApprovalRequest/UpdatePreApprovalMas";
   static String POAMENDMENT_APPROVAL_SAVEAPI = BASE_URL_CORE + "api/MaterialInward/SaveSelectItemAndPoAmd";
   static String PUNCH_IN = BASE_URL_CORE + "api/PunchInandOut/AddOrUpdatePunchAndOut";
+  static String PUNCH_IN_VERIFY_APPROVE = BASE_URL_CORE + "api/PunchInandOut/VerifyAndApprovePunchinandOut";
 
   static String SET_SITE_LOCATION = BASE_URL_CORE + "api/PunchInandOut/AddPinLocation";
   static String MATERIALREQUEST_PREINDENT_SAVE = BASE_URL_CORE + "api/SiteRequest/AddPreIndentDetails";

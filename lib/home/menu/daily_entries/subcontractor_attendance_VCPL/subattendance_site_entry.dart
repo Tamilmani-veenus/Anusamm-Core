@@ -536,12 +536,12 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         vertical: 8, horizontal: 8),
                                     child: ConstIcons.remarks),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return '\u26A0 ${RequestConstant.VALIDATE}';
-                                }
-                                return null;
-                              },
+                              // validator: (value) {
+                              //   if (value!.isEmpty) {
+                              //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                              //   }
+                              //   return null;
+                              // },
                             ),
                           ),
                         ),

@@ -43,9 +43,10 @@ class _AttendanceReportState extends State<AttendanceReport> {
       attendanceController.FromdateController.clear();
       attendanceController.TodateController.clear();
       DateTime currentDate = DateTime.now();
+      DateTime oneWeekBefore = currentDate.subtract(const Duration(days: 7));
 
       attendanceController.FromdateController.text =
-          currentDate.toString().substring(0, 10);
+          oneWeekBefore.toString().substring(0, 10);
       attendanceController.TodateController.text =
           currentDate.toString().substring(0, 10);
 
@@ -233,9 +234,9 @@ class _AttendanceReportState extends State<AttendanceReport> {
                                   DateTime fromDate = DateTime.parse(siteController.FromdateController.text);
                                   var Todate = await showDatePicker(
                                       context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2010),
-                                      lastDate: DateTime.now(),
+                                      initialDate: today.isBefore(fromDate) ? fromDate : today,
+                                      firstDate: fromDate,
+                                      lastDate: today,
                                       builder: (context, child) {
                                         return Theme(
                                           data: Theme.of(context).copyWith(
@@ -259,9 +260,10 @@ class _AttendanceReportState extends State<AttendanceReport> {
                                           child: child!,
                                         );
                                       });
-                                  attendanceController.TodateController.text =
-                                      Todate.toString().substring(0, 10);
-                                },
+                                  if(Todate != null) {
+                                    attendanceController.TodateController.text =
+                                        Todate.toString().substring(0, 10);
+                                  } },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Select Date';

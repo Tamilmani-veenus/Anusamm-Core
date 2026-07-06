@@ -211,6 +211,24 @@ class OnClickListResult {
   String? payfor;
   double? advanceReqVoucherAmount;
   String? advanceReqVoucherType;
+  int? Id;
+  String? punchNo;
+  int? EmployeeId;
+  String? punchInLoc;
+  String? punchInDate;
+  String? inTime;
+  String? punchOutLoc;
+  String? punchOutDate;
+  String? outTime;
+  String? toDayTask;
+  String? tomorrowTask;
+  String? remarks;
+  String? EntryType;
+  String? status;
+  String? inNAPRemarks;
+  String? outNAPRemarks;
+  String? designationName;
+  String? onDutyRemarks;
 
   OnClickListResult({
     this.id,
@@ -388,6 +406,24 @@ class OnClickListResult {
     this.payfor,
     this.advanceReqVoucherAmount,
     this.advanceReqVoucherType,
+    this.Id,
+    this.punchNo,
+    this.EmployeeId,
+    this.punchInLoc,
+    this.punchInDate,
+    this.inTime,
+    this.punchOutLoc,
+    this.punchOutDate,
+    this.outTime,
+    this.toDayTask,
+    this.tomorrowTask,
+    this.remarks,
+    this.EntryType,
+    this.status,
+    this.inNAPRemarks,
+    this.outNAPRemarks,
+    this.designationName,
+    this.onDutyRemarks,
   });
 
   factory OnClickListResult.fromJson(Map<String, dynamic> json) => OnClickListResult(
@@ -566,6 +602,23 @@ class OnClickListResult {
     payfor: json["payfor"],
     advanceReqVoucherAmount: json["advanceReqVoucherAmount"],
     advanceReqVoucherType: json["advanceReqVoucherType"],
+    Id: json["Id"],
+    punchNo: json["PunchNo"],
+    EmployeeId: json["EmployeeId"], punchInLoc: json["PunchInLoc"],
+    punchInDate: json["PunchInDate"],
+    inTime: json["InTime"],
+    punchOutLoc: json["PunchOutLoc"],
+    punchOutDate: json["PunchOutDate"],
+    outTime: json["OutTime"],
+    toDayTask: json["ToDayTask"],
+    tomorrowTask: json["TomorrowTask"],
+    remarks: json["Remarks"],
+    EntryType: json["EntryType"],
+    status: json["Status"],
+    inNAPRemarks: json["InNAPRemarks"],
+    outNAPRemarks: json["OutNAPRemarks"],
+    onDutyRemarks: json["OnDutyRemarks"],
+    designationName: json["DesignationName"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -744,5 +797,23 @@ class OnClickListResult {
     "payfor": payfor,
     "advanceReqVoucherType": advanceReqVoucherType,
     "advanceReqVoucherAmount": advanceReqVoucherAmount,
+    "Id": Id,
+    "PunchNo": punchNo,
+    "EmployeeId": employeeId,
+    "PunchInLoc": punchInLoc,
+    "PunchInDate": punchInDate,
+    "InTime": inTime,
+    "PunchOutLoc": punchOutLoc,
+    "PunchOutDate": punchOutDate,
+    "OutTime": outTime,
+    "ToDayTask": toDayTask,
+    "TomorrowTask": tomorrowTask,
+    "Remarks": remarks,
+    "EntryType": EntryType,
+    "Status": status,
+    "InNAPRemarks": inNAPRemarks,
+    "OutNAPRemarks": outNAPRemarks,
+    "OnDutyRemarks": onDutyRemarks,
+    "DesignationName": designationName,
   };
 }

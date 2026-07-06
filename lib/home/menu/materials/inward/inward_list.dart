@@ -504,127 +504,130 @@ class _Inward_ListScreenState extends State<Inward_ListScreen> {
                                                           top: Radius.circular(25.0)),
                                                     ),
                                                     builder: (context) {
-                                                      return Container(
-                                                        margin: const EdgeInsets.only(
-                                                          left: 15,
-                                                        ),
-                                                        height: BaseUtitiles.getheightofPercentage(context, 25),
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        right: 10),
-                                                                    child: Text(
-                                                                      inward_controller.inwardEtyList[index].inwardNo.toString(),
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                          color: Theme.of(
-                                                                              context)
-                                                                              .primaryColor),
+                                                      return SafeArea(
+                                                        top: false,
+                                                        child: Container(
+                                                          margin: const EdgeInsets.only(
+                                                            left: 15,
+                                                          ),
+                                                          height: BaseUtitiles.getheightofPercentage(context, 25),
+                                                          child: Column(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: 10),
+                                                                      child: Text(
+                                                                        inward_controller.inwardEtyList[index].inwardNo.toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                            color: Theme.of(
+                                                                                context)
+                                                                                .primaryColor),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed: () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  icon:  ConstIcons.cancle,)
-                                                              ],
-                                                            ),
-                                                            Visibility(
-                                                              visible: commanController.editMode == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: const Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .lightGreen,
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          EdgeInsets
-                                                                              .all(8),
-                                                                          child: Icon(
-                                                                            Icons.edit,
-                                                                            color: Colors
-                                                                                .white,
+                                                                  IconButton(
+                                                                    onPressed: () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    icon:  ConstIcons.cancle,)
+                                                                ],
+                                                              ),
+                                                              Visibility(
+                                                                visible: commanController.editMode == 1 ? true : false,
+                                                                child: InkWell(
+                                                                    child: const Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors
+                                                                              .lightGreen,
+                                                                          child: Padding(
+                                                                            padding:
+                                                                            EdgeInsets
+                                                                                .all(8),
+                                                                            child: Icon(
+                                                                              Icons.edit,
+                                                                              color: Colors
+                                                                                  .white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(width: 5),
-                                                                      Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    inward_controller.itemlistTable_Delete();
-                                                                    inward_controller.ItemGetTableListdata.clear();
-                                                                    inward_controller.getInwardDetList.clear();
-                                                                    inward_controller.editListApiDatas.value.clear();
-                                                                    FocusScope.of(context).unfocus();
-                                                                    await inward_controller.EntryList_EditApi(
-                                                                        inward_controller.inwardEtyList[index].id,
-                                                                        inward_controller.inwardEtyList[index].inwType.trim(),
-                                                                        inward_controller.inwardEtyList[index].inwType.toString().trim()=="O"?"Inward Pending - WO":"Inward Pending",
-                                                                        context);
-                                                                  }),
-                                                            ),
-                                                            Container(
-                                                                margin: EdgeInsets.only(right: 20),
-                                                                child: Divider(thickness: 1)),
-                                                            Visibility(
-                                                              visible: commanController.deleteMode == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors.red,
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets
-                                                                              .all(8),
-                                                                          child: Icon(
-                                                                            Icons
-                                                                                .delete_forever,
-                                                                            color: Colors
-                                                                                .white,
+                                                                        SizedBox(width: 5),
+                                                                        Text(
+                                                                          "Edit",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                              Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap: () async {
+                                                                      inward_controller.itemlistTable_Delete();
+                                                                      inward_controller.ItemGetTableListdata.clear();
+                                                                      inward_controller.getInwardDetList.clear();
+                                                                      inward_controller.editListApiDatas.value.clear();
+                                                                      FocusScope.of(context).unfocus();
+                                                                      await inward_controller.EntryList_EditApi(
+                                                                          inward_controller.inwardEtyList[index].id,
+                                                                          inward_controller.inwardEtyList[index].inwType.trim(),
+                                                                          inward_controller.inwardEtyList[index].inwType.toString().trim()=="O"?"Inward Pending - WO":"Inward Pending",
+                                                                          context);
+                                                                    }),
+                                                              ),
+                                                              Container(
+                                                                  margin: EdgeInsets.only(right: 20),
+                                                                  child: Divider(thickness: 1)),
+                                                              Visibility(
+                                                                visible: commanController.deleteMode == 1 ? true : false,
+                                                                child: InkWell(
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors.red,
+                                                                          child: Padding(
+                                                                            padding:
+                                                                            const EdgeInsets
+                                                                                .all(8),
+                                                                            child: Icon(
+                                                                              Icons
+                                                                                  .delete_forever,
+                                                                              color: Colors
+                                                                                  .white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(width: 5),
-                                                                      Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    Future.delayed(const Duration(seconds: 0),() async {
-                                                                      setState(() {
-                                                                        Navigator.pop(context);
-                                                                        inward_controller.DeleteAlert(context,index);
+                                                                        SizedBox(width: 5),
+                                                                        Text(
+                                                                          "Delete",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                              Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap: () async {
+                                                                      Future.delayed(const Duration(seconds: 0),() async {
+                                                                        setState(() {
+                                                                          Navigator.pop(context);
+                                                                          inward_controller.DeleteAlert(context,index);
+                                                                        });
                                                                       });
-                                                                    });
 
-                                                                  }),
-                                                            ),
-                                                            SizedBox(height: 20)
-                                                          ],
+                                                                    }),
+                                                              ),
+                                                              SizedBox(height: 20)
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     });

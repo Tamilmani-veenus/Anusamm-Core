@@ -597,7 +597,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
       billStatus: "N",
       totalAmount: totalNetAmnt,
       refNo: "-",
-      remarks: dpr_new_remarksController.text,
+      remarks: dpr_new_remarksController.text.isEmpty ? "-" : dpr_new_remarksController.text,
       createdBy: int.tryParse(loginController.EmpId()),
       createdDt: BaseUtitiles().convertToUtcIso(dateController.text),
       approveStatus: saveButton.value==RequestConstant.APPROVAL?"Y":"N",

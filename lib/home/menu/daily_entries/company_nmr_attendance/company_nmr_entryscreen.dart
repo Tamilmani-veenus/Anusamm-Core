@@ -573,12 +573,12 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                                       vertical: 8, horizontal: 8),
                                   child: ConstIcons.remarks),
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return '\u26A0 ${RequestConstant.VALIDATE}';
-                              }
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                            //   }
+                            //   return null;
+                            // },
                           ),
                         ),
                       ),

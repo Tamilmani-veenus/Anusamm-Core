@@ -498,108 +498,111 @@ class _AdvReq_Voucher_EntryList_newState extends State<AdvReq_Voucher_EntryList_
                                                   top: Radius.circular(25.0)),
                                             ),
                                             builder: (context) {
-                                              return Container(
-                                                margin: EdgeInsets.only(left: 15,),
-                                                height: BaseUtitiles.getheightofPercentage(context, 25),
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          margin: EdgeInsets.only(right: 10),
-                                                          child: Text(
-                                                            advanceReqVoucherController_new.entryList.value[index].projectName.toString(),
-                                                            style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                                              return SafeArea(
+                                                top: false,
+                                                child: Container(
+                                                  margin: EdgeInsets.only(left: 15,),
+                                                  height: BaseUtitiles.getheightofPercentage(context, 25),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(right: 10),
+                                                            child: Text(
+                                                              advanceReqVoucherController_new.entryList.value[index].projectName.toString(),
+                                                              style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                          icon:  ConstIcons.cancle,)
-                                                      ],
-                                                    ),
-                                                    Visibility(
-                                                      visible: commanController.editMode.value == 1 ? true : false,
-                                                      child: InkWell(
-                                                          child: Row(
-                                                            children: [
-                                                              Card(
-                                                                color: Colors
-                                                                    .lightGreen,
-                                                                child: Padding(
-                                                                  padding:
-                                                                  const EdgeInsets
-                                                                      .all(8),
-                                                                  child: Icon(
-                                                                    Icons.edit,
-                                                                    color: Colors
-                                                                        .white,
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(context);
+                                                            },
+                                                            icon:  ConstIcons.cancle,)
+                                                        ],
+                                                      ),
+                                                      Visibility(
+                                                        visible: commanController.editMode.value == 1 ? true : false,
+                                                        child: InkWell(
+                                                            child: Row(
+                                                              children: [
+                                                                Card(
+                                                                  color: Colors
+                                                                      .lightGreen,
+                                                                  child: Padding(
+                                                                    padding:
+                                                                    const EdgeInsets
+                                                                        .all(8),
+                                                                    child: Icon(
+                                                                      Icons.edit,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(width: 5),
-                                                              Text(
-                                                                "Edit",
-                                                                style: TextStyle(
-                                                                    color:
-                                                                    Colors.grey,
-                                                                    fontSize: 15),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          onTap: () async {
-                                                              advanceReqVoucherController_new.delete_ListTable();
-                                                              advanceReqVoucherController_new.GetTableList.value=[];
-                                                              advanceReqVoucherController_new.itemlistTable_Delete();
-                                                              advanceReqVoucherController_new.ItemGetTableListdata.clear();
-                                                              FocusScope.of(context).unfocus();
-                                                              await advanceReqVoucherController_new.EntryList_EditApi("edit",
-                                                                  advanceReqVoucherController_new.entryList.value[index].id, true,
-                                                                  widget.heading,context);
-                                                          }),
-                                                    ),
-                                                    Container(
-                                                        margin: EdgeInsets.only(right: 20),
-                                                        child: Divider(thickness: 1)),
-                                                    Visibility(
-                                                      visible: commanController.deleteMode.value == 1 ? true : false,
-                                                      child: InkWell(
-                                                          child: Row(
-                                                            children: [
-                                                              Card(
-                                                                color: Colors.red,
-                                                                child: Padding(
-                                                                  padding:
-                                                                  const EdgeInsets
-                                                                      .all(8),
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .delete_forever,
-                                                                    color: Colors
-                                                                        .white,
+                                                                SizedBox(width: 5),
+                                                                Text(
+                                                                  "Edit",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                      Colors.grey,
+                                                                      fontSize: 15),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            onTap: () async {
+                                                                advanceReqVoucherController_new.delete_ListTable();
+                                                                advanceReqVoucherController_new.GetTableList.value=[];
+                                                                advanceReqVoucherController_new.itemlistTable_Delete();
+                                                                advanceReqVoucherController_new.ItemGetTableListdata.clear();
+                                                                FocusScope.of(context).unfocus();
+                                                                await advanceReqVoucherController_new.EntryList_EditApi("edit",
+                                                                    advanceReqVoucherController_new.entryList.value[index].id, true,
+                                                                    widget.heading,context);
+                                                            }),
+                                                      ),
+                                                      Container(
+                                                          margin: EdgeInsets.only(right: 20),
+                                                          child: Divider(thickness: 1)),
+                                                      Visibility(
+                                                        visible: commanController.deleteMode.value == 1 ? true : false,
+                                                        child: InkWell(
+                                                            child: Row(
+                                                              children: [
+                                                                Card(
+                                                                  color: Colors.red,
+                                                                  child: Padding(
+                                                                    padding:
+                                                                    const EdgeInsets
+                                                                        .all(8),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .delete_forever,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(width: 5),
-                                                              Text(
-                                                                "Delete",
-                                                                style: TextStyle(
-                                                                    color:
-                                                                    Colors.grey,
-                                                                    fontSize: 15),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          onTap: () async {
-                                                            Navigator.pop(context);
-                                                            advanceReqVoucherController_new.DeleteAlert(context, index);
-                                                          }),
-                                                    ),
-                                                    SizedBox(height: 20,)
-                                                  ],
+                                                                SizedBox(width: 5),
+                                                                Text(
+                                                                  "Delete",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                      Colors.grey,
+                                                                      fontSize: 15),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            onTap: () async {
+                                                              Navigator.pop(context);
+                                                              advanceReqVoucherController_new.DeleteAlert(context, index);
+                                                            }),
+                                                      ),
+                                                      SizedBox(height: 20,)
+                                                    ],
+                                                  ),
                                                 ),
                                               );
                                             });

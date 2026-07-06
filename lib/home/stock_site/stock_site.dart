@@ -134,15 +134,11 @@ class _StockSiteState extends State<StockSite>
             color: Colors.black,
           ),
           backgroundColor: Setmybackground,
-          title:  Row(
-            children: [
-              Expanded(
-                child: Text(
-                  widget.heading,
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
+          title:  Expanded(
+            child: Text(
+              widget.heading,
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           bottom: TabBar(
             controller: _tabController,

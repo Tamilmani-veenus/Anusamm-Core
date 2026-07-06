@@ -605,12 +605,12 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                                           vertical: 8, horizontal: 8),
                                       child: ConstIcons.remarks),
                                 ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
+                                // validator: (value) {
+                                //   if (value!.isEmpty) {
+                                //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                             ),
                           ),

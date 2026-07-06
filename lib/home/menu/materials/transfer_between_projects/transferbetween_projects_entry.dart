@@ -830,7 +830,7 @@ class _TrasferBetweenProjects_EntryState
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.zero,
                                       border: InputBorder.none,
-                                      labelText: "Transport Amt",
+                                      labelText: "Total Amt",
                                       labelStyle: TextStyle(
                                           color: Colors.grey,
                                           fontSize:
@@ -890,12 +890,12 @@ class _TrasferBetweenProjects_EntryState
                                         vertical: 8, horizontal: 8),
                                     child: ConstIcons.remarks),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return '\u26A0 ${RequestConstant.VALIDATE}';
-                                }
-                                return null;
-                              },
+                              // validator: (value) {
+                              //   if (value!.isEmpty) {
+                              //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                              //   }
+                              //   return null;
+                              // },
                             ),
                           ),
                         ),

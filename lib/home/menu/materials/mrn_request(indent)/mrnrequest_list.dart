@@ -580,175 +580,178 @@ class _MRN_RequestIndent_EntrylistState
                                                                       25.0)),
                                                     ),
                                                     builder: (context) {
-                                                      return Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 15),
-                                                        height: BaseUtitiles
-                                                            .getheightofPercentage(
-                                                                context, 25),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        right:
-                                                                            10),
-                                                                    child: Text(
-                                                                      mrn_request_controller.MrnReqEtyList.value[index]
-                                                                          .reqOrdNo
-                                                                          .toString(),
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          color:
-                                                                              Theme.of(context).primaryColor),
+                                                      return SafeArea(
+                                                        top: false,
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 15),
+                                                          height: BaseUtitiles
+                                                              .getheightofPercentage(
+                                                                  context, 25),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child: Text(
+                                                                        mrn_request_controller.MrnReqEtyList.value[index]
+                                                                            .reqOrdNo
+                                                                            .toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            color:
+                                                                                Theme.of(context).primaryColor),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  icon: ConstIcons
-                                                                      .cancle,
-                                                                )
-                                                              ],
-                                                            ),
-                                                            Visibility(
-                                                              visible: commanController.editMode.value == 1
-                                                                  ? true
-                                                                  : false,
-                                                              child: InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .lightGreen,
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: const EdgeInsets
-                                                                              .all(
-                                                                              8),
+                                                                  IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    icon: ConstIcons
+                                                                        .cancle,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Visibility(
+                                                                visible: commanController.editMode.value == 1
+                                                                    ? true
+                                                                    : false,
+                                                                child: InkWell(
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors
+                                                                              .lightGreen,
                                                                           child:
-                                                                              Icon(
-                                                                            Icons.edit,
-                                                                            color:
-                                                                                Colors.white,
+                                                                              Padding(
+                                                                            padding: const EdgeInsets
+                                                                                .all(
+                                                                                8),
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.edit,
+                                                                              color:
+                                                                                  Colors.white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              5),
-                                                                      Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap:
-                                                                      () async {
-                                                                    mrn_request_controller
-                                                                        .delete_MaterialIntent_itemlist_Table();
-                                                                    mrn_request_controller
-                                                                            .Material_itemview_GetDbList
-                                                                        .clear();
-                                                                    mrn_request_controller
-                                                                        .getRequestDetList
-                                                                        .clear();
-                                                                    FocusScope.of(
-                                                                            context)
-                                                                        .unfocus();
-                                                                    await mrn_request_controller.MaterialIntentList_EditApi(
-                                                                        mrn_request_controller
-                                                                            .MrnReqEtyList[
-                                                                                index]
-                                                                            .reqMasId,
-                                                                        mrn_request_controller
-                                                                            .MrnReqEtyList[
-                                                                                index]
-                                                                            .projectid,
-                                                                        mrn_request_controller
-                                                                            .MrnReqEtyList[index]
-                                                                            .siteid,
-                                                                        widget.heading,
-                                                                        context);
-                                                                  }),
-                                                            ),
-                                                            Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        right:
-                                                                            20),
-                                                                child:
-                                                                    const Divider(
-                                                                        thickness:
-                                                                            1)),
-                                                            Visibility(
-                                                              visible: commanController
-                                                                          .deleteMode
-                                                                          .value ==
-                                                                      1
-                                                                  ? true
-                                                                  : false,
-                                                              child: InkWell(
+                                                                        SizedBox(
+                                                                            width:
+                                                                                5),
+                                                                        Text(
+                                                                          "Edit",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                                  Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap:
+                                                                        () async {
+                                                                      mrn_request_controller
+                                                                          .delete_MaterialIntent_itemlist_Table();
+                                                                      mrn_request_controller
+                                                                              .Material_itemview_GetDbList
+                                                                          .clear();
+                                                                      mrn_request_controller
+                                                                          .getRequestDetList
+                                                                          .clear();
+                                                                      FocusScope.of(
+                                                                              context)
+                                                                          .unfocus();
+                                                                      await mrn_request_controller.MaterialIntentList_EditApi(
+                                                                          mrn_request_controller
+                                                                              .MrnReqEtyList[
+                                                                                  index]
+                                                                              .reqMasId,
+                                                                          mrn_request_controller
+                                                                              .MrnReqEtyList[
+                                                                                  index]
+                                                                              .projectid,
+                                                                          mrn_request_controller
+                                                                              .MrnReqEtyList[index]
+                                                                              .siteid,
+                                                                          widget.heading,
+                                                                          context);
+                                                                    }),
+                                                              ),
+                                                              Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          right:
+                                                                              20),
                                                                   child:
-                                                                      const Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .red,
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(8),
+                                                                      const Divider(
+                                                                          thickness:
+                                                                              1)),
+                                                              Visibility(
+                                                                visible: commanController
+                                                                            .deleteMode
+                                                                            .value ==
+                                                                        1
+                                                                    ? true
+                                                                    : false,
+                                                                child: InkWell(
+                                                                    child:
+                                                                        const Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors
+                                                                              .red,
                                                                           child:
-                                                                              Icon(
-                                                                            Icons.delete_forever,
-                                                                            color:
-                                                                                Colors.white,
+                                                                              Padding(
+                                                                            padding:
+                                                                                EdgeInsets.all(8),
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.delete_forever,
+                                                                              color:
+                                                                                  Colors.white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              5),
-                                                                      Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap:
-                                                                      () async {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    mrn_request_controller
-                                                                        .DeleteAlert(
-                                                                            context,
-                                                                            index);
-                                                                  }),
-                                                            ),
-                                                            SizedBox(height: 20)
-                                                          ],
+                                                                        SizedBox(
+                                                                            width:
+                                                                                5),
+                                                                        Text(
+                                                                          "Delete",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                                  Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap:
+                                                                        () async {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      mrn_request_controller
+                                                                          .DeleteAlert(
+                                                                              context,
+                                                                              index);
+                                                                    }),
+                                                              ),
+                                                              SizedBox(height: 20)
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     });

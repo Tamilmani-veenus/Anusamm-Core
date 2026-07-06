@@ -658,157 +658,160 @@ class _Company_nmr_entrylistState extends State<Company_nmr_entrylist> {
                                                               25.0)),
                                                     ),
                                                     builder: (context) {
-                                                      return Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 15),
-                                                        height: BaseUtitiles
-                                                            .getheightofPercentage(
-                                                            context, 25),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                  Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        right:
-                                                                        10),
-                                                                    child: Text(
-                                                                      companyNmrAttendanceController.CompanyEntrylist
-                                                                          .value[index]
-                                                                          .labourAttendanceNo
-                                                                          .toString(),
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          color:
-                                                                          Theme.of(context).primaryColor),
+                                                      return SafeArea(
+                                                        top: false,
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 15),
+                                                          height: BaseUtitiles
+                                                              .getheightofPercentage(
+                                                              context, 25),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                          10),
+                                                                      child: Text(
+                                                                        companyNmrAttendanceController.CompanyEntrylist
+                                                                            .value[index]
+                                                                            .labourAttendanceNo
+                                                                            .toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            color:
+                                                                            Theme.of(context).primaryColor),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  icon: ConstIcons
-                                                                      .cancle,
-                                                                )
-                                                              ],
-                                                            ),
-                                                            Visibility(
-                                                              visible: commanController.editMode.value == 1
-                                                                  ? true
-                                                                  : false,
-                                                              child: InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .lightGreen,
-                                                                        child:
-                                                                        Padding(
-                                                                          padding: const EdgeInsets
-                                                                              .all(
-                                                                              8),
+                                                                  IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    icon: ConstIcons
+                                                                        .cancle,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Visibility(
+                                                                visible: commanController.editMode.value == 1
+                                                                    ? true
+                                                                    : false,
+                                                                child: InkWell(
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors
+                                                                              .lightGreen,
                                                                           child:
-                                                                          Icon(
-                                                                            Icons.edit,
-                                                                            color:
-                                                                            Colors.white,
+                                                                          Padding(
+                                                                            padding: const EdgeInsets
+                                                                                .all(
+                                                                                8),
+                                                                            child:
+                                                                            Icon(
+                                                                              Icons.edit,
+                                                                              color:
+                                                                              Colors.white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                          5),
-                                                                      Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap:
-                                                                      () async {
-                                                                        companyNmrAttendanceController.delete_cmpNmrdetTable();
-                                                                        companyNmrAttendanceController.cmpNmr_getDbDetList.clear();
-                                                                    await companyNmrAttendanceController.entryList_EditApi(
-                                                                        companyNmrAttendanceController.CompanyEntrylist[index].id,true,"Edit",
-                                                                        widget.heading,
-                                                                        context);
-                                                                  }),
-                                                            ),
-                                                            Container(
-                                                                margin:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    right:
-                                                                    20),
-                                                                child:
-                                                                const Divider(
-                                                                    thickness:
-                                                                    1)),
-                                                            Visibility(
-                                                              visible: commanController
-                                                                  .deleteMode
-                                                                  .value ==
-                                                                  1
-                                                                  ? true
-                                                                  : false,
-                                                              child: InkWell(
+                                                                        SizedBox(
+                                                                            width:
+                                                                            5),
+                                                                        Text(
+                                                                          "Edit",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                              Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap:
+                                                                        () async {
+                                                                          companyNmrAttendanceController.delete_cmpNmrdetTable();
+                                                                          companyNmrAttendanceController.cmpNmr_getDbDetList.clear();
+                                                                      await companyNmrAttendanceController.entryList_EditApi(
+                                                                          companyNmrAttendanceController.CompanyEntrylist[index].id,true,"Edit",
+                                                                          widget.heading,
+                                                                          context);
+                                                                    }),
+                                                              ),
+                                                              Container(
+                                                                  margin:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      right:
+                                                                      20),
                                                                   child:
-                                                                  const Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .red,
-                                                                        child:
-                                                                        Padding(
-                                                                          padding:
-                                                                          EdgeInsets.all(8),
+                                                                  const Divider(
+                                                                      thickness:
+                                                                      1)),
+                                                              Visibility(
+                                                                visible: commanController
+                                                                    .deleteMode
+                                                                    .value ==
+                                                                    1
+                                                                    ? true
+                                                                    : false,
+                                                                child: InkWell(
+                                                                    child:
+                                                                    const Row(
+                                                                      children: [
+                                                                        Card(
+                                                                          color: Colors
+                                                                              .red,
                                                                           child:
-                                                                          Icon(
-                                                                            Icons.delete_forever,
-                                                                            color:
-                                                                            Colors.white,
+                                                                          Padding(
+                                                                            padding:
+                                                                            EdgeInsets.all(8),
+                                                                            child:
+                                                                            Icon(
+                                                                              Icons.delete_forever,
+                                                                              color:
+                                                                              Colors.white,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                          5),
-                                                                      Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap:
-                                                                      () async {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    companyNmrAttendanceController
-                                                                        .DeleteAlert(
-                                                                        context,
-                                                                        index);
-                                                                  }),
-                                                            ),
-                                                            SizedBox(height: 20)
-                                                          ],
+                                                                        SizedBox(
+                                                                            width:
+                                                                            5),
+                                                                        Text(
+                                                                          "Delete",
+                                                                          style: TextStyle(
+                                                                              color:
+                                                                              Colors.grey,
+                                                                              fontSize: 15),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    onTap:
+                                                                        () async {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      companyNmrAttendanceController
+                                                                          .DeleteAlert(
+                                                                          context,
+                                                                          index);
+                                                                    }),
+                                                              ),
+                                                              SizedBox(height: 20)
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     });
