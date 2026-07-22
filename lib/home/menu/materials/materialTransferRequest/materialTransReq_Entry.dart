@@ -46,19 +46,17 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
       if (materialTransferReqController.saveButton.value == RequestConstant.SUBMIT) {
         await autoYearWiseNoController.AutoYearWiseNo(
             "MATERIAL TRANSFER REQUEST");
-        materialTransferReqController.autoyrwiseText.text =
-            autoYearWiseNoController.matTransReqautoYrsWise.toString();
+        materialTransferReqController.autoyrwiseText.text = autoYearWiseNoController.matTransReqautoYrsWise.toString();
         materialTransferReqController.matTansReqId = 0;
-        materialTransferReqController.entryDateText.text =
-            BaseUtitiles.initiateCurrentDateFormat();
+        materialTransferReqController.entryDateText.text = BaseUtitiles.initiateCurrentDateFormat();
         fromprojectController.fromprojectname.text = "--SELECT--";
         fromprojectController.selectedProjectId = 0.obs;
         fromsiteController.selectedsiteId = 0.obs;
         fromsiteController.FromSitename.text = "--SELECT--";
         projectController.projectnameAll.text = "--SELECT--";
         projectController.selectedProjectIdAll.value = 0;
-        materialTransferReqController.prearedbyText.text =
-            loginController.EmpName();
+        materialTransferReqController.createdById.value = 0;
+        materialTransferReqController.prearedbyText.text = loginController.EmpName();
         materialTransferReqController.remarksText.text = "";
         materialTransferReqController.itemlistTable_Delete();
         materialTransferReqController.ItemGetTableListdata.clear();
@@ -78,6 +76,7 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
           projectController.projectnameAll.text =
               element.toProjectName.toString();
           projectController.selectedProjectIdAll.value = element.toProjectId;
+          materialTransferReqController.createdById.value = element.createdBy;
           materialTransferReqController.remarksText.text =
               element.remarks.toString();
           materialTransferReqController.prearedbyText.text =

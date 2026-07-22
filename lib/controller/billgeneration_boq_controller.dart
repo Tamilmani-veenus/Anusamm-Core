@@ -55,6 +55,8 @@ class BillGenerationBoqController extends GetxController {
   final tobededadv = TextEditingController();
   final Advded = TextEditingController();
   final Roundoff = TextEditingController();
+  final netBillAmt = TextEditingController();
+  final finalBillAmt = TextEditingController();
   final netpayamt = TextEditingController();
   final EntrylistFrDate = TextEditingController();
   final EntrylistToDate = TextEditingController();
@@ -76,6 +78,8 @@ class BillGenerationBoqController extends GetxController {
   String oldRoundOffValue = "0.0";
   String oldmatDebitValue = "0.0";
   RxString entryType = "".obs;
+  RxBool isAdvanceReadOnly = true.obs;
+  RxInt createdById = 0.obs;
 
 
   ProjectController projectController = Get.put(ProjectController());
@@ -143,9 +147,15 @@ class BillGenerationBoqController extends GetxController {
     }
   }
 
-  Future DirectBill_CalculationList() async {
+  Future DirectBill_CalculationList({type}) async {
     billDet_Calculation.value.clear();
-    final value = await BillGenerateBoqProvider.getBillDirectCalculation_List();
+    final value = await BillGenerateBoqProvider.getBillDirectCalculation_List(
+      pId:projectController.selectedProjectId.value,
+      siteId:siteController.selectedsiteId.value,
+      subId:dailyWrkDone_DPR_Controller.TypeSubcontId.value,
+      wrkOrdId:subcontractorController.selectedWorkOrderId.value,
+      type: type,
+    );
     if (value != null) {
       if(value.success==true){
         if(value.result!.isNotEmpty){
@@ -154,29 +164,41 @@ class BillGenerationBoqController extends GetxController {
           await directBillCalculationSave();
           await getDirectBillCalDatas();
           if(saveButton.value == RequestConstant.RESUBMIT || saveButton.value == RequestConstant.VERIFY || saveButton.value == RequestConstant.APPROVAL) {
-            setBaseNetPay(billamount.text);
+            setBaseNetPay();
             await preloadEditAddLessData(bill_editListApiDatas[0].subContractorBillAddLessSetupS);
           }
         }
-        else {
-          BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
-        }
-      }else {
-        BaseUtitiles.showToast(value.message ?? 'Something went wrong..');
+        // else {
+        //   BaseUtitiles.showToast(RequestConstant.NORECORD_FOUND);
+        // }
       }
+      // else {
+      //   BaseUtitiles.showToast(value.message ?? 'Something went wrong..');
+      // }
     } else {
       BaseUtitiles.showToast("Something Went Wrong...");
     }
   }
 
-  void setBaseNetPay(String value) {
-    baseNetPayAmt = double.tryParse(value) ?? 0.0;
-    netpayamt.text = baseNetPayAmt.toStringAsFixed(2);
-    print("=== setBaseNetPay called: $baseNetPayAmt ==="); // 👈 add this
+  void setBaseNetPay() {
 
+    double bill = double.tryParse(billamount.text) ?? 0;
+
+    double credit = double.tryParse(Creditamt.text) ?? 0;
+
+    double debit = double.tryParse(Debitamt.text) ?? 0;
+
+    double netBill =
+        bill +
+            credit -
+            debit;
+
+    baseNetPayAmt = netBill;
+
+    netBillAmt.text = netBill.toStringAsFixed(2);
+
+    print("=== Base Net Bill : $baseNetPayAmt ===");
   }
-
-
 
 
   Future<String?> getNmrAdvance() async {
@@ -433,13 +455,14 @@ class BillGenerationBoqController extends GetxController {
       siteId: siteController.selectedsiteId.value,
       subContId:  dailyWrkDone_DPR_Controller.TypeSubcontId.value,
       workOrderId: workOrderId,
-      refWorkId: 0,
+      // refWorkId: 0,
       fromDate: FromdateController.text,
       toDate: TodateController.text,
       billno: subcontractorController.InvoiceNo.text,
       remarks: RemarksController.text,
       rndOff: double.tryParse(Roundoff.text) ?? 0.0,
-      billAmt: double.tryParse(billamount.text)?? 0.0,
+      billAmount: double.tryParse(billamount.text)?? 0.0,
+      netBillAmount: double.tryParse(netBillAmt.text)?? 0.0,
       actAdvAmt: double.tryParse(tobededadv.text)?? 0.0,
       advAmt: double.tryParse(Advded.text)?? 0.0,
       netPayAmt: double.tryParse(netpayamt.text)?? 0.0,
@@ -449,12 +472,12 @@ class BillGenerationBoqController extends GetxController {
       creditRemarks: CreditRemarksController.text,
       materialDebitRemarks: materialDebitRemarks.text,
       materialDebitAmount: double.tryParse(materialDebitamt.text)?? 0.0,
-      finalBillAmount: double.tryParse(netpayamt.text)?? 0.0,
+      finalBillAmount: double.tryParse(finalBillAmt.text)?? 0.0,
       penaltyAmount: 0,
       paymentDate: billPaymentWkDateController.text,
       partRateStatus: 0,
-      createdBy: int.parse(loginController.EmpId()),
-      createdDt: BaseUtitiles().convertToUtcIso(billentryDateController.text),
+      createdBy: saveButton.value == RequestConstant.SUBMIT?int.parse(loginController.EmpId()):createdById.value,
+      // createdDt: BaseUtitiles().convertToUtcIso(billentryDateController.text),
       verifyStatus: saveButton.value == RequestConstant.VERIFY || saveButton.value == RequestConstant.APPROVAL? "Y":"N",
       approveStatus: saveButton.value == RequestConstant.APPROVAL? "Y":"N",
       subContractorWorkQtyDetS: getNmrBillDet(id,entryType.value),
@@ -502,7 +525,7 @@ class BillGenerationBoqController extends GetxController {
         headItemid: element.headItemid,
         subItemid: element.subItemid,
         level3ItemId: element.level3ItemId,
-        refWorkDetId: 0,
+        // refWorkDetId: 0,
         flatNo: "0",
         actualQty: 0,
         actualAmount: 0,
@@ -513,7 +536,7 @@ class BillGenerationBoqController extends GetxController {
         amount:element.amount,
         balanceBillQty: element.balbillqty,
         currentBillQty: element.CurBillQty,
-        balanceQty: 0,
+        // balanceQty: 0,
         partRateStatus: 0,
         qtysClosed: "0",
         totalQty: element.qty,
@@ -543,115 +566,59 @@ class BillGenerationBoqController extends GetxController {
       }});
     return getDetAddLessList.value;
   }
-  RxBool isAdvanceReadOnly = true.obs;
+
+
   void updateAdvanceReadOnly() {
     final amt = double.tryParse(tobededadv.text) ?? 0.0;
     isAdvanceReadOnly.value = amt <= 0;
   }
 
   Future<bool> deductionPaymentCalculation() async {
-    await getItemlistTablesDatas();
-    double advLimit =
-        double.tryParse(tobededadv.text) ?? 0;
 
-    double advDed =
-        double.tryParse(Advded.text) ?? 0;
+    double advLimit = double.tryParse(tobededadv.text) ?? 0;
+    double advDed = double.tryParse(Advded.text) ?? 0;
 
     if (advLimit < advDed) {
-
       BaseUtitiles.showToast(
           "Please change the adv deduction amount");
-
       return false;
     }
 
     if (ItemGetTableListdata.value.isEmpty) return false;
 
-
     double totalNetAmount = 0.0;
 
     for (var item in ItemGetTableListdata.value) {
-
-      totalNetAmount +=
-      (saveButton.value ==
-          RequestConstant.RESUBMIT ||
-          saveButton.value ==
-              RequestConstant.VERIFY ||
-
-          saveButton.value ==
-              RequestConstant.APPROVAL)
-
-          ? (item.amount ?? 0)
-
-          : (item.amount ?? 0);
+      totalNetAmount += item.amount ?? 0;
     }
 
-    billamount.text =
-        totalNetAmount.toStringAsFixed(2);
+    billamount.text = totalNetAmount.toStringAsFixed(2);
 
-    double bill =
-        double.tryParse(billamount.text) ?? 0;
-
-    double credit =
-        double.tryParse(Creditamt.text) ?? 0;
-
-    double debit =
-        double.tryParse(Debitamt.text) ?? 0;
-
-    double matDebit =
-        double.tryParse(materialDebitamt.text) ?? 0;
-
-    double adv =
-        double.tryParse(Advded.text) ?? 0;
+    double bill = double.tryParse(billamount.text) ?? 0;
+    double credit = double.tryParse(Creditamt.text) ?? 0;
+    double debit = double.tryParse(Debitamt.text) ?? 0;
+    double matDebit = double.tryParse(materialDebitamt.text) ?? 0;
+    double adv = double.tryParse(Advded.text) ?? 0;
+    String roundText = Roundoff.text.trim();
 
     double round =
-        double.tryParse(Roundoff.text) ?? 0;
+    (roundText.isEmpty || roundText == "-")
+        ? 0
+        : double.tryParse(roundText) ?? 0;
+    // Recalculate all Add/Less, NetBill and NetPay
+    recalculateAddLessAmounts(
+      bill: bill,
+      credit: credit,
+      debit: debit,
+      adv: adv,
+      matDebit: matDebit,
+      round: round,
+    );
 
-    // IMPORTANT
-    setBaseNetPay(billamount.text);
-
-    // RECALCULATE ADD/LESS FIRST
-    for (var item in directBillGen_ItemReadList) {
-
-      double percent =
-          item.percentValue ?? 0.0;
-
-      double amt =
-          (bill * percent) / 100;
-
-      if (amt == 0) {
-
-        item.amount = 0.0;
-
-      } else {
-
-        item.amount =
-        item.addLessType == "-"
-            ? -amt
-            : amt;
-      }
-    }
-
-    // NOW GET UPDATED TOTAL
-    double addLessTotal =
-        totalAddLess;
-
-    // FINAL NET
-    double netAmount =
-        bill +
-            credit -
-            debit -
-            adv -
-            matDebit +
-            round +
-            addLessTotal;
-
-    // VALIDATION
-    if (netAmount < 0) {
+    // Optional validation
+    if ((double.tryParse(netpayamt.text) ?? 0) < 0) {
       return false;
     }
-
-    netpayamt.text = netAmount.toStringAsFixed(2);
 
     directBillGen_ItemReadList.refresh();
 
@@ -659,128 +626,243 @@ class BillGenerationBoqController extends GetxController {
 
     return true;
   }
-
   // ADD THIS
-
   bool calculateAndUpdate(
       int addLessId,
       double percent,
-      double baseAmount,
       ) {
-
-    final item = directBillGen_ItemReadList
-        .firstWhereOrNull(
+    final item = directBillGen_ItemReadList.firstWhereOrNull(
           (e) => e.addLessId == addLessId,
     );
 
     if (item == null) return false;
 
-    // OLD VALUES
-    double oldPercent =
-        item.percentValue ?? 0.0;
+    // Store old percentage
+    final oldPercent = item.percentValue ?? 0.0;
 
-    double oldAmount =
-        item.amount ?? 0.0;
-
-    // NEW AMOUNT
-    double amt =
-        (baseAmount * percent) / 100;
-
-    double newAmount;
-
-    if (amt == 0) {
-
-      newAmount = 0.0;
-
-    } else {
-
-      newAmount =
-      item.addLessType == "-"
-          ? -amt
-          : amt;
-    }
-
-    // TEMP TOTAL
-    double tempTotal =
-        totalAddLess -
-            oldAmount +
-            newAmount;
-
-    double bill =
-        double.tryParse(billamount.text) ?? 0;
-
-    double credit =
-        double.tryParse(Creditamt.text) ?? 0;
-
-    double debit =
-        double.tryParse(Debitamt.text) ?? 0;
-
-    double adv =
-        double.tryParse(Advded.text) ?? 0;
+    // Update percentage
+    item.percentValue = percent;
+    String roundText = Roundoff.text.trim();
 
     double round =
-        double.tryParse(Roundoff.text) ?? 0;
+    (roundText.isEmpty || roundText == "-")
+        ? 0
+        : double.tryParse(roundText) ?? 0;
+    // Recalculate everything
+    recalculateAddLessAmounts(
+      bill: double.tryParse(billamount.text) ?? 0,
+      credit: double.tryParse(Creditamt.text) ?? 0,
+      debit: double.tryParse(Debitamt.text) ?? 0,
+      adv: double.tryParse(Advded.text) ?? 0,
+      matDebit: double.tryParse(materialDebitamt.text) ?? 0,
+      round: round,
+    );
 
-    double netAmount =
-        bill +
-            credit -
-            debit -
-            adv -
-            round +
-            tempTotal;
+    // Validate Net Pay
+    final netPay = double.tryParse(netpayamt.text) ?? 0;
 
-    // NEGATIVE VALIDATION
-    if (netAmount < 0) {
-
+    if (netPay < 0) {
       BaseUtitiles.showToast(
-        "Net Bill Amount cannot be negative. "
-            "Please reduce the deductions "
-            "or add-less percentages.",
+        "Net Pay Amount cannot be negative.",
       );
 
-      // RESTORE OLD VALUES
+      // Restore only percentage
       item.percentValue = oldPercent;
-      item.amount = oldAmount;
+
+      // Recalculate again using restored percentage
+      recalculateAddLessAmounts(
+        bill: double.tryParse(billamount.text) ?? 0,
+        credit: double.tryParse(Creditamt.text) ?? 0,
+        debit: double.tryParse(Debitamt.text) ?? 0,
+        adv: double.tryParse(Advded.text) ?? 0,
+        matDebit: double.tryParse(materialDebitamt.text) ?? 0,
+        round: round,
+      );
 
       directBillGen_ItemReadList.refresh();
+      update();
 
       return false;
     }
 
-    item.percentValue = percent;
-    item.amount = newAmount;
-
-    netpayamt.text =
-        netAmount.toStringAsFixed(2);
-
     directBillGen_ItemReadList.refresh();
-
     update();
 
     return true;
   }
 
+  void recalculateAddLessAmounts({
+    required double bill,
+    required double credit,
+    required double debit,
+    required double adv,
+    required double matDebit,
+    required double round,
+  }) {
 
+    double baseNetBill = bill + credit - debit;
+
+    for (var item in directBillGen_ItemReadList) {
+      final name = (item.addLessName ?? "").trim().toUpperCase();
+      final percent = item.percentValue ?? 0;
+
+      switch (name) {
+        case "SGST":
+        case "CGST":
+        case "IGST":
+          double amt = baseNetBill * percent / 100;
+
+          item.amount =
+          item.addLessType == "-" ? -amt : amt;
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    //----------------------------------
+    // STEP 3
+    // Read GST Amounts
+    //----------------------------------
+
+    double sgst = 0;
+    double cgst = 0;
+    double igst = 0;
+
+    for (var item in directBillGen_ItemReadList) {
+      switch ((item.addLessName ?? "").trim().toUpperCase()) {
+        case "SGST":
+          sgst = item.amount ?? 0;
+          break;
+
+        case "CGST":
+          cgst = item.amount ?? 0;
+          break;
+
+        case "IGST":
+          igst = item.amount ?? 0;
+          break;
+      }
+    }
+
+    //----------------------------------
+    // STEP 4
+    // Net Bill
+    //----------------------------------
+
+    double netBill = baseNetBill + sgst + cgst + igst;
+
+    netBillAmt.text = netBill.toStringAsFixed(2);
+
+    //----------------------------------
+    // STEP 5
+    // Final Bill
+    //----------------------------------
+
+    double finalBill = netBill - round;
+
+    finalBillAmt.text = finalBill.toStringAsFixed(2);
+
+    //----------------------------------
+    // STEP 6
+    // Calculate TDS / Retention / GST Hold
+    // Base = Net Bill
+    //----------------------------------
+
+    for (var item in directBillGen_ItemReadList) {
+      final name = (item.addLessName ?? "").trim().toUpperCase();
+      final percent = item.percentValue ?? 0;
+
+      switch (name) {
+        case "RETENTION":
+        case "TDS":
+        case "GST HOLD":
+          double amt = netBill * percent / 100;
+
+          item.amount =
+          item.addLessType == "-" ? -amt : amt;
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    //----------------------------------
+    // STEP 7
+    // Read Deductions
+    //----------------------------------
+
+    double retention = 0;
+    double tds = 0;
+    double gstHold = 0;
+
+    for (var item in directBillGen_ItemReadList) {
+      switch ((item.addLessName ?? "").trim().toUpperCase()) {
+        case "RETENTION":
+          retention = item.amount ?? 0;
+          break;
+
+        case "TDS":
+          tds = item.amount ?? 0;
+          break;
+
+        case "GST HOLD":
+          gstHold = item.amount ?? 0;
+          break;
+      }
+    }
+
+    //----------------------------------
+    // STEP 8
+    // Net Pay
+    //----------------------------------
+
+    double netPay =
+        finalBill +
+            retention +
+            tds +
+            gstHold -
+            adv -
+            matDebit;
+
+    //----------------------------------
+    // Validation
+    //----------------------------------
+
+    if (netPay < 0) {
+      BaseUtitiles.showToast("Net Pay Amount cannot be negative.");
+    }
+
+    //----------------------------------
+    // Update UI
+    //----------------------------------
+
+    netBillAmt.text = netBill.toStringAsFixed(2);
+    finalBillAmt.text = finalBill.toStringAsFixed(2);
+    netpayamt.text = netPay.toStringAsFixed(2);
+
+    directBillGen_ItemReadList.refresh();
+    update();
+  }
 
   void updateNetPay() {
+    String roundText = Roundoff.text.trim();
 
-    double bill = double.tryParse(billamount.text) ?? 0;
-    double credit = double.tryParse(Creditamt.text) ?? 0;
-    double debit = double.tryParse(Debitamt.text) ?? 0;
-    double adv = double.tryParse(Advded.text) ?? 0;
-    double round = double.tryParse(Roundoff.text) ?? 0;
+    double round =
+    (roundText.isEmpty || roundText == "-")
+        ? 0
+        : double.tryParse(roundText) ?? 0;
+    recalculateAddLessAmounts(
+      bill: double.tryParse(billamount.text) ?? 0,
+      credit: double.tryParse(Creditamt.text) ?? 0,
+      debit: double.tryParse(Debitamt.text) ?? 0,
+      adv: double.tryParse(Advded.text) ?? 0,
+      matDebit: double.tryParse(materialDebitamt.text) ?? 0,
+      round: round,
+    );
 
-    double addLessTotal = totalAddLess;
-
-    double netAmount =
-        bill +
-            credit -
-            debit -
-            adv -
-            round +
-            addLessTotal;
-
-    netpayamt.text = netAmount.toStringAsFixed(2);
   }
 
 // ADD THIS
@@ -789,32 +871,35 @@ class BillGenerationBoqController extends GetxController {
   }
 
 // ADD THIS
-  double get totalAddLess {
-    return directBillGen_ItemReadList.fold(
-      0.0,
-          (sum, item) => sum + (item.amount ?? 0.0),
-    );
+  double getTotalAddLess() {
+
+    double total = 0;
+
+    for (final item in directBillGen_ItemReadList) {
+      total += item.amount ?? 0;
+    }
+
+    return total;
   }
 
+  Future<void> directBillCalculationSave() async {
+    directBillTableModelList = [];
 
+    for (final element in billDet_Calculation.value) {
+      final directBillTable = DirectBillGSTCalTable();
 
-
-  directBillCalculationSave() async {
-    int i = 0;
-    directBillTableModelList=[];
-    billDet_Calculation.value.forEach((element) {
-      directBillTable = new DirectBillGSTCalTable();
       directBillTable.reqDetId = 0;
       directBillTable.addLessId = element.id;
-      directBillTable.percentValue = 0.0;
+      directBillTable.percentValue = element.percentage.value;
       directBillTable.amount = 0.0;
-      directBillTable.addLessName =  element.addLessName;
+      directBillTable.addLessName = element.addLessName;
       directBillTable.addLessType = element.addLessType;
+
       directBillTableModelList.add(directBillTable);
-      i++;
-    });
-    var savedatas = await directBillGen_ItemlistService.DirectBillGST_ItemTable_Save(directBillTableModelList);
-    return savedatas;
+    }
+
+    await directBillGen_ItemlistService
+        .DirectBillGST_ItemTable_Save(directBillTableModelList);
   }
 
   Future getDirectBillCalDatas() async {

@@ -47,7 +47,6 @@ class _Subcont_Nmr_EntryScreenState_Site
   void initState() {
     var duration = Duration(seconds: 0);
     Future.delayed(duration, () async {
-
       if (billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL) {
         billGenerationDirectController.bill_editListApiDatas.forEach((element) {
           billGenerationDirectController.workid = element.id!;
@@ -68,18 +67,18 @@ class _Subcont_Nmr_EntryScreenState_Site
           billGenerationDirectController.billInvoiceDateController.text =
               element.workDate.toString();
           billGenerationDirectController.billPaymentWkDateController.text = element.paymentDate;
-
           subcontractorController.selectedWorkOrderId.value =element.workOrderId;
-          subcontractorController.WorkOrderNo.text =element.workOrderNo == null ? "--SELECT--":element.workOrderNo;
+          subcontractorController.WorkOrderNo.text = element.workOrderNo ?? "--SELECT--";
           billGenerationDirectController.FromdateController.text =
               element.fromWorkDate.toString();
           billGenerationDirectController.TodateController.text =
               element.toWorkDate.toString();
-
           billGenerationDirectController.RemarksController.text =
               element.remarks.toString();
+          billGenerationDirectController.createdById.value=element.createdBy;
         });
       }
+      await billGenerationDirectController.DirectBill_CalculationList();
       if (billGenerationDirectController.saveButton.value == RequestConstant.SUBMIT) {
         await autoYearWiseNoController.AutoYearWiseNo("DIRECT BILL");
         billGenerationDirectController.autoYearWiseNoController.text =
@@ -116,6 +115,7 @@ class _Subcont_Nmr_EntryScreenState_Site
         billGenerationDirectController.Roundoff.text = "0";
         billGenerationDirectController.netpayamt.text = "0.0";
         billGenerationDirectController.tobededadv.text = billGenerationDirectController.to_be_dection_advance;
+        billGenerationDirectController.createdById.value=0;
       }
     });
     super.initState();
@@ -275,6 +275,60 @@ class _Subcont_Nmr_EntryScreenState_Site
                       ),
                       elevation: 3,
                       child: Padding(
+                        padding:
+                        const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                        child: TextFormField(
+                          autovalidateMode: AutovalidateMode.always,
+                          readOnly: true,
+                          controller: billGenerationDirectController.DirectBillTypeText,
+                          cursorColor: Colors.black,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: InputBorder.none,
+                            labelText: "Bill Type",
+                            labelStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: RequestConstant.Lable_Font_SIZE),
+                            prefixIconConstraints:
+                            BoxConstraints(minWidth: 0, minHeight: 0),
+                            prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 8),
+                                child: ConstIcons.billType),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                value == "--Select--" ||
+                                value == "--SELECT--") {
+                              return '\u26A0 ${RequestConstant.VALIDATE}';
+                            }
+                            return null;
+                          },
+                          onTap: () async {
+                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
+                            {}
+                            else{
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BillType_Alert();
+                                  });}
+
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.white70, width: 1),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 3,
+                      child: Padding(
                         padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
@@ -399,71 +453,15 @@ class _Subcont_Nmr_EntryScreenState_Site
                             if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
                             {}
                             else{
-                              await subcontractorController.getSubcontList(context,
-                              projectController.selectedProjectId.value,
-                              siteController.selectedsiteId.value,"billdirect");
-                              bottomsheetControllers.SubcontractorName(context,
-                              subcontractorController.getdropDownvalue.value);
-                          } },
+                              await subcontractorController.getSubcontList(context, projectController.selectedProjectId.value, siteController.selectedsiteId.value,"billdirect");
+                              bottomsheetControllers.SubcontractorName(context, subcontractorController.getdropDownvalue.value);
+                          }
+                            },
                           validator: (value) {
                             if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
                               return '\u26A0 ${RequestConstant.VALIDATE}';
                             }
                             return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5, left: 10, right: 10),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.white70, width: 1),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      elevation: 3,
-                      child: Padding(
-                        padding:
-                        const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.always,
-                          readOnly: true,
-                          controller: billGenerationDirectController.DirectBillTypeText,
-                          cursorColor: Colors.black,
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero,
-                            border: InputBorder.none,
-                            labelText: "Bill Type",
-                            labelStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: RequestConstant.Lable_Font_SIZE),
-                            prefixIconConstraints:
-                            BoxConstraints(minWidth: 0, minHeight: 0),
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 8),
-                                child: ConstIcons.billType),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                value == "--Select--" ||
-                                value == "--SELECT--") {
-                              return '\u26A0 ${RequestConstant.VALIDATE}';
-                            }
-                            return null;
-                          },
-                          onTap: () async {
-                            if(billGenerationDirectController.saveButton.value == RequestConstant.RESUBMIT || billGenerationDirectController.saveButton.value == RequestConstant.VERIFY || billGenerationDirectController.saveButton.value == RequestConstant.APPROVAL)
-                            {}
-                            else{
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return BillType_Alert();
-                                });}
-
                           },
                         ),
                       ),
@@ -757,7 +755,6 @@ class _Subcont_Nmr_EntryScreenState_Site
                       ),
                     ),
                     onTap: () {
-                      setState(() {
                         if(_formKey.currentState!.validate()){
                           _formKey.currentState!.save();
                           billGenerationDirectController.tobededadv.addListener(() {
@@ -768,7 +765,6 @@ class _Subcont_Nmr_EntryScreenState_Site
                               MaterialPageRoute(
                                   builder: (context) => Bill_Generation_Itemlist()));
                         }
-                      });
                     },
                   ),
                 ],

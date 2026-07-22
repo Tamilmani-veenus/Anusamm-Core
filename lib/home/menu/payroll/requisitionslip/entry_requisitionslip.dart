@@ -47,6 +47,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
        }
        reportsController.projectname.text  = "--SELECT--";
        reportsController.selectedProjectId.value = 0;
+       requisitionSlipController.createdById.value = 0;
        requisitionSlipController.LeaveReason.text = "";
        requisitionSlipController.Reason.text = "";
        requisitionSlipController.Fromdate.text = BaseUtitiles.initiateCurrentDateFormat();
@@ -80,6 +81,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
          requisitionSlipController.Reason.text=element.permissionReason;
          requisitionSlipController.LeaveReason.text = element.leaveReason;
          requisitionSlipController.Date.text = element.permissionFromDate;
+         requisitionSlipController.createdById.value = element.createdBy;
          requisitionSlipController.Totaldays.text=element.totalLeaveDays.toString();
          requisitionSlipController.Fromtime.text = element.permissionFromTime;
          requisitionSlipController.Totime.text = element.permissionToTime;
@@ -1724,70 +1726,65 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
   Future SubmitAlert(BuildContext context) async {
     return await showDialog(
       context: context,
-      builder: (context) => WillPopScope(
-        onWillPop: () async {
-          return requisitionSlipController.willPop;
-        },
-        child: AlertDialog(
-          title: const Text('Alert!'),
-          content: Text(
-              'Are you sure to ${requisitionSlipController.saveButton.value}?'),
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          "Cancel",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                          ),
+      builder: (context) => AlertDialog(
+        title: const Text('Alert!'),
+        content: Text(
+            'Are you sure to ${requisitionSlipController.saveButton.value}?'),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: RequestConstant.Lable_Font_SIZE,
                         ),
                       ),
                     ),
-                    VerticalDivider(
-                      color: Colors.grey.shade400,
-                      width: 5,
-                      thickness: 2,
-                      indent: 15,
-                      endIndent: 15,
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () async {
-                             if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
-                             await requisitionSlipController.SaveButtonStaffReqScreen(
-                               context,
-                               requisitionSlipController.reqId
-                             );
-                           }
-                        },
-                        child: Text(
-                          requisitionSlipController.saveButton.value,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                          ),
+                  ),
+                  VerticalDivider(
+                    color: Colors.grey.shade400,
+                    width: 5,
+                    thickness: 2,
+                    indent: 15,
+                    endIndent: 15,
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () async {
+                           if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
+                           await requisitionSlipController.SaveButtonStaffReqScreen(
+                             context,
+                             requisitionSlipController.reqId
+                           );
+                         }
+                      },
+                      child: Text(
+                        requisitionSlipController.saveButton.value,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: RequestConstant.Lable_Font_SIZE,
                         ),
                       ),
+                    ),
 
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

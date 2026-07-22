@@ -117,8 +117,7 @@ class _DailyWork_done_DPR_MaterialState
                                   .getMaterialName();
                               bottomsheetControllers.MaterialName(
                                   context,
-                                  dailyWrkDone_DPRNEW_Controller
-                                      .MaterialApiList.value);
+                                  dailyWrkDone_DPRNEW_Controller.MaterialApiList.value);
                             },
                             validator: (value) {
                               if (value!.isEmpty || value == "--SELECT--") {

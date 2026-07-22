@@ -62,7 +62,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
           consumption_controller.expenseType = element.expenseType!;
           consumption_controller.Consum_preparedbyController.text=element.createdName!;
           consumption_controller.Consum_RemarksController.text=element.remarks!;
-
+          consumption_controller.createdById.value=element.createdBy!;
         });
       }
 
@@ -79,6 +79,7 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
         consumption_controller.expenseTypeController.text = "--SELECT--";
         consumption_controller.expenseType = "0";
         consumption_controller.Consum_RemarksController.text = "";
+        consumption_controller.createdById.value=0;
         consumption_controller.Consum_itemview_GetDbList.clear();
         await autoYearWiseNoController.AutoYearWiseNo("CONSUMPTION");
         await projectController.getProjectList();

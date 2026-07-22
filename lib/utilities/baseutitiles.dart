@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../models/boqrevised_itemlist_model.dart';
+import '../models/labourDashboard_model.dart';
 
 String? punchStatus;
 bool punchIn = false;
@@ -411,6 +412,37 @@ class BaseUtitiles {
             item.fromWorkDate.toString().toUpperCase().contains(value) ||
             item.toWorkDate.toString().toLowerCase().contains(value) ||
             item.toWorkDate.toString().toUpperCase().contains(value) ||
+            item.siteName.toString().toLowerCase().contains(value) ||
+            item.siteName.toString().toUpperCase().contains(value) ||
+            item.createdName.toString().toLowerCase().contains(value) ||
+            item.createdName.toString().toUpperCase().contains(value) ) {
+          dummyListData.add(item);
+        }
+      }
+      return dummyListData;
+    } else {
+      return list;
+    }
+  }
+
+  static filterSearchResults_workOrderDirect(
+      String value,
+      List list,
+      ) {
+    dummyListData.clear();
+
+    if (value.isNotEmpty) {
+      for (var item in list) {
+        if (item.entryDate.toString().toLowerCase().contains(value) ||
+            item.entryDate.toString().toUpperCase().contains(value) ||
+            item.workOrderNo.toString().toLowerCase().contains(value) ||
+            item.workOrderNo.toString().toUpperCase().contains(value) ||
+            item.subContractorName.toString().toLowerCase().contains(value) ||
+            item.subContractorName.toString().toUpperCase().contains(value) ||
+            item.projectName.toString().toLowerCase().contains(value) ||
+            item.projectName.toString().toUpperCase().contains(value) ||
+            item.netAmount.toString().toLowerCase().contains(value) ||
+            item.netAmount.toString().toUpperCase().contains(value) ||
             item.siteName.toString().toLowerCase().contains(value) ||
             item.siteName.toString().toUpperCase().contains(value) ||
             item.createdName.toString().toLowerCase().contains(value) ||
@@ -1072,21 +1104,23 @@ class BaseUtitiles {
   }
 
 
-  static companyPopupAlert(String value,list)  {
-    dummyListData.value.clear();
-    if (value.isNotEmpty) {
-      list.forEach((item) {
-        if (item.company.toString().toLowerCase().contains(value) ||
-            item.company.toString().toUpperCase().contains(value))
-        {
-          dummyListData.value.add(item);
-        }
-      });
-      return  dummyListData.value;
+  static companyPopupAlert(String value, List list) {
+    dummyListData.clear();
+
+    if (value.trim().isEmpty) {
+      return list;
     }
-    else {
-      return  list;
+
+    final search = value.toLowerCase();
+
+    for (var item in list) {
+      if (item.companyName.toString().toLowerCase().contains(search) ||
+          item.companyName.toString().toLowerCase().contains(search)) {
+        dummyListData.add(item);
+      }
     }
+
+    return dummyListData;
   }
 
   static subcontLabAttendPopupAlert(String value,list)  {
@@ -1250,8 +1284,8 @@ class BaseUtitiles {
     dummyListData.value.clear();
     if (value.isNotEmpty) {
       list.forEach((item) {
-        if (item.materialName.toString().toLowerCase().contains(value) ||
-            item.materialName.toString().toUpperCase().contains(value))
+        if (item["materialName"].toString().toLowerCase().contains(value) ||
+            item["materialName"].toString().toUpperCase().contains(value))
         {
           dummyListData.value.add(item);
         }
@@ -1681,11 +1715,13 @@ class BaseUtitiles {
 
   static String amountFormat(double value) {
     final numberFormatter = NumberFormat(
-      "##,##,###",
+      "##,##,##0.00",
       "en_IN", // local US
     ).format(value);
     return numberFormatter;
   }
+
+
 
 }
 

@@ -60,9 +60,8 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
           transferBt_Site_Controller.ReqNoText.text = element.reqOrdNo;
           subcontractorController.Subcontractorname.text="--SELECT--";
           subcontractorController.selectedSubcontId.value=0;
+          transferBt_Site_Controller.createdById.value=0;
           transferBt_Site_Controller.remarksText.text="";
-
-
         });
       }
      if(transferBt_Site_Controller.saveButton.value == RequestConstant.RESUBMIT){
@@ -80,6 +79,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
          subcontractorController.Subcontractorname.text=element.subcontractName == null ? "--SELECT--" : element.subcontractName;
          subcontractorController.selectedSubcontId.value=element.subContractId;
          transferBt_Site_Controller.remarksText.text=element.remarks.toString();
+         transferBt_Site_Controller.createdById.value=element.createdBy;
          transferBt_Site_Controller.radioValue.value=element.transferType==1?"transfer_usage":"transfer";
        });
      }
@@ -98,6 +98,7 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
         transferBt_Site_Controller.itemlistTable_Delete();
         transferBt_Site_Controller.ItemGetTableListdata.value=[];
         transferBt_Site_Controller.remarksText.text="";
+        transferBt_Site_Controller.createdById.value=0;
         transferBt_Site_Controller.autoyrwiseText.text=autoYearWiseNoController.TransferBetSiteautoYrsWise.toString();
         transferBt_Site_Controller.entryDateText.text=BaseUtitiles.initiateCurrentDateFormat();
         transferBt_Site_Controller.prearedbyText.text=loginController.EmpName();
@@ -1128,7 +1129,6 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                         onPressed: () async {
                            if (await BaseUtitiles.checkNetworkAndShowLoader(context)) {
                           transferBt_Site_Controller.getItemlistTablesDatas();
-                          print("SSSSSS...${transferBt_Site_Controller.saveButton.value}");
                           transferBt_Site_Controller.Save_EntryScreen(context,transferBt_Site_Controller.transId);
                           }
                            },

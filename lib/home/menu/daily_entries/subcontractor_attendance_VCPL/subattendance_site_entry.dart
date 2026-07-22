@@ -72,6 +72,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
         subcontractorController.Subcontractorname.text = "--SELECT--";
         subcontractorController.selectedSubcontId.value = 0;
         dailyEntriesController.attendId = 0;
+        dailyEntriesController.createdById.value = 0;
         dailyEntriesController.AttendDateController.text = BaseUtitiles.initiateCurrentDateFormat();
         dailyEntriesController.RemarksController.text = "";
         dailyEntriesController.WorkTypeTextController.text = "NMR";
@@ -90,7 +91,8 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
           subcontractorController.selectedSubcontId.value = element.subcontractorId;
           siteController.Sitename.text = element.siteName;
           siteController.selectedsiteId.value = element.siteId;
-          dailyEntriesController.WorkTypeTextController.text = element.workType! == "N" ? "NMR" : element.workType! == "R" ? "RATE" : "".toUpperCase();
+          dailyEntriesController.createdById.value = element.createdBy;
+          dailyEntriesController.WorkTypeTextController.text = element.workType! == "N" ? "NMR" : element.workType! == "R" ? "RATE" : element.workType! == "W" ? "NO WORK":"".toUpperCase();
           dailyEntriesController.Nmr_Rate.value = element.workType!;
           dailyEntriesController.RemarksController.text = element.remarks==null?"-":element.remarks;
         });
@@ -536,12 +538,12 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         vertical: 8, horizontal: 8),
                                     child: ConstIcons.remarks),
                               ),
-                              // validator: (value) {
-                              //   if (value!.isEmpty) {
-                              //     return '\u26A0 ${RequestConstant.VALIDATE}';
-                              //   }
-                              //   return null;
-                              // },
+                              validator: (value) {
+                                if (value!.isEmpty && dailyEntriesController.WorkTypeTextController.text == "NO WORK") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ),
@@ -562,7 +564,12 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                   onPressed: () async {
                                     if (_formkey.currentState!.validate()) {
                                       _formkey.currentState!.save();
-                                        dailyEntriesController.getShowClickPopList(context);
+                                      if(dailyEntriesController.WorkTypeTextController.text == "NO WORK"){
+                                        Fluttertoast.showToast(msg: "Labour Details cannot be added for 'NO WORK'.");
+                                      }else {
+                                        dailyEntriesController
+                                            .getShowClickPopList(context);
+                                      }
                                     }
                                   },
                                   child: Row(
@@ -605,23 +612,26 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                               "Image can't add in approve stage");
                                     } else if (dailyEntriesController
                                             .WorkTypeTextController.text ==
-                                        "No Work") {
+                                        "NO WORK") {
                                       Fluttertoast.showToast(
-                                          msg: "No Work can't add Image");
+                                          msg: "Image cannot be added for 'NO WORK'.");
                                     } else {
-                                      // showDialog(
-                                      //     context: context,
-                                      //     builder: (BuildContext context) {
-                                      //       return const ImageGalleryPopup_Alert(imageUrl: "DLR");
-                                      //     });
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => CameraCapturePage(
-                                                  fromScreen:
-                                                      "Subcontractor Attendance",
-                                                )),
-                                      );
+                                      if (!AppClient.isPrahkurti) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => CameraCapturePage(
+                                                fromScreen:
+                                                "Subcontractor Attendance",
+                                              )),
+                                        );
+                                      }else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return const ImageGalleryPopup_Alert(imageUrl: "DLR");
+                                            });
+                                      }
                                     }
                                   },
                                   child: Row(
@@ -884,7 +894,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                       onTap: () {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
-                          if (dailyEntriesController.readListdata.isEmpty) {
+                          if (dailyEntriesController.readListdata.isEmpty && dailyEntriesController.WorkTypeTextController.text != "NO WORK") {
                             Fluttertoast.showToast(msg: "Please add labour details");
                           } else {
                             bool hasInvalid = false;
