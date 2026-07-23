@@ -29,10 +29,11 @@ class NmrSaveRequest {
   double? actualAdvanceAmount;
   double? roundOff;
   double? netPayAmount;
-  double? balanceAmount;
+  double? netBillAmount;
+  // double? balanceAmount;
   String? remarks;
   int? createdBy;
-  String? createdDt;
+  // String? createdDt;
   String? verifyStatus;
   String? approveStatus;
   List<SubContractorNmrBillDet>? subContractorNmrBillDetS;
@@ -59,10 +60,11 @@ class NmrSaveRequest {
     this.actualAdvanceAmount,
     this.roundOff,
     this.netPayAmount,
-    this.balanceAmount,
+    this.netBillAmount,
+    // this.balanceAmount,
     this.remarks,
     this.createdBy,
-    this.createdDt,
+    // this.createdDt,
     this.verifyStatus,
     this.approveStatus,
     this.subContractorNmrBillDetS,
@@ -90,10 +92,11 @@ class NmrSaveRequest {
     actualAdvanceAmount: json["actualAdvanceAmount"],
     roundOff: json["roundOff"],
     netPayAmount: json["netPayAmount"],
-    balanceAmount: json["balanceAmount"],
+    netBillAmount: json["netBillAmount"],
+    // balanceAmount: json["balanceAmount"],
     remarks: json["remarks"],
     createdBy: json["createdBy"],
-    createdDt: json["createdDt"],
+    // createdDt: json["createdDt"],
     verifyStatus: json["verifyStatus"],
     approveStatus: json["approveStatus"],
     subContractorNmrBillDetS: List<SubContractorNmrBillDet>.from(json["subContractorNMRBillDetS"].map((x) => SubContractorNmrBillDet.fromJson(x))),
@@ -121,10 +124,11 @@ class NmrSaveRequest {
     "actualAdvanceAmount": actualAdvanceAmount,
     "roundOff": roundOff,
     "netPayAmount": netPayAmount,
-    "balanceAmount": balanceAmount,
+    "netBillAmount": netBillAmount,
+    // "balanceAmount": balanceAmount,
     "remarks": remarks,
     "createdBy": createdBy,
-    "createdDt": createdDt,
+    // "createdDt": createdDt,
     "verifyStatus": verifyStatus,
     "approveStatus": approveStatus,
     "subContractorNMRBillDetS": List<dynamic>.from(subContractorNmrBillDetS!.map((x) => x.toJson())),

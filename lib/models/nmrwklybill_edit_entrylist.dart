@@ -43,6 +43,7 @@ class Result {
   String? toDate;
   String? billNo;
   double? billAmount;
+  double? netBillAmount;
   double? foodAmount;
   double? bankCharges;
   double? debitAmount;
@@ -59,6 +60,7 @@ class Result {
   String? siteName;
   String? subContractorName;
   String? createdName;
+  int? createdBy;
   String? status;
   dynamic appSts;
   dynamic verSts;
@@ -76,6 +78,7 @@ class Result {
     this.toDate,
     this.billNo,
     this.billAmount,
+    this.netBillAmount,
     this.foodAmount,
     this.bankCharges,
     this.debitAmount,
@@ -95,6 +98,7 @@ class Result {
     this.status,
     this.appSts,
     this.verSts,
+    this.createdBy,
     this.subContractorNmrBillDetS,
     this.subContractorNmrBillAddLessSetupS,
   });
@@ -110,6 +114,7 @@ class Result {
     toDate: json["toDate"],
     billNo: json["billNo"],
     billAmount: json["billAmount"],
+    netBillAmount: json["netBillAmount"],
     foodAmount: json["foodAmount"],
     bankCharges: json["bankCharges"],
     debitAmount: json["debitAmount"],
@@ -129,6 +134,7 @@ class Result {
     status: json["status"],
     appSts: json["appSts"],
     verSts: json["verSts"],
+    createdBy: json["createdBy"],
     subContractorNmrBillDetS: List<SubContractorNmrBillDet>.from(json["subContractorNMRBillDetS"].map((x) => SubContractorNmrBillDet.fromJson(x))),
     subContractorNmrBillAddLessSetupS: List<SubContractorNmrBillAddLessSetup>.from(json["subContractorNMRBillAddLessSetupS"].map((x) => SubContractorNmrBillAddLessSetup.fromJson(x))),
   );
@@ -144,6 +150,7 @@ class Result {
     "toDate": toDate,
     "billNo": billNo,
     "billAmount": billAmount,
+    "netBillAmount": netBillAmount,
     "foodAmount": foodAmount,
     "bankCharges": bankCharges,
     "debitAmount": debitAmount,
@@ -163,6 +170,7 @@ class Result {
     "status": status,
     "appSts": appSts,
     "verSts": verSts,
+    "createdBy": createdBy,
     "subContractorNMRBillDetS": List<dynamic>.from(subContractorNmrBillDetS!.map((x) => x.toJson())),
     "subContractorNMRBillAddLessSetupS": List<dynamic>.from(subContractorNmrBillAddLessSetupS!.map((x) => x.toJson())),
   };

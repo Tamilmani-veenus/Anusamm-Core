@@ -29,6 +29,7 @@ class Bill_Generation_Boq_EntryScreen extends StatefulWidget {
 class _Bill_Generation_Boq_EntryScreenState_Site
     extends State<Bill_Generation_Boq_EntryScreen> {
   ProjectController projectController = Get.put(ProjectController());
+
   SubcontractorController subcontractorController =
   Get.put(SubcontractorController());
   SiteController siteController = Get.put(SiteController());
@@ -50,7 +51,6 @@ class _Bill_Generation_Boq_EntryScreenState_Site
 
       if (billGenerationBoqController.saveButton.value == RequestConstant.RESUBMIT || billGenerationBoqController.saveButton.value == RequestConstant.VERIFY || billGenerationBoqController.saveButton.value == RequestConstant.APPROVAL) {
         billGenerationBoqController.bill_editListApiDatas.forEach((element) {
-
           billGenerationBoqController.workid = element.id!;
           billGenerationBoqController.autoYearWiseNoController.text = element.workNo.toString();
           billGenerationBoqController.billentryDateController.text = element.workDate.toString();
@@ -72,8 +72,11 @@ class _Bill_Generation_Boq_EntryScreenState_Site
           billGenerationBoqController.FromdateController.text = element.fromWorkDate.toString();
           billGenerationBoqController.TodateController.text = element.toWorkDate.toString();
           billGenerationBoqController.RemarksController.text = element.remarks.toString();
+          billGenerationBoqController.createdById.value = element.createdBy;
         });
       }
+      await billGenerationBoqController.DirectBill_CalculationList();
+
       if (billGenerationBoqController.saveButton.value == RequestConstant.SUBMIT) {
         await autoYearWiseNoController.AutoYearWiseNo("BILL BOQ");
         billGenerationBoqController.autoYearWiseNoController.text =
@@ -113,13 +116,12 @@ class _Bill_Generation_Boq_EntryScreenState_Site
         billGenerationBoqController.Advded.text = billGenerationBoqController.tobededadv.text;
         billGenerationBoqController.Roundoff.text = "0";
         billGenerationBoqController.netpayamt.text = "0.0";
+        billGenerationBoqController.createdById.value = 0;
         billGenerationBoqController.tobededadv.text = billGenerationBoqController.to_be_dection_advance;
       }
     });
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -233,8 +235,8 @@ class _Bill_Generation_Boq_EntryScreenState_Site
                               var Entrydate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime(1900),
-                                  lastDate: DateTime(2100),
+                                  firstDate: DateTime(2010),
+                                  lastDate: DateTime.now(),
                                   builder: (context, child) {
                                     return Theme(
                                       data: Theme.of(context).copyWith(

@@ -88,9 +88,6 @@ class MRN_Request_Controller extends GetxController {
   bool get isSubmit => saveButton.value == RequestConstant.SUBMIT;
   bool get isVerify => saveButton.value == RequestConstant.VERIFY;
   bool get isResubmit => saveButton.value == RequestConstant.RESUBMIT;
-  bool get isPreApprove => saveButton.value == RequestConstant.PREAPPROVAL;
-  bool get isFinalApprove => saveButton.value == RequestConstant.APPROVAL;
-
 
 
   Future getMrn_Req_EntryList() async {

@@ -50,6 +50,7 @@ class _TrasferBetweenProjects_EntryState
       transferBW_project_Controller.AgTransReqMasid.value=0;
 
       if (transferBW_project_Controller.type.value == "Against Mrn Approval" && transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
+      print("AAAAAA");
        await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
        transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
        transferBW_project_Controller.vechicleNoText.text = "";
@@ -69,9 +70,11 @@ class _TrasferBetweenProjects_EntryState
         projectController.selectedProjectIdAll.value = transferBW_project_Controller.transferAllDatasList[0].toProjectId;
        transferBW_project_Controller.prearedbyText.text = loginController.EmpName();
        transferBW_project_Controller.AgMRNAppreqMasid.value=transferBW_project_Controller.transferAllDatasList[0].reqMasid;
+       transferBW_project_Controller.createdById.value =0;
       }
 
       else if (transferBW_project_Controller.type.value == "Against Transfer Request" && transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
+        print("BBBBBB");
         await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
         transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
         transferBW_project_Controller.vechicleNoText.text = "";
@@ -102,9 +105,11 @@ class _TrasferBetweenProjects_EntryState
           transferBW_project_Controller.prearedbyText.text = loginController.EmpName();
           transferBW_project_Controller.AgTransReqMasid.value =
               transferBW_project_Controller.transferAllDatasList[0].id;
+        transferBW_project_Controller.createdById.value = 0;
       }
 
       else if (transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
+        print("CCCCC");
         await transferBW_project_Controller.itemlistTable_Delete();
         await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
         transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
@@ -125,10 +130,12 @@ class _TrasferBetweenProjects_EntryState
         transferBW_project_Controller.transportAmtText.text = "0.0";
         transferBW_project_Controller.remarksText.text = "";
         transferBW_project_Controller.appNoText.text="";
+        transferBW_project_Controller.createdById.value = 0;
         transferBW_project_Controller.ItemGetTableListdata.value = [];
       }
 
       else if (transferBW_project_Controller.saveButton.value == RequestConstant.RESUBMIT) {
+        print("DDDDD");
         transferBW_project_Controller.editListApiDatas.forEach((element) {
           transferBW_project_Controller.transferId = element.id!;
           transferBW_project_Controller.autoyrwiseText.text =
@@ -156,14 +163,14 @@ class _TrasferBetweenProjects_EntryState
           transferBW_project_Controller.dcNoText.text = element.dcNo.toString();
           transferBW_project_Controller.remarksText.text =
               element.remarks.toString();
-          transferBW_project_Controller.prearedbyText.text =
-              element.createdName.toString();
-          transferBW_project_Controller.transportAmtText.text =
-              element.totalAmount.toString();
+
+
           transferBW_project_Controller.transportCostText.text =
               element.transportAmount.toString();
           transferBW_project_Controller.AgTransReqMasid.value=element.matTransReqMasId!;
           transferBW_project_Controller.AgMRNAppreqMasid.value=element.matReqMasId!;
+          transferBW_project_Controller.createdById.value =element.createdBy!;
+
         });
       }
     });

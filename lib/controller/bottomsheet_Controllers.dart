@@ -461,11 +461,13 @@ class BottomsheetControllers {
                               await billGenerationDirectController
                                   .getWorkOrderList(
                                       "ItemListDet", type, todate);
+                              await billGenerationDirectController.DirectBill_CalculationList(type: "WorkOrder");
                             } else if (type == "BILL BOQ") {
                               await billGenerationBoqController
                                   .getWorkOrderList("ItemListDet", todate);
                               await billGenerationBoqController
                                   .getNmrAdvance();
+                              await billGenerationBoqController.DirectBill_CalculationList(type: "WorkOrder");
                             }
                             Navigator.pop(context);
                           },
@@ -1391,6 +1393,8 @@ class BottomsheetControllers {
                               projectcontroller.selectedProjectId.value,
                               subcontractorController.selectedSubcontId.value);
                           await billGenerationDirectController.getNmrAdvance();
+                          await billGenerationDirectController.DirectBill_CalculationList(type: "Subcont");
+                          await nmrWklyController.DirectBill_CalculationList(type: "Subcont");
                           Navigator.pop(context);
                         },
                       ),
@@ -2687,13 +2691,11 @@ class BottomsheetControllers {
                     },
                     textInputAction: TextInputAction.search,
                     onChanged: (value) {
-                      dailyWrkDone_DPRNEW_Controller.mainlist.value =
+                      list =
                           BaseUtitiles.materialName_DPRNew(
                               value,
                               dailyWrkDone_DPRNEW_Controller
                                   .MaterialApiList.value);
-
-                      // dailyWrkDone_DPRNEW_Controller.MaterialApiLIst.value = BaseUtitiles.materialNamePopupAlert(value,dailyWrkDone_DPRNEW_Controller.mainlist.value);
                     },
                   ),
                 ),
@@ -3314,13 +3316,14 @@ class BottomsheetControllers {
                     ),
                     onEditingComplete: () {
                       FocusScope.of(context).unfocus();
-                      // if (onSearch != null) onSearch!(searchcontroller.text);
                     },
                     textInputAction: TextInputAction.search,
                     onChanged: (value) {
-                      list = BaseUtitiles.companyPopupAlert(value,
-                          companycontroller.getdropDownvalue_Companywise.value);
-                    },
+                        list = BaseUtitiles.companyPopupAlert(
+                          value,
+                          companycontroller.getdropDownvalue.value,
+                        );
+                        },
                   ),
                 ),
                 SizedBox(width: 20),
@@ -3367,7 +3370,7 @@ class BottomsheetControllers {
                           margin: EdgeInsets.only(left: 10),
                           alignment: Alignment.center,
                           child: Text(
-                  type=="mrnReqTracker"?list[index]["companyName"].toString():list[index].company.toString(),
+                  type=="mrnReqTracker"?list[index]["companyName"].toString():list[index].companyName.toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: RequestConstant.Lable_Font_SIZE,
@@ -3388,14 +3391,9 @@ class BottomsheetControllers {
                           }
                           else {
                             companycontroller.CompanyName.text =
-                                list[index].company.toString();
+                                list[index].companyName.toString();
                             companycontroller.selectedCompanyId.value =
-                                list[index].companyid;
-                            await companycontroller.getProjectList_CompanyWise(
-                                context, 0);
-                            // await expensesController.getSupplierOS_ExpensesList();
-                            // await expensesController.totalAmt();
-                            // await expensesController.getSubcontractor_ExpensesList();
+                                list[index].id;
                             expensesController.update();
                           }
                           searchcontroller.text = "";

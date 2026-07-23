@@ -62,6 +62,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
         advanceReqVoucherController_new.remarksController.text = "";
         advanceReqVoucherController_new.entry_amount.text = "0.0";
         advanceReqVoucherController_new.listButton.value = "List";
+        advanceReqVoucherController_new.createdById.value = 0;
         await autoYearWiseNoController.AutoYearWiseNo("ADVANCE REQ VOUCHER");
         advanceReqVoucherController_new.autoYearWiseNoController.text = autoYearWiseNoController.AdvReqautoYrsWise.value;
 
@@ -92,6 +93,7 @@ class _AdvReq_voucher_NewState extends State<AdvReq_voucher_New> {
               : "Sitewise List";
           advanceReqVoucherController_new.entry_amount.text =
               element.advanceReqVoucherAmount.toString();
+          advanceReqVoucherController_new.createdById.value = element.createdBy;
         });
       }
     });

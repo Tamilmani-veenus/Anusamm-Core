@@ -47,6 +47,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
         subcontractorController.Subcontractorname.text="--SELECT--";
         subcontractorController.selectedSubcontId.value=0;
         subcontractorController.InvoiceNo.text = "";
+        nmrWklyController.createdById.value = 0;
         nmrWklyController.RemarksController.text = "";
         nmrWklyController.NmrentryDateController.text = BaseUtitiles.initiateCurrentDateFormat();
         nmrWklyController.FromdateController.text=BaseUtitiles.initiateCurrentDateFormat();
@@ -54,6 +55,8 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
         await autoYearWiseNoController.AutoYearWiseNo("NMR WEEKLY BILL");
         nmrWklyController.autoYearWiseNoController.text=autoYearWiseNoController.NMR_autoYrsWise.value;
       }
+
+      await nmrWklyController.DirectBill_CalculationList();
 
       if(nmrWklyController.saveButton.value == RequestConstant.RESUBMIT || nmrWklyController.saveButton.value == RequestConstant.VERIFY || nmrWklyController.saveButton.value == RequestConstant.APPROVAL){
         nmrWklyController.EditListSaveDatas.value.forEach((element) {
@@ -70,6 +73,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
           nmrWklyController.FromdateController.text=element.fromDate!;
           nmrWklyController.TodateController.text=element.toDate!;
           nmrWklyController.RemarksController.text=element.remarks!;
+          nmrWklyController.createdById.value = element.createdBy;
         });
       }
     });

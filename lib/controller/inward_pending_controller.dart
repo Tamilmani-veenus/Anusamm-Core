@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:anusamm/controller/punch_in_controller.dart';
 import '../db_model/inwardpending_itemlist_table_model.dart';
@@ -90,6 +91,7 @@ class InwardPending_Controller extends GetxController
   RxInt netWorkImageCount = 0.obs;
   RxInt pickedImageCount = 0.obs;
   RxInt count = 0.obs;
+  RxInt createdById = 0.obs;
 
   int projectId = 0;
   int siteId = 0;
@@ -463,8 +465,8 @@ class InwardPending_Controller extends GetxController
       vechileName: InwardVechileNoText.text,
       driverName: InwardDriverNameText.text,
       remarks: InwardRemarksText.text,
-      createdBy: int.tryParse(loginController.EmpId()),
-      createdDt: BaseUtitiles().convertToUtcIso(InwardEntryDateText.text),
+      createdBy: saveButton.value == RequestConstant.RESUBMIT?createdById.value:int.tryParse(loginController.EmpId()),
+      // createdDt: saveButton.value == RequestConstant.RESUBMIT?null:BaseUtitiles().convertToUtcIso(InwardEntryDateText.text),
       selectedNo: saveButton.value == RequestConstant.RESUBMIT
           ? editListApiDatas[0].selectedNo
           : type == "INWARD PENDING - WO"
@@ -505,7 +507,7 @@ class InwardPending_Controller extends GetxController
     for (int i = 0; i < ItemGetTableListdata.length; i++) {
       final element = ItemGetTableListdata[i];
 
-      if (element.inwQty > 0) {
+      // if (element.inwQty > 0) {
         var list = InwardDet(
             id: saveButton.value == RequestConstant.RESUBMIT
                 ? (i < editListApiDatas.length
@@ -532,7 +534,7 @@ class InwardPending_Controller extends GetxController
                 : "N".toString().trim());
 
         getInwardDetList.add(list);
-      }
+      // }
     }
 
     return getInwardDetList;
@@ -600,15 +602,21 @@ class InwardPending_Controller extends GetxController
       if (value != null) {
         if (value.success == true) {
           editListApiDatas.value = value.result!;
-          saveButton.value = RequestConstant.RESUBMIT;
-          EditTable_SaveTable();
-          getItemlistTablesDatas();
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Inward_entry(
-                        heading: MenuName,
-                      )));
+          if(value.result!.isNotEmpty) {
+            saveButton.value = RequestConstant.RESUBMIT;
+            EditTable_SaveTable();
+            getItemlistTablesDatas();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Inward_entry(
+                          heading: MenuName,
+                        )));
+          }
+          else {
+            BaseUtitiles.showToast(value.message ?? 'Something went wrong..');
+          }
         } else {
           BaseUtitiles.showToast(value.message ?? 'Something went wrong..');
         }
@@ -699,13 +707,10 @@ class InwardPending_Controller extends GetxController
                     child: TextButton(
                       onPressed: () async {
                         bool result = await EntryList_DeleteApi(
-                            inwardEtyList.value[index].id);
+                            inwardEtyList[index].id);
                         if (result) {
                           itemlistTable_Delete();
-                          ItemGetTableListdata.value = [];
-                          inwardEtyList.value.removeAt(index);
-                          update();
-                          await getInward_EntryList();
+                          inwardEtyList.removeAt(index);
                           Navigator.of(context).pop();
                         } else {
                           Navigator.of(context).pop();

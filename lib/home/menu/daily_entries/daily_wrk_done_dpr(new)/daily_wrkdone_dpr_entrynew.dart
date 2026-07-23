@@ -15,6 +15,7 @@ import '../../../../controller/projectcontroller.dart';
 import '../../../../controller/sitecontroller.dart';
 import '../../../../controller/subcontcontroller.dart';
 import '../../../../home/menu/daily_entries/daily_wrk_done_dpr/type_subcont_alert.dart';
+import '../../../../utilities/apiconstant.dart';
 import '../../../../utilities/baseutitiles.dart';
 import '../../../../utilities/image_view.dart';
 import '../../../../utilities/requestconstant.dart';
@@ -64,6 +65,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
         dailyWrkDone_DPR_Controller.TypeSubcontId.value=0;
         siteController.headNameController.text = "--SELECT--";
         siteController.selectedHeadId.value=0;
+        dailyWrkDone_DPRNEW_Controller.createdById.value=0;
         dailyWrkDone_DPRNEW_Controller.dpr_new_preparedbyController.text=loginController.EmpName();
         dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController.text="";
         await autoYearWiseNoController.AutoYearWiseNo("DPR NEW");
@@ -113,6 +115,7 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
           dailyWrkDone_DPR_Controller.entryType=element.entryType;
           siteController.headNameController.text = element.headItemName;
           siteController.selectedHeadId.value=element.headItemId;
+          dailyWrkDone_DPRNEW_Controller.createdById.value=element.createdBy;
           dailyWrkDone_DPRNEW_Controller.dpr_new_preparedbyController.text=element.createdName;
           dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController.text=element.remarks;
         });
@@ -128,529 +131,518 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width * 100/100;
     final double height = MediaQuery.of(context).size.height * 50/100;
-    return WillPopScope(
-      onWillPop: () async {
-        await dailyWrkDone_DPRNEW_Controller.dpr_New_getEntryList();
-        return true;
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
       },
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus &&
-              currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          }
-        },
-        child: Form(
-          key: _formKey,
-          child: SafeArea(
-            top: false,
-            child: Scaffold(
-              backgroundColor: Setmybackground,
-              body: Stack(
-                children: [
-                  SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 40),
-                        Container(
-                          margin: const EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                               Expanded(
-                                 child: Text(
-                                  widget.heading,
-                                  style: TextStyle(
-                                      fontSize: dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
-                                      fontWeight: FontWeight.bold),
-                                                               ),
-                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    dailyWrkDone_DPRNEW_Controller.dpr_New_getEntryList();
-                                    dailyWrkDone_DPRNEW_Controller.dprnew_ClearData();
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    "Back",
-                                    style: TextStyle(color: Colors.grey, fontSize: 18),
-                                  ))
-                            ],
-                          ),
+      child: Form(
+        key: _formKey,
+        child: SafeArea(
+          top: false,
+          child: Scaffold(
+            backgroundColor: Setmybackground,
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 40),
+                      Container(
+                        margin: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                             Expanded(
+                               child: Text(
+                                widget.heading,
+                                style: TextStyle(
+                                    fontSize: dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL ? 16 : RequestConstant.Heading_Font_SIZE,
+                                    fontWeight: FontWeight.bold),
+                                                             ),
+                             ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "Back",
+                                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                                ))
+                          ],
                         ),
+                      ),
 
-                        Container(
-                          margin: const EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                readOnly: true,
-                                controller: dailyWrkDone_DPRNEW_Controller.autoYearWiseNoController,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Entry No",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.requestNo),
-                                ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: dailyWrkDone_DPRNEW_Controller.autoYearWiseNoController,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Entry No",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.requestNo),
                               ),
                             ),
                           ),
                         ),
+                      ),
 
-                        Container(
-                          margin: EdgeInsets.only(top: 2, right: 10, left: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                readOnly: true,
-                                controller: dailyWrkDone_DPRNEW_Controller.dateController,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Date",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.date),
-                                ),
-                                onTap: () async {
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
-                                  }
-                                  else{
-                                    var Entrydate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime.now().subtract(Duration(days: 2)),
-                                        lastDate: DateTime.now(),
-                                        builder: (context, child) {
-                                          return Theme(data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
-                                              primary: Theme.of(context).primaryColor, // header background color
-                                              onPrimary: Colors.white, // header text color
-                                              onSurface: Colors.black, // body text color
-                                            ),
-                                            textButtonTheme: TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                primary: Colors.black, // button text color
-                                              ),
+                      Container(
+                        margin: EdgeInsets.only(top: 2, right: 10, left: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: dailyWrkDone_DPRNEW_Controller.dateController,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Date",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.date),
+                              ),
+                              onTap: () async {
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+                                }
+                                else{
+                                  var Entrydate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now().subtract(Duration(days: 2)),
+                                      lastDate: DateTime.now(),
+                                      builder: (context, child) {
+                                        return Theme(data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: Theme.of(context).primaryColor, // header background color
+                                            onPrimary: Colors.white, // header text color
+                                            onSurface: Colors.black, // body text color
+                                          ),
+                                          textButtonTheme: TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              primary: Colors.black, // button text color
                                             ),
                                           ),
-                                            child: child!,
-                                          );
+                                        ),
+                                          child: child!,
+                                        );
+                                      });
+                                  dailyWrkDone_DPRNEW_Controller.dateController.text = BaseUtitiles.selectDateFormat(Entrydate!);
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15)),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              readOnly: true,
+                              controller: projectController.projectname,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Project Name",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.projectName),
+                              ),
+                              onTap: () async {
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+
+                                }else{
+                                  await projectController.getProjectList();
+                                  bottomsheetControllers.ProjectName(context, projectController.getdropDownvalue.value );
+                                }
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              readOnly: true,
+                              controller: siteController.Sitename,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: RequestConstant.SITE_NAME,
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.siteName),
+                              ),
+                              onTap: () {
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL) {
+
+                                }else{
+                                    bottomsheetControllers.SiteName(context, siteController.getSiteDropdownvalue.value );
+                                }
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              readOnly: true,
+                              controller: dailyWrkDone_DPR_Controller.entryTypeController,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "TYPE",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.types),
+                              ),
+                              onTap: () {
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+
+                                }
+                                else{
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return  EntryTypeAlert_DPR_New();
                                         });
-                                    dailyWrkDone_DPRNEW_Controller.dateController.text = BaseUtitiles.selectDateFormat(Entrydate!);
-                                  }
-                                },
-                              ),
+                                }
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ),
+                      ),
 
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15)),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                readOnly: true,
-                                controller: projectController.projectname,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Project Name",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.projectName),
-                                ),
-                                onTap: () async {
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
-
-                                  }else{
-                                    await projectController.getProjectList();
-                                    bottomsheetControllers.ProjectName(context, projectController.getdropDownvalue.value );
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                readOnly: true,
-                                controller: siteController.Sitename,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: RequestConstant.SITE_NAME,
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.siteName),
-                                ),
-                                onTap: () {
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL) {
-
-                                  }else{
-                                      bottomsheetControllers.SiteName(context, siteController.getSiteDropdownvalue.value );
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              readOnly: true,
+                              controller: dailyWrkDone_DPR_Controller.TypeSubcontractorname,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: RequestConstant.SUBCONTRACTOR_NAME,
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.subcontractorName),
                               ),
-                            ),
-                          ),
-                        ),
+                              onTap: () async {
+                                await  dailyWrkDone_DPR_Controller.dpr_getSubcotType(type: "Dprnew",entryType: dailyWrkDone_DPR_Controller.entryType);
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
 
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                readOnly: true,
-                                controller: dailyWrkDone_DPR_Controller.entryTypeController,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "TYPE",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.types),
-                                ),
-                                onTap: () {
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+                                }
+                                else{
+                                  if(dailyWrkDone_DPR_Controller.entryTypeController.text=="TYPE" && projectController.selectedProjectId.value ==0 && siteController.selectedsiteId.value==0){
 
                                   }
                                   else{
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return  EntryTypeAlert_DPR_New();
-                                          });
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return  TypeSubcontAlert(list: dailyWrkDone_DPR_Controller.dpr_subcontractorList,);
+                                        });
                                   }
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
+                                }
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              readOnly: true,
+                              controller: siteController.headNameController,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Head Name",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.dcNo),
+                              ),
+                              onTap: () async {
+                                if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL) {
+
+                                }else{
+                                   await siteController.headNameList("DPRNEW");
+                                    bottomsheetControllers.dprNewHeadName(context, siteController.getHeadNameDropdownvalue.value,"DPRNEW" );
+                                }
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
+                                  return '\u26A0 ${RequestConstant.VALIDATE}';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: dailyWrkDone_DPRNEW_Controller.dpr_new_preparedbyController,
+                              cursorColor: Colors.black,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Prepared By",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.preparedBy),
                               ),
                             ),
                           ),
                         ),
+                      ),
 
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                readOnly: true,
-                                controller: dailyWrkDone_DPR_Controller.TypeSubcontractorname,
-                                cursorColor: Colors.black,
-                                style: const TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: RequestConstant.SUBCONTRACTOR_NAME,
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.subcontractorName),
-                                ),
-                                onTap: () async {
-                                  await  dailyWrkDone_DPR_Controller.dpr_getSubcotType(type: "Dprnew",entryType: dailyWrkDone_DPR_Controller.entryType);
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
-
-                                  }
-                                  else{
-                                    if(dailyWrkDone_DPR_Controller.entryTypeController.text=="TYPE" && projectController.selectedProjectId.value ==0 && siteController.selectedsiteId.value==0){
-
-                                    }
-                                    else{
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return  TypeSubcontAlert(list: dailyWrkDone_DPR_Controller.dpr_subcontractorList,);
-                                          });
-                                    }
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
+                      Container(
+                        margin: EdgeInsets.only(top: 2, left: 10, right: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                            child: TextFormField(
+                              autovalidateMode: AutovalidateMode.always,
+                              controller: dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                labelText: "Remarks",
+                                labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: RequestConstant.Lable_Font_SIZE),
+                                prefixIconConstraints:
+                                BoxConstraints(minWidth: 0, minHeight: 0),
+                                prefixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    child: ConstIcons.remarks),
                               ),
+                              // validator: (value) {
+                              //   if (value!.isEmpty) {
+                              //     return '\u26A0 ${RequestConstant.VALIDATE}';
+                              //   }
+                              //   return null;
+                              // },
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(height: BaseUtitiles.getheightofPercentage(context, 1)),
 
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                readOnly: true,
-                                controller: siteController.headNameController,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Head Name",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.dcNo),
-                                ),
-                                onTap: () async {
-                                  if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.RESUBMIT || dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL) {
-
-                                  }else{
-                                     await siteController.headNameList("DPRNEW");
-                                      bottomsheetControllers.dprNewHeadName(context, siteController.getHeadNameDropdownvalue.value,"DPRNEW" );
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty || value == "--Select--" || value == "--SELECT--") {
-                                    return '\u26A0 ${RequestConstant.VALIDATE}';
-                                  }
-                                  return null;
-                                },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Setmybackground,
                               ),
-                            ),
+                              onPressed: () async {
+                                if(_formKey.currentState!.validate()){
+                                  _formKey.currentState!.save();
+                                  dailyWrkDone_DPRNEW_Controller.getAddBoqDetails(context);
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(Icons.add, color: Theme.of(context).primaryColor,),
+                                  SizedBox(width: 5),
+                                  Text("Add BOQ", style: TextStyle(color: Theme.of(context).primaryColor),),
+                                ],
+                              )),
+                          const SizedBox(
+                            width: 14,
                           ),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                readOnly: true,
-                                controller: dailyWrkDone_DPRNEW_Controller.dpr_new_preparedbyController,
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Prepared By",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.preparedBy),
-                                ),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Setmybackground,
                               ),
-                            ),
-                          ),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(top: 2, left: 10, right: 10),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.always,
-                                controller: dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController,
-                                cursorColor: Colors.black,
-                                style: const TextStyle(color: Colors.black),
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "Remarks",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                  BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: ConstIcons.remarks),
-                                ),
-                                // validator: (value) {
-                                //   if (value!.isEmpty) {
-                                //     return '\u26A0 ${RequestConstant.VALIDATE}';
-                                //   }
-                                //   return null;
-                                // },
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: BaseUtitiles.getheightofPercentage(context, 1)),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Setmybackground,
-                                ),
-                                onPressed: () async {
-                                  if(_formKey.currentState!.validate()){
-                                    _formKey.currentState!.save();
-                                    dailyWrkDone_DPRNEW_Controller.getAddBoqDetails(context);
-                                  }
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(Icons.add, color: Theme.of(context).primaryColor,),
-                                    SizedBox(width: 5),
-                                    Text("Add BOQ", style: TextStyle(color: Theme.of(context).primaryColor),),
-                                  ],
-                                )),
-                            const SizedBox(
-                              width: 14,
-                            ),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Setmybackground,
-                                ),
-                                onPressed: () async {
-                                  // showDialog(
-                                  //     context: context,
-                                  //     builder: (BuildContext context) {
-                                  //       return const ImageGalleryPopup_Alert(imageUrl: "DPR NEW");
-                                  //     });
+                              onPressed: () async {
+                                if (!AppClient.isPrahkurti) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -659,267 +651,273 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                                           "DPR-NEW",
                                         )),
                                   );
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    Text(
-                                      "Add Image",
-                                      style: TextStyle(
-                                          color:
-                                          Theme.of(context).primaryColor),
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-
-                        Obx(() {
-                          final allImages = [
-                            ...dailyWrkDone_DPRNEW_Controller.gettingNetworkImages,
-                            ...dailyWrkDone_DPRNEW_Controller.imageFiles,
-                          ];
-
-                          if (allImages.isEmpty) return SizedBox();
-                          return Container(
-                            height:
-                            BaseUtitiles.getheightofPercentage(context, 37),
-                            width:
-                            BaseUtitiles.getWidthtofPercentage(context, 95),
-                            child: Builder(
-                              builder: (context){
-                                return GridView.builder(
-                                  padding: const EdgeInsets.all(8),
-                                  physics: const BouncingScrollPhysics(),
-                                  gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 8,
-                                    mainAxisSpacing: 8,
-                                    childAspectRatio: 1,
+                                }else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const ImageGalleryPopup_Alert(imageUrl: "DPR NEW");
+                                      });
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                  itemCount: allImages.length,
-                                  itemBuilder: (context, index) {
-                                    final image = allImages[index];
-                                    final isNetwork = image
-                                    is String; // URL → network, File → local
+                                  Text(
+                                    "Add Image",
+                                    style: TextStyle(
+                                        color:
+                                        Theme.of(context).primaryColor),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
 
-                                    return Stack(
-                                      children: [
-                                        GestureDetector(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                            BorderRadius.circular(10),
-                                            child: AspectRatio(
-                                              aspectRatio: 1,
-                                              child: isNetwork
-                                                  ? Image.network(
-                                                image,
-                                                fit: BoxFit.cover,
-                                                width: double.infinity,
-                                              )
-                                                  : Image.file(
-                                                image
-                                                as File, // 👈 cast to File
-                                                fit: BoxFit.cover,
-                                                width: double.infinity,
-                                              ),
+                      Obx(() {
+                        final allImages = [
+                          ...dailyWrkDone_DPRNEW_Controller.gettingNetworkImages,
+                          ...dailyWrkDone_DPRNEW_Controller.imageFiles,
+                        ];
+
+                        if (allImages.isEmpty) return SizedBox();
+                        return Container(
+                          height:
+                          BaseUtitiles.getheightofPercentage(context, 37),
+                          width:
+                          BaseUtitiles.getWidthtofPercentage(context, 95),
+                          child: Builder(
+                            builder: (context){
+                              return GridView.builder(
+                                padding: const EdgeInsets.all(8),
+                                physics: const BouncingScrollPhysics(),
+                                gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 8,
+                                  mainAxisSpacing: 8,
+                                  childAspectRatio: 1,
+                                ),
+                                itemCount: allImages.length,
+                                itemBuilder: (context, index) {
+                                  final image = allImages[index];
+                                  final isNetwork = image
+                                  is String; // URL → network, File → local
+
+                                  return Stack(
+                                    children: [
+                                      GestureDetector(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10),
+                                          child: AspectRatio(
+                                            aspectRatio: 1,
+                                            child: isNetwork
+                                                ? Image.network(
+                                              image,
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
+                                            )
+                                                : Image.file(
+                                              image
+                                              as File, // 👈 cast to File
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
                                             ),
                                           ),
+                                        ),
+                                        onTap: () {
+                                          if (image is String) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ImageViewPage(
+                                                          imageUrl: image,
+                                                          netUrl: true,
+                                                        )));
+                                          } else if (image is File) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ImageViewPage(
+                                                          imagePath: image,
+                                                          netUrl: false,
+                                                        )));
+                                          }
+                                        },
+                                      ),
+                                      Positioned(
+                                        top: 4,
+                                        right: 4,
+                                        child: GestureDetector(
                                           onTap: () {
                                             if (image is String) {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ImageViewPage(
-                                                            imageUrl: image,
-                                                            netUrl: true,
-                                                          )));
+                                              DeleteAlert(
+                                                  context, index, "String");
                                             } else if (image is File) {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ImageViewPage(
-                                                            imagePath: image,
-                                                            netUrl: false,
-                                                          )));
+                                              DeleteAlert(
+                                                  context, index, "File");
                                             }
                                           },
-                                        ),
-                                        Positioned(
-                                          top: 4,
-                                          right: 4,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              if (image is String) {
-                                                DeleteAlert(
-                                                    context, index, "String");
-                                              } else if (image is File) {
-                                                DeleteAlert(
-                                                    context, index, "File");
-                                              }
-                                            },
-                                            child: const CircleAvatar(
-                                              backgroundColor: Colors.red,
-                                              radius: 12,
-                                              child: Icon(Icons.close,
-                                                  color: Colors.white, size: 16),
-                                            ),
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.red,
+                                            radius: 12,
+                                            child: Icon(Icons.close,
+                                                color: Colors.white, size: 16),
                                           ),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          );
-                        }),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      }),
 
-                        SizedBox(height: height),
-                      ],
-                    ),
+                      SizedBox(height: height),
+                    ],
                   ),
+                ),
 
 
-                  Obx(()=>Visibility(
-                    visible: dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.value.isEmpty?false:true,
-                    child: Container(
-                      height: BaseUtitiles.getheightofPercentage(context, 100),
-                      child: DraggableScrollableSheet(
-                        minChildSize: 0.1,
-                        maxChildSize: 0.9,
-                        initialChildSize: 0.3,
-                        builder: (BuildContext context, ScrollController scrollController) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Setmybackground,
-                              borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(40.0),
-                                topRight: const Radius.circular(40.0),
-                              ),
+                Obx(()=>Visibility(
+                  visible: dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.value.isEmpty?false:true,
+                  child: Container(
+                    height: BaseUtitiles.getheightofPercentage(context, 100),
+                    child: DraggableScrollableSheet(
+                      minChildSize: 0.1,
+                      maxChildSize: 0.9,
+                      initialChildSize: 0.3,
+                      builder: (BuildContext context, ScrollController scrollController) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Setmybackground,
+                            borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(40.0),
+                              topRight: const Radius.circular(40.0),
                             ),
-                            child: Stack(
-                              children: [
-                                Container(
-                                    child: SingleChildScrollView(
-                                      controller: scrollController,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                              margin: EdgeInsets.only(top: 10),
-                                              child: ListDetails(context, scrollController)
-                                          ),
-
-                                        ],
-                                      ),
-                                    )),
-                                IgnorePointer(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: new BorderRadius.only(
-                                        topLeft: const Radius.circular(40.0),
-                                        topRight: const Radius.circular(40.0),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                          child: Stack(
+                            children: [
+                              Container(
+                                  child: SingleChildScrollView(
+                                    controller: scrollController,
+                                    child: Column(
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(top: 20, bottom: 20),
-                                          height: 5,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              color: Colors.grey),
+                                            margin: EdgeInsets.only(top: 10),
+                                            child: ListDetails(context, scrollController)
                                         ),
+
                                       ],
                                     ),
+                                  )),
+                              IgnorePointer(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: new BorderRadius.only(
+                                      topLeft: const Radius.circular(40.0),
+                                      topRight: const Radius.circular(40.0),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                                        height: 5,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.grey),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
 
-                    ),
-                  )),
-                ],
-
-              ),
-              bottomNavigationBar: Container(
-                height: BaseUtitiles.getheightofPercentage(context, 4),
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: InkWell(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 20,right: 20),
-                          height: BaseUtitiles.getheightofPercentage(context, 4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.white,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text("Reset",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                                color:  Theme.of(context).primaryColor ),
-                          ),
-                        ),
-                        onTap: (){
-                            if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
-                              BaseUtitiles.showToast("In this approval page can't be reset");
-                            }else {
-                              ResetAlert(context);
-                            }
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 20 , right: 20),
-                          height: BaseUtitiles.getheightofPercentage(context, 4),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            color:  Theme.of(context).primaryColor
-                          ),
-                          alignment: Alignment.center,
-                          child: Text("NEXT",  style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
-                              color:  Colors.white ),),
-                        ),
-                        onTap: () async {
-                            if(_formKey.currentState!.validate()){
-                              _formKey.currentState!.save();
-                              if(dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.isEmpty){
-                                BaseUtitiles.showToast("Please add BOQ details");
-                              }
-                              else {
-                                Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => const DailyWork_done_DPR_Labour()));
-                              }
-                            }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+                )),
+              ],
 
             ),
+            bottomNavigationBar: Container(
+              height: BaseUtitiles.getheightofPercentage(context, 4),
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: InkWell(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 20,right: 20),
+                        height: BaseUtitiles.getheightofPercentage(context, 4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                        ),
+                        alignment: Alignment.center,
+                        child: Text("Reset",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
+                              color:  Theme.of(context).primaryColor ),
+                        ),
+                      ),
+                      onTap: (){
+                          if(dailyWrkDone_DPRNEW_Controller.saveButton.value==RequestConstant.APPROVAL){
+                            BaseUtitiles.showToast("In this approval page can't be reset");
+                          }else {
+                            ResetAlert(context);
+                          }
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 20 , right: 20),
+                        height: BaseUtitiles.getheightofPercentage(context, 4),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          color:  Theme.of(context).primaryColor
+                        ),
+                        alignment: Alignment.center,
+                        child: Text("NEXT",  style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE,
+                            color:  Colors.white ),),
+                      ),
+                      onTap: () async {
+                          if(_formKey.currentState!.validate()){
+                            _formKey.currentState!.save();
+                            if(dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.isEmpty){
+                              BaseUtitiles.showToast("Please add BOQ details");
+                            }
+                            else {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => const DailyWork_done_DPR_Labour()));
+                            }
+                          }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
           ),
         ),
       ),

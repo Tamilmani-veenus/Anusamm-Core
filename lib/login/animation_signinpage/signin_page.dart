@@ -15,9 +15,9 @@ class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
   static Future<void> checkVersion(BuildContext context) async {
-     final newVersion = NewVersionPlus(
-       androidId: 'com.veenus.anusamm',
-     );
+    final newVersion = NewVersionPlus(
+      androidId: 'com.veenus.anusamm',
+    );
 
     final status = await newVersion.getVersionStatus();
 
@@ -84,7 +84,7 @@ class _SignInPageState extends State<SignInPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).size.height*15/100),
+                  SizedBox(height: MediaQuery.of(context).size.height*10/100),
                   FadeAnimation(
                     1.2,
                     Transform(

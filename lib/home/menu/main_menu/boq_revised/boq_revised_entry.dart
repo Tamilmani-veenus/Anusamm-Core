@@ -57,6 +57,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
         siteController.selectedsiteId.value = 0;
         siteController.headNameController.text = RequestConstant.SELECT;
         siteController.selectedHeadId.value=0;
+        boq_revised_controller.createdById.value=0;
         boq_revised_controller.boq_preparedbyController.text = loginController.EmpName();
         boq_revised_controller.boq_remarksController.text = "";
         await autoYearWiseNoController.AutoYearWiseNo("BOQ REVISED");
@@ -74,6 +75,7 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
           siteController.Sitename.text = element.siteName;
           siteController.selectedHeadId.value = element.measureHeadItemId;
           siteController.headNameController.text = element.measureHeadItemName;
+          boq_revised_controller.createdById.value = element.createdBy;
           boq_revised_controller.boq_preparedbyController.text = element.createdByName;
           boq_revised_controller.boq_remarksController.text = element.remarks;
         });

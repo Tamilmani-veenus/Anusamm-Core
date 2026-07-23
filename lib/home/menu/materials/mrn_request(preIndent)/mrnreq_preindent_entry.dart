@@ -52,6 +52,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
           mrnRequest_PreIndent_Controller.preparedbyController.text = element.preparedbyName;
           mrnRequest_PreIndent_Controller.ReqTypeController.text = element.purchaseType == "PO" ? "General Items" : "Asset Materials";
           mrnRequest_PreIndent_Controller.ReqType.value = element.purchaseVal.toString();
+          mrnRequest_PreIndent_Controller.createdById.value=element.preparedby;
           mrnRequest_PreIndent_Controller.RemarksController.text = element.reqRemarks;
         });
       }
@@ -68,6 +69,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
           mrnRequest_PreIndent_Controller.preparedbyController.text = element.preparedbyName;
           mrnRequest_PreIndent_Controller.ReqTypeController.text = element.purchaseType == "PO" ? "General Items" : "Asset Materials";
           mrnRequest_PreIndent_Controller.ReqType.value = element.purchaseVal.toString();
+          mrnRequest_PreIndent_Controller.createdById.value=element.createdBy;
           mrnRequest_PreIndent_Controller.RemarksController.text = element.reqRemarks;
         });
       }
@@ -79,7 +81,7 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
         mrnRequest_PreIndent_Controller.Material_itemview_GetDbList.clear();
         projectController.projectname.text = "--SELECT--";
         projectController.selectedProjectId.value = 0;
-        subcontractorController.Subcontractorname.text = "--Select--";
+        subcontractorController.Subcontractorname.text = "--SELECT--";
         subcontractorController.selectedSubcontId.value = 0;
         mrnRequest_PreIndent_Controller.RemarksController.clear();
         mrnRequest_PreIndent_Controller.RequestDateController.text = BaseUtitiles.initiateCurrentDateFormat();
@@ -88,10 +90,8 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
         mrnRequest_PreIndent_Controller.ReqTypeController.text = "--SELECT--";
         mrnRequest_PreIndent_Controller.ReqType.value = "0";
         siteController.selectedsiteId = 0.obs;
-        siteController.selectedsitedropdownName = "--Select--".obs;
-        siteController.getSiteDropdownvalue.value.clear();
         siteController.Sitename.text = RequestConstant.SELECT;
-        siteController.siteDropdownName.clear();
+        mrnRequest_PreIndent_Controller.createdById.value=0;
         bottomsheetControllers.searchcontroller.text = "";
       }
     });
@@ -1124,7 +1124,6 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                           // mrn_request_controller.ReqTypeController.text = "General items";
                           // mrn_request_controller.ReqType.value = "PO";
                           siteController.selectedsiteId = 0.obs;
-                          siteController.selectedsitedropdownName = "--Select--".obs;
                           siteController.getSiteDropdownvalue.value.clear();
                           siteController.Sitename.text = RequestConstant.SELECT;
                           siteController.siteDropdownName.clear();

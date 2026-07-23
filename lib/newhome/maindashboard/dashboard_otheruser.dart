@@ -28,6 +28,7 @@ import '../../login/animation_signinpage/signin_page.dart';
 import '../../login/animation_signinpage/welcomepage.dart';
 import '../../provider/daily_wrkdone_dprNew_provider.dart';
 import '../../signalr_service.dart';
+import '../../utilities/apiconstant.dart';
 import '../../utilities/baseutitiles.dart';
 import '../../utilities/requestconstant.dart';
 import '../menus/main_menuslist.dart';
@@ -320,8 +321,10 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      punchInController.getPunchTypeList();
-      punchInController.getProjectPunchInSts();
+      if (!AppClient.isPrahkurti) {
+        punchInController.getPunchTypeList();
+        punchInController.getProjectPunchInSts();
+      }
       SignInPage.checkVersion(context);
     });
   }
@@ -353,7 +356,7 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 80),
+                  SizedBox(height:!AppClient.isPrahkurti? 80:150),
                   Column(
                     children: [
                       FadeAnimation(1.2,
@@ -404,7 +407,7 @@ class _HomeScreenOtherUserState extends State<HomeScreenOtherUser> {
                           const SizedBox(height: 20,),
                         ],
                       )),
-
+                      if (!AppClient.isPrahkurti)
                           Obx(() {
                             return punchInController.punchTypeList.isNotEmpty
                                 ? FadeAnimation(
