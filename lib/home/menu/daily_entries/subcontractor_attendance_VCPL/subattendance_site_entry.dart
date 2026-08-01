@@ -1219,11 +1219,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .EntrySCreenNosControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1314,11 +1317,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .ExtrasControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1418,11 +1424,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .MrngOtHrsControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1492,11 +1501,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .MrngOtAmtControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1595,11 +1607,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       style:
                                           const TextStyle(color: Colors.black),
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1667,11 +1682,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         .EvgOtAmtControllers[index],
                                     style: const TextStyle(color: Colors.black),
                                     cursorColor: Colors.black,
-                                    keyboardType: TextInputType.number,
+                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
+                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                            ? newValue
+                                            : oldValue;
+                                      }),
                                     ],
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -1766,11 +1784,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       style:
                                           const TextStyle(color: Colors.black),
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -1839,11 +1860,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         .NetAmtController[index],
                                     style: const TextStyle(color: Colors.black),
                                     cursorColor: Colors.black,
-                                    keyboardType: TextInputType.number,
+                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
+                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                            ? newValue
+                                            : oldValue;
+                                      }),
                                     ],
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -2215,11 +2239,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .EntrySCreenNosControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -2311,11 +2338,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .MrngOtHrsControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -2414,11 +2444,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       style:
                                       const TextStyle(color: Colors.black),
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -2488,11 +2521,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                       controller: dailyEntriesController
                                           .MrngOtAmtControllers[index],
                                       cursorColor: Colors.black,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
@@ -2568,11 +2604,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         .EvgOtAmtControllers[index],
                                     style: const TextStyle(color: Colors.black),
                                     cursorColor: Colors.black,
-                                    keyboardType: TextInputType.number,
+                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
+                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                            ? newValue
+                                            : oldValue;
+                                      }),
                                     ],
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -2634,11 +2673,14 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                         .NetAmtController[index],
                                     style: const TextStyle(color: Colors.black),
                                     cursorColor: Colors.black,
-                                    keyboardType: TextInputType.number,
+                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
+                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                            ? newValue
+                                            : oldValue;
+                                      }),
                                     ],
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(

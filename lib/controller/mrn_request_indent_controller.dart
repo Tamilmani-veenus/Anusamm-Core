@@ -111,8 +111,7 @@ class MRN_Request_Controller extends GetxController {
     }
   }
 
-  Future getMaterialList(
-      BuildContext context, String requestType, projectId, siteId) async {
+  Future getMaterialList(BuildContext context, String requestType, projectId, siteId) async {
     getmaterialvalue.value.clear();
     final value = await CommonProvider.getmaterial(
         requestType == "CP", projectId, siteId);

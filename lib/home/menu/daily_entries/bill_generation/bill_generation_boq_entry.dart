@@ -29,7 +29,6 @@ class Bill_Generation_Boq_EntryScreen extends StatefulWidget {
 class _Bill_Generation_Boq_EntryScreenState_Site
     extends State<Bill_Generation_Boq_EntryScreen> {
   ProjectController projectController = Get.put(ProjectController());
-
   SubcontractorController subcontractorController =
   Get.put(SubcontractorController());
   SiteController siteController = Get.put(SiteController());

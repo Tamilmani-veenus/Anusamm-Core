@@ -44,6 +44,7 @@ class OnClickListResult {
   int? PoId;
   int? CompanyId;
   String? requisitionNo;
+  String? manPowerNo;
   String? advanceReqVoucherDate;
   String? advanceReqVoucherNo;
   String? workOrderNo;
@@ -243,6 +244,7 @@ class OnClickListResult {
     this.PONo,
     this.PoId,
     this.requisitionNo,
+    this.manPowerNo,
     this.advanceReqVoucherDate,
     this.advanceReqVoucherNo,
     this.workOrderNo,
@@ -481,6 +483,7 @@ class OnClickListResult {
     approvedname: json["ApprovedBy"],
     appId: json["AppId"],
     no: json["No"],
+    manPowerNo: json["ManPowerNo"],
     date: json["PODate"],
     dueDate: json["DueDate"],
     deliveryDate: json["deliveryDate"],
@@ -574,7 +577,7 @@ class OnClickListResult {
     PurchaseOrdDate: json["PurchaseOrdDate"] ?? json["WorkOrdDate"],
     purchaseOrdNo: json["PurchaseOrdNo"] ?? json["WorkOrdNo"],
     inwType: json["inw_type"] ?? json["inwType"],
-    entryDate: json["entryDate"],
+    entryDate: json["entryDate"] ?? json["EntryDate"],
     entryDateMobile: json["entryDateMobile"],
     approveByName: json["ApproveByName"],
     approvedbyname:json["approvedbyname"],
@@ -653,6 +656,7 @@ class OnClickListResult {
     "Labcount": Labcount,
     "reqOrdNo": reqOrdNo,
     "ReqOrdNo": ReqOrdNo,
+    "ManPowerNo": manPowerNo,
     "reviseNo": reviseNo,
     "reviseDate": reviseDate,
     "LabourAttendanceNo": labourAttendanceNo,

@@ -1,6 +1,7 @@
 import 'package:anusamm/controller/logincontroller.dart';
 import 'package:anusamm/controller/reports_controller.dart';
 import 'package:anusamm/controller/transfer_acknowledgment_pending_controller.dart';
+
 import '../controller/projectcontroller.dart';
 import '../home/mrn_report/mrn_popup.dart';
 import '../home/pdf_generate/pdf_model/pdfmodel.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:anusamm/models/mrnreq_tracker_reportmodel.dart';
 import '../models/sitedropdownresponse_model.dart';
+
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'fromproject_ccontroller.dart';
@@ -106,8 +108,7 @@ class SiteController extends GetxController {
 
   Future headNameList(type) async {
     getHeadNameDropdownvalue.value = [];
-    final value =
-        await CommonProvider.dprNewHeadNameDropdown(selectedsiteId.value, type);
+    final value = await CommonProvider.dprNewHeadNameDropdown(selectedsiteId.value, type,projectController.selectedProjectId);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {

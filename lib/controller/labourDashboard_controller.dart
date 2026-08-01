@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commonpopup/labourAttendanceChart.dart';
+import '../commonpopup/labourAttendanceTable.dart';
 import '../models/labourDashboard_model.dart';
+import '../newhome/maindashboard/labourDashboard.dart';
 import '../provider/labourDashboard_Provider.dart';
 import '../utilities/baseutitiles.dart';
 
@@ -17,7 +19,12 @@ class LabourDashboardController extends GetxController{
   Rx<LabourDashboardResponse?> dashboardResponse = Rx<LabourDashboardResponse?>(null);
   RxList<LabourCategoryWise> labourCategoryList = <LabourCategoryWise>[].obs;
   RxList<TodayAttendance> todayAttendanceList = <TodayAttendance>[].obs;
-  RxList<TodayAttendance> allTodayAttendanceList = <TodayAttendance>[].obs;
+  RxList<TodayAttendance> allTodayAttendanceList = <TodayAttendance>[].obs;  // Filter search
+  RxList<ProjectWiseLabour> projectWiseLabourList = <ProjectWiseLabour>[].obs;
+  RxList<ProjectWiseLabour> filteredProjects = <ProjectWiseLabour>[].obs;
+  RxList<SubContractorWiseLabourTradeChart> subcontWiseLabourSummaryList = <SubContractorWiseLabourTradeChart>[].obs;
+  RxList<SubContractorWiseLabourTradeChart> subcontractorfilteredProjects = <SubContractorWiseLabourTradeChart>[].obs;
+  RxList<SubContractorWiseLabour> subContractorWiseLabour = <SubContractorWiseLabour>[].obs;
 
 /// -------Category-wise
   final RxBool showAllLabours = false.obs;
@@ -28,14 +35,11 @@ class LabourDashboardController extends GetxController{
 
     try {
       isLoading.value = true;
-      final response = await LabourDashboardProvider.getLabourDashboard("2026-07-01", selectedDate.value);
+      final response = await LabourDashboardProvider.getLabourDashboard(labourEntryFromDate.text,labourEntryToDate.text);
       if (response != null && response.success == true) {
         dashboardResponse.value = response;
-        labourCategoryList.assignAll(
-            response.labourCategoryWise ?? []);
-        todayAttendanceList.assignAll(
-          response.todayAttendance ?? [],
-        );
+        labourCategoryList.assignAll(response.labourCategoryWise ?? []);
+        todayAttendanceList.assignAll(response.todayAttendance ?? [],);
         allTodayAttendanceList.assignAll(response.todayAttendance ?? []);
         projectList.assignAll(
           allTodayAttendanceList
@@ -44,6 +48,11 @@ class LabourDashboardController extends GetxController{
               .toList(),
         );
         projectList.insert(0, "All");
+        filteredProjects.assignAll(response.projectWiseLabour ?? []);
+        projectWiseLabourList.assignAll(response.projectWiseLabour ?? []);
+        subcontractorfilteredProjects.assignAll(response.subContractorWiseLabourTradeChart ?? []);
+        subcontWiseLabourSummaryList.assignAll(response.subContractorWiseLabourTradeChart ?? []);
+        subContractorWiseLabour.assignAll(response.subContractorWiseLabour ?? []);
 
       } else {
         dashboardResponse.value = null;
@@ -56,77 +65,17 @@ class LabourDashboardController extends GetxController{
     }
   }
 
-  RxList<LabourCategoryChartData> labourList =
-      <LabourCategoryChartData>[
-        LabourCategoryChartData(
-            category: "Mason",
-            value: 220,
-            color: Colors.blue,
-          icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Male Coolie (MC)",
-            value: 180,
-            color: Colors.deepPurple,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Female Coolie (FC)",
-            value: 150,
-            color: Colors.orange,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Helper",
-            value: 130,
-            color: Colors.teal,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Skilled Labour",
-            value: 90,
-            color: Colors.amber,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Electrician",
-            value: 70,
-            color: Colors.red,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Carpenter",
-            value: 55,
-            color: Colors.blueGrey,
-            icon: Icons.co2_outlined
-        ),
-
-        LabourCategoryChartData(
-            category: "Painter",
-            value: 50,
-            color: Colors.green,
-            icon: Icons.co2_outlined
-        ),
-      ].obs;
-
-
   Color getCategoryColor(int index) {
     const colors = [
-      Color(0xff4F46E5),
-      Color(0xff06B6D4),
-      Color(0xff10B981),
-      Color(0xffF59E0B),
-      Color(0xffEF4444),
-      Color(0xff8B5CF6),
-      Color(0xffEC4899),
-      Color(0xff14B8A6),
-      Color(0xff84CC16),
+      Color(0xff2563eb),
+      Color(0xff7c3aed),
+      Color(0xfff97316),
+      Color(0xff0d9488),
+      Color(0xffd97706),
+      Color(0xffe11d48),
+      Color(0xff68717c),
+      Color(0xff76c5ad),
+      Color(0xffb574f0),
       Color(0xffF97316),
     ];
 
@@ -173,6 +122,9 @@ class LabourDashboardController extends GetxController{
     );
   }
 
+
+
+
   void filterAttendance(String query) {
     if (query.trim().isEmpty) {
       todayAttendanceList.assignAll(allTodayAttendanceList);
@@ -195,9 +147,9 @@ class LabourDashboardController extends GetxController{
             (item.subContractorName ?? "")
                 .toLowerCase()
                 .contains(query) ||
-            (item.employeeName ?? "")
-                .toLowerCase()
-                .contains(query) ||
+            // (item.employeeName ?? "")
+            //     .toLowerCase()
+            //     .contains(query) ||
             (item.totNos?.toString() ?? "")
                 .contains(query) ||
             (item.totAmt?.toString() ?? "")
@@ -219,3 +171,6 @@ class LabourDashboardController extends GetxController{
     );
   }
 }
+
+
+

@@ -25,6 +25,7 @@ import '../../app_theme/app_colors.dart';
 import '../../utilities/baseutitiles.dart';
 import '../../utilities/requestconstant.dart';
 import '../menus/main_menuslist.dart';
+import 'admin_dashboard.dart';
 
 class Dashboard_screen extends StatefulWidget {
   const Dashboard_screen({Key? key}) : super(key: key);
@@ -42,6 +43,8 @@ class MyBehavior extends ScrollBehavior {
 }
 
 class _Dashboard_screenState extends State<Dashboard_screen> {
+  bool isLabour = false;
+  bool isAdmin = false;
   int _currentPage = 0;
   final _pageController = PageController();
   LoginController loginController = Get.put(LoginController());
@@ -99,23 +102,54 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           )),
-                      // Container(
-                      //   child: InkWell(
-                      //     child: Container(
-                      //         margin:
-                      //         const EdgeInsets.only(left: 20, right: 10),
-                      //         child: Icon(Icons.computer_outlined,
-                      //             color: Theme.of(context).primaryColor)),
-                      //     onTap: () {
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //               builder: (BuildContext context) =>
-                      //               const LabourDashboard()));
-                      //       // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) =>  VoiceToTextExample()));
-                      //     },
-                      //   ),
-                      // ),
+                      if(_currentPage == 0)    SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: PopupMenuButton<String>(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            icon: Container(
+                              margin:
+                              const EdgeInsets.only( right: 10),
+                              child: Icon(
+                                Icons.widgets_outlined,
+                                size: 24,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            offset: const Offset(70, 35),
+                            onSelected: (value) {
+                              setState(() {
+                                isLabour = value == "Labour";
+                                isAdmin = value == "Admin";
+                                // _currentPage = 0;
+                              });},
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: "Admin",
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(Icons.person,size: 20,color: Theme.of(context).primaryColor,),
+                                    Text(" Admin Dashboard",style: TextStyle(fontSize: 14),),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: "Labour",
+                                child: Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.group,size: 20,color: Theme.of(context).primaryColor,),
+                                      Text(" Labour Dashboard",style: TextStyle(fontSize: 14)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                      ),
                       Container(
                         child: InkWell(
                           child: Container(
@@ -156,7 +190,9 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                       children: [
                         Container(
                           alignment: Alignment.center,
-                          child: const Home_Dashboard(),
+                          child: isLabour
+                              ? const HomeScreen() : isAdmin ? const AdminHomeScreen()
+                              : const Home_Dashboard(),
                         ),
                         Container(
                           alignment: Alignment.center,

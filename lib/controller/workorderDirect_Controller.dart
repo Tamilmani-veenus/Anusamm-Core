@@ -617,14 +617,9 @@ class WorkOrderDirectController extends GetxController{
     datas.forEach((value) {
       workOrderTable = WorkOrderGSTCalTable();
       workOrderTable.reqDetId = value['reqDetId'];
-      print("AAAAAAAAAAA....${workOrderTable.addLessId}");
-      print("AAAAAAAAAAA....${value['percentValue']}");
-
       workOrderTable.addLessId = value['addLessId'];
       workOrderTable.percentValue = value['percentValue'];
       workOrderTable.amount = value['amount'];
-      print("BBBBBBBBBB....${workOrderTable.amount}");
-      print("BBBBBBBBBBB....${value['amount']}");
       workOrderTable.addLessName = value['addLessName'];
       workOrderTable.addLessType = value['addLessType'];
       workOrder_ItemReadList.add(workOrderTable);

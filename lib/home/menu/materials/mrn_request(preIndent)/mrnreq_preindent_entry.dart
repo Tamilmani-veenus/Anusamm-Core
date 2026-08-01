@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -956,11 +958,14 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                                         cursorColor: Theme.of(context).primaryColor,
                                         textAlign: TextAlign.center,
                                         controller: mrnRequest_PreIndent_Controller.Addwork_qtyControllers[index],
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),

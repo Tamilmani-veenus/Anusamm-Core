@@ -272,16 +272,10 @@ class InwardPending_Controller extends GetxController
         Itemlist_Qty_PlusListController[i].text = "0.0";
         Itemlist_Qty_MinusListController[i].text = "0.0";
       } else {
-        Itemlist_Qty_PlusListController[i].text = ItemGetTableListdata[i]
-                    .balQty <=
-                double.parse(
-                    Itemlist_Inward_QtyListController[i].value.text.toString())
-            ? (double.parse(Itemlist_Inward_QtyListController[i]
-                        .value
-                        .text
-                        .toString()) -
-                    ItemGetTableListdata[i].balQty)
-                .toString()
+        Itemlist_Qty_PlusListController[i].text = ItemGetTableListdata[i].balQty <=
+                double.parse(Itemlist_Inward_QtyListController[i].value.text.toString())
+            ? (double.parse(Itemlist_Inward_QtyListController[i].value.text.toString()) -
+                    ItemGetTableListdata[i].balQty).toStringAsFixed(2)
             : Itemlist_Qty_PlusListController[i].text = "0.0";
         Itemlist_Qty_MinusListController[i].text = ItemGetTableListdata[i]
                     .balQty >=
@@ -292,7 +286,7 @@ class InwardPending_Controller extends GetxController
                         .value
                         .text
                         .toString()))
-                .toString()
+                .toStringAsFixed(2)
             : Itemlist_Qty_MinusListController[i].text = "0.0";
         if (id == element.id) {
           if (ItemGetTableListdata[i].balQty <
