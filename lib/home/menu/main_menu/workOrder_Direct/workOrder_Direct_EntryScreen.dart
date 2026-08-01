@@ -118,7 +118,7 @@ class _WorkOrdDirectEntryScreenState extends State<WorkOrdDirectEntryScreen> {
                           child: Text(
                             widget.heading,
                             style: TextStyle(
-                                fontSize: RequestConstant.Heading_Font_SIZE,
+                                fontSize: workOrderDirectController.saveButton.value == RequestConstant.RESUBMIT || workOrderDirectController.saveButton.value == RequestConstant.SUBMIT? RequestConstant.Heading_Font_SIZE : 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),

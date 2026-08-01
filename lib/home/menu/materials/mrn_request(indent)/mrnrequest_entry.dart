@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -1220,11 +1222,14 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                         cursorColor: Theme.of(context).primaryColor,
                                         textAlign: TextAlign.center,
                                         controller: mrn_request_controller.Addwork_qtyControllers[index],
-                                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
 
                                         decoration: InputDecoration(contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),

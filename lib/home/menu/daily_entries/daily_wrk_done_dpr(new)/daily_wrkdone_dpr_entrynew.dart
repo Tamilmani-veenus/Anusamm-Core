@@ -978,11 +978,14 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                     decoration: BoxDecoration(),
                     child: TextField(
                       readOnly:true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'),
-                        ),
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                              ? newValue
+                              : oldValue;
+                        }),
                       ],
                       controller: dailyWrkDone_DPRNEW_Controller.dpr_new_rateController,
                       textAlign: TextAlign.center,
@@ -1006,11 +1009,14 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                     decoration: BoxDecoration(),
                     child: TextField(
                       readOnly:true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'),
-                        ),
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                              ? newValue
+                              : oldValue;
+                        }),
                       ],
                       controller:dailyWrkDone_DPRNEW_Controller.dpr_new_unitsController,
                       textAlign: TextAlign.center,
@@ -1034,11 +1040,14 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                     decoration: BoxDecoration(),
                     child: TextField(
                       readOnly:true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'),
-                        ),
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                              ? newValue
+                              : oldValue;
+                        }),
                       ],
                       controller:dailyWrkDone_DPRNEW_Controller.dpr_new_boqQtyController,
                       textAlign: TextAlign.center,
@@ -1062,11 +1071,14 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                     decoration: BoxDecoration(),
                     child: TextField(
                       readOnly:true,
-                      keyboardType: TextInputType.number,
+                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'),
-                        ),
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                              ? newValue
+                              : oldValue;
+                        }),
                       ],
                       controller:dailyWrkDone_DPRNEW_Controller.dpr_new_currQtyController,
                       textAlign: TextAlign.center,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../constants/ui_constant/icons_const.dart';
@@ -186,11 +188,14 @@ class _Bill_Generation_Boq_deductionState
                                 autovalidateMode:
                                 AutovalidateMode.always,
 
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.materialDebitamt,
@@ -352,11 +357,14 @@ class _Bill_Generation_Boq_deductionState
                                     });
                                   }
                                 },
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.Creditamt,
@@ -513,11 +521,14 @@ class _Bill_Generation_Boq_deductionState
                                     });
                                   }
                                 },
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.Debitamt,
@@ -695,11 +706,14 @@ class _Bill_Generation_Boq_deductionState
                               child: Obx(()=>
                                 TextFormField(
                                   readOnly: billGenerationBoqController.isAdvanceReadOnly.value,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d+\.?\d{0,2}'),
-                                    ),
+                                    TextInputFormatter.withFunction((oldValue, newValue) {
+                                      return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                          ? newValue
+                                          : oldValue;
+                                    }),
                                   ],
                                   controller: billGenerationBoqController.Advded,
                                   cursorColor: Colors.black,
@@ -807,11 +821,14 @@ class _Bill_Generation_Boq_deductionState
                                     });
                                   }
                                 },
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.netBillAmt,
@@ -877,11 +894,14 @@ class _Bill_Generation_Boq_deductionState
                                     });
                                   }
                                 },
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.finalBillAmt,
@@ -950,11 +970,14 @@ class _Bill_Generation_Boq_deductionState
                                     });
                                   }
                                 },
-                                keyboardType: TextInputType.number,
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^-?\d*\.?\d{0,2}$'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 controller:
                                 billGenerationBoqController.Roundoff,
@@ -1045,11 +1068,14 @@ class _Bill_Generation_Boq_deductionState
                               padding: const EdgeInsets.only(
                                   top: 3, left: 10, bottom: 5),
                               child: TextFormField(
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,2}'),
-                                  ),
+                                  TextInputFormatter.withFunction((oldValue, newValue) {
+                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                        ? newValue
+                                        : oldValue;
+                                  }),
                                 ],
                                 autovalidateMode:
                                 AutovalidateMode.always,
@@ -1165,11 +1191,14 @@ class _Bill_Generation_Boq_deductionState
                                   padding: const EdgeInsets.all(8),
                                   child: TextFormField(
                                     controller: billGenerationBoqController.percentControllers[index],
-                                    keyboardType: TextInputType.number,
+                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
+                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                            ? newValue
+                                            : oldValue;
+                                      }),
                                     ],
                                     cursorColor: Colors.black,
                                     textAlign: TextAlign.center,

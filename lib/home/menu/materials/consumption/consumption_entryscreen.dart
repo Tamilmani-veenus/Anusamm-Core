@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -855,12 +857,16 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                                 cursorColor: Theme.of(context).primaryColor,
                                 textAlign: TextAlign.center,
                                    controller: consumption_controller.Itemlist_stockqtyControllers[index],
-                                   keyboardType: TextInputType.number,
+                                   keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                    inputFormatters: [
-                                     FilteringTextInputFormatter.allow(
-                                       RegExp(r'^\d+\.?\d{0,2}'),
-                                     ),
+                                     TextInputFormatter.withFunction((oldValue, newValue) {
+                                       return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                           ? newValue
+                                           : oldValue;
+                                     }),
                                    ],
+
                                    decoration: InputDecoration(
                                      labelText: 'Stock Quantity',
                                      labelStyle: const TextStyle(color: Colors.black),
@@ -907,11 +913,14 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                                    cursorColor:Theme.of(context).primaryColor,
                                    textAlign: TextAlign.center,
                                    controller: consumption_controller.Itemlist_UsageqtyControllers[index],
-                                   keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                   keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                    inputFormatters: [
-                                     FilteringTextInputFormatter.allow(
-                                       RegExp(r'^\d+\.?\d{0,2}'),
-                                     ),
+                                     TextInputFormatter.withFunction((oldValue, newValue) {
+                                       return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                           ? newValue
+                                           : oldValue;
+                                     }),
                                    ],
                                    decoration: InputDecoration(
                                      labelText: 'Usage Quantity',

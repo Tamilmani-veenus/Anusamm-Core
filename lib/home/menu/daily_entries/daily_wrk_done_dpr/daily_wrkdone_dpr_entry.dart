@@ -1030,11 +1030,14 @@ Widget ListDetails(BuildContext context, ScrollController scrollController) {
                               cursorColor:Theme.of(context).primaryColor,
                               textAlign: TextAlign.center,
                               controller: dailyWrkDone_DPR_Controller.Itemlist_RateControllers[index],
-                              keyboardType: TextInputType.number,
+                              keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d+\.?\d{0,2}'),
-                                ),
+                                TextInputFormatter.withFunction((oldValue, newValue) {
+                                  return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                      ? newValue
+                                      : oldValue;
+                                }),
                               ],
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
@@ -1112,11 +1115,14 @@ Widget ListDetails(BuildContext context, ScrollController scrollController) {
                             cursorColor:Theme.of(context).primaryColor,
                             textAlign: TextAlign.center,
                             controller: dailyWrkDone_DPR_Controller.Itemlist_CurrentQtyControllers[index],
-                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                             inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,2}'),
-                              ),
+                              TextInputFormatter.withFunction((oldValue, newValue) {
+                                return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                    ? newValue
+                                    : oldValue;
+                              }),
                             ],
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),

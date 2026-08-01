@@ -1337,8 +1337,13 @@ class PendingListController extends GetxController {
               MaterialPageRoute(builder: (context) => SiteVoucherApproval(
                   onclickPendingListData: onclickPendingListData,
                   heading: entryTypeName!,checkheading: name)),
-            )
-                : Navigator.push(context, MaterialPageRoute(
+            ): name == "MAN POWER APPROVAL PENDING"
+                ? Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ManPowerApproval(
+                  onclickPendingListData: onclickPendingListData,
+                  heading: entryTypeName!,checkheading: name)),
+            ) : Navigator.push(context, MaterialPageRoute(
                 builder: (context) => OfficeVoucherApproval(
                     onclickPendingListData: onclickPendingListData,
                     heading: entryTypeName!,checkheading: name)));

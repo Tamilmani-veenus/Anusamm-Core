@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../app_theme/app_colors.dart';
@@ -840,11 +842,14 @@ class _Boq_Revised_EntryScreenState extends State<Boq_Revised_EntryScreen> {
                                         cursorColor: Theme.of(context).primaryColor,
                                         textAlign: TextAlign.center,
                                         controller: boq_revised_controller.Addwork_qtyControllers[index],
-                                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),

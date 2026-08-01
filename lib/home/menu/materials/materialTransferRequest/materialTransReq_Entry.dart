@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -820,12 +822,14 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                                                         materialTransferReqController
                                                                 .Show_Itemlist_stockQtyControllers[
                                                             index],
-                                                    keyboardType:
-                                                        TextInputType.number,
+                                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                                     inputFormatters: [
-                                                      FilteringTextInputFormatter.allow(
-                                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                                      ),
+                                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                            ? newValue
+                                                            : oldValue;
+                                                      }),
                                                     ],
                                                     decoration: InputDecoration(
                                                       contentPadding:
@@ -880,9 +884,15 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                                                         materialTransferReqController
                                                                 .Show_Itemlist_TransQtyController[
                                                             index],
-                                                    keyboardType: TextInputType
-                                                        .numberWithOptions(
-                                                            decimal: true),
+                                                    keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
+                                                    inputFormatters: [
+                                                      TextInputFormatter.withFunction((oldValue, newValue) {
+                                                        return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                            ? newValue
+                                                            : oldValue;
+                                                      }),
+                                                    ],
                                                     decoration: InputDecoration(
                                                       contentPadding:
                                                           const EdgeInsets

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -50,7 +52,6 @@ class _TrasferBetweenProjects_EntryState
       transferBW_project_Controller.AgTransReqMasid.value=0;
 
       if (transferBW_project_Controller.type.value == "Against Mrn Approval" && transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
-      print("AAAAAA");
        await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
        transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
        transferBW_project_Controller.vechicleNoText.text = "";
@@ -70,11 +71,10 @@ class _TrasferBetweenProjects_EntryState
         projectController.selectedProjectIdAll.value = transferBW_project_Controller.transferAllDatasList[0].toProjectId;
        transferBW_project_Controller.prearedbyText.text = loginController.EmpName();
        transferBW_project_Controller.AgMRNAppreqMasid.value=transferBW_project_Controller.transferAllDatasList[0].reqMasid;
-       transferBW_project_Controller.createdById.value =0;
+       transferBW_project_Controller.createdById.value = transferBW_project_Controller.transferAllDatasList[0].createdBy;
       }
 
       else if (transferBW_project_Controller.type.value == "Against Transfer Request" && transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
-        print("BBBBBB");
         await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
         transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
         transferBW_project_Controller.vechicleNoText.text = "";
@@ -105,11 +105,11 @@ class _TrasferBetweenProjects_EntryState
           transferBW_project_Controller.prearedbyText.text = loginController.EmpName();
           transferBW_project_Controller.AgTransReqMasid.value =
               transferBW_project_Controller.transferAllDatasList[0].id;
-        transferBW_project_Controller.createdById.value = 0;
+        transferBW_project_Controller.createdById.value = transferBW_project_Controller.transferAllDatasList[0].createdBy;
+
       }
 
       else if (transferBW_project_Controller.saveButton.value == RequestConstant.SUBMIT) {
-        print("CCCCC");
         await transferBW_project_Controller.itemlistTable_Delete();
         await autoYearWiseNoController.AutoYearWiseNo("TRANSFER BETWEEN PROJECTS");
         transferBW_project_Controller.autoyrwiseText.text = autoYearWiseNoController.TransferBetProjectautoYrsWise.toString();
@@ -135,7 +135,6 @@ class _TrasferBetweenProjects_EntryState
       }
 
       else if (transferBW_project_Controller.saveButton.value == RequestConstant.RESUBMIT) {
-        print("DDDDD");
         transferBW_project_Controller.editListApiDatas.forEach((element) {
           transferBW_project_Controller.transferId = element.id!;
           transferBW_project_Controller.autoyrwiseText.text =
@@ -163,8 +162,10 @@ class _TrasferBetweenProjects_EntryState
           transferBW_project_Controller.dcNoText.text = element.dcNo.toString();
           transferBW_project_Controller.remarksText.text =
               element.remarks.toString();
-
-
+          transferBW_project_Controller.prearedbyText.text =
+              element.createdName.toString();
+          transferBW_project_Controller.transportAmtText.text =
+              element.totalAmount.toString();
           transferBW_project_Controller.transportCostText.text =
               element.transportAmount.toString();
           transferBW_project_Controller.AgTransReqMasid.value=element.matTransReqMasId!;
@@ -1242,11 +1243,14 @@ class _TrasferBetweenProjects_EntryState
                                         controller: transferBW_project_Controller
                                             .Itemlist_stockQty_ListController[
                                         index],
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -1311,13 +1315,14 @@ class _TrasferBetweenProjects_EntryState
                                         controller: transferBW_project_Controller
                                             .Itemlist_TransQty_ListController[
                                         index],
-                                        keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -1391,11 +1396,14 @@ class _TrasferBetweenProjects_EntryState
                                         textAlign: TextAlign.center,
                                         controller: transferBW_project_Controller
                                             .Itemlist_Rate_ListController[index],
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -1491,13 +1499,14 @@ class _TrasferBetweenProjects_EntryState
                                         textAlign: TextAlign.center,
                                         controller: transferBW_project_Controller
                                             .Itemlist_Amt_ListController[index],
-                                        keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                         inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'),
-                                          ),
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
                                         ],
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -1704,11 +1713,14 @@ class _TrasferBetweenProjects_EntryState
                                       controller: transferBW_project_Controller
                                               .Itemlist_stockQty_ListController[
                                           index],
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -1773,13 +1785,14 @@ class _TrasferBetweenProjects_EntryState
                                       controller: transferBW_project_Controller
                                               .Itemlist_TransQty_ListController[
                                           index],
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                              decimal: true),
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -1853,11 +1866,14 @@ class _TrasferBetweenProjects_EntryState
                                       textAlign: TextAlign.center,
                                       controller: transferBW_project_Controller
                                           .Itemlist_Rate_ListController[index],
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -1953,13 +1969,14 @@ class _TrasferBetweenProjects_EntryState
                                       textAlign: TextAlign.center,
                                       controller: transferBW_project_Controller
                                           .Itemlist_Amt_ListController[index],
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                              decimal: true),
+                                      keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                          RegExp(r'^\d+\.?\d{0,2}'),
-                                        ),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                              ? newValue
+                                              : oldValue;
+                                        }),
                                       ],
                                       decoration: InputDecoration(
                                         contentPadding:

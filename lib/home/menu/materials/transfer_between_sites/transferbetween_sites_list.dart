@@ -324,8 +324,8 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                   () => ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
-                      itemCount: transferBt_Site_Controller.entryList.value.length,
+                  padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
+                  itemCount: transferBt_Site_Controller.entryList.value.length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(left: 3, right: 3),
@@ -563,7 +563,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                                                                   transferBt_Site_Controller.editListApiDatas.value.clear();
                                                                   FocusScope.of(context).unfocus();
                                                                   await transferBt_Site_Controller.EntryList_EditApi(
-                                                                    transferBt_Site_Controller.entryList.value[index].fromProjectId,
+                                                                      transferBt_Site_Controller.entryList.value[index].fromProjectId,
                                                                       transferBt_Site_Controller.entryList.value[index].toSiteId,
                                                                       transferBt_Site_Controller.entryList.value[index].fromSiteid,
                                                                       transferBt_Site_Controller.entryList.value[index].id,widget.heading,context);
@@ -605,7 +605,7 @@ class _TransferBetweenSites_EntrylistState extends State<TransferBetweenSites_En
                                                                 ),
                                                                 onTap: () async {
                                                                   Navigator.pop(context);
-                                                                    transferBt_Site_Controller.DeleteAlert(context,index);
+                                                                  transferBt_Site_Controller.DeleteAlert(context,index);
                                                                 }),
                                                           ),
                                                           SizedBox(height: 20)

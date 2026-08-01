@@ -21,6 +21,15 @@ class LabourDashboardResponse {
   List<TodayAttendance>? todayAttendance;
   List<LabourCost>? labourCost;
   List<TodayLabourCost>? todayLabourCost;
+  List<ProjectWiseLabour>? projectWiseLabour;
+  List<SubContractorWiseLabour>? subContractorWiseLabour;
+  int? dprApproval;
+  int? subContAttendanceApprovalPendingCount;
+  int? subConNmrBillAppPending;
+  int? billAppDirectCount;
+  int? boqBillApprovalCount;
+  List<SubContractPaymentPending>? subContractPaymentPending;
+  List<SubContractorWiseLabourTradeChart>? subContractorWiseLabourTradeChart;
 
 
   LabourDashboardResponse({
@@ -36,7 +45,15 @@ class LabourDashboardResponse {
     this.todayAttendance,
     this.labourCost,
     this.todayLabourCost,
-
+    this.projectWiseLabour,
+    this.subContractorWiseLabour,
+    this.dprApproval,
+    this.subContAttendanceApprovalPendingCount,
+    this.subConNmrBillAppPending,
+    this.billAppDirectCount,
+    this.boqBillApprovalCount,
+    this.subContractPaymentPending,
+    this.subContractorWiseLabourTradeChart,
   });
 
   factory LabourDashboardResponse.fromJson(Map<String, dynamic> json) => LabourDashboardResponse(
@@ -76,7 +93,36 @@ class LabourDashboardResponse {
       json["labourCost"]
           .map((x) => LabourCost.fromJson(x)),
     ),
-    todayLabourCost: json["todayLabourCost"] == null ? [] : List<TodayLabourCost>.from(json["todayLabourCost"].map((x) => TodayLabourCost.fromJson(x))),
+    todayLabourCost: json["todayLabourCost"] == null
+        ? []
+        : List<TodayLabourCost>.from(
+        json["todayLabourCost"].map((x) => TodayLabourCost.fromJson(x))
+    ),
+    projectWiseLabour: json["projectWiseLabour"] == null
+        ? []
+        : List<ProjectWiseLabour>.from(
+        json["projectWiseLabour"].map((x) => ProjectWiseLabour.fromJson(x))
+    ),
+    subContractorWiseLabour: json["subContractorWiseLabour"] == null
+        ? []
+        : List<SubContractorWiseLabour>.from(
+        json["subContractorWiseLabour"].map((x) => SubContractorWiseLabour.fromJson(x))
+    ),
+    dprApproval: json["dprApproval"],
+    subContAttendanceApprovalPendingCount: json["subContAttendanceApprovalPendingCount"],
+    subConNmrBillAppPending: json["subConNMRBillAppPending"],
+    billAppDirectCount: json["billAppDirectCount"],
+    boqBillApprovalCount: json["boqBillApprovalCount"],
+    subContractPaymentPending: json["subContractPaymentPending"] == null
+        ? []
+        : List<SubContractPaymentPending>.from(
+        json["subContractPaymentPending"].map((x) => SubContractPaymentPending.fromJson(x))
+    ),
+    subContractorWiseLabourTradeChart: json["subContractorWiseLabourTradeChart"] == null
+        ? []
+        : List<SubContractorWiseLabourTradeChart>.from(
+        json["subContractorWiseLabourTradeChart"].map((x) => SubContractorWiseLabourTradeChart.fromJson(x))
+    ),
 
   );
 
@@ -93,6 +139,15 @@ class LabourDashboardResponse {
     "todayAttendance": List<dynamic>.from(todayAttendance!.map((x) => x.toJson())),
     "labourCost": List<dynamic>.from(labourCost!.map((x) => x.toJson())),
     "todayLabourCost": List<dynamic>.from(todayLabourCost!.map((x) => x.toJson())),
+    "projectWiseLabour": List<dynamic>.from(projectWiseLabour!.map((x) => x.toJson())),
+    "subContractorWiseLabour": List<dynamic>.from(subContractorWiseLabour!.map((x) => x.toJson())),
+    "dprApproval": dprApproval,
+    "subContAttendanceApprovalPendingCount": subContAttendanceApprovalPendingCount,
+    "subConNMRBillAppPending": subConNmrBillAppPending,
+    "billAppDirectCount": billAppDirectCount,
+    "boqBillApprovalCount": boqBillApprovalCount,
+    "subContractPaymentPending": List<dynamic>.from(subContractPaymentPending!.map((x) => x.toJson())),
+    "subContractorWiseLabourTradeChart": List<dynamic>.from(subContractorWiseLabourTradeChart!.map((x) => x.toJson())),
 
   };
 }
@@ -296,6 +351,203 @@ class TodayLabourCost {
     "DifferenceType": differenceType,
   };
 }
+
+class ProjectWiseLabour {
+  int? projectId;
+  String? projectName;
+  double? nmrNos;
+  double? rateNos;
+  double? totalNos;
+  double? nmrPercent;
+  double? ratePercent;
+
+  ProjectWiseLabour({
+    this.projectId,
+    this.projectName,
+    this.nmrNos,
+    this.rateNos,
+    this.totalNos,
+    this.nmrPercent,
+    this.ratePercent,
+  });
+
+  factory ProjectWiseLabour.fromJson(Map<String, dynamic> json) => ProjectWiseLabour(
+    projectId: json["ProjectId"],
+    projectName: json["ProjectName"],
+    nmrNos: json["NMRNos"]?.toDouble(),
+    rateNos: json["RateNos"]?.toDouble(),
+    totalNos: json["TotalNos"]?.toDouble(),
+    nmrPercent: json["NMRPercent"]?.toDouble(),
+    ratePercent: json["RatePercent"]?.toDouble(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "ProjectId": projectId,
+    "ProjectName": projectName,
+    "NMRNos": nmrNos,
+    "RateNos": rateNos,
+    "TotalNos": totalNos,
+    "NMRPercent": nmrPercent,
+    "RatePercent": ratePercent,
+  };
+
+
+}
+
+
+class SubContractorWiseLabour {
+  int? subcontractorId;
+  String? subcontractName;
+  double? labourCount;
+
+  SubContractorWiseLabour({
+     this.subcontractorId,
+     this.subcontractName,
+     this.labourCount,
+  });
+
+  factory SubContractorWiseLabour.fromJson(Map<String, dynamic> json) => SubContractorWiseLabour(
+    subcontractorId: json["SubcontractorId"],
+    subcontractName: json["SubcontractName"],
+    labourCount: json["LabourCount"]?.toDouble(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "SubcontractorId": subcontractorId,
+    "SubcontractName": subcontractName,
+    "LabourCount": labourCount,
+  };
+}
+
+class SubContractPaymentPending {
+  int? paymentId;
+  int? workId;
+  String? workNo;
+  String? workDate;
+  int? projectId;
+  String? projectName;
+  int? siteid;
+  String? siteName;
+  int? subContractorId;
+  String? subcontractName;
+  String? billNo;
+  double? netPayAmount;
+  double? paidAmt;
+  double? balAmt;
+  String? billType;
+  String? billTypeId;
+  int? companyId;
+  String? createdByName;
+  String? approvedByName;
+
+  SubContractPaymentPending({
+    this.paymentId,
+    this.workId,
+    this.workNo,
+    this.workDate,
+    this.projectId,
+    this.projectName,
+    this.siteid,
+    this.siteName,
+    this.subContractorId,
+    this.subcontractName,
+    this.billNo,
+    this.netPayAmount,
+    this.paidAmt,
+    this.balAmt,
+    this.billType,
+    this.billTypeId,
+    this.companyId,
+    this.createdByName,
+    this.approvedByName,
+  });
+
+  factory SubContractPaymentPending.fromJson(Map<String, dynamic> json) => SubContractPaymentPending(
+    paymentId: json["PaymentId"],
+    workId: json["WorkId"],
+    workNo: json["WorkNo"],
+    workDate: json["WorkDate"],
+    projectId: json["ProjectId"],
+    projectName: json["ProjectName"],
+    siteid: json["siteid"],
+    siteName: json["SiteName"],
+    subContractorId: json["SubContractorId"],
+    subcontractName: json["SubcontractName"],
+    billNo: json["BillNo"],
+    netPayAmount: json["NetPayAmount"]?.toDouble(),
+    paidAmt: json["PaidAmt"],
+    balAmt: json["BalAmt"]?.toDouble(),
+    billType: json["BillType"],
+    billTypeId: json["BillTypeId"],
+    companyId: json["CompanyID"],
+    createdByName: json["CreatedByName"],
+    approvedByName: json["ApprovedByName"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "PaymentId": paymentId,
+    "WorkId": workId,
+    "WorkNo": workNo,
+    "WorkDate": workDate,
+    "ProjectId": projectId,
+    "ProjectName": projectName,
+    "siteid": siteid,
+    "SiteName": siteName,
+    "SubContractorId": subContractorId,
+    "SubcontractName": subcontractName,
+    "BillNo": billNo,
+    "NetPayAmount": netPayAmount,
+    "PaidAmt": paidAmt,
+    "BalAmt": balAmt,
+    "BillType": billType,
+    "BillTypeId": billTypeId,
+    "CompanyID": companyId,
+    "CreatedByName": createdByName,
+    "ApprovedByName": approvedByName,
+  };
+}
+
+class SubContractorWiseLabourTradeChart {
+  int? subcontractorId;
+  String? subcontractName;
+  double? nmrNos;
+  double? rateNos;
+  double? totalNos;
+  double? nmrPercent;
+  double? ratePercent;
+
+  SubContractorWiseLabourTradeChart({
+    this.subcontractorId,
+    this.subcontractName,
+    this.nmrNos,
+    this.rateNos,
+    this.totalNos,
+    this.nmrPercent,
+    this.ratePercent,
+  });
+
+  factory SubContractorWiseLabourTradeChart.fromJson(Map<String, dynamic> json) => SubContractorWiseLabourTradeChart(
+    subcontractorId: json["SubcontractorId"],
+    subcontractName: json["SubcontractName"],
+    nmrNos: json["NMRNos"]?.toDouble(),
+    rateNos: json["RateNos"]?.toDouble(),
+    totalNos: json["TotalNos"]?.toDouble(),
+    nmrPercent: json["NMRPercent"]?.toDouble(),
+    ratePercent: json["RatePercent"]?.toDouble(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "SubcontractorId": subcontractorId,
+    "SubcontractName": subcontractName,
+    "NMRNos": nmrNos,
+    "RateNos": rateNos,
+    "TotalNos": totalNos,
+    "NMRPercent": nmrPercent,
+    "RatePercent": ratePercent,
+  };
+}
+
+
 
 
 

@@ -849,12 +849,14 @@ class _Subcont_Nmr_EntryScreenState_Site
                                               "SiteWise Payment"
                                           ? true
                                           : false,
-                                  keyboardType: TextInputType.numberWithOptions(
-                                      decimal: true),
+                                  keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d+\.?\d{0,2}'),
-                                    ),
+                                    TextInputFormatter.withFunction((oldValue, newValue) {
+                                      return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                          ? newValue
+                                          : oldValue;
+                                    }),
                                   ],
                                   controller:
                                       staffVoucher_Controller.TotalAmount,
@@ -971,11 +973,14 @@ class _Subcont_Nmr_EntryScreenState_Site
                                           top: 3, left: 10, bottom: 5),
                                       child: TextFormField(
                                           readOnly: true,
-                                          keyboardType: TextInputType.number,
+                                          keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
                                           inputFormatters: [
-                                            FilteringTextInputFormatter.allow(
-                                              RegExp(r'^\d+\.?\d{0,2}'),
-                                            ),
+                                            TextInputFormatter.withFunction((oldValue, newValue) {
+                                              return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                  ? newValue
+                                                  : oldValue;
+                                            }),
                                           ],
                                           controller: staffVoucher_Controller
                                               .ChequeDate,
