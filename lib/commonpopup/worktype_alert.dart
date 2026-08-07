@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../controller/attendancecontroller.dart';
 import '../controller/dailyentries_controller.dart';
 import '../controller/dailywrk_done_dpr_controller.dart';
+import '../controller/requisitionslip_controller_new.dart';
 import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
@@ -86,6 +87,86 @@ class _WorkTypeAlertState extends State<WorkTypeAlert> {
                                   Divider(color: Theme.of(context).primaryColorLight),
                               ],
                             ),
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LeaveTypeAlert extends StatefulWidget {
+  const LeaveTypeAlert({Key? key}) : super(key: key);
+
+  @override
+  State<LeaveTypeAlert> createState() => _LeaveTypeAlertState();
+}
+
+class _LeaveTypeAlertState extends State<LeaveTypeAlert> {
+
+  final RequisitionSlipControllerNew requisitionSlipController = Get.put(RequisitionSlipControllerNew());
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      contentPadding: EdgeInsets.all(5.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      content: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+
+              Container(
+                height: BaseUtitiles.getheightofPercentage(context, 4),
+                color: Theme.of(context).primaryColor,
+                child: Center(child: Text("Leave Type",style: TextStyle(color: Colors.white),)),
+              ),
+
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                width: BaseUtitiles.getWidthtofPercentage(context, 80),
+                height: BaseUtitiles.getheightofPercentage(context,13),
+                child: ListView.builder(
+                    itemCount: requisitionSlipController.leaveTypeList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () {
+                          final selected = requisitionSlipController.leaveTypeList[index];
+
+                          requisitionSlipController.leaveTypeText.text = selected;
+
+                          switch (selected) {
+                            case "Casual Leave":
+                              requisitionSlipController.leaveTypeValue.value = "CL";
+                              break;
+
+                            case "Sick Leave":
+                              requisitionSlipController.leaveTypeValue.value = "SL";
+                              break;
+
+                            case "Earned Leave":
+                              requisitionSlipController.leaveTypeValue.value = "EL";
+                              break;
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                                width: BaseUtitiles.getWidthtofPercentage(context, 60),
+                                child: Text(requisitionSlipController.leaveTypeList[index].toString(), textAlign: TextAlign.center,style: TextStyle(fontSize: RequestConstant.ALERT_Font_SIZE,fontWeight: FontWeight.bold),)),
+
+                            if (index < requisitionSlipController.leaveTypeList.length - 1)
+                              Divider(color: Theme.of(context).primaryColorLight),
                           ],
                         ),
                       );

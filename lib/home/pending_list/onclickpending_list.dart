@@ -14436,9 +14436,9 @@ class _AdvanceReqAprovalState extends State<AdvanceReqAproval> {
 class StaffRequisitionVerify extends StatefulWidget {
   StaffRequisitionVerify(
       {Key? key,
-      required this.onclickPendingListData,
-      required this.heading,
-      required this.checkheading})
+        required this.onclickPendingListData,
+        required this.heading,
+        required this.checkheading})
       : super(key: key);
   List<OnClickListResult> onclickPendingListData;
   String heading;
@@ -14451,9 +14451,9 @@ class StaffRequisitionVerify extends StatefulWidget {
 class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
   TextEditingController editingController = TextEditingController();
   PendingListController pendingListController =
-      Get.put(PendingListController());
+  Get.put(PendingListController());
   RequisitionSlipControllerNew requisitionSlipController =
-      Get.put(RequisitionSlipControllerNew());
+  Get.put(RequisitionSlipControllerNew());
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -14572,7 +14572,7 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                   return GestureDetector(
                                     onTap: () {
                                       FocusScopeNode currentFocus =
-                                          FocusScope.of(context);
+                                      FocusScope.of(context);
                                       if (!currentFocus.hasPrimaryFocus &&
                                           currentFocus.focusedChild != null) {
                                         FocusManager.instance.primaryFocus
@@ -14593,19 +14593,19 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                         content: ConstrainedBox(
                                           constraints: BoxConstraints(
                                             maxHeight: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
+                                                .size
+                                                .height *
                                                 0.8, // Set max height
                                             maxWidth: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                .size
+                                                .width *
                                                 0.8, // Set max width
                                           ),
                                           child: IntrinsicHeight(
                                             child: Container(
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
+                                                CrossAxisAlignment.stretch,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Container(
@@ -14613,22 +14613,22 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                       children: <Widget>[
                                                         Text(
                                                           widget.checkheading ==
-                                                                  "STAFF L & P VERIFICATION"
+                                                              "STAFF L & P VERIFICATION"
                                                               ? pendingListController
-                                                                  .mainlist
-                                                                  .value[index]
-                                                                  .StaffName
+                                                              .mainlist
+                                                              .value[index]
+                                                              .StaffName
                                                               : pendingListController
-                                                                  .mainlist
-                                                                  .value[index]
-                                                                  .empName,
+                                                              .mainlist
+                                                              .value[index]
+                                                              .empName,
                                                           style: TextStyle(
                                                             color: Theme.of(
-                                                                    context)
+                                                                context)
                                                                 .primaryColor,
                                                             fontSize:
-                                                                RequestConstant
-                                                                    .Lable_Font_SIZE,
+                                                            RequestConstant
+                                                                .Lable_Font_SIZE,
                                                           ),
                                                         ),
                                                       ],
@@ -14644,11 +14644,11 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                               "Project: ",
                                                               style: TextStyle(
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                                FontWeight
+                                                                    .bold,
                                                                 fontSize:
-                                                                    RequestConstant
-                                                                        .Lable_Font_SIZE,
+                                                                RequestConstant
+                                                                    .Lable_Font_SIZE,
                                                               ),
                                                             )),
                                                         Expanded(
@@ -14661,8 +14661,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 .toString(),
                                                             style: TextStyle(
                                                               fontSize:
-                                                                  RequestConstant
-                                                                      .Lable_Font_SIZE,
+                                                              RequestConstant
+                                                                  .Lable_Font_SIZE,
                                                             ),
                                                           ),
                                                         ),
@@ -14679,11 +14679,11 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                               "Entry No: ",
                                                               style: TextStyle(
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                                FontWeight
+                                                                    .bold,
                                                                 fontSize:
-                                                                    RequestConstant
-                                                                        .Lable_Font_SIZE,
+                                                                RequestConstant
+                                                                    .Lable_Font_SIZE,
                                                               ),
                                                             )),
                                                         Expanded(
@@ -14696,8 +14696,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 .toString(),
                                                             style: TextStyle(
                                                               fontSize:
-                                                                  RequestConstant
-                                                                      .Lable_Font_SIZE,
+                                                              RequestConstant
+                                                                  .Lable_Font_SIZE,
                                                             ),
                                                           ),
                                                         ),
@@ -14707,24 +14707,24 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                   const SizedBox(height: 5),
                                                   Visibility(
                                                     visible: pendingListController
-                                                                    .mainlist
-                                                                    .value[
-                                                                        index]
-                                                                    .requisitionType ==
-                                                                "LEAVE" ||
-                                                            widget
-                                                                    .onclickPendingListData[
-                                                                        index]
-                                                                    .requisitionType ==
-                                                                "COMP OF LEAVE"
+                                                        .mainlist
+                                                        .value[
+                                                    index]
+                                                        .requisitionType ==
+                                                        "LEAVE" ||
+                                                        widget
+                                                            .onclickPendingListData[
+                                                        index]
+                                                            .requisitionType ==
+                                                            "COMP OF LEAVE"
                                                         ? true
                                                         : false,
                                                     child: Column(
                                                       children: <Widget>[
                                                         Container(
                                                           margin:
-                                                              const EdgeInsets
-                                                                  .only(top: 2),
+                                                          const EdgeInsets
+                                                              .only(top: 2),
                                                           child: Row(
                                                             children: <Widget>[
                                                               const Expanded(
@@ -14732,13 +14732,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   child: Text(
                                                                     "Reason: ",
                                                                     style:
-                                                                        TextStyle(
+                                                                    TextStyle(
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                       fontSize:
-                                                                          RequestConstant
-                                                                              .Lable_Font_SIZE,
+                                                                      RequestConstant
+                                                                          .Lable_Font_SIZE,
                                                                     ),
                                                                   )),
                                                               Expanded(
@@ -14747,14 +14747,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   pendingListController
                                                                       .mainlist
                                                                       .value[
-                                                                          index]
+                                                                  index]
                                                                       .LeaveReason
                                                                       .toString(),
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 ),
                                                               ),
@@ -14764,8 +14764,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                         SizedBox(height: 5),
                                                         Container(
                                                           margin:
-                                                              const EdgeInsets
-                                                                  .only(top: 2),
+                                                          const EdgeInsets
+                                                              .only(top: 2),
                                                           child: Row(
                                                             children: <Widget>[
                                                               const Expanded(
@@ -14773,13 +14773,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   child: Text(
                                                                     "From Date: ",
                                                                     style:
-                                                                        TextStyle(
+                                                                    TextStyle(
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                       fontSize:
-                                                                          RequestConstant
-                                                                              .Lable_Font_SIZE,
+                                                                      RequestConstant
+                                                                          .Lable_Font_SIZE,
                                                                     ),
                                                                   )),
                                                               Expanded(
@@ -14788,14 +14788,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   pendingListController
                                                                       .mainlist
                                                                       .value[
-                                                                          index]
+                                                                  index]
                                                                       .leaveFromDate
                                                                       .toString(),
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 ),
                                                               ),
@@ -14805,8 +14805,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                         SizedBox(height: 5),
                                                         Container(
                                                           margin:
-                                                              const EdgeInsets
-                                                                  .only(top: 2),
+                                                          const EdgeInsets
+                                                              .only(top: 2),
                                                           child: Row(
                                                             children: <Widget>[
                                                               const Expanded(
@@ -14814,13 +14814,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   child: Text(
                                                                     "To Date: ",
                                                                     style:
-                                                                        TextStyle(
+                                                                    TextStyle(
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                       fontSize:
-                                                                          RequestConstant
-                                                                              .Lable_Font_SIZE,
+                                                                      RequestConstant
+                                                                          .Lable_Font_SIZE,
                                                                     ),
                                                                   )),
                                                               Expanded(
@@ -14829,14 +14829,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   pendingListController
                                                                       .mainlist
                                                                       .value[
-                                                                          index]
+                                                                  index]
                                                                       .leaveToDate
                                                                       .toString(),
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 ),
                                                               ),
@@ -14846,8 +14846,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                         SizedBox(height: 5),
                                                         Container(
                                                           margin:
-                                                              const EdgeInsets
-                                                                  .only(top: 2),
+                                                          const EdgeInsets
+                                                              .only(top: 2),
                                                           child: Row(
                                                             children: <Widget>[
                                                               const Expanded(
@@ -14855,13 +14855,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   child: Text(
                                                                     "Total Days: ",
                                                                     style:
-                                                                        TextStyle(
+                                                                    TextStyle(
                                                                       fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                      FontWeight
+                                                                          .bold,
                                                                       fontSize:
-                                                                          RequestConstant
-                                                                              .Lable_Font_SIZE,
+                                                                      RequestConstant
+                                                                          .Lable_Font_SIZE,
                                                                     ),
                                                                   )),
                                                               Expanded(
@@ -14870,14 +14870,55 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   pendingListController
                                                                       .mainlist
                                                                       .value[
-                                                                          index]
+                                                                  index]
                                                                       .totalLeaveDays
                                                                       .toString(),
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Container(
+                                                          margin:
+                                                          const EdgeInsets
+                                                              .only(top: 2),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              const Expanded(
+                                                                  flex: 2,
+                                                                  child: Text(
+                                                                    "Leave Type: ",
+                                                                    style:
+                                                                    TextStyle(
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      fontSize:
+                                                                      RequestConstant
+                                                                          .Lable_Font_SIZE,
+                                                                    ),
+                                                                  )),
+                                                              Expanded(
+                                                                flex: 4,
+                                                                child: Text(
+                                                                  pendingListController
+                                                                      .mainlist
+                                                                      .value[
+                                                                  index]
+                                                                      .LeaveTypeDesc
+                                                                      ?? "-",
+                                                                  style:
+                                                                  TextStyle(
+                                                                    fontSize:
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 ),
                                                               ),
@@ -14889,19 +14930,19 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                   ),
                                                   Visibility(
                                                     visible: pendingListController
-                                                                .mainlist
-                                                                .value[index]
-                                                                .requisitionType ==
-                                                            "ON DUTY"
+                                                        .mainlist
+                                                        .value[index]
+                                                        .requisitionType ==
+                                                        "ON DUTY"
                                                         ? true
                                                         : pendingListController
-                                                                    .mainlist
-                                                                    .value[
-                                                                        index]
-                                                                    .requisitionType ==
-                                                                "PERMISSION"
-                                                            ? true
-                                                            : false,
+                                                        .mainlist
+                                                        .value[
+                                                    index]
+                                                        .requisitionType ==
+                                                        "PERMISSION"
+                                                        ? true
+                                                        : false,
                                                     child: Column(
                                                       children: <Widget>[
                                                         Row(
@@ -14911,13 +14952,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 child: Text(
                                                                   "Reason: ",
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 )),
                                                             Expanded(
@@ -14926,14 +14967,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 pendingListController
                                                                     .mainlist
                                                                     .value[
-                                                                        index]
+                                                                index]
                                                                     .permissionReason
                                                                     .toString(),
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize:
-                                                                      RequestConstant
-                                                                          .Lable_Font_SIZE,
+                                                                  RequestConstant
+                                                                      .Lable_Font_SIZE,
                                                                 ),
                                                               ),
                                                             ),
@@ -14948,13 +14989,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 child: Text(
                                                                   "Date: ",
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 )),
                                                             Expanded(
@@ -14963,14 +15004,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 pendingListController
                                                                     .mainlist
                                                                     .value[
-                                                                        index]
+                                                                index]
                                                                     .permissionFromDate
                                                                     .toString(),
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize:
-                                                                      RequestConstant
-                                                                          .Lable_Font_SIZE,
+                                                                  RequestConstant
+                                                                      .Lable_Font_SIZE,
                                                                 ),
                                                               ),
                                                             ),
@@ -14985,38 +15026,38 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 child: Text(
                                                                   "From Time: ",
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 )),
                                                             Expanded(
                                                               flex: 4,
                                                               child: Text(
-                                                                widget.heading
-                                                                            .toString() ==
-                                                                        "STAFF L & P VERIFICATION"
+                                                                widget.checkheading
+                                                                    .toString() ==
+                                                                    "STAFF L & P VERIFICATION"
                                                                     ? pendingListController
-                                                                        .mainlist
-                                                                        .value[
-                                                                            index]
-                                                                        .permissionFromTime
-                                                                        .toString()
+                                                                    .mainlist
+                                                                    .value[
+                                                                index]
+                                                                    .permissionFromTime
+                                                                    .toString()
                                                                     : pendingListController
-                                                                        .mainlist
-                                                                        .value[
-                                                                            index]
-                                                                        .PermissionFromTime
-                                                                        .toString(),
+                                                                    .mainlist
+                                                                    .value[
+                                                                index]
+                                                                    .PermissionFromTime
+                                                                    .toString(),
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize:
-                                                                      RequestConstant
-                                                                          .Lable_Font_SIZE,
+                                                                  RequestConstant
+                                                                      .Lable_Font_SIZE,
                                                                 ),
                                                               ),
                                                             ),
@@ -15031,13 +15072,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 child: Text(
                                                                   "To Time: ",
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 )),
                                                             Expanded(
@@ -15046,14 +15087,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 pendingListController
                                                                     .mainlist
                                                                     .value[
-                                                                        index]
+                                                                index]
                                                                     .permissionToTime
                                                                     .toString(),
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize:
-                                                                      RequestConstant
-                                                                          .Lable_Font_SIZE,
+                                                                  RequestConstant
+                                                                      .Lable_Font_SIZE,
                                                                 ),
                                                               ),
                                                             ),
@@ -15068,13 +15109,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 child: Text(
                                                                   "Total Hours: ",
                                                                   style:
-                                                                      TextStyle(
+                                                                  TextStyle(
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     fontSize:
-                                                                        RequestConstant
-                                                                            .Lable_Font_SIZE,
+                                                                    RequestConstant
+                                                                        .Lable_Font_SIZE,
                                                                   ),
                                                                 )),
                                                             Expanded(
@@ -15083,14 +15124,14 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                 pendingListController
                                                                     .mainlist
                                                                     .value[
-                                                                        index]
+                                                                index]
                                                                     .totalPermissionHours
                                                                     .toString(),
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize:
-                                                                      RequestConstant
-                                                                          .Lable_Font_SIZE,
+                                                                  RequestConstant
+                                                                      .Lable_Font_SIZE,
                                                                 ),
                                                               ),
                                                             ),
@@ -15103,65 +15144,65 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                   Container(
                                                     child: TextFormField(
                                                       autovalidateMode:
-                                                          AutovalidateMode
-                                                              .onUserInteraction,
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
                                                       cursorColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
+                                                      Theme.of(context)
+                                                          .primaryColor,
                                                       readOnly: false,
                                                       style: const TextStyle(
                                                         fontSize: 14,
                                                       ),
                                                       controller:
-                                                          requisitionSlipController
-                                                              .remarksValue,
+                                                      requisitionSlipController
+                                                          .remarksValue,
                                                       textAlign:
-                                                          TextAlign.center,
+                                                      TextAlign.center,
                                                       decoration:
-                                                          InputDecoration(
+                                                      InputDecoration(
                                                         constraints:
-                                                            const BoxConstraints(
-                                                                maxHeight: 70,
-                                                                minHeight: 35),
+                                                        const BoxConstraints(
+                                                            maxHeight: 70,
+                                                            minHeight: 35),
                                                         // contentPadding: EdgeInsets.symmetric(vertical: 13,horizontal: 18),
                                                         contentPadding:
-                                                            EdgeInsets.fromLTRB(
-                                                                5.0,
-                                                                0.0,
-                                                                5.0,
-                                                                0.0),
+                                                        EdgeInsets.fromLTRB(
+                                                            5.0,
+                                                            0.0,
+                                                            5.0,
+                                                            0.0),
                                                         // isDense: false,
                                                         labelText: widget
-                                                                    .checkheading
-                                                                    .toString() ==
-                                                                "STAFF L & P VERIFICATION"
+                                                            .checkheading
+                                                            .toString() ==
+                                                            "STAFF L & P VERIFICATION"
                                                             ? "Remarks"
                                                             : widget.checkheading
-                                                                        .toString() ==
-                                                                    "STAFF L & P APPROVAL"
-                                                                ? "Remarks"
-                                                                : "",
+                                                            .toString() ==
+                                                            "STAFF L & P APPROVAL"
+                                                            ? "Remarks"
+                                                            : "",
                                                         labelStyle: TextStyle(
                                                             color:
-                                                                Colors.black),
+                                                            Colors.black),
                                                         focusedBorder:
-                                                            OutlineInputBorder(
+                                                        OutlineInputBorder(
                                                           borderSide: BorderSide(
                                                               color: Theme.of(
-                                                                      context)
+                                                                  context)
                                                                   .primaryColor,
                                                               width: 1.0),
                                                         ),
                                                         enabledBorder:
-                                                            OutlineInputBorder(
+                                                        OutlineInputBorder(
                                                           borderSide: BorderSide(
                                                               color: Theme.of(
-                                                                      context)
+                                                                  context)
                                                                   .primaryColor,
                                                               width: 1.0),
                                                         ),
                                                         border:
-                                                            OutlineInputBorder(),
+                                                        OutlineInputBorder(),
                                                       ),
                                                       validator: (value) {
                                                         if (value!.isEmpty) {
@@ -15183,8 +15224,8 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                             child: IntrinsicHeight(
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   InkWell(
                                                     child: Container(
@@ -15192,41 +15233,41 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                           left: 20, right: 20),
                                                       height: BaseUtitiles
                                                           .getheightofPercentage(
-                                                              context, 4),
+                                                          context, 4),
                                                       width: BaseUtitiles
                                                           .getWidthtofPercentage(
-                                                              context, 20),
+                                                          context, 20),
                                                       decoration: BoxDecoration(
                                                           borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10)),
+                                                          BorderRadius.all(
+                                                              Radius
+                                                                  .circular(
+                                                                  10)),
                                                           color: Theme.of(
-                                                                  context)
+                                                              context)
                                                               .primaryColor),
                                                       alignment:
-                                                          Alignment.center,
+                                                      Alignment.center,
                                                       child: Text(
                                                         widget.checkheading
-                                                                    .toString() ==
-                                                                "STAFF L & P VERIFICATION"
+                                                            .toString() ==
+                                                            "STAFF L & P VERIFICATION"
                                                             ? RequestConstant
-                                                                .VERIFY
+                                                            .VERIFY
                                                             : widget.checkheading
-                                                                        .toString() ==
-                                                                    "STAFF L & P APPROVAL"
-                                                                ? RequestConstant
-                                                                    .APPROVAL
-                                                                : "",
+                                                            .toString() ==
+                                                            "STAFF L & P APPROVAL"
+                                                            ? RequestConstant
+                                                            .APPROVAL
+                                                            : "",
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                            FontWeight.bold,
                                                             fontSize:
-                                                                RequestConstant
-                                                                    .Lable_Font_SIZE,
+                                                            RequestConstant
+                                                                .Lable_Font_SIZE,
                                                             color:
-                                                                Colors.white),
+                                                            Colors.white),
                                                       ),
                                                     ),
                                                     onTap: () async {
@@ -15247,24 +15288,24 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                           left: 20, right: 20),
                                                       height: BaseUtitiles
                                                           .getheightofPercentage(
-                                                              context, 4),
+                                                          context, 4),
                                                       width: BaseUtitiles
                                                           .getWidthtofPercentage(
-                                                              context, 20),
+                                                          context, 20),
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10)),
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
                                                         color: Colors.red,
                                                       ),
                                                       alignment:
-                                                          Alignment.center,
+                                                      Alignment.center,
                                                       child: const Text(
                                                         "Reject",
                                                         style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                          FontWeight.bold,
                                                           fontSize: RequestConstant
                                                               .Lable_Font_SIZE,
                                                           color: Colors.white,
@@ -15309,13 +15350,13 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                   margin: EdgeInsets.all(3),
                                   child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
                                             "${pendingListController.mainlist.value[index].requisitionNo.toString()}  ",
@@ -15403,15 +15444,15 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                               flex: 8,
                                               child: Text(
                                                 widget.checkheading ==
-                                                        "STAFF L & P VERIFICATION"
+                                                    "STAFF L & P VERIFICATION"
                                                     ? pendingListController
-                                                        .mainlist
-                                                        .value[index]
-                                                        .StaffName
+                                                    .mainlist
+                                                    .value[index]
+                                                    .StaffName
                                                     : pendingListController
-                                                        .mainlist
-                                                        .value[index]
-                                                        .empName,
+                                                    .mainlist
+                                                    .value[index]
+                                                    .empName,
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 ),
@@ -15493,7 +15534,7 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize:
-                                        RequestConstant.Lable_Font_SIZE))),
+                                    RequestConstant.Lable_Font_SIZE))),
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
@@ -15507,23 +15548,23 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                             onPressed: () async {
                               await requisitionSlipController
                                   .reqSlipVerifyApproveApi(
-                                      context,
-                                      widget.onclickPendingListData[index],
-                                      widget.checkheading ==
-                                              "STAFF L & P VERIFICATION"
-                                          ? "Verify"
-                                          : "Approve");
+                                  context,
+                                  widget.onclickPendingListData[index],
+                                  widget.checkheading ==
+                                      "STAFF L & P VERIFICATION"
+                                      ? "Verify"
+                                      : "Approve");
                             },
                             child: Text(
                                 widget.checkheading.toString() ==
-                                        "STAFF L & P VERIFICATION"
+                                    "STAFF L & P VERIFICATION"
                                     ? RequestConstant.VERIFY
                                     : RequestConstant.APPROVAL,
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize:
-                                        RequestConstant.Lable_Font_SIZE))),
+                                    RequestConstant.Lable_Font_SIZE))),
                       )
                     ],
                   ),
@@ -15575,7 +15616,7 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize:
-                                        RequestConstant.Lable_Font_SIZE))),
+                                    RequestConstant.Lable_Font_SIZE))),
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
@@ -15589,19 +15630,19 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                             onPressed: () async {
                               await requisitionSlipController
                                   .reqSlipVerifyApproveApi(
-                                      context,
-                                      widget.onclickPendingListData[index],
-                                      widget.checkheading ==
-                                              "STAFF L & P VERIFICATION"
-                                          ? "Verify-Reject"
-                                          : "Approve-Reject");
+                                  context,
+                                  widget.onclickPendingListData[index],
+                                  widget.checkheading ==
+                                      "STAFF L & P VERIFICATION"
+                                      ? "Verify-Reject"
+                                      : "Approve-Reject");
                             },
                             child: Text("Reject",
                                 style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize:
-                                        RequestConstant.Lable_Font_SIZE))),
+                                    RequestConstant.Lable_Font_SIZE))),
                       )
                     ],
                   ),
