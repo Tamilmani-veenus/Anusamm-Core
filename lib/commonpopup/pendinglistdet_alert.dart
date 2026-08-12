@@ -2745,7 +2745,19 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
               }),
               SizedBox(height: 15),
               /// HORIZONTAL SCROLL AREA
-
+              Row(
+                children: [
+                  Text(
+                    "   ⓘ Note: Tap to view full description and remarks",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF2E7D32),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
               widget.type == "P"?
               Expanded(
                 child: Row(
@@ -2861,10 +2873,9 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: SizedBox(
-                          width: 600,
+                          width: 875,
                           child: Column(
                             children: [
-
                               /// HEADER
                               Container(
                                 height: 50,
@@ -2873,12 +2884,14 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                   children: [
 
                                     headerCell("Qty"),
-                                    headerCell("Data\nRate"),
+                                    // headerCell("Data\nRate"),
                                     headerCell("PO\nRate"),
                                     headerCell("PO\nAmt"),
                                     headerCell("GST%"),
                                     headerCell("GST\nAmt"),
                                     headerCell("Net\nAmt"),
+                                    headerCell("Description",width: 180),
+                                    headerCell("Remarks",width: 180),
 
                                   ],
                                 ),
@@ -2910,7 +2923,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                           dataCell(
                                             item.Poqty.toString(),
                                           ),
-                                          dataCell("0.0"),
+                                          // dataCell("0.0"),
                                           dataCell(
                                             item.rate.toString(),
                                           ),
@@ -2928,8 +2941,39 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                           ),
 
                                           dataCell(
-
                                             item.netAmount.toString(),
+                                          ),
+                                          dataCell(
+                                            item.poDescription.toString(),
+                                            width: 180,
+                                            onTap: () {
+                                              if(item.poDescription != null &&
+                                                  item.poDescription.toString().trim().isNotEmpty &&
+                                                  item.poDescription.toString().trim() != "-"){
+                                              descriptionShowingAlert(
+                                                context,
+                                                item.poDescription.toString(),
+                                                "Description"
+                                              );}
+                                            },
+                                          ),
+                                          // dataCell(
+                                          //   "android:enableOnBackInvokedCallback=""' in the application manifest. android:enableOnBackInvokedCallback=""' in the application manifest. android:enableOnBackInvokedCallback=""' in the application manifest. android:enableOnBackInvokedCallback=""' in the application manifest.",
+                                          //   // item.poDescription.toString(),
+                                          //     width: 180
+                                          // ),
+                                          dataCell(
+                                            item.remarks.toString(),width: 180,
+                                            onTap: () {
+                                              if(item.remarks != null &&
+                                                  item.remarks.toString().trim().isNotEmpty &&
+                                                  item.remarks.toString().trim() != "-"){
+                                              descriptionShowingAlert(
+                                                context,
+                                                item.remarks.toString(),
+                                                "Remarks"
+                                              );}
+                                            },
                                           ),
                                         ],
                                       ),
@@ -3194,9 +3238,9 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     );
   }
 
-  Widget headerCell(String text) {
+  Widget headerCell(String text,{double width = 85}) {
     return Container(
-      width: 85,
+      width: width,
       height: 50,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
@@ -3217,27 +3261,30 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     );
   }
 
-  Widget dataCell(String text) {
-    return Container(
-      width: 85,
-      height: 60,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: Colors.grey.shade300,
+  Widget dataCell(String text,{double width = 85, VoidCallback? onTap,}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 2,horizontal: 2),
+        width: width,
+        height: 60,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+              color: Colors.grey.shade300,
+            ),
           ),
         ),
-      ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }
-
-
-
 
   Widget buildInfoRow(
       String title,
@@ -3283,6 +3330,31 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> descriptionShowingAlert(
+      BuildContext context,
+      String description,
+      String value
+      ) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title:  Text(value,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+        content: SingleChildScrollView(
+          child: Text(
+            description,
+            style: const TextStyle(fontSize: 14),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close',style: TextStyle(color: Theme.of(context).primaryColor),),
+          ),
+        ],
+      ),
     );
   }
 
@@ -3425,265 +3497,65 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     );
   }
 
+}
 
-  Widget ListDetails(BuildContext context){
+class ScrollableDataCell extends StatefulWidget {
+  final String text;
+  final double width;
+
+  const ScrollableDataCell({
+    super.key,
+    required this.text,
+    this.width = 180,
+  });
+
+  @override
+  State<ScrollableDataCell> createState() => _ScrollableDataCellState();
+}
+
+class _ScrollableDataCellState extends State<ScrollableDataCell> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: BaseUtitiles.getheightofPercentage(context, 90),
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 15)),
-        itemCount: pendingListController.onclickPendingListDet.length,
-        itemBuilder: (BuildContext context, int index) {
-
-          var item = pendingListController.onclickPendingListDet[index];
-
-          return Container(
-            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(color: Colors.grey.shade300),
-              ),
+      width: widget.width,
+      height: 60,
+      padding: const EdgeInsets.only(
+       right: 0,left: 5
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
+      child: Scrollbar(
+        controller: _scrollController,
+        thumbVisibility: true,
+        thickness: 5,
+        radius: const Radius.circular(5),
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          scrollDirection: Axis.vertical,
+          child: Text(
+            widget.text,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 13,
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      Text(
-                        item.materialName.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                      ),
-
-                      SizedBox(height: 3),
-
-                      Text(
-                        "(${item.scaleName})",
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: 13,
-                        ),
-                      ),
-
-                      SizedBox(height: 3),
-
-                      Text(
-                        "PO Amt : ${item.amount}",
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                /// UNIT PRICE
-                Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Text(
-                      "₹ ${item.rate}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// QTY
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Text(
-                      "${item.Poqty} ${item.scaleName}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// VIEW BUTTON
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () {
-
-                      pendingListController.poapprovalSupplierlist(
-                        context,
-                        item.materialID,
-                        item.materialName.toString(),
-                        item.scale.toString(),
-                      );
-
-                    },
-                    child: Icon(
-                      Icons.arrow_circle_right_outlined,
-                      color: Theme.of(context).primaryColor,
-                      size: 28,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-        // itemBuilder: (BuildContext context, int index) {
-        //   return Container(
-        //     margin: EdgeInsets.only(left: 3, right: 3),
-        //     child: Card(
-        //       elevation: 5,
-        //       shape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(20.0),
-        //       ),
-        //       child: Container(
-        //         margin: EdgeInsets.only(left: 10, right: 5, bottom: 10, top:5 ),
-        //         child: Column(
-        //           children: [
-        //             Row(
-        //               children: [
-        //                 Text("Material" + ":   ",
-        //                   style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 5,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].materialName.toString(),
-        //                       style: TextStyle(fontWeight: FontWeight.bold),
-        //                     )),
-        //                 Expanded(
-        //                     flex: 3,
-        //                     child: InkWell(
-        //                       child: Row(
-        //                         mainAxisAlignment: MainAxisAlignment.end,
-        //                         children: [
-        //                           Icon(Icons.arrow_circle_right_outlined, color: Theme.of(context).primaryColor,),
-        //                           Container(child: Text("    "),)
-        //                         ],
-        //                       ),
-        //                       onTap: (){
-        //                         pendingListController.poapprovalSupplierlist(context,
-        //                           pendingListController.onclickPendingListDet[index].materialId,
-        //                           pendingListController.onclickPendingListDet[index].materialName.toString(),
-        //                           pendingListController.onclickPendingListDet[index].scaleName.toString(),
-        //                         );
-        //                       },
-        //                     ))
-        //               ],
-        //             ),
-        //             Divider(),
-        //             Row(
-        //               children: [
-        //                 Expanded(
-        //                   flex: 2,
-        //                   child: Text("Po Qty:",
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].Poqty.toString())),
-        //                 Expanded(
-        //                     flex: 2,
-        //                     child: Text("Scale" + ":  ",
-        //                       style: TextStyle(fontWeight: FontWeight.bold),
-        //                     )),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].scaleName.toString())),
-        //               ],
-        //             ),
-        //             Divider(),
-        //             Row(
-        //               children: [
-        //                 Expanded(
-        //                   flex: 2,
-        //                   child: Text("Po Rate" + ":  ",
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].rate.toString())),
-        //                 Expanded(
-        //                     flex: 2,
-        //                     child: Text("Data Rate" + ":  ",
-        //                       style: TextStyle(fontWeight: FontWeight.bold),
-        //                     )),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( "")),
-        //               ],
-        //             ),
-        //             Divider(),
-        //             Row(
-        //               children: [
-        //
-        //                 Expanded(
-        //                   flex: 2,
-        //                   child: Text("Po Amt" + ":  ",
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].amount.toString())),
-        //                 Expanded(
-        //                   flex: 2,
-        //                   child: Text("GST Per:" ,
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 4,
-        //                     child: Text( " "+pendingListController.onclickPendingListDet[index].GSTPer.toString())),
-        //               ],
-        //             ),
-        //             Divider(),
-        //             Row(
-        //               children: [
-        //                 Expanded(
-        //                   flex: 3,
-        //                   child: Text("GST Amt:" + "   ",
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 6,
-        //                     child: Text(" " + pendingListController.onclickPendingListDet[index].GSTAmt.toString())),
-        //
-        //                 Expanded(
-        //                   flex: 3,
-        //                   child: Text("Net Amt" + ":",
-        //                     style: TextStyle(fontWeight: FontWeight.bold),
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                     flex: 6,
-        //                     child: Text( pendingListController.onclickPendingListDet[index].netAmount.toString()))
-        //               ],
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   );
-        // },
+          ),
+        ),
       ),
     );
   }
-
 }
 
 

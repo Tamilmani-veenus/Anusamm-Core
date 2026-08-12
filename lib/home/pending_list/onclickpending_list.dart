@@ -14563,6 +14563,7 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                         physics: BouncingScrollPhysics(),
                         itemCount: pendingListController.mainlist.length,
                         itemBuilder: (context, index) {
+                          final isHalfDay=pendingListController.mainlist.value[index].isHalfDay ?? false;
                           return InkWell(
                             onTap: () async {
                               requisitionSlipController.remarksValue.text = "";
@@ -14866,13 +14867,10 @@ class _StaffRequisitionVerifyState extends State<StaffRequisitionVerify> {
                                                                   )),
                                                               Expanded(
                                                                 flex: 4,
-                                                                child: Text(
-                                                                  pendingListController
-                                                                      .mainlist
-                                                                      .value[
-                                                                  index]
-                                                                      .totalLeaveDays
-                                                                      .toString(),
+                                                                child:
+                                                                Text(
+                                                                  "${pendingListController.mainlist.value[index].totalLeaveDays}"
+                                                                      "${isHalfDay == true ? ' (Half Day)' : ''}",
                                                                   style:
                                                                   TextStyle(
                                                                     fontSize:

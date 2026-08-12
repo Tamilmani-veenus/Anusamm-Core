@@ -43,7 +43,7 @@ class  RequisitionSlipControllerNew extends GetxController{
   var leaveType = "".obs;
   var yearofLeavedays = ''.obs;
   var yearofPerHrs = ''.obs;
-
+  RxBool isHalfDay = false.obs;
 
   final ondutyDate=TextEditingController();
   final perDate=TextEditingController();
@@ -67,6 +67,7 @@ class  RequisitionSlipControllerNew extends GetxController{
   RxInt createdById = 0.obs;
   RxString saveButton=RequestConstant.SUBMIT.obs;
   RxString leaveTypeValue="-".obs;
+  RxString totalLeaveValue="".obs;
   RxList ReqSlipEtyList = [].obs;
   RxList mainentrylist = [].obs;
   RxList staffLeaveInfolist = [].obs;
@@ -168,8 +169,8 @@ class  RequisitionSlipControllerNew extends GetxController{
       permissionToDate: Date.text,
       permissionFromTime: Fromtime.text,
       permissionToTime: Totime.text,
-      permissionTimeHrs: int.tryParse(RequiredHrs.text),
-      permissionTimeMins: int.tryParse(RequiredMins.text),
+      permissionTimeHrs: int.tryParse(RequiredHrs.text) ?? 0,
+      permissionTimeMins: int.tryParse(RequiredMins.text) ?? 0,
       totalPermissionHours: double.tryParse(TotalHrs.text),
       createdBy: saveButton.value==RequestConstant.SUBMIT?int.tryParse(loginController.EmpId()):createdById.value,
       // createdDt: BaseUtitiles().convertToUtcIso(Reqdate.text),
@@ -178,6 +179,7 @@ class  RequisitionSlipControllerNew extends GetxController{
       verifyRemarks: "-",
       approveRemarks: "-",
       leaveType: leaveTypeValue.value,
+      isHalfDay: isHalfDay.value,
     ));
     final list = await RequisitionslipProvider.SaveReqslipScreenEntryAPI(body, reqId);
     if (list != null ) {
@@ -223,7 +225,8 @@ class  RequisitionSlipControllerNew extends GetxController{
         approveRemarks: type=="Approve"||type=="Approve-Reject"?remarksValue.text:"",
         verifyStatus: type=="Verify-Reject"?"R":"Y",
         approveStatus: type=="Approve-Reject"?"R":type=="Approve"?"Y":"N",
-        leaveType: data.LeaveType
+        leaveType: data.LeaveType,
+        isHalfDay: data.isHalfDay
     ));
     final list = await RequisitionslipProvider.SaveReqslipScreenEntryAPI(body, data.id);
     if (list != null ) {
@@ -294,6 +297,7 @@ class  RequisitionSlipControllerNew extends GetxController{
     int totalDays = toDate.difference(fromDate).inDays + 1;
     totalDays = totalDays < 1 ? 1 : totalDays;
     Totaldays.text = totalDays.toString();
+    totalLeaveValue.value = totalDays.toString();
   }
 
 
