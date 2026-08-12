@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -55,6 +57,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
         requisitionSlipController.Fromdate.text = BaseUtitiles.initiateCurrentDateFormat();
         requisitionSlipController.Todate.text = BaseUtitiles.initiateCurrentDateFormat();
         requisitionSlipController.Totaldays.text = "1";
+        requisitionSlipController.totalLeaveValue.value = "1";
         requisitionSlipController.Date.text = BaseUtitiles.initiateCurrentDateFormat();
         requisitionSlipController.Fromtime.text = "00:00";
         requisitionSlipController.Totime.text = "00:00";
@@ -67,6 +70,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
         await autoYearWiseNoController.AutoYearWiseNo("REQ SLIP");
         requisitionSlipController.ReqAutoyearwise.text = autoYearWiseNoController.RequisitionSlip_autoYrsWise.value;
         requisitionSlipController.type.value = "L";
+        requisitionSlipController.isHalfDay.value=false;
       }
 
       else if(requisitionSlipController.saveButton.value==RequestConstant.RESUBMIT){
@@ -85,13 +89,17 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
           requisitionSlipController.LeaveReason.text = element.leaveReason;
           requisitionSlipController.Date.text = element.permissionFromDate;
           requisitionSlipController.createdById.value = element.createdBy;
-          requisitionSlipController.Totaldays.text=element.totalLeaveDays.toString();
+          requisitionSlipController.Totaldays.text = element.totalLeaveDays.toString();
+          requisitionSlipController.totalLeaveValue.value = (element.totalLeaveDays ?? 0.0) == 1.0
+              ? "1"
+              : (element.totalLeaveDays ?? 0.0).toString();
           requisitionSlipController.Fromtime.text = element.permissionFromTime;
           requisitionSlipController.Totime.text = element.permissionToTime;
           requisitionSlipController.TotalHrs.text=element.totalPermissionHours.toStringAsFixed(2);
           requisitionSlipController.yearofLeavedays.value="0";
           requisitionSlipController.leaveTypeText.text=element.leaveTypeDesc;
           requisitionSlipController.leaveTypeValue.value=element.leaveType;
+          requisitionSlipController.isHalfDay.value=element.isHalfDay;
         }
       }
     });
@@ -349,6 +357,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                           requisitionSlipController.pTotime.text = "00:00";
                                           requisitionSlipController.TotalHrs.text = "0.0";
                                           requisitionSlipController.Totaldays.text = "1";
+                                          requisitionSlipController.totalLeaveValue.value = "1";
                                           requisitionSlipController.RequiredHrs.text = "0";
                                           requisitionSlipController.RequiredMins.text = "0";
                                           requisitionSlipController.Fromdate.text =
@@ -357,6 +366,7 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                               BaseUtitiles.initiateCurrentDateFormat();
                                           requisitionSlipController.leaveTypeText.text="--SELECT--";
                                           requisitionSlipController.leaveTypeValue.value="-";
+                                          requisitionSlipController.isHalfDay.value=false;
                                         },
                                       ),
                                   ),
@@ -535,7 +545,9 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                             );
                                             requisitionSlipController.Fromdate.text = BaseUtitiles.selectDateFormat(Frdate!);
                                             requisitionSlipController.vehicleAge(DateTime.parse(requisitionSlipController.Fromdate.text),DateTime.parse(requisitionSlipController.Todate.text));
-
+                                            setState(() {
+                                              requisitionSlipController.isHalfDay.value = false;
+                                            });
                                           },
                                         ),
                                       ),
@@ -596,6 +608,9 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                                                 });
                                             requisitionSlipController.Todate.text =BaseUtitiles.selectDateFormat(Todate!);
                                             requisitionSlipController.vehicleAge(DateTime.parse(requisitionSlipController.Fromdate.text),DateTime.parse(requisitionSlipController.Todate.text));
+                                            setState(() {
+                                              requisitionSlipController.isHalfDay.value = false;
+                                            });
                                           },
                                         ),
                                       ),
@@ -606,48 +621,90 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                             ),
                           ),
 
-                          Container(
-                            margin: const EdgeInsets.only(top: 2, left: 10, right: 10),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  autovalidateMode: AutovalidateMode.always,
-                                  controller: requisitionSlipController.Totaldays,
-                                  cursorColor: Colors.black,
-                                  style: const TextStyle(color: Colors.black),
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "Total Days",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.format_list_numbered_rounded, color: ConstIcons.IconColor),
+                          Row(
+                            children: [
+                              Expanded(flex: 2,
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 2, left: 10),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(color: Colors.white70, width: 1),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                                      child: TextFormField(
+                                        readOnly: true,
+                                        autovalidateMode: AutovalidateMode.always,
+                                        controller: requisitionSlipController.Totaldays,
+                                        cursorColor: Colors.black,
+                                        style: const TextStyle(color: Colors.black),
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          border: InputBorder.none,
+                                          labelText: "Total Days",
+                                          labelStyle: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: RequestConstant.Lable_Font_SIZE),
+                                          prefixIconConstraints:
+                                          BoxConstraints(minWidth: 0, minHeight: 0),
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                            child: Icon(Icons.format_list_numbered_rounded, color: ConstIcons.IconColor),
+                                          ),
+                                        ),
+                                        onTap: (){
+                                          setState(() {
+                                            requisitionSlipController.Totaldays.text == "0" ? requisitionSlipController.Totaldays.text = "" : requisitionSlipController.Totaldays.text;
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return '\u26A0 Required';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  onTap: (){
-                                    requisitionSlipController.Totaldays.text == "0" ? requisitionSlipController.Totaldays.text = "" : requisitionSlipController.Totaldays.text;
-                                  },
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '\u26A0 Required';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
-                            ),
+                              Expanded(flex: 1,
+                                child: Row(
+                                  children: [
+                                    Obx((){
+                                      return Checkbox(
+                                        value: requisitionSlipController.isHalfDay.value,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
+                                        side: BorderSide(
+                                          width: 1,
+                                          color: requisitionSlipController.totalLeaveValue.value!="1" && requisitionSlipController.totalLeaveValue.value!="0.5"?Colors.grey:Theme.of(context).primaryColor,
+                                        ),
+                                        activeColor: requisitionSlipController.totalLeaveValue.value!="1" && requisitionSlipController.totalLeaveValue.value!="0.5"?Colors.grey:Theme.of(context).primaryColor,
+                                        checkColor: Colors.white,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            if(requisitionSlipController.totalLeaveValue.value=="1" ||requisitionSlipController.totalLeaveValue.value=="0.5") {
+                                              requisitionSlipController.isHalfDay.value = value ?? false;
+                                              if (requisitionSlipController.isHalfDay.value == true) {
+                                                requisitionSlipController.Totaldays.text = "0.5";
+                                              }
+                                              else {
+                                                requisitionSlipController.Totaldays.text = "1";
+                                              }
+                                            }
+                                          });
+                                        },
+                                      );},
+                                    ),
+                                    Text("Half Day", style:  TextStyle(fontWeight: FontWeight.bold,color: requisitionSlipController.totalLeaveValue.value!="1" && requisitionSlipController.totalLeaveValue.value!="0.5"?Colors.grey:Colors.black),),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -897,48 +954,88 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                             ],
                           ),
 
-                          Container(
-                            margin: const EdgeInsets.only(top: 2, left: 10, right: 10),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
-                                child: TextFormField(
-                                  readOnly: false,
-                                  autovalidateMode: AutovalidateMode.always,
-                                  controller: requisitionSlipController.Totaldays,
-                                  cursorColor: Colors.black,
-                                  style: const TextStyle(color: Colors.black),
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "Total Days",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.format_list_numbered_rounded, color: ConstIcons.IconColor),
+                          Row(
+                            children: [
+                              Expanded(flex: 2,
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 2, left: 10),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(color: Colors.white70, width: 1),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 3, left: 10, bottom: 5),
+                                      child: TextFormField(
+                                        readOnly: true,
+                                        autovalidateMode: AutovalidateMode.always,
+                                        controller: requisitionSlipController.Totaldays,
+                                        cursorColor: Colors.black,
+                                        style: const TextStyle(color: Colors.black),
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          border: InputBorder.none,
+                                          labelText: "Total Days",
+                                          labelStyle: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: RequestConstant.Lable_Font_SIZE),
+                                          prefixIconConstraints:
+                                          BoxConstraints(minWidth: 0, minHeight: 0),
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                            child: Icon(Icons.format_list_numbered_rounded, color: ConstIcons.IconColor),
+                                          ),
+                                        ),
+                                        onTap: (){
+                                          requisitionSlipController.Totaldays.text == "0" ? requisitionSlipController.Totaldays.text = "" : requisitionSlipController.Totaldays.text;
+                                        },
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return '\u26A0 Required';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  onTap: (){
-                                    requisitionSlipController.Totaldays.text == "0" ? requisitionSlipController.Totaldays.text = "" : requisitionSlipController.Totaldays.text;
-                                  },
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '\u26A0 Required';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
-                            ),
+                              Expanded(flex: 1,
+                                child: Row(
+                                  children: [
+                                    Obx((){
+                                      return Checkbox(
+                                        value: requisitionSlipController.isHalfDay.value,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
+                                        side: BorderSide(
+                                          width: 1,
+                                          color: requisitionSlipController.Totaldays.text!="1" && requisitionSlipController.Totaldays.text!="0.5"?Colors.grey:Theme.of(context).primaryColor,
+                                        ),
+                                        activeColor: requisitionSlipController.Totaldays.text!="1" && requisitionSlipController.Totaldays.text!="0.5"?Colors.grey:Theme.of(context).primaryColor,
+                                        checkColor: Colors.white,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            if(requisitionSlipController.Totaldays.text=="1" ||requisitionSlipController.Totaldays.text=="0.5") {
+                                              requisitionSlipController.isHalfDay.value = value ?? false;
+                                              if (requisitionSlipController.isHalfDay.value == true) {
+                                                requisitionSlipController.Totaldays.text = "0.5";
+                                              }
+                                              else {
+                                                requisitionSlipController.Totaldays.text = "1";
+                                              }
+                                            }
+                                          });
+                                        },
+                                      );},
+                                    ),
+                                    Text("Half Day", style:  TextStyle(fontWeight: FontWeight.bold,color: requisitionSlipController.Totaldays.text!="1" && requisitionSlipController.Totaldays.text!="0.5"?Colors.grey:Colors.black),),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
 
                         ],
@@ -1739,7 +1836,8 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                           requisitionSlipController.reqId=0;
                           requisitionSlipController.saveButton.value=RequestConstant.SUBMIT;
                           staffController.selectedstaffId.value = loginController.user.value.empId!;
-                          staffController.Staffname.text = loginController.user.value.empName!;                          requisitionSlipController.Reqdate.text=BaseUtitiles.initiateCurrentDateFormat();
+                          staffController.Staffname.text = loginController.user.value.empName!;
+                          requisitionSlipController.Reqdate.text=BaseUtitiles.initiateCurrentDateFormat();
                           requisitionSlipController.Fromdate.text=BaseUtitiles.initiateCurrentDateFormat();
                           requisitionSlipController.Todate.text=BaseUtitiles.initiateCurrentDateFormat();
                           requisitionSlipController.ondutyDate.text=BaseUtitiles.initiateCurrentDateFormat();
@@ -1748,10 +1846,12 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                           reportsController.projectname.text  = "--SELECT--";
                           reportsController.selectedProjectId.value = 0;
                           requisitionSlipController.Totaldays.text="1";
+                          requisitionSlipController.totalLeaveValue.value = "1";
                           requisitionSlipController.type.value="L";
                           requisitionSlipController.TotalHrs.text="0";
                           requisitionSlipController.Reason.text="";
                           requisitionSlipController.LeaveReason.text="";
+                          requisitionSlipController.isHalfDay.value=false;
                           Navigator.pop(context);
                         },
                         child: Text("Reset",
