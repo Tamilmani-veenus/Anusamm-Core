@@ -228,6 +228,9 @@ class PendingListProvider {
       else if (formName == "MAN POWER APPROVAL PENDING") {
         response = await ApiManager.getAPICall(ApiConstant.GET_MANPOWERAPPROVALLIST);
       }
+      else if (formName == "WORK ORDER VERIFICATION PENDING - BOQ") {
+        response = await ApiManager.getAPICall(ApiConstant.GET_WORKORDERBOQ_VERIFYLIST);
+      }
       else if (formName == "PENDING PO [AGENCY]" || formName == "PENDING PO [TRADER]" || formName == "PENDING PO [SUPPLIER]") {
         String supplierCategory = formName == "PENDING PO [SUPPLIER]"
             ? "S"

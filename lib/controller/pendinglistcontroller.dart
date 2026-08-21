@@ -1148,7 +1148,7 @@ class PendingListController extends GetxController {
             )
                 : name == "WORK ORDER VERIFICATION PENDING - DIRECT" ||
                 name ==
-                    "WORK ORDER VERIFICATION - BOQ"
+                    "WORK ORDER VERIFICATION PENDING - BOQ"
                 ? Navigator
                 .push(
               context,

@@ -16,7 +16,6 @@ import '../models/materialintentsave_model.dart';
 import '../models/mrnrq_addmat_resmodel.dart';
 import '../provider/common_provider.dart';
 import '../provider/mrn_request_indent_provider.dart';
-import '../sample.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'logincontroller.dart';
@@ -113,13 +112,14 @@ class MRN_Request_Controller extends GetxController {
 
   Future getMaterialList(BuildContext context, String requestType, projectId, siteId) async {
     getmaterialvalue.value.clear();
+    ClickUtils.run(() async {
     final value = await CommonProvider.getmaterial(
         requestType == "CP", projectId, siteId);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           getmaterialvalue.value = value.result!;
-          return Navigator.push(
+          await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => Materials_Add(
@@ -134,6 +134,7 @@ class MRN_Request_Controller extends GetxController {
     } else {
       BaseUtitiles.showToast('Something went wrong..');
     }
+    });
   }
 
   Future getCheckApprovalLevel() async {
@@ -268,22 +269,53 @@ class MRN_Request_Controller extends GetxController {
     materialTableList.clear();
     int i = 0;
     int j = 0;
+    int itemcount = 0;
     getmaterialvalue.forEach((element) {
       Material_itemlist_textControllersInitiate();
       if (element.isCheck == true) {
         if (Itemlist_qtyControllers[j].value.text == "0.0" ||
             Itemlist_qtyControllers[j].value.text == "0" ||
-            Itemlist_qtyControllers[j].value.text == "") {
-        } else {
-          materialTableModel = Materiallist();
+            Itemlist_qtyControllers[j].value.text == "") {}
+        if (double.parse(Itemlist_qtyControllers[j].value.text) < 0) {}
+        else if (ReqType.value == "PO") {
+          if (activeType.value && element.balqty <= 0.0) {
+            itemcount++;
+          }
+          else {
+            materialTableModel = Materiallist();
+            materialTableModel.materialid = element.materialId!;
+            materialTableModel.material = element.material!;
+            materialTableModel.scale = element.scale!;
+            materialTableModel.qty = double.parse("0");
+            materialTableModel.stockqty = element.stockQty;
+            materialTableModel.scaleId = element.scaleId;
+            materialTableModel.balqty = element.balqty;
+            materialTableModel.reqDetId = 0;
+            materialTableModel.remarks = "";
+            materialTableModel.desc = "";
+            Material_itemview_GetDbList.forEach((element) {
+              if (element.materialid == materialTableModel.materialid) {
+                i = 1;
+                BaseUtitiles.showToast("Entries already exist");
+              }
+            });
+            if (i == 0) {
+              materialTableList.add(materialTableModel);
+            } else {
+              i = 0;
+            }
+          }
+        }
+        else {
+          materialTableModel = new Materiallist();
           materialTableModel.materialid = element.materialId!;
           materialTableModel.material = element.material!;
           materialTableModel.scale = element.scale!;
-          materialTableModel.qty = double.parse("0");
-          materialTableModel.stockqty = element.stockQty;
           materialTableModel.scaleId = element.scaleId;
-          materialTableModel.balqty = element.balqty;
+          materialTableModel.stockqty = element.stockQty;
+          materialTableModel.qty = double.parse("0");
           materialTableModel.reqDetId = 0;
+          materialTableModel.balqty = element.balqty;
           materialTableModel.remarks = "";
           materialTableModel.desc = "";
           Material_itemview_GetDbList.forEach((element) {
@@ -294,7 +326,8 @@ class MRN_Request_Controller extends GetxController {
           });
           if (i == 0) {
             materialTableList.add(materialTableModel);
-          } else {
+          }
+          else {
             i = 0;
           }
         }
@@ -303,6 +336,9 @@ class MRN_Request_Controller extends GetxController {
     });
     var savedatas =
         await materiallistService.Material_table_Save(materialTableList);
+    if(itemcount>0){
+      BaseUtitiles.showToast(itemcount.toString() + " Materials doesn't have a balqty");
+    }
     return Navigator.pop(context, savedatas);
   }
 
@@ -522,6 +558,7 @@ class MRN_Request_Controller extends GetxController {
 
   Future MaterialIntentList_EditApi(
       int reqId, int pId, int sId,String MenuName, BuildContext context) async {
+    ClickUtils.run(() async {
     final value =
     await Mrn_Req_provider.Material_IntentList_editAPI(reqId);
     if (value != null) {
@@ -532,7 +569,7 @@ class MRN_Request_Controller extends GetxController {
           Material_Intentlist_editSaveDetTable();
           getMaterialTablesDatas();
           saveButton.value = RequestConstant.RESUBMIT;
-          return Navigator.pushReplacement(
+          await Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) =>  MRNRequest_Indent_Entry(heading: MenuName,)));
@@ -545,6 +582,7 @@ class MRN_Request_Controller extends GetxController {
     } else {
       BaseUtitiles.showToast('Something went wrong..');
     }
+    });
   }
 
 //--Entrylist Delete--

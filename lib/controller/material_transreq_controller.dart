@@ -83,13 +83,14 @@ class MaterialTransferReqController extends GetxController {
   Future getItemList(int prid, int siteId, BuildContext context) async {
     mainItemList.value.clear();
     mattransreqItemList.value.clear();
+    ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(prid, siteId);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           mainListAddItems.value = value.result!;
           mattransreqItemList.value = mainListAddItems.value;
-          Navigator.push(
+          await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) =>
@@ -103,6 +104,7 @@ class MaterialTransferReqController extends GetxController {
     } else {
       BaseUtitiles.showToast("Something Went Wrong...");
     }
+    });
   }
 
   setCheck(int id, bool value) {
@@ -350,6 +352,7 @@ class MaterialTransferReqController extends GetxController {
   }
 
   Future matTransReqEdit(int transId,String MenuName, BuildContext context) async {
+    ClickUtils.run(() async {
     final value = await MaterialTransReqProvider.matTransReqeditAPI(transId);
     if (value != null) {
       if (value.success == true) {
@@ -358,7 +361,7 @@ class MaterialTransferReqController extends GetxController {
         if (mattranReqEditListValue.isNotEmpty) {
           matTransReqeditSaveDetTable();
           getItemlistTablesDatas();
-          return Navigator.pushReplacement(context,
+          await Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => MaterialTransReqEntry(heading: MenuName,)));
         } else {
           BaseUtitiles.showToast("No Data Found");
@@ -369,6 +372,7 @@ class MaterialTransferReqController extends GetxController {
     } else {
       BaseUtitiles.showToast('Something went wrong..');
     }
+    });
   }
 
   ///----------Det Table Edit-----------

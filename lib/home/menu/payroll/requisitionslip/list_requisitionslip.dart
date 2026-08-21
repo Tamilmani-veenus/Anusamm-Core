@@ -89,7 +89,7 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
                       TextButton(
                           onPressed: () {
                             Navigator.pop(context);
-                          },
+                            },
                           child: Text("Back", style: TextStyle(color: Colors.grey, fontSize: 18),))
                     ],
                   ),
@@ -324,406 +324,406 @@ class _Requisitionslip_EntryListState extends State<Requisitionslip_EntryList> {
               child: Container(
                 height: BaseUtitiles.getheightofPercentage(context, 55),
                 child: Obx(() => ListView.builder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
-                    itemCount: requisitionSlipController.ReqSlipEtyList.value.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(left: 3, right: 3),
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.all(3),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: BaseUtitiles.getheightofPercentage(context, 10)),
+                      itemCount: requisitionSlipController.ReqSlipEtyList.value.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(left: 3, right: 3),
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Container(
+                              margin: EdgeInsets.all(3),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
 
-                                        Container(
-                                          width: BaseUtitiles.getWidthtofPercentage(context, 50),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(left: 5, right: 3),
-                                                child: ConstIcons.list_date, ),
-                                              Text(
-                                                requisitionSlipController.ReqSlipEtyList.value[index].entryDate.toString(),
-                                                style: TextStyle(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                          Container(
+                                            width: BaseUtitiles.getWidthtofPercentage(context, 50),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(left: 5, right: 3),
+                                                  child: ConstIcons.list_date, ),
+                                                Text(
+                                                  requisitionSlipController.ReqSlipEtyList.value[index].entryDate.toString(),
+                                                  style: TextStyle(
+                                                      color: Theme.of(context).primaryColor,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          )
 
-                                      ],
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        requisitionSlipController.ReqSlipEtyList.value[index].requisitionNo.toString(),
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 5, left: 10),
-                                      child: Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
+                                      Container(
+                                        margin: EdgeInsets.only(right: 10),
                                         child: Text(
-                                          "Type",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,),
-                                        )),
-                                    Expanded(
-                                        flex: 9,
-                                        child: Text(
-                                          requisitionSlipController.ReqSlipEtyList.value[index].requisitionTypeDesc.toString(),
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                SizedBox(height: 5,),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 5, left: 10),
-                                      child: Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Staff",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,),
-                                        )),
-                                    Expanded(
-                                        flex: 9,
-                                        child: Text(
-                                          requisitionSlipController.ReqSlipEtyList.value[index].staffName.toString(),
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                SizedBox(height: 5,),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 5, left: 10),
-                                      child: Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Location",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,),
-                                        )),
-                                    Expanded(
-                                        flex: 9,
-                                        child: Text(
-                                          requisitionSlipController.ReqSlipEtyList.value[index].projectName.toString(),
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="C" ?
-                                Column(
-                                  children: [
-                                    SizedBox(height: 5,),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(top: 5, left: 10),
-                                          child: Text(""),
+                                          requisitionSlipController.ReqSlipEtyList.value[index].requisitionNo.toString(),
+                                          style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
-                                        Expanded(
-                                            flex: 3,
-                                            child: Text(
-                                              "Leave Type",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,),
-                                            )),
-                                        Expanded(
-                                            flex: 9,
-                                            child: Text(
-                                              requisitionSlipController.ReqSlipEtyList.value[index].leaveTypeDesc ?? "-",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ],
-                                ):SizedBox(),
-                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ?
-                                Column(
-                                  children: [
-                                    SizedBox(height: 5,),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(top: 5, left: 10),
-                                          child: Text(""),
-                                        ),
-                                        Expanded(
-                                            flex: 3,
-                                            child: Text(
-                                              requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Time" : "OnDuty\nTime",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,),
-                                            )),
-                                        Expanded(
-                                            flex: 9,
-                                            child: Text(
-
-                                              "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromTime} - ${requisitionSlipController.ReqSlipEtyList.value[index].permissionToTime}" ,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ],
-                                ):SizedBox(),
-                                // SizedBox(height: 5,),
-
-                                Column(
-                                  children: [
-                                    SizedBox(height: 5,),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(top: 5, left: 10),
-                                          child: Text(""),
-                                        ),
-                                        Expanded(
-                                            flex: 3,
-                                            child: Text(
-                                              requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Date" :
-                                              requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ? "OnDuty\nDate" :
-                                              requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" ? "Leave Date" : "Compansate Date",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,),
-                                            )),
-                                        Expanded(
-                                            flex: 9,
-                                            child: Text(
-                                              requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O"?
-                                              "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromDate}" :
-                                              "${requisitionSlipController.ReqSlipEtyList.value[index].leaveFromDate} - ${requisitionSlipController.ReqSlipEtyList.value[index].leaveToDate}",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-
-                                SizedBox(height: 5,),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 5,left: 10),
-                                      child: Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Prepared By",
-                                          style: TextStyle(
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(""),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "Type",
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black),
-                                        )),
-                                    Expanded(
-                                        flex: 9,
-                                        child: Text(
-                                          requisitionSlipController.ReqSlipEtyList.value[index].createdName.toString(),
-                                        )),
-                                  ],
-                                ),
-                                Divider(thickness: 1),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(left: 10),
-                                      child: Text(""),
-                                    ),
-                                    Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "Status",
-                                          style: TextStyle(
+                                              color: Colors.black,),
+                                          )),
+                                      Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].requisitionTypeDesc.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(""),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "Staff",
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black),
-                                        )),
-                                    Expanded(
-                                        flex: 7,
-                                        child:Text(
-                                          requisitionSlipController.ReqSlipEtyList.value[index].status.toString(),
-                                          style: TextStyle(color:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Approved"?Colors.green:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Rejected"? Colors.red:Colors.black),
-                                        )
-                                    ),
-                                    Expanded(
-                                        flex: 2,
-                                        child: IconButton(
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  shape: RoundedRectangleBorder(
-                                                    // <-- SEE HERE
-                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-                                                  ),
-                                                  builder: (context) {
-                                                    return SafeArea(
-                                                      top: false,
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(left: 15),
-                                                        height: BaseUtitiles.getheightofPercentage(context, 25),
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Row(
+                                              color: Colors.black,),
+                                          )),
+                                      Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].staffName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(""),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "Location",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,),
+                                          )),
+                                      Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].projectName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="C" ?
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                "Leave Type",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,),
+                                              )),
+                                          Expanded(
+                                              flex: 9,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].leaveTypeDesc ?? "-",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ):SizedBox(),
+                                  requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ?
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Time" : "OnDuty\nTime",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,),
+                                              )),
+                                          Expanded(
+                                              flex: 9,
+                                              child: Text(
+
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromTime} - ${requisitionSlipController.ReqSlipEtyList.value[index].permissionToTime}" ,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ):SizedBox(),
+                                  // SizedBox(height: 5,),
+
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 5,),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.only(top: 5, left: 10),
+                                            child: Text(""),
+                                          ),
+                                          Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" ? "Permission Date" :
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O" ? "OnDuty\nDate" :
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="L" ? "Leave Date" : "Compansate Date",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,),
+                                              )),
+                                          Expanded(
+                                              flex: 9,
+                                              child: Text(
+                                                requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="P" || requisitionSlipController.ReqSlipEtyList.value[index].requisitionType=="O"?
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].permissionFromDate}" :
+                                                "${requisitionSlipController.ReqSlipEtyList.value[index].leaveFromDate} - ${requisitionSlipController.ReqSlipEtyList.value[index].leaveToDate}",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5,left: 10),
+                                        child: Text(""),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "Prepared By",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          )),
+                                      Expanded(
+                                          flex: 9,
+                                          child: Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].createdName.toString(),
+                                          )),
+                                    ],
+                                  ),
+                                  Divider(thickness: 1),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Text(""),
+                                      ),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "Status",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          )),
+                                      Expanded(
+                                          flex: 7,
+                                          child:Text(
+                                            requisitionSlipController.ReqSlipEtyList.value[index].status.toString(),
+                                            style: TextStyle(color:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Approved"?Colors.green:requisitionSlipController.ReqSlipEtyList.value[index].status.toString() == "Rejected"? Colors.red:Colors.black),
+                                          )
+                                          ),
+                                      Expanded(
+                                          flex: 2,
+                                          child: IconButton(
+                                              onPressed: () {
+                                                  showModalBottomSheet(
+                                                      context: context,
+                                                      shape: RoundedRectangleBorder(
+                                                        // <-- SEE HERE
+                                                        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                                                      ),
+                                                      builder: (context) {
+                                                        return SafeArea(
+                                                          top: false,
+                                                          child: Container(
+                                                            margin: EdgeInsets.only(left: 15),
+                                                            height: BaseUtitiles.getheightofPercentage(context, 25),
+                                                            child: Column(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    margin: EdgeInsets.only(right: 10),
-                                                                    child: Text(
-                                                                      requisitionSlipController.ReqSlipEtyList.value[index].requisitionNo.toString(),
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight.bold,
-                                                                          color: Theme.of(context).primaryColor),
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child: Container(
+                                                                        margin: EdgeInsets.only(right: 10),
+                                                                        child: Text(
+                                                                          requisitionSlipController.ReqSlipEtyList.value[index].requisitionNo.toString(),
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Theme.of(context).primaryColor),
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
+                                                                    IconButton(
+                                                                      onPressed: () {
+                                                                        Navigator.pop(context);
+                                                                      },
+                                                                      icon:  ConstIcons.cancle,)
+                                                                  ],
                                                                 ),
-                                                                IconButton(
-                                                                  onPressed: () {
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  icon:  ConstIcons.cancle,)
+                                                                Visibility(
+                                                                  visible: commanController.editMode.value == 1 ? true : false,
+                                                                  child: InkWell(
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Card(
+                                                                            color: Colors
+                                                                                .lightGreen,
+                                                                            child: Padding(
+                                                                              padding:
+                                                                              const EdgeInsets
+                                                                                  .all(8),
+                                                                              child: Icon(
+                                                                                Icons.edit,
+                                                                                color: Colors
+                                                                                    .white,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(width: 5),
+                                                                          Text(
+                                                                            "Edit",
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                Colors.grey,
+                                                                                fontSize: 15),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                      onTap: () async {
+                                                                          await requisitionSlipController.Requisitionslip_EditApi(
+                                                                              requisitionSlipController.ReqSlipEtyList[index].id,
+                                                                              widget.heading,
+                                                                              context, true);
+                                                                          }),
+                                                                ),
+                                                                Container(
+                                                                    margin: EdgeInsets.only(right: 20),
+                                                                    child: Divider(thickness: 1)),
+                                                                Visibility(
+                                                                  visible: commanController.deleteMode.value == 1 ? true : false,
+                                                                  child: InkWell(
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Card(
+                                                                            color: Colors.red,
+                                                                            child: Padding(
+                                                                              padding:
+                                                                              const EdgeInsets
+                                                                                  .all(8),
+                                                                              child: Icon(
+                                                                                Icons
+                                                                                    .delete_forever,
+                                                                                color: Colors
+                                                                                    .white,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(width: 5),
+                                                                          Text(
+                                                                            "Delete",
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                Colors.grey,
+                                                                                fontSize: 15),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                      onTap: () async {
+                                                                        Navigator.pop(context);
+                                                                          requisitionSlipController.DeleteAlert(context, index, true);
+                                                                      }),
+                                                                ),
+                                                                SizedBox(height: 20)
                                                               ],
                                                             ),
-                                                            Visibility(
-                                                              visible: commanController.editMode.value == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors
-                                                                            .lightGreen,
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets
-                                                                              .all(8),
-                                                                          child: Icon(
-                                                                            Icons.edit,
-                                                                            color: Colors
-                                                                                .white,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(width: 5),
-                                                                      Text(
-                                                                        "Edit",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    await requisitionSlipController.Requisitionslip_EditApi(
-                                                                        requisitionSlipController.ReqSlipEtyList[index].id,
-                                                                        widget.heading,
-                                                                        context, true);
-                                                                  }),
-                                                            ),
-                                                            Container(
-                                                                margin: EdgeInsets.only(right: 20),
-                                                                child: Divider(thickness: 1)),
-                                                            Visibility(
-                                                              visible: commanController.deleteMode.value == 1 ? true : false,
-                                                              child: InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Card(
-                                                                        color: Colors.red,
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets
-                                                                              .all(8),
-                                                                          child: Icon(
-                                                                            Icons
-                                                                                .delete_forever,
-                                                                            color: Colors
-                                                                                .white,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(width: 5),
-                                                                      Text(
-                                                                        "Delete",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            Colors.grey,
-                                                                            fontSize: 15),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  onTap: () async {
-                                                                    Navigator.pop(context);
-                                                                    requisitionSlipController.DeleteAlert(context, index, true);
-                                                                  }),
-                                                            ),
-                                                            SizedBox(height: 20)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  });
-                                            },
-                                            icon: Icon(
-                                              Icons.arrow_drop_down_circle_outlined,
-                                              color: Theme.of(context).primaryColor,
-                                            )))
-                                  ],
-                                ),
-                              ],
+                                                          ),
+                                                        );
+                                                      });
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_drop_down_circle_outlined,
+                                                color: Theme.of(context).primaryColor,
+                                              )))
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
                 ),
               ),
             ),

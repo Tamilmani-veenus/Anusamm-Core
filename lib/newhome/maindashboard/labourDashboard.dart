@@ -25,7 +25,6 @@ import 'dashboard.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:math' as math;
 
-
 class LabourDashboard extends StatefulWidget {
   const LabourDashboard({super.key});
 
@@ -221,10 +220,13 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
 
   LabourDashboardController labourDashboardController = Get.put(LabourDashboardController());
   late TooltipBehavior _tooltipBehavior;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -235,17 +237,63 @@ class _HomeScreenState extends State<HomeScreen> {
     labourDashboardController.labourEntryToDate.text = currentDate.toString().substring(0, 10);
     labourDashboardController.getLabourDashboardDetails();
 
+
     _tooltipBehavior = TooltipBehavior(
       enable: true,
-      color: Colors.black87,
-      textStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-      ),
-      canShowMarker: true,
-      header: '',
+      builder: (dynamic data,
+          dynamic point,
+          dynamic series,
+          int pointIndex,
+          int seriesIndex) {
+        dynamic item;
+        if(data is ProjectWiseLabour){
+            item = labourDashboardController.filteredProjects[pointIndex];
+        }
+        else{
+           item = labourDashboardController.subcontractorfilteredProjects[pointIndex];
+        }
+
+
+        return Container(
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: Colors.black87,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 6),
+
+              if (seriesIndex == 0)
+                Text(
+                  "NMR Nos : ${item.nmrNos?.toStringAsFixed(0) ?? "0"}",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 9,
+                  ),
+                ),
+
+              if (seriesIndex == 1)
+                Text(
+                  "Rate Nos : ${item.rateNos?.toStringAsFixed(0) ?? "0"}",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 9,
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -265,6 +313,8 @@ class _HomeScreenState extends State<HomeScreen> {
           top: false,
           child: Scaffold(
             body: RefreshIndicator(
+              key: _refreshIndicatorKey,
+              color: Theme.of(context).primaryColor,
               onRefresh: () async {
                 await labourDashboardController.getLabourDashboardDetails();
               },
@@ -275,169 +325,244 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     /// Date -----------
-                    Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: BaseUtitiles.getWidthtofPercentage(context, 45),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              // elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller:
-                                  labourDashboardController.labourEntryFromDate,
-                                  cursorColor: Colors.black,
-                                  style: TextStyle(color: Colors.black,fontSize: 14),
-                                  decoration:  InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "From Date",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.calendar_today_outlined,size:18,color: Theme.of(context).primaryColor,),
-                                    ),
-                                    suffixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.keyboard_arrow_down,size:18,color: Theme.of(context).primaryColor,),
-                                    ),
-                                  ),
-                                  onTap: () async {
-                                    var Frdate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2010),
-                                        lastDate: DateTime.now(),
-                                        builder: (context, child) {
-                                          return Theme(
-                                            data: Theme.of(context).copyWith(
-                                              colorScheme: ColorScheme.light(
-                                                primary:
-                                                Theme.of(context).primaryColor,
-                                                onPrimary: Colors.white,
-                                                onSurface:
-                                                Colors.black, // body text color
-                                              ),
-                                              textButtonTheme: TextButtonThemeData(
-                                                style: TextButton.styleFrom(
-                                                  primary: Colors
-                                                      .black, // button text color
-                                                ),
-                                              ),
-                                            ),
-                                            child: child!,
-                                          );
-                                        });
-                                    if (Frdate != null) {
-                                      labourDashboardController.labourEntryFromDate.text =
-                                          Frdate.toString().substring(0, 10);
 
-                                      // Refresh API
-                                      await labourDashboardController.getLabourDashboardDetails();
-                                    }
+                    Container(
+                      margin: const EdgeInsets.only(top: 6),
+                      child: Row(
+                        children: [
+                          // ================= FROM DATE =================
+                          Expanded(
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () async {
+                                final Frdate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2010),
+                                  lastDate: DateTime.now(),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary: Theme.of(context).primaryColor,
+                                          onPrimary: Colors.white,
+                                          onSurface: Colors.black,
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
                                   },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Select Date';
-                                    }
-                                    return null;
-                                  },
+                                );
+
+                                if (Frdate != null) {
+                                  labourDashboardController.labourEntryFromDate.text =
+                                      Frdate.toString().substring(0, 10);
+
+                                  setState(() {});
+
+                                  _refreshIndicatorKey.currentState?.show();
+                                }
+                              },
+                              child: Container(
+                                height: 62,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: const Color(0xffDDE2E8),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 38,
+                                      height: 38,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.08),
+                                        borderRadius: BorderRadius.circular(9),
+                                      ),
+                                      child: Icon(
+                                        Icons.calendar_today_outlined,
+                                        size: 18,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+
+                                    const SizedBox(width: 9),
+
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "FROM DATE",
+                                            style: TextStyle(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.6,
+                                              color: Color(0xff8A919C),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Text(
+                                            labourDashboardController
+                                                .labourEntryFromDate.text.isEmpty
+                                                ? "Select date"
+                                                : labourDashboardController
+                                                .labourEntryFromDate.text,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 12.5,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff20242A),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 18,
+                                      color: Color(0xff8A919C),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Container(
-                            width: BaseUtitiles.getWidthtofPercentage(context, 45),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              // elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller:
-                                  labourDashboardController.labourEntryToDate,
-                                  cursorColor: Colors.black,
-                                  style: TextStyle(color: Colors.black,fontSize: 14),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.zero,
-                                    border: InputBorder.none,
-                                    labelText: "To Date",
-                                    labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: RequestConstant.Lable_Font_SIZE),
-                                    prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                    prefixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 8),
-                                        child: Icon(Icons.calendar_today,size:18,
-                                            color: Theme.of(context).primaryColor)),
-                                    suffixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.keyboard_arrow_down,size:18,color: Theme.of(context).primaryColor,),
-                                    ),
-                                  ),
-                                  onTap: () async {
-                                    var Todate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2010),
-                                        lastDate: DateTime.now(),
-                                        builder: (context, child) {
-                                          return Theme(
-                                            data: Theme.of(context).copyWith(
-                                              colorScheme: ColorScheme.light(
-                                                primary:
-                                                Theme.of(context).primaryColor,
-                                                // header background color
-                                                onPrimary: Colors.white,
-                                                // header text color
-                                                onSurface:
-                                                Colors.black, // body text color
-                                              ),
-                                              textButtonTheme: TextButtonThemeData(
-                                                style: TextButton.styleFrom(
-                                                  primary: Colors
-                                                      .black, // button text color
-                                                ),
-                                              ),
-                                            ),
-                                            child: child!,
-                                          );
-                                        });
-                                    if (Todate != null) {
-                                      labourDashboardController.labourEntryToDate.text =
-                                          Todate.toString().substring(0, 10);
 
-                                      // Refresh API
-                                      await labourDashboardController.getLabourDashboardDetails();
-                                    }
+                          // ================= CENTER ARROW =================
+                          Container(
+                            width: 28,
+                            height: 28,
+                            margin: const EdgeInsets.symmetric(horizontal: 6),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+
+                          // ================= TO DATE =================
+                          Expanded(
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () async {
+                                final Todate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2010),
+                                  lastDate: DateTime.now(),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary: Theme.of(context).primaryColor,
+                                          onPrimary: Colors.white,
+                                          onSurface: Colors.black,
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
                                   },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Select Date';
-                                    }
-                                    return null;
-                                  },
+                                );
+
+                                if (Todate != null) {
+                                  labourDashboardController.labourEntryToDate.text =
+                                      Todate.toString().substring(0, 10);
+
+                                  setState(() {});
+
+                                  _refreshIndicatorKey.currentState?.show();
+                                }
+                              },
+                              child: Container(
+                                height: 62,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: const Color(0xffDDE2E8),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 38,
+                                      height: 38,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.08),
+                                        borderRadius: BorderRadius.circular(9),
+                                      ),
+                                      child: Icon(
+                                        Icons.event_available_outlined,
+                                        size: 18,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+
+                                    const SizedBox(width: 9),
+
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "TO DATE",
+                                            style: TextStyle(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.6,
+                                              color: Color(0xff8A919C),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Text(
+                                            labourDashboardController
+                                                .labourEntryToDate.text.isEmpty
+                                                ? "Select date"
+                                                : labourDashboardController
+                                                .labourEntryToDate.text,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 12.5,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff20242A),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 18,
+                                      color: Color(0xff8A919C),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -445,6 +570,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+
+
                     /// Cards ---------
                     Obx(()=>
                       GridView.builder(
@@ -457,7 +584,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 2,
-                          childAspectRatio: 1.45,
+                          mainAxisExtent: 105,
+                          // childAspectRatio: 1.45,
                         ),
                         itemBuilder: (_, index) {
                           final item = labourCards[index];
@@ -476,6 +604,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: const Color(0xffEAECF0),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.06),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -771,8 +910,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   ),
                     // ),
 
-                    SizedBox(height: 12),
-
                     /// ----------- OT ANALYSIS TODAY ------------
 
                     Container(
@@ -780,6 +917,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xffEAECF0),
+                          width: 1,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(.15),
@@ -862,6 +1003,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 250,
                               child:
                               SfCartesianChart(
+                                tooltipBehavior: _tooltipBehavior,
                                 legend:  Legend(isVisible: false),
                                 plotAreaBorderWidth: 0,
 
@@ -890,8 +1032,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 series: <CartesianSeries>[
                                   ColumnSeries<ProjectWiseLabour, String>(
-                                    width: 0.65,
-                                    spacing: 0.25,
+                                    width: 0.85,
+                                    spacing: 0.10,
                                     dataSource: labourDashboardController.filteredProjects
                                         .take(3)
                                         .toList(), // Dashboard preview
@@ -909,8 +1051,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
 
                                   ColumnSeries<ProjectWiseLabour, String>(
-                                    width: 0.65,
-                                    spacing: 0.25,
+                                    width: 0.85,
+                                    spacing: 0.10,
                                     dataSource: labourDashboardController.filteredProjects
                                         .take(3)
                                         .toList(),
@@ -943,6 +1085,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xffEAECF0),
+                          width: 1,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(.15),
@@ -1019,6 +1165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 250,
                               child:
                               SfCartesianChart(
+                                tooltipBehavior: _tooltipBehavior,
                                 legend:  Legend(isVisible: false),
                                 plotAreaBorderWidth: 0,
                                 primaryXAxis: CategoryAxis(
@@ -1043,8 +1190,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 series: <CartesianSeries>[
                                   ColumnSeries<SubContractorWiseLabourTradeChart, String>(
-                                    width: 0.65,
-                                    spacing: 0.25,
+                                    width: 0.85,
+                                    spacing: 0.10,
                                     dataSource: labourDashboardController.subcontractorfilteredProjects
                                         .take(3)
                                         .toList(), // Dashboard preview
@@ -1061,8 +1208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   ColumnSeries<SubContractorWiseLabourTradeChart, String>(
-                                    width: 0.65,
-                                    spacing: 0.25,
+                                    width: 0.85,
+                                    spacing: 0.10,
                                     dataSource: labourDashboardController.subcontractorfilteredProjects
                                         .take(3)
                                         .toList(),
@@ -1086,7 +1233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 24),
+                    SizedBox(height: 12),
 
                     /// ----------- TABULAR COLUMN
 
@@ -1266,6 +1413,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: const Color(0xffEAECF0),
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(.06),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: Column(
                         children: [
@@ -1355,442 +1513,446 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 24,),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(.15),
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-
-                          /// Header
-                          Row(
-                            children: [
-                              const Expanded(
-                                child: Text(
-                                  "Subcontractor wise labour",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-
-                              InkWell(
-                                onTap: () {
-                                  Get.dialog(
-                                    SubcontractorPerformanceDialog(
-                                      labourList: labourDashboardController.subContractorWiseLabour,
-                                      totalLabourStrength:
-                                      labourDashboardController.dashboardResponse.value?.totalLabourStrength ?? 0,
-                                    ),
-                                  );
-                                },
-                                child: Obx(()=>
-                                   Visibility(
-                                    visible: labourDashboardController.subContractorWiseLabour.isNotEmpty,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "View All",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(width: 4),
-                                        Icon(Icons.arrow_forward_ios, size: 12),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10,),
-                          Text("Based on work completion",style: TextStyle(fontSize: 13,color: Colors.grey),),
-
-                          const SizedBox(height: 20),
-
-                          /// Horizontal Table
-                          Obx(() {
-
-                            if (labourDashboardController.subContractorWiseLabour.isEmpty) {
-                              return const Center(
-                                child: Text("No Data"),
-                              );
-                            }
-
-                            final list = labourDashboardController.subContractorWiseLabour;
-
-                            final displayList = list.take(5).toList();
-
-                            final totalLabourStrength =
-                                labourDashboardController.dashboardResponse.value?.totalLabourStrength ?? 0;
-
-                            const colors = [
-                              Colors.green,
-                              Colors.blue,
-                              Colors.orange,
-                              Colors.purple,
-                            ];
-
-                            return Column(
-                              children: List.generate(displayList.length, (index) {
-
-                                final item = displayList[index];
-                                final count = item.labourCount ?? 0;
-
-                                /// Percentage for progress bar (0.0 - 1.0)
-                                final double percent = totalLabourStrength == 0
-                                    ? 0.0
-                                    : (count / totalLabourStrength).clamp(0.0, 1.0);
-
-                                /// Percentage text (0 - 100)
-                                final double percentageValue = totalLabourStrength == 0
-                                    ? 0.0
-                                    : (count / totalLabourStrength) * 100;
-
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 15),
-                                  child: Row(
-                                    children: [
-
-                                      SizedBox(
-                                        width: 100,
-                                        child: Text(
-                                          item.subcontractName ?? "",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-
-                                      const SizedBox(width: 10),
-
-                                      Expanded(
-                                        child: LinearPercentIndicator(
-                                          padding: EdgeInsets.zero,
-                                          lineHeight: 18,
-                                          animation: true,
-                                          animationDuration: 1000,
-                                          percent: percent,
-                                          barRadius: const Radius.circular(20),
-                                          backgroundColor: Colors.grey.shade200,
-                                          progressColor: colors[index % colors.length],
-                                        ),
-                                      ),
-
-                                      const SizedBox(width: 5),
-
-                                      SizedBox(
-                                        width: 65,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Text(BaseUtitiles.formatNumber(count),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${percentageValue.toStringAsFixed(1)}%",
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey.shade600,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                            );
-                          })
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24,),
+                    SizedBox(height: 12),
+                    // Container(
+                    //   padding: const EdgeInsets.all(16),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(16),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.grey.withOpacity(.15),
+                    //         blurRadius: 8,
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //
+                    //       /// Header
+                    //       Row(
+                    //         children: [
+                    //           const Expanded(
+                    //             child: Text(
+                    //               "Subcontractor wise labour",
+                    //               style: TextStyle(
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.bold,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //
+                    //           InkWell(
+                    //             onTap: () {
+                    //               Get.dialog(
+                    //                 SubcontractorPerformanceDialog(
+                    //                   labourList: labourDashboardController.subContractorWiseLabour,
+                    //                   totalLabourStrength:
+                    //                   labourDashboardController.dashboardResponse.value?.totalLabourStrength ?? 0,
+                    //                 ),
+                    //               );
+                    //             },
+                    //             child: Obx(()=>
+                    //                Visibility(
+                    //                 visible: labourDashboardController.subContractorWiseLabour.isNotEmpty,
+                    //                 child: Row(
+                    //                   children: [
+                    //                     Text(
+                    //                       "View All",
+                    //                       style: TextStyle(
+                    //                         fontSize: 14,
+                    //                         fontWeight: FontWeight.bold,
+                    //                       ),
+                    //                     ),
+                    //                     SizedBox(width: 4),
+                    //                     Icon(Icons.arrow_forward_ios, size: 12),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(height: 10,),
+                    //       Text("Based on work completion",style: TextStyle(fontSize: 13,color: Colors.grey),),
+                    //
+                    //       const SizedBox(height: 20),
+                    //
+                    //       /// Horizontal Table
+                    //       Obx(() {
+                    //
+                    //         if (labourDashboardController.subContractorWiseLabour.isEmpty) {
+                    //           return const Center(
+                    //             child: Text("No Data"),
+                    //           );
+                    //         }
+                    //
+                    //         final list = labourDashboardController.subContractorWiseLabour;
+                    //
+                    //         final displayList = list.take(5).toList();
+                    //
+                    //         final totalLabourStrength =
+                    //             labourDashboardController.dashboardResponse.value?.totalLabourStrength ?? 0;
+                    //
+                    //         const colors = [
+                    //           Colors.green,
+                    //           Colors.blue,
+                    //           Colors.orange,
+                    //           Colors.purple,
+                    //         ];
+                    //
+                    //         return Column(
+                    //           children: List.generate(displayList.length, (index) {
+                    //
+                    //             final item = displayList[index];
+                    //             final count = item.labourCount ?? 0;
+                    //
+                    //             /// Percentage for progress bar (0.0 - 1.0)
+                    //             final double percent = totalLabourStrength == 0
+                    //                 ? 0.0
+                    //                 : (count / totalLabourStrength).clamp(0.0, 1.0);
+                    //
+                    //             /// Percentage text (0 - 100)
+                    //             final double percentageValue = totalLabourStrength == 0
+                    //                 ? 0.0
+                    //                 : (count / totalLabourStrength) * 100;
+                    //
+                    //             return Padding(
+                    //               padding: const EdgeInsets.only(bottom: 15),
+                    //               child: Row(
+                    //                 children: [
+                    //
+                    //                   SizedBox(
+                    //                     width: 100,
+                    //                     child: Text(
+                    //                       item.subcontractName ?? "",
+                    //                       maxLines: 1,
+                    //                       overflow: TextOverflow.ellipsis,
+                    //                       style: const TextStyle(
+                    //                         fontWeight: FontWeight.w600,
+                    //                         fontSize: 13,
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //
+                    //                   const SizedBox(width: 10),
+                    //
+                    //                   Expanded(
+                    //                     child: LinearPercentIndicator(
+                    //                       padding: EdgeInsets.zero,
+                    //                       lineHeight: 18,
+                    //                       animation: true,
+                    //                       animationDuration: 1000,
+                    //                       percent: percent,
+                    //                       barRadius: const Radius.circular(20),
+                    //                       backgroundColor: Colors.grey.shade200,
+                    //                       progressColor: colors[index % colors.length],
+                    //                     ),
+                    //                   ),
+                    //
+                    //                   const SizedBox(width: 5),
+                    //
+                    //                   SizedBox(
+                    //                     width: 65,
+                    //                     child: Column(
+                    //                       crossAxisAlignment: CrossAxisAlignment.end,
+                    //                       children: [
+                    //                         Text(BaseUtitiles.formatNumber(count),
+                    //                           style: const TextStyle(
+                    //                             fontWeight: FontWeight.bold,
+                    //                             fontSize: 13,
+                    //                           ),
+                    //                         ),
+                    //                         Text(
+                    //                           "${percentageValue.toStringAsFixed(1)}%",
+                    //                           style: TextStyle(
+                    //                             fontSize: 11,
+                    //                             color: Colors.grey.shade600,
+                    //                           ),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             );
+                    //           }),
+                    //         );
+                    //       })
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(height: 24,),
 
                     /// -----------Payment Pending--------
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(.15),
-                            blurRadius: 8,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /// Header
-                          Row(
-                            children: [
-                              const Expanded(
-                                child: Text(
-                                  "Payment Pending",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(
-                                        () => PaymentPendingScreen(
-                                      paymentList: labourDashboardController
-                                          .dashboardResponse
-                                          .value
-                                          ?.subContractPaymentPending ??
-                                          [],
-                                    ),
-                                  );
-                                },
-                                child:  Obx(() =>
-                                   Visibility(
-                                    visible: labourDashboardController
-                                        .dashboardResponse.value?.subContractPaymentPending
-                                        ?.isNotEmpty ??
-                                        false,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "View All",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(width: 4),
-                                        Icon(Icons.arrow_forward_ios, size: 12),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10,),
-                          SizedBox(height: 10,),
-                          /// Horizontal Table
-                          Obx(() {
-
-                            final paymentList = labourDashboardController
-                                .dashboardResponse.value?.subContractPaymentPending ??
-                                [];
-                            if (paymentList.isEmpty) {
-                              return const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text("No Payment Pending"),
-                                ),
-                              );
-                            }
-                            return
-                              Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(12),
-                                        topRight: Radius.circular(12),),
-                                    ),
-                                    child: const Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            "Subcontractor",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Amount",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: paymentList.length > 5 ? 5 : paymentList.length,
-                                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                                  itemBuilder: (context, index) {
-                                    final item = paymentList[index];
-                                    return Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(   bottomLeft: Radius.circular(12),
-                                          bottomRight: Radius.circular(12),),
-                                        border: Border.all(color: Colors.grey.shade200),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(.08),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 2),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Row(
-                                        children: [
-
-                                          /// Leading Icon
-                                          Container(
-                                            height: 38,
-                                            width: 38,
-                                            decoration: BoxDecoration(
-                                              color: item.billType == "WORK BILL" ? Theme.of(context)
-                                                  .primaryColor
-                                                  .withOpacity(.1) : item.billType == "NMR BILL" ? Colors.orange.withOpacity(.2) :
-                                            item.billType == "RATE BILL" ? Colors.green.withOpacity(.2) : Colors.orange.withOpacity(.2),
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: Icon(
-                                              Icons.account_balance_wallet_outlined,
-                                              color: item.billType == "WORK BILL" ? Theme.of(context).primaryColor : item.billType == "NMR BILL" ? Colors.orange.shade700 :
-                                              item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
-                                            ),
-                                          ),
-
-                                          const SizedBox(width: 12),
-
-                                          /// Left
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-
-                                                Text(
-                                                  item.subcontractName ?? "",
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-
-                                                const SizedBox(height: 4),
-
-                                                Text(
-                                                  item.projectName ?? "",
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.grey.shade600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                          const SizedBox(width: 10),
-
-                                          /// Right
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-
-                                              Text(
-                                                " ${'\u20B9'} ${(item.balAmt ?? 0).toStringAsFixed(0)}",
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-
-                                              const SizedBox(height: 5),
-
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10,
-                                                  vertical: 4,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: item.billType == "WORK BILL" ? Theme.of(context)
-                                                      .primaryColor
-                                                      .withOpacity(.1) : item.billType == "NMR BILL" ? Colors.orange.withOpacity(.2) :
-                                                  item.billType == "RATE BILL" ? Colors.green.withOpacity(.2) : Colors.orange.shade700,
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                    color: item.billType == "WORK BILL" ? Theme.of(context)
-                                                        .primaryColor
-                                                        .withOpacity(.4) : item.billType == "NMR BILL" ? Colors.orange.shade700 :
-                                                    item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  item.billType ?? "",
-                                                  style: TextStyle(
-                                                    color: item.billType == "WORK BILL" ? Theme.of(context).primaryColor :
-                                                    item.billType == "NMR BILL" ? Colors.orange.shade700 :
-                                                    item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  ),
-                                ],
-                              );
-                          })
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 24,),
+                    // Container(
+                    //   padding: const EdgeInsets.all(16),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(16),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.grey.withOpacity(.15),
+                    //         blurRadius: 8,
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       /// Header
+                    //       Row(
+                    //         children: [
+                    //           const Expanded(
+                    //             child: Text(
+                    //               "Payment Pending",
+                    //               style: TextStyle(
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.bold,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           InkWell(
+                    //             onTap: () {
+                    //               Get.to(
+                    //                     () => PaymentPendingScreen(
+                    //                   paymentList: labourDashboardController
+                    //                       .dashboardResponse
+                    //                       .value
+                    //                       ?.subContractPaymentPending ??
+                    //                       [],
+                    //                 ),
+                    //               );
+                    //             },
+                    //             child:  Obx(() =>
+                    //                Visibility(
+                    //                 visible: labourDashboardController
+                    //                     .dashboardResponse.value?.subContractPaymentPending
+                    //                     ?.isNotEmpty ??
+                    //                     false,
+                    //                 child: Row(
+                    //                   children: [
+                    //                     Text(
+                    //                       "View All",
+                    //                       style: TextStyle(
+                    //                         fontSize: 14,
+                    //                         fontWeight: FontWeight.bold,
+                    //                       ),
+                    //                     ),
+                    //                     SizedBox(width: 4),
+                    //                     Icon(Icons.arrow_forward_ios, size: 12),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(height: 10,),
+                    //       SizedBox(height: 10,),
+                    //       /// Horizontal Table
+                    //       Obx(() {
+                    //
+                    //         final paymentList = labourDashboardController
+                    //             .dashboardResponse.value?.subContractPaymentPending ??
+                    //             [];
+                    //         if (paymentList.isEmpty) {
+                    //           return const Center(
+                    //             child: Padding(
+                    //               padding: EdgeInsets.all(20),
+                    //               child: Text("No Payment Pending"),
+                    //             ),
+                    //           );
+                    //         }
+                    //         return
+                    //           Column(
+                    //             children: [
+                    //               Container(
+                    //                 padding: const EdgeInsets.symmetric(
+                    //                   horizontal: 12,
+                    //                   vertical: 10,
+                    //                 ),
+                    //                 decoration: BoxDecoration(
+                    //                   color: Colors.grey.shade100,
+                    //                   borderRadius: BorderRadius.only(
+                    //                     topLeft: Radius.circular(12),
+                    //                     topRight: Radius.circular(12),),
+                    //                 ),
+                    //                 child: const Row(
+                    //                   children: [
+                    //                     Expanded(
+                    //                       child: Text(
+                    //                         "Subcontractor",
+                    //                         style: TextStyle(
+                    //                           fontSize: 12,
+                    //                           fontWeight: FontWeight.bold,
+                    //                           color: Colors.black87,
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                     Text(
+                    //                       "Amount",
+                    //                       style: TextStyle(
+                    //                         fontSize: 12,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: Colors.black87,
+                    //                       ),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //               ListView.separated(
+                    //                 padding: EdgeInsets.zero,
+                    //               shrinkWrap: true,
+                    //               physics: const NeverScrollableScrollPhysics(),
+                    //               itemCount: paymentList.length > 5 ? 5 : paymentList.length,
+                    //               separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    //               itemBuilder: (context, index) {
+                    //                 final item = paymentList[index];
+                    //                 return Container(
+                    //                   padding: const EdgeInsets.all(8),
+                    //                   decoration: BoxDecoration(
+                    //                     color: Colors.white,
+                    //                     borderRadius: BorderRadius.only(   bottomLeft: Radius.circular(12),
+                    //                       bottomRight: Radius.circular(12),),
+                    //                     border: Border.all(color: Colors.grey.shade200),
+                    //                     boxShadow: [
+                    //                       BoxShadow(
+                    //                         color: Colors.grey.withOpacity(.08),
+                    //                         blurRadius: 8,
+                    //                         offset: const Offset(0, 2),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                   child: Row(
+                    //                     children: [
+                    //
+                    //                       /// Leading Icon
+                    //                       Container(
+                    //                         height: 38,
+                    //                         width: 38,
+                    //                         decoration: BoxDecoration(
+                    //                           color: item.billType == "WORK BILL" ? Theme.of(context)
+                    //                               .primaryColor
+                    //                               .withOpacity(.1) : item.billType == "NMR BILL" ? Colors.orange.withOpacity(.2) :
+                    //                         item.billType == "RATE BILL" ? Colors.green.withOpacity(.2) : Colors.orange.withOpacity(.2),
+                    //                           borderRadius: BorderRadius.circular(10),
+                    //                         ),
+                    //                         child: Icon(
+                    //                           Icons.account_balance_wallet_outlined,
+                    //                           color: item.billType == "WORK BILL" ? Theme.of(context).primaryColor : item.billType == "NMR BILL" ? Colors.orange.shade700 :
+                    //                           item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
+                    //                         ),
+                    //                       ),
+                    //
+                    //                       const SizedBox(width: 12),
+                    //
+                    //                       /// Left
+                    //                       Expanded(
+                    //                         child: Column(
+                    //                           crossAxisAlignment: CrossAxisAlignment.start,
+                    //                           children: [
+                    //
+                    //                             Text(
+                    //                               item.subcontractName ?? "",
+                    //                               maxLines: 1,
+                    //                               overflow: TextOverflow.ellipsis,
+                    //                               style: const TextStyle(
+                    //                                 fontSize: 13,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //
+                    //                             const SizedBox(height: 4),
+                    //
+                    //                             Text(
+                    //                               item.projectName ?? "",
+                    //                               maxLines: 1,
+                    //                               overflow: TextOverflow.ellipsis,
+                    //                               style: TextStyle(
+                    //                                 fontSize: 12,
+                    //                                 color: Colors.grey.shade600,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //
+                    //                       const SizedBox(width: 10),
+                    //
+                    //                       /// Right
+                    //                       Column(
+                    //                         crossAxisAlignment: CrossAxisAlignment.end,
+                    //                         children: [
+                    //
+                    //                           Text(
+                    //                             " ${'\u20B9'} ${(item.balAmt ?? 0).toStringAsFixed(0)}",
+                    //                             style: const TextStyle(
+                    //                               fontWeight: FontWeight.bold,
+                    //                               fontSize: 14,
+                    //                             ),
+                    //                           ),
+                    //
+                    //                           const SizedBox(height: 5),
+                    //
+                    //                           Container(
+                    //                             padding: const EdgeInsets.symmetric(
+                    //                               horizontal: 10,
+                    //                               vertical: 4,
+                    //                             ),
+                    //                             decoration: BoxDecoration(
+                    //                               color: item.billType == "WORK BILL" ? Theme.of(context)
+                    //                                   .primaryColor
+                    //                                   .withOpacity(.1) : item.billType == "NMR BILL" ? Colors.orange.withOpacity(.2) :
+                    //                               item.billType == "RATE BILL" ? Colors.green.withOpacity(.2) : Colors.orange.shade700,
+                    //                               borderRadius: BorderRadius.circular(20),
+                    //                               border: Border.all(
+                    //                                 color: item.billType == "WORK BILL" ? Theme.of(context)
+                    //                                     .primaryColor
+                    //                                     .withOpacity(.4) : item.billType == "NMR BILL" ? Colors.orange.shade700 :
+                    //                                 item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
+                    //                               ),
+                    //                             ),
+                    //                             child: Text(
+                    //                               item.billType ?? "",
+                    //                               style: TextStyle(
+                    //                                 color: item.billType == "WORK BILL" ? Theme.of(context).primaryColor :
+                    //                                 item.billType == "NMR BILL" ? Colors.orange.shade700 :
+                    //                                 item.billType == "RATE BILL" ? Colors.green.shade700 : Colors.orange.shade700,
+                    //                                 fontSize: 10,
+                    //                                 fontWeight: FontWeight.w600,
+                    //                               ),
+                    //                             ),
+                    //                           ),
+                    //                         ],
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 );
+                    //               },
+                    //               ),
+                    //             ],
+                    //           );
+                    //       })
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(height: 24,),
                     Container(
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: const Color(0xffEAECF0),
+                          width: 1,
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(.05),
+                            color: Colors.black.withOpacity(.06),
                             blurRadius: 12,
-                            offset: const Offset(0, 3),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -2036,6 +2198,404 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 12),
+                    Obx (
+                          () => Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: const Color(0xffEAECF0),
+                                width: 1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(.06),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: const [
+
+                                            Text(
+                                              "Project Wise Subcontractor",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xff101828),
+                                              ),
+                                            ),
+
+                                            SizedBox(height: 5),
+
+                                            Text(
+                                              "Subcontractor breakdown for selected project",
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                color: Color(0xff667085),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 8),
+
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return SubcontractorWiseLabourDialog(
+                                                subcontractorList:
+                                                labourDashboardController.subcontWiseLabourSummaryList,
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child:  Obx(() =>
+                                            Visibility(
+                                              visible: labourDashboardController
+                                                  .subcontractorfilteredProjects
+                                                  ?.isNotEmpty ??
+                                                  false,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "View All",
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 4),
+                                                  Icon(Icons.arrow_forward_ios, size: 12),
+                                                ],
+                                              ),
+                                            ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  const SizedBox(height: 22),
+
+                                  if (labourDashboardController
+                                      .subcontractorfilteredProjects
+                                      .isEmpty)
+
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 30,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "No Record Found",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xff667085),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+
+                                  else
+                                    ...(() {
+                                      final List<SubContractorWiseLabourTradeChart> sortedList =
+                                      List<SubContractorWiseLabourTradeChart>.from(
+                                        labourDashboardController.subcontractorfilteredProjects,
+                                      );
+
+                                      // Alphabetical order
+                                      sortedList.sort(
+                                            (a, b) => (a.subcontractName ?? '')
+                                            .toLowerCase()
+                                            .compareTo(
+                                          (b.subcontractName ?? '').toLowerCase(),
+                                        ),
+                                      );
+
+                                      // Show only first 4
+                                      return sortedList
+                                          .take(4)
+                                          .map(
+                                            (item) => _subcontractorItem(
+                                          item: item,
+                                        ),
+                                      )
+                                          .toList();
+                                    }()),
+
+                                  const SizedBox(height: 2),
+
+                                  const Divider(
+                                    height: 1,
+                                    color: Color(0xffEAECF0),
+                                  ),
+
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    children: [
+
+                                      Container(
+                                        width: 10,
+                                        height: 10,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xff2864F0),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 6),
+
+                                      const Text(
+                                        "NMR Work",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Color(0xff667085),
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 20),
+
+                                      Container(
+                                        width: 10,
+                                        height: 10,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xffff7214),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 6),
+
+                                      const Text(
+                                        "Rate Work",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Color(0xff667085),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                    ),
+                    SizedBox(height: 12),
+                    Obx (
+                          () => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: const Color(0xffEAECF0),
+                            width: 1,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.06),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: const [
+
+                                        Text(
+                                          "Subcontractor Wise Project",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xff101828),
+                                          ),
+                                        ),
+
+                                        SizedBox(height: 5),
+
+                                        Text(
+                                          "Project breakdown for selected subcontractor",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Color(0xff667085),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 8),
+
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return ProjectWiseAttendanceDialog(
+                                            projectList: labourDashboardController.projectWiseAttendanceList,
+                                            attendanceList:
+                                            labourDashboardController.allTodayAttendanceList,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child:  Obx(() =>
+                                        Visibility(
+                                          visible: labourDashboardController.projectWiseAttendanceList
+                                              ?.isNotEmpty ??
+                                              false,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "View All",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(width: 4),
+                                              Icon(Icons.arrow_forward_ios, size: 12),
+                                            ],
+                                          ),
+                                        ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 22),
+
+                              if (labourDashboardController.projectWiseAttendanceList.isEmpty)
+
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 30,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "No Record Found",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff667085),
+                                      ),
+                                    ),
+                                  ),
+                                )
+
+                              else
+                                ...(() {
+                                  final List<ProjectWiseAttendance> sortedList =
+                                  List<ProjectWiseAttendance>.from(
+                                    labourDashboardController.projectWiseAttendanceList,
+                                  );
+
+                                  // Alphabetical order
+                                  sortedList.sort(
+                                        (a, b) => (a.projectName ?? '')
+                                        .toLowerCase()
+                                        .compareTo(
+                                      (b.projectName ?? '').toLowerCase(),
+                                    ),
+                                  );
+
+                                  // Show only first 4
+                                  return sortedList
+                                      .take(4)
+                                      .map(
+                                        (item) => _projectAttendanceItem(
+                                      item: item,
+                                    ),
+                                  )
+                                      .toList();
+                                }()),
+
+                              const SizedBox(height: 2),
+
+                              const Divider(
+                                height: 1,
+                                color: Color(0xffEAECF0),
+                              ),
+
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xff2864F0),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 6),
+
+                                  const Text(
+                                    "NMR Work",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Color(0xff667085),
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 20),
+
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffff7214),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 6),
+
+                                  const Text(
+                                    "Rate Work",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Color(0xff667085),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 100,),
                   ],
                 ),
@@ -2046,6 +2606,599 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
 
+  }
+
+  Widget _dateSelector({
+    required BuildContext context,
+    required String title,
+    required TextEditingController controller,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        height: 58,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 6,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: const Color(0xffE1E5EB),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: Theme.of(context)
+                    .primaryColor
+                    .withOpacity(0.10),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                size: 19,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+
+            const SizedBox(width: 8),
+
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.8,
+                      color: Color(0xff8A929E),
+                    ),
+                  ),
+
+                  const SizedBox(height: 2),
+
+                  Text(
+                    controller.text.isEmpty
+                        ? "Select date"
+                        : controller.text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: controller.text.isEmpty
+                          ? const Color(0xff9AA1AB)
+                          : const Color(0xff20242A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(width: 3),
+
+            const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: 18,
+              color: Color(0xff8A929E),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _projectAttendanceItem({
+    required ProjectWiseAttendance item,
+  }) {
+    final double total = item.total.toDouble();
+
+    final int nmrCount = item.nmrCount.toInt();
+    final int rateCount = item.rateCount.toInt();
+
+    final int nmrPercentage =
+    total > 0 ? ((nmrCount / total) * 100).round() : 0;
+
+    final int ratePercentage =
+    total > 0 ? ((rateCount / total) * 100).round() : 0;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  item.projectName,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff344054),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+
+              Text(
+                item.total.toString(),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff101828),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 7),
+          Tooltip(
+            triggerMode: TooltipTriggerMode.tap,
+            preferBelow: false,
+            verticalOffset: 10,
+            waitDuration: Duration.zero,
+            showDuration: const Duration(seconds: 5),
+
+            // Tooltip padding
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 9,
+            ),
+
+            // Tooltip decoration
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              border: Border.all(
+                color: const Color(0xffD0D5DD),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.12),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+
+            richMessage: WidgetSpan(
+              child: SizedBox(
+                width: 100,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.projectName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff344054),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                            color: Color(0xff2864F0),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        const Expanded(
+                          child: Text(
+                            "NMR",
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Color(0xff667085),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "$nmrCount "
+                              "(${total > 0 ? ((nmrCount / total) * 100).round() : 0}%)",
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                            color: Color(0xffff7214),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        const Expanded(
+                          child: Text(
+                            "Rate",
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Color(0xff667085),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "$rateCount "
+                              "(${total > 0 ? ((rateCount / total) * 100).round() : 0}%)",
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    const Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Color(0xffEAECF0),
+                    ),
+
+                    const SizedBox(height: 7),
+
+                    Row(
+                      children: [
+
+                        const Expanded(
+                          child: Text(
+                            "Total",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Color(0xff667085),
+                            ),
+                          ),
+                        ),
+
+                        Text(
+                          item.total.toString(),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                height: 12,
+                child: Stack(
+                  children: [
+
+                    // Background
+                    Container(
+                      width: double.infinity,
+                      color: const Color(0xffEAECF0),
+                    ),
+
+                    // NMR + Rate
+                    Row(
+                      children: [
+
+                        // NMR
+                        if (nmrCount > 0)
+                          Expanded(
+                            flex: nmrCount,
+                            child: Container(
+                              color: const Color(0xff2864F0),
+                            ),
+                          ),
+
+                        // Rate
+                        if (rateCount > 0)
+                          Expanded(
+                            flex: rateCount,
+                            child: Container(
+                              color: const Color(0xffff7214),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _subcontractorItem({
+    required SubContractorWiseLabourTradeChart item,
+  }) {
+    final int nmrNos = (item.nmrNos ?? 0).toInt();
+    final int rateNos = (item.rateNos ?? 0).toInt();
+    final int totalNos = (item.totalNos ?? 0).toInt();
+
+    // Safety check
+    final int calculatedTotal = nmrNos + rateNos;
+
+    final int actualTotal =
+    totalNos > 0 ? totalNos : calculatedTotal;
+
+    double nmrFraction = 0.0;
+    double rateFraction = 0.0;
+
+    if (actualTotal > 0) {
+      nmrFraction = nmrNos / actualTotal;
+      rateFraction = rateNos / actualTotal;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          // Name + Total
+          Row(
+            children: [
+
+              Expanded(
+                child: Text(
+                  item.subcontractName ?? "",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff344054),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+
+              Text(
+                actualTotal.toString(),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff101828),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 7),
+
+          Tooltip(
+            triggerMode: TooltipTriggerMode.tap,
+            preferBelow: false,
+            verticalOffset: 10,
+            waitDuration: Duration.zero,
+            showDuration: const Duration(seconds: 5),
+
+            padding: const EdgeInsets.all(12),
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9),
+              border: Border.all(
+                color: const Color(0xffD0D5DD),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+
+            richMessage: WidgetSpan(
+              child: SizedBox(
+                width: 100,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    // Subcontractor Name
+                    Text(
+                      item.subcontractName ?? "",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff344054),
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // NMR
+                    Row(
+                      children: [
+
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Color(0xff2864F0),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        const Text(
+                          "NMR",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Color(0xff667085),
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        Text(
+                          "$nmrNos "
+                              "(${actualTotal > 0 ? ((nmrNos / actualTotal) * 100).round() : 0}%)",
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    // Rate
+                    Row(
+                      children: [
+
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Color(0xffff7214),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        const Text(
+                          "Rate",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Color(0xff667085),
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        Text(
+                          "$rateNos "
+                              "(${actualTotal > 0 ? ((rateNos / actualTotal) * 100).round() : 0}%)",
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    const Divider(
+                      height: 1,
+                      color: Color(0xffEAECF0),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Total
+                    Row(
+                      children: [
+
+                        const Text(
+                          "Total",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Color(0xff667085),
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        Text(
+                          actualTotal.toString(),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff344054),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                height: 12,
+                child: Row(
+                  children: [
+
+                    if (nmrNos > 0)
+                      Expanded(
+                        flex: nmrNos,
+                        child: Container(
+                          color: const Color(0xff2864F0),
+                        ),
+                      ),
+
+                    if (rateNos > 0)
+                      Expanded(
+                        flex: rateNos,
+                        child: Container(
+                          color: const Color(0xffff7214),
+                        ),
+                      ),
+
+                    if (nmrNos == 0 && rateNos == 0)
+                      Expanded(
+                        child: Container(
+                          color: const Color(0xffEAECF0),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Map<String, double> getYAxisValues(List<ProjectWiseLabour> list) {
@@ -2157,11 +3310,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
-
-
-
   List<LabourCardModel> get labourCards {
     final data = labourDashboardController.dashboardResponse.value;
     final difference = data?.totalLabourDifference ?? 0;
@@ -2170,9 +3318,10 @@ class _HomeScreenState extends State<HomeScreen> {
       LabourCardModel(
         title: "TOTAL LABOUR",
         value: "${data?.totalLabourStrength ?? 0}",
-        subtitle: "${difference > 0 ? '+' : ''}$difference vs previous period",
+        subtitle: "vs previous period",
         icon: Icons.groups,
         color: Color(0xFF2563EB),
+        difference: difference
       ),
 
       LabourCardModel(
@@ -2192,11 +3341,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       LabourCardModel(
-        title: "TOTAL NMR COST",
-        value:
-        "${data?.todayLabourCost?.isNotEmpty == true ? data!.todayLabourCost!.first.todayLabourCost ?? 0 : 0}",
-        subtitle: "${'\u20B9'} ${data?.todayLabourCost?.isNotEmpty == true ? data!.todayLabourCost!.first.yesterdayLabourCost ?? 0.0 : 0.0} Yesterday",
-        icon: Icons.currency_rupee,
+        title: "No Work",
+        value: "${data?.noWorkDetails ?? 0}",
+        subtitle: "No work entries today",
+        // subtitle: "${'\u20B9'} ${data?.todayLabourCost?.isNotEmpty == true ? data!.todayLabourCost!.first.yesterdayLabourCost ?? 0.0 : 0.0} Yesterday",
+        icon: Icons.block,
         color: Color(0xFFE11D48),
       ),
 
@@ -2310,7 +3459,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class ProjectWiseAttendance {
+  final String projectName;
+  int nmrCount;
+  int rateCount;
 
+  ProjectWiseAttendance({
+    required this.projectName,
+    this.nmrCount = 0,
+    this.rateCount = 0,
+  });
+
+  int get total => nmrCount + rateCount;
+}
 
 class LabourCardModel {
   final String title;
@@ -2318,6 +3479,7 @@ class LabourCardModel {
   final String subtitle;
   final IconData icon;
   final Color color;
+  final int? difference;
 
   LabourCardModel({
     required this.title,
@@ -2325,6 +3487,7 @@ class LabourCardModel {
     required this.subtitle,
     required this.icon,
     required this.color,
+    this.difference = 0,
   });
 }
 
@@ -2341,8 +3504,8 @@ class LabourCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 13),
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.fromLTRB(8, 10, 8, 6),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
@@ -2358,12 +3521,13 @@ class LabourCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              /// Icon Box
               Container(
                 height: 45,
                 width: 42,
@@ -2374,20 +3538,21 @@ class LabourCard extends StatelessWidget {
                 child: Icon(
                   item.icon,
                   color: item.color,
-                  size: 22,
+                  size: 26,
                 ),
               ),
 
               const SizedBox(width: 8),
 
-              /// Text Section
               Expanded(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text(
                       item.title.toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 11,
                         color: Colors.grey.shade700,
@@ -2396,48 +3561,104 @@ class LabourCard extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 4),
 
                     SizedBox(
                       height: 18,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.centerLeft,
-                        child: Text(
-                          item.value,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween<double>(
+                            begin: 0,
+                            end: double.tryParse(item.value) ?? 0,
                           ),
+                          duration: const Duration(milliseconds: 1500),
+                          curve: Curves.easeOutCubic,
+                          builder: (context, value, child) {
+                            return Text(
+                              value.toInt().toString(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 8),
-
-
                   ],
                 ),
               ),
-
             ],
           ),
-          SizedBox(height: 5,),
-          Text(
-            item.subtitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade500,
-            ),
-          ),
+
+          const SizedBox(height: 6),
+          Align(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (item.title == "TOTAL LABOUR") ...[
+                  if (item.difference != null && item.difference! < 0) ...[
+                    const Icon(
+                      Icons.arrow_downward_rounded,
+                      size: 13,
+                      color: Color(0xffDC2626),
+                    ),
+
+                    const SizedBox(width: 3),
+
+                    Text(
+                      item.difference!.abs().toString(),
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xffDC2626),
+                      ),
+                    ),
+
+                    const SizedBox(width: 4),
+                  ] else if (item.difference != null) ...[
+                    Text(
+                      item.difference.toString(),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+
+                    const SizedBox(width: 4),
+                  ],
+                ],
+
+                Text(
+                  item.subtitle,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.grey.shade500,
+                  ),
+                ),
+              ],
+            )
+          )
+
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Text(
+          //     item.subtitle,
+          //     maxLines: 1,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(
+          //       fontSize: 12,
+          //       color: Colors.grey.shade500,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
-    );
-  }
+    );  }
 }
-
 
 class PendingApprovalModel {
   final String title;

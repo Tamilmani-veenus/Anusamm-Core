@@ -21,7 +21,7 @@ class _WorkTypeAlertState extends State<WorkTypeAlert> {
 
   DailyEntriesController dailyEntriesController = Get.put(DailyEntriesController());
 
-  final list = (!AppClient.isAnusamm)?["NMR","RATE"]:["NMR","RATE","NO WORK"];
+  final list = (!AppClient.isAnusamm && !AppClient.isVrindhavana )?["NMR","RATE"]:["NMR","RATE","NO WORK"];
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +100,7 @@ class _WorkTypeAlertState extends State<WorkTypeAlert> {
   }
 }
 
+//--LeaveType----------
 class LeaveTypeAlert extends StatefulWidget {
   const LeaveTypeAlert({Key? key}) : super(key: key);
 
@@ -291,7 +292,7 @@ class WorkType_AttendRPT extends StatefulWidget {
 class _WorkType_AttendRPTState extends State<WorkType_AttendRPT> {
   AttendanceController attendanceController =Get.put(AttendanceController());
 
-  final list = (!AppClient.isAnusamm)?["NMR","RATE"]:["NMR","RATE","NO WORK"];
+  final list = (!AppClient.isAnusamm && !AppClient.isVrindhavana )?["NMR","RATE"]:["NMR","RATE","NO WORK"];
 
   @override
   Widget build(BuildContext context) {

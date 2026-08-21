@@ -10,7 +10,6 @@ import '../../constants/ui_constant/icons_const.dart';
 import '../../controller/logincontroller.dart';
 import '../../controller/punch_in_controller.dart';
 import '../../controller/site_location_controller.dart';
-import '../../splash/splash.dart';
 import '../../utilities/apiconstant.dart';
 import '../../utilities/baseutitiles.dart';
 import '../punch_in_out/punch_in.dart';

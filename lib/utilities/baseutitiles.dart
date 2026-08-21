@@ -1294,25 +1294,22 @@ class BaseUtitiles {
     }
   }
 
-  static materialNamePopupAlert(String value,list)  {
+  static materialNamePopupAlert(String value, List list) {
     dummyListData.value.clear();
-    if (value.isNotEmpty) {
-      list.forEach((item) {
-        if (item.material.toString().toLowerCase().contains(value) ||
-            item.material.toString().toUpperCase().contains(value) ||
-            item.balqty.toString().toLowerCase().contains(value) ||
-            item.balqty.toString().toUpperCase().contains(value) ||
-            item.scale.toString().toLowerCase().contains(value) ||
-            item.scale.toString().toUpperCase().contains(value)
-        )
-        {
+
+    final search = value.trim().toLowerCase();
+
+    if (search.isNotEmpty) {
+      for (var item in list) {
+        if ((item.material ?? "").toLowerCase().contains(search) ||
+            (item.scale ?? "").toLowerCase().contains(search) ||
+            (item.balqty?.toString() ?? "").contains(search)) {
           dummyListData.value.add(item);
         }
-      });
-      return  dummyListData.value;
-    }
-    else {
-      return  list;
+      }
+      return dummyListData.value;
+    } else {
+      return list;
     }
   }
 
@@ -1810,4 +1807,62 @@ class BaseUtitiles {
 
 }
 
+class ClickUtils {
+  static bool _isClickable = true;
 
+  static Future<void> run(Future<void> Function() action) async {
+    if (!_isClickable) return;
+
+    _isClickable = false;
+
+    try {
+      await action();
+    } finally {
+      _isClickable = true;
+    }
+  }
+}
+
+class DashboardErrorWidget extends StatelessWidget {
+  const DashboardErrorWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: 100),
+
+        Icon(
+          Icons.warning,
+          color: Colors.red,
+          size: 35,
+        ),
+
+        SizedBox(height: 15),
+
+        Text(
+          "Failed to load dashboard data",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+
+        SizedBox(height: 8),
+
+        Text(
+          "Please check your connection and try refreshing the dashboard.",
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 12,
+          ),
+        ),
+      ],
+    );
+  }
+}
