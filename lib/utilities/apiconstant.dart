@@ -78,6 +78,11 @@ class ApiConstant{
   static String DASHBOARD_API = BASE_URL_CORE + "api/DashBoard/GetMobileDashBoardView";
   static String LABOURDASHBOARD_API = BASE_URL_CORE + "api/DashBoard/LabourDashBoard";
   static String ADMINDASHBOARD_API = BASE_URL_CORE + "api/DashBoard/AdminDashBoard";
+  static String MATERIALDASHPROJWISE_API = BASE_URL_CORE + "api/DashBoard/DashBoardProjectWiseFilter";
+  static String MATERIALDASHMATHEAD_API = BASE_URL_CORE + "api/DashBoard/DashBoardMaterialHeadWise";
+  static String HRDASHBOARD_API = BASE_URL_CORE + "api/DashBoard/HRDashBoard";
+  static String HRDASHBOARDCARDS_API = BASE_URL_CORE + "api/DashBoard/HRDashBoardEmployeeName";
+
 
 
   static String PENDINGLISTAPI = BASE_URL_CORE + "api/Menu/GetMobilePendingList";
@@ -162,6 +167,7 @@ class ApiConstant{
   static String GET_WORKORDERBOQ_ENTRY_LIST = BASE_URL_CORE + "api/SubContractorWorkQtyBOQ/GetBillBOQDetLoad";
   static String EDIT_DIRECTBILL_API = BASE_URL_CORE + "api/SubContractorWorkQty/GetSubContractorWorkQtyById";
   static String EDIT_WORKORDERDIRECT_API = BASE_URL_CORE + "api/SubcontractWorkOrderMas/GetlSubcontractWorkOrderById";
+
 
   static String EDIT_BILLBOQ_API = BASE_URL_CORE + "api/SubContractorWorkQtyBOQ/GetSubContractorWorkQtyById";
   static String EDIT_INWARDPENDING_API = BASE_URL_CORE + "api/MaterialInward/GetInwardDetById";
@@ -269,6 +275,8 @@ class ApiConstant{
   static String GET_ONDUTY_PUNCHINOUT_APPRLIST = BASE_URL_CORE + "api/PunchInandOut/GetAllOnDutyApprovepending";
   static String GET_NONALLOT_PUNCHINOUT_APPRLIST = BASE_URL_CORE + "api/PunchInandOut/GetAllPunchinandoutApprovepending";
   static String GET_WORKORDERVERIFYLIST = BASE_URL_CORE + "api/SubcontractWorkOrderMas/GetAllSubcontractWorkOrderToBeVerifyData";
+  static String GET_WORKORDERBOQ_VERIFYLIST = BASE_URL_CORE + "api/SubcontractWorkOrderMas/GetWorkOrderVerificationPendingBOQ";
+
   static String GET_WORKORDERAPPROVALLIST = BASE_URL_CORE + "api/SubcontractWorkOrderMas/GetAllSubcontractWorkOrderVerifyData";
   static String GET_MANPOWERAPPROVALLIST = BASE_URL_CORE + "api/ManPower/GetManPowerApprovalPending";
 

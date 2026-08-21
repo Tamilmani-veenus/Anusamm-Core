@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:anusamm/controller/punch_in_controller.dart';
 import '../db_model/inwardpending_itemlist_table_model.dart';
@@ -591,6 +590,7 @@ class InwardPending_Controller extends GetxController
   Future EntryList_EditApi(
       int workid, String type, String MenuName, BuildContext context) async {
     editListApiDatas.value = [];
+    ClickUtils.run(() async {
     await Inward_Pending_provider.entryList_editAPI(workid, type)
         .then((value) async {
       if (value != null) {
@@ -600,7 +600,7 @@ class InwardPending_Controller extends GetxController
             saveButton.value = RequestConstant.RESUBMIT;
             EditTable_SaveTable();
             getItemlistTablesDatas();
-            Navigator.pushReplacement(
+            await Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
@@ -617,6 +617,7 @@ class InwardPending_Controller extends GetxController
       } else {
         BaseUtitiles.showToast('Something went wrong..');
       }
+    });
     });
   }
 

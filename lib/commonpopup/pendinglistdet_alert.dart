@@ -2308,7 +2308,6 @@ class PendingPo_Approval_Popup extends StatefulWidget {
   final String netAmount;
   final String type;
 
-
   @override
   State<PendingPo_Approval_Popup> createState() => _PendingPo_Approval_PopupState();
 }
@@ -2344,7 +2343,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     return SafeArea(
       top: false,
       child: Scaffold(
-          backgroundColor: Setmybackground,
+        backgroundColor: Setmybackground,
 
         bottomNavigationBar: widget.list.isNotEmpty?Container(
           padding: EdgeInsets.only(
@@ -2416,8 +2415,8 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
 
                           child: Text(
 
-                              "${RequestConstant.CURRENCY_SYMBOL} "
-                            "${pendingListController
+                            "${RequestConstant.CURRENCY_SYMBOL} "
+                                "${pendingListController
                                 .onclickPendingListDet[0].netPayAmount.toString()}",
                             textAlign: TextAlign.end,
                             style: TextStyle(
@@ -2540,7 +2539,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                   children: [
 
                     Text(
-                      widget.heading,
+                      widget.type == "P" ? widget.heading : "RENTAL WORK ORDER",
 
                       style: TextStyle(
                         fontSize: 18,
@@ -2804,10 +2803,10 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                       bottom: BorderSide(
                                         color: Colors.grey.shade300,
                                       ),
-                                    //   right: BorderSide(
-                                    //   color: Colors.grey.shade400,
-                                    //   width: 1,
-                                    // ),
+                                      //   right: BorderSide(
+                                      //   color: Colors.grey.shade400,
+                                      //   width: 1,
+                                      // ),
                                     ),
                                   ),
 
@@ -2950,11 +2949,11 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                               if(item.poDescription != null &&
                                                   item.poDescription.toString().trim().isNotEmpty &&
                                                   item.poDescription.toString().trim() != "-"){
-                                              descriptionShowingAlert(
-                                                context,
-                                                item.poDescription.toString(),
-                                                "Description"
-                                              );}
+                                                descriptionShowingAlert(
+                                                    context,
+                                                    item.poDescription.toString(),
+                                                    "Description"
+                                                );}
                                             },
                                           ),
                                           // dataCell(
@@ -2968,11 +2967,11 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                               if(item.remarks != null &&
                                                   item.remarks.toString().trim().isNotEmpty &&
                                                   item.remarks.toString().trim() != "-"){
-                                              descriptionShowingAlert(
-                                                context,
-                                                item.remarks.toString(),
-                                                "Remarks"
-                                              );}
+                                                descriptionShowingAlert(
+                                                    context,
+                                                    item.remarks.toString(),
+                                                    "Remarks"
+                                                );}
                                             },
                                           ),
                                         ],
@@ -3313,7 +3312,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
         Text(
           ": ",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold,
               fontSize: 11
           ),
         ),
@@ -3497,65 +3496,6 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
     );
   }
 
-}
-
-class ScrollableDataCell extends StatefulWidget {
-  final String text;
-  final double width;
-
-  const ScrollableDataCell({
-    super.key,
-    required this.text,
-    this.width = 180,
-  });
-
-  @override
-  State<ScrollableDataCell> createState() => _ScrollableDataCellState();
-}
-
-class _ScrollableDataCellState extends State<ScrollableDataCell> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: 60,
-      padding: const EdgeInsets.only(
-       right: 0,left: 5
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: Colors.grey.shade300,
-          ),
-        ),
-      ),
-      child: Scrollbar(
-        controller: _scrollController,
-        thumbVisibility: true,
-        thickness: 5,
-        radius: const Radius.circular(5),
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          scrollDirection: Axis.vertical,
-          child: Text(
-            widget.text,
-            textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontSize: 13,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 

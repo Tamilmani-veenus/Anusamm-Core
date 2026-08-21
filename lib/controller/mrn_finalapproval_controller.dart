@@ -254,6 +254,7 @@ class MrnFinalApprovalController extends GetxController{
   //------------MRN Final Approval List--------------
   Future mrnFinalapprovalDetListApi(int ReqMasId,String MenuName, BuildContext context) async {
     mrnfinalAppDetList.value.clear();
+    ClickUtils.run(() async {
     final value = await PendingListProvider.getMrnFinalApproval(ReqMasId);
     if (value != null ) {
       if(value.success == true)
@@ -265,7 +266,7 @@ class MrnFinalApprovalController extends GetxController{
           await getFinalApp_MaterialsItemlist_TableDatas();
           await mrn_request_controller.getCheckApprovalLevel();
           mrn_request_controller.saveButton.value = RequestConstant.APPROVAL;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MrnfinalEntryScreen(heading: MenuName,)));
+          await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MrnfinalEntryScreen(heading: MenuName,)));
         }
         else {
           BaseUtitiles.showToast("No Data Found");
@@ -277,6 +278,7 @@ class MrnFinalApprovalController extends GetxController{
     else{
       BaseUtitiles.showToast("Something went wrong..");
     }
+    });
   }
 
 

@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:anusamm/models/project_name_response.dart';
 import '../controller/pendinglistcontroller.dart';
 import '../controller/projectcontroller.dart';
 import '../controller/sitecontroller.dart';
@@ -12,10 +8,7 @@ import '../db_model/materialapprlist_model.dart';
 import '../db_services/materialapprlist_service.dart';
 import '../home/pending_list/mrnpre_aproval/mrnpreapr_entryscreen.dart';
 import '../home/pending_list/mrnpre_aproval/mrnpreapr_stockmaterialwiselist_popup.dart';
-import '../home/pending_list/pending_list.dart';
 import '../models/materialintentsave_model.dart';
-import '../models/mrnfinalapproval_aproveapiresmodel.dart';
-import '../provider/common_provider.dart';
 import '../provider/mrn_request_indent_provider.dart';
 import '../provider/mrnfinalapproval_provider.dart';
 import '../provider/pendinglist_provider.dart';
@@ -272,6 +265,7 @@ class MrnPreApprovalController extends GetxController {
   Future mrnPreapprovalDetListApi(
       String url, int ReqMasId, BuildContext context) async {
     mrnPreAppDetList.value = [];
+    ClickUtils.run(() async {
     final value = await PendingListProvider.getMrnPreApproval(ReqMasId);
     if (value != null) {
       if (value.success == true) {
@@ -281,7 +275,7 @@ class MrnPreApprovalController extends GetxController {
           await getMaterialsItemlist_TableDatas();
           await mrn_request_controller.getCheckApprovalLevel();
           mrn_request_controller.saveButton.value = RequestConstant.PREAPPROVAL;
-          Navigator.pushReplacement(
+          await Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) =>
@@ -295,6 +289,7 @@ class MrnPreApprovalController extends GetxController {
     } else {
       BaseUtitiles.showToast("Something went wrong..");
     }
+    });
   }
 
   /// ----- MRN PreApproval -----

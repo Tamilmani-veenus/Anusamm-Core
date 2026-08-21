@@ -1,17 +1,12 @@
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:anusamm/controller/pendinglistcontroller.dart';
-import '../app_theme/app_colors.dart';
 import '../controller/projectcontroller.dart';
 import '../controller/sitecontroller.dart';
 import '../controller/subcontcontroller.dart';
-import '../db_model/materiallist_model.dart';
 import '../db_model/transferbet_sitewise_itemlistTable_model.dart';
 import '../db_services/transferbet_sitewise_itemlist_service.dart';
 import '../home/menu/materials/transfer_between_sites/transferbetween_sites_additems.dart';
 import '../home/menu/materials/transfer_between_sites/transferbetween_sites_entry.dart';
-import '../home/menu/materials/transfer_between_sites/transferbetween_sites_list.dart';
 import '../models/transferbet_site_saveapi_req_model.dart';
-import '../provider/common_provider.dart';
 import '../provider/consumption_provider.dart';
 import '../provider/transferbetween_site_provider.dart';
 import '../utilities/baseutitiles.dart';
@@ -19,7 +14,6 @@ import '../utilities/requestconstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'fromsite_controller.dart';
 import 'logincontroller.dart';
 
@@ -86,12 +80,13 @@ class TransferBt_Site_Controller extends GetxController {
 
   Future getItemList(int prid, int siteId, context) async {
     transferItemListdatas.value = [];
+    ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(prid, siteId);
     if (value != null) {
       if (value.success == true) {
         if (value.result!.isNotEmpty) {
           transferItemListdatas.value = value.result ?? [];
-          Navigator.push(
+          await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => Transferbetween_sites_additems()));
@@ -104,6 +99,7 @@ class TransferBt_Site_Controller extends GetxController {
     } else {
       BaseUtitiles.showToast("Something Went Wrong...");
     }
+    });
   }
 
   itemlist_textControllersInitiate() {
@@ -399,6 +395,7 @@ class TransferBt_Site_Controller extends GetxController {
   Future getStoreTransPendingView(trId,frSiteId,String MenuName, BuildContext context) async {
     transferAllDatasList.value = [];
     transferItemListdatas.value = [];
+    ClickUtils.run(() async {
     final value =
     await TransferBetSiteProvider.getStoreTransPendingViewAPI(trId,frSiteId);
     if (value != null) {
@@ -409,7 +406,7 @@ class TransferBt_Site_Controller extends GetxController {
             await detTransReqPendingViewTable();
             await getItemlistTablesDatas();
             FocusScope.of(context).unfocus();
-            Navigator.push(
+            await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => TransferBetweenSites_Entry(heading: MenuName,)));
@@ -422,6 +419,7 @@ class TransferBt_Site_Controller extends GetxController {
     } else {
       BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG);
     }
+    });
   }
 
   detTransReqPendingViewTable() async {
@@ -450,6 +448,7 @@ class TransferBt_Site_Controller extends GetxController {
 
 
   Future EntryList_EditApi(pId,sId,frsId,int workid,String MenuName, BuildContext context) async {
+    ClickUtils.run(() async {
     final value = await TransferBetSiteProvider.entryList_editAPI(pId,sId,frsId,workid);
     if (value != null) {
       if (value.success == true) {
@@ -457,7 +456,7 @@ class TransferBt_Site_Controller extends GetxController {
         saveButton.value = RequestConstant.RESUBMIT;
         EditTable_SaveTable();
         getItemlistTablesDatas();
-        return Navigator.pushReplacement(
+        await Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => TransferBetweenSites_Entry(heading: MenuName,)));
@@ -467,7 +466,7 @@ class TransferBt_Site_Controller extends GetxController {
     } else {
       BaseUtitiles.showToast("Something Went Wrong...");
     }
-
+    });
   }
 
   EditTable_SaveTable() async {

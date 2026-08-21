@@ -1024,30 +1024,128 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                         Container(
                           margin:
                           const EdgeInsets.only(left: 10, top: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 5,
-                                child: Text(
-                                  "${mrn_request_controller.Material_itemview_GetDbList.value[index].material} (${mrn_request_controller.Material_itemview_GetDbList.value[index].scale})",
-                                  style: TextStyle(
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      fontSize:
-                                      RequestConstant
-                                          .ALERT_Font_SIZE,
-                                      color: Theme.of(context)
-                                          .primaryColor),
-                                ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 5,
+                                    child: Text(
+                                      "${mrn_request_controller.Material_itemview_GetDbList.value[index].material} (${mrn_request_controller.Material_itemview_GetDbList.value[index].scale})",
+                                      style: TextStyle(
+                                          fontWeight:
+                                          FontWeight
+                                              .bold,
+                                          fontSize:
+                                          RequestConstant
+                                              .ALERT_Font_SIZE,
+                                          color: Theme.of(context)
+                                              .primaryColor),
+                                    ),
+                                  ),
+                                  // Obx((){
+                                  //   return mrn_request_controller.activeType.value ?
+                                  //    Expanded(
+                                  //     flex: 3,
+                                  //     child: Text(
+                                  //       "( BalQty: ${mrn_request_controller.Material_itemview_GetDbList.value[index].balqty.toString()} )",
+                                  //       style: TextStyle(
+                                  //           fontWeight:
+                                  //           FontWeight
+                                  //               .bold,
+                                  //           fontSize:
+                                  //           RequestConstant
+                                  //               .ALERT_Font_SIZE,
+                                  //           color: Theme.of(context)
+                                  //               .primaryColor),
+                                  //     ),
+                                  //   ) : SizedBox();
+                                  //   },
+                                  // ),
+                                  Visibility(
+                                    visible: mrn_request_controller.saveButton.value != RequestConstant.VERIFY
+                                        ? true:false,
+                                    child: SizedBox(
+                                      child:
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context:
+                                            context,
+                                            builder:
+                                                (context) =>
+                                                AlertDialog(
+                                                  title:
+                                                  const Text(
+                                                    RequestConstant.DO_YOU_WANT_DELETE,
+                                                    style:
+                                                    TextStyle(color: Colors.black),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    Container(
+                                                      margin: const EdgeInsets.only(left: 20, right: 20),
+                                                      child: IntrinsicHeight(
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                              child: TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: const Text(
+                                                                  "Cancel",
+                                                                  style: TextStyle(
+                                                                    color: Colors.grey,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: RequestConstant.Lable_Font_SIZE,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            VerticalDivider(
+                                                              color: Colors.grey.shade400,
+                                                              width: 5,
+                                                              thickness: 2,
+                                                              indent: 15,
+                                                              endIndent: 15,
+                                                            ),
+                                                            Expanded(
+                                                              child: TextButton(
+                                                                  onPressed: () async{
+                                                                    mrn_request_controller.deleteParticularList(mrn_request_controller.Material_itemview_GetDbList[index]);
+                                                                    mrn_request_controller.Material_itemview_GetDbList.remove(mrn_request_controller.Material_itemview_GetDbList[index]);
+                                                                    mrn_request_controller.getMaterialTablesDatas();
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: const Text("Delete", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                          );
+                                        },
+                                        child: const Icon(
+                                            Icons
+                                                .remove_circle,
+                                            color: Colors
+                                                .red),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Obx((){
                                 return mrn_request_controller.activeType.value ?
-                                 Expanded(
-                                  flex: 3,
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     "( BalQty: ${mrn_request_controller.Material_itemview_GetDbList.value[index].balqty.toString()} )",
                                     style: TextStyle(
@@ -1057,85 +1155,10 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                         fontSize:
                                         RequestConstant
                                             .ALERT_Font_SIZE,
-                                        color: Theme.of(context)
-                                            .primaryColor),
+                                        color: Colors.red),
                                   ),
                                 ) : SizedBox();
-                                },
-                              ),
-                              Visibility(
-                                visible: mrn_request_controller.saveButton.value != RequestConstant.VERIFY
-                                    ? true:false,
-                                child: SizedBox(
-                                  child:
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context:
-                                        context,
-                                        builder:
-                                            (context) =>
-                                            AlertDialog(
-                                              title:
-                                              const Text(
-                                                RequestConstant.DO_YOU_WANT_DELETE,
-                                                style:
-                                                TextStyle(color: Colors.black),
-                                              ),
-                                              actions: <Widget>[
-                                                Container(
-                                                  margin: const EdgeInsets.only(left: 20, right: 20),
-                                                  child: IntrinsicHeight(
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextButton(
-                                                            onPressed: () {
-                                                              Navigator.pop(context);
-                                                            },
-                                                            child: const Text(
-                                                              "Cancel",
-                                                              style: TextStyle(
-                                                                color: Colors.grey,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: RequestConstant.Lable_Font_SIZE,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        VerticalDivider(
-                                                          color: Colors.grey.shade400,
-                                                          width: 5,
-                                                          thickness: 2,
-                                                          indent: 15,
-                                                          endIndent: 15,
-                                                        ),
-                                                        Expanded(
-                                                          child: TextButton(
-                                                              onPressed: () async{
-                                                                mrn_request_controller.deleteParticularList(mrn_request_controller.Material_itemview_GetDbList[index]);
-                                                                mrn_request_controller.Material_itemview_GetDbList.remove(mrn_request_controller.Material_itemview_GetDbList[index]);
-                                                                mrn_request_controller.getMaterialTablesDatas();
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: const Text("Delete", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: RequestConstant.Lable_Font_SIZE))),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      );
-                                    },
-                                    child: const Icon(
-                                        Icons
-                                            .remove_circle,
-                                        color: Colors
-                                            .red),
-                                  ),
-                                ),
+                              },
                               ),
                             ],
                           ),

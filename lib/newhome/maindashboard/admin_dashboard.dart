@@ -2,6 +2,7 @@ import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math' as math;
 import '../../app_theme/app_colors.dart';
@@ -81,7 +82,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       const Expanded(
                           flex: 3,
                           child: Text(
-                            "Labour Dashboard",
+                            "Admin Dashboard",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           )),
@@ -211,17 +212,19 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   AdminDashboardController adminDashboardController = Get.put(AdminDashboardController());
   LoginController loginController = Get.put(LoginController());
   late TooltipBehavior _tooltipBehavior;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    DateTime currentDate = DateTime.now();
-    adminDashboardController.entryFromDate.text =
-        currentDate.toString().substring(0, 10);
-    adminDashboardController.entryToDate.text =
-        currentDate.toString().substring(0, 10);
-    adminDashboardController.getAdminDashboardDetails();
+
+    final currentDate = DateTime.now();
+    final today = currentDate.toString().substring(0, 10);
+
+    adminDashboardController.entryFromDate.text = today;
+    adminDashboardController.entryToDate.text = today;
+
     _tooltipBehavior = TooltipBehavior(
       enable: true,
       color: Colors.black87,
@@ -233,6 +236,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       canShowMarker: true,
       header: '',
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      adminDashboardController.getAdminDashboardDetails();
+    });
   }
 
   @override
@@ -251,6 +258,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         top: false,
         child: Scaffold(
           body: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            color: Theme.of(context).primaryColor,
             onRefresh: () async {
               await adminDashboardController.getAdminDashboardDetails();
             },
@@ -261,185 +270,141 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 2),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: const Color(0xffE4E7EC),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.04),
+                          blurRadius: 10,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: BaseUtitiles.getWidthtofPercentage(context, 45),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            // elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: TextFormField(
-                                readOnly: true,
-                                controller:
-                                    adminDashboardController.entryFromDate,
-                                cursorColor: Colors.black,
-                                style:
-                                    TextStyle(color: Colors.black, fontSize: 14),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "From Date",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                      BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 8),
-                                    child: Icon(
-                                      Icons.calendar_today_outlined,
-                                      size: 18,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  suffixIcon: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 8),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      size: 18,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                ),
-                                onTap: () async {
-                                  var Frdate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2010),
-                                      lastDate: DateTime.now(),
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
-                                              primary:
-                                                  Theme.of(context).primaryColor,
-                                              onPrimary: Colors.white,
-                                              onSurface:
-                                                  Colors.black, // body text color
-                                            ),
-                                            textButtonTheme: TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                primary: Colors
-                                                    .black, // button text color
-                                              ),
-                                            ),
+                        Expanded(
+                          child: _dashboardDateCard(
+                            context: context,
+                            title: "From Date",
+                            controller:
+                            adminDashboardController.entryFromDate,
+                            accentColor: Theme.of(context).primaryColor,
+                            onTap: () async {
+                              final date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2010),
+                                lastDate: DateTime.now(),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary:
+                                          Theme.of(context).primaryColor,
+                                          onPrimary: Colors.white,
+                                          onSurface:
+                                          Colors.black, // body text color
+                                        ),
+                                        textButtonTheme: TextButtonThemeData(
+                                          style: TextButton.styleFrom(
+                                            primary: Colors
+                                                .black, // button text color
                                           ),
-                                          child: child!,
-                                        );
-                                      });
-                                  if (Frdate != null) {
-                                    adminDashboardController.entryFromDate.text =
-                                        Frdate.toString().substring(0, 10);
-                                    // Refresh API
-                                    await adminDashboardController
-                                        .getAdminDashboardDetails();
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
                                   }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Select Date';
-                                  }
-                                  return null;
-                                },
+                              );
+
+                              if (date != null) {
+                                adminDashboardController.entryFromDate.text = date.toString().substring(0, 10);
+                                    // DateFormat('dd MMM yyyy').format(date);
+
+                                setState(() {});
+
+                                _refreshIndicatorKey.currentState?.show();
+                              }
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(width: 10),
+
+                        // Range separator
+                        Container(
+                          width: 34,
+                          height: 34,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffF8FAFC),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color(0xffE4E7EC),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "–",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xff667085),
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: BaseUtitiles.getWidthtofPercentage(context, 45),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            // elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: TextFormField(
-                                readOnly: true,
-                                controller: adminDashboardController.entryToDate,
-                                cursorColor: Colors.black,
-                                style:
-                                    TextStyle(color: Colors.black, fontSize: 14),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  labelText: "To Date",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: RequestConstant.Lable_Font_SIZE),
-                                  prefixIconConstraints:
-                                      BoxConstraints(minWidth: 0, minHeight: 0),
-                                  prefixIcon: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 8),
-                                      child: Icon(Icons.calendar_today,
-                                          size: 18,
-                                          color: Theme.of(context).primaryColor)),
-                                  suffixIcon: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 8),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      size: 18,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                ),
-                                onTap: () async {
-                                  var Todate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2010),
-                                      lastDate: DateTime.now(),
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
-                                              primary:
-                                                  Theme.of(context).primaryColor,
-                                              // header background color
-                                              onPrimary: Colors.white,
-                                              // header text color
-                                              onSurface:
-                                                  Colors.black, // body text color
-                                            ),
-                                            textButtonTheme: TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                primary: Colors
-                                                    .black, // button text color
-                                              ),
-                                            ),
-                                          ),
-                                          child: child!,
-                                        );
-                                      });
-                                  if (Todate != null) {
-                                    adminDashboardController.entryToDate.text =
-                                        Todate.toString().substring(0, 10);
 
-                                    // Refresh API
-                                    await adminDashboardController
-                                        .getAdminDashboardDetails();
+                        const SizedBox(width: 10),
+
+                        Expanded(
+                          child: _dashboardDateCard(
+                            context: context,
+                            title: "To Date",
+                            controller:
+                            adminDashboardController.entryToDate,
+                            accentColor: Theme.of(context).primaryColor,
+                            onTap: () async {
+                              final date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2010),
+                                lastDate: DateTime.now(),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary:
+                                          Theme.of(context).primaryColor,
+                                          onPrimary: Colors.white,
+                                          onSurface:
+                                          Colors.black, // body text color
+                                        ),
+                                        textButtonTheme: TextButtonThemeData(
+                                          style: TextButton.styleFrom(
+                                            primary: Colors
+                                                .black, // button text color
+                                          ),
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
                                   }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Select Date';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
+                              );
+
+                              if (date != null) {
+
+                                adminDashboardController.entryToDate.text = date.toString().substring(0, 10);
+                                    // DateFormat('dd MMM yyyy').format(date);
+                                setState(() {});
+
+                                _refreshIndicatorKey.currentState?.show();
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -591,7 +556,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             return const Center(
                               child: Padding(
                                 padding: EdgeInsets.all(20),
-                                child: Text("No Data Found"),
+                                child: Text("No PO data available for the selected period",style: TextStyle(color: Colors.grey),),
                               ),
                             );
                           }
@@ -660,7 +625,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               ),
                                               const SizedBox(height: 12),
                                               Text(
-                                                "PO: ${item.poValue!}",
+                                                "PO: ₹${item.poValue!}",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   fontSize: 13,
@@ -727,6 +692,812 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       ],
                     ),
                   ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  /// -----------Budget vs Actual
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.15),
+                          blurRadius: 8,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Expanded(flex: 3,
+                              child: Text(
+                                "Budget Vs Actual",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => BudgetVsActualDialog(),
+                                );},
+                              child: Obx(()=>
+                                  Visibility(
+                                    visible: adminDashboardController.filteredBudgetVsActualList.length>3,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(.1),
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withOpacity(.4)),
+                                      ),
+                                      child: Text(
+                                        "View All",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _legend(
+                              const Color(0xfff97316),
+                              "Budget %",
+                            ),
+                            const SizedBox(width: 15),
+                            _legend(
+                              const Color(0xff2563eb),
+                              "Actual %",
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+
+                        Obx(() {
+                          final budgetPercentage = parse_Percentage(
+                            adminDashboardController
+                                .dashboardResponse
+                                .value
+                                ?.budgetUsed,
+                          );
+
+                          final chartData = List<ProjectCompletion>.from(
+                            adminDashboardController.filteredBudgetVsActualList,
+                          )
+                            ..sort(
+                                  (a, b) =>
+                                  (b.completionPercentage ?? 0.0)
+                                      .compareTo(
+                                    a.completionPercentage ?? 0.0,
+                                  ),
+                            );
+
+                          final topThree = chartData.take(3).toList();
+                          return SizedBox(
+                            height: 250,
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+
+                              legend: Legend(
+                                isVisible: false,
+                              ),
+
+                              margin: const EdgeInsets.only(
+                                left: 5,
+                                right: 10,
+                                top: 20,
+                                bottom: 5,
+                              ),
+
+                              primaryXAxis: CategoryAxis(
+                                majorGridLines: const MajorGridLines(width: 0),
+
+                                majorTickLines: const MajorTickLines(size: 0),
+
+                                axisLine: const AxisLine(width: 0),
+
+                                labelStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                ),
+
+                                labelIntersectAction:
+                                AxisLabelIntersectAction.multipleRows,
+                              ),
+
+
+                              primaryYAxis: NumericAxis(
+                                minimum: 0,
+                                maximum: 110,
+                                interval: 20,
+                                axisLine: const AxisLine(width: 0,),
+
+                                majorTickLines: const MajorTickLines(size: 0),
+
+                                majorGridLines: MajorGridLines(color: Colors.grey.shade300,),
+
+                                labelFormat: '{value}%',
+
+                                labelStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+
+                              series: <CartesianSeries>[
+
+                                ColumnSeries<ProjectCompletion, String>(
+                                  name: "Budget %",
+                                  dataSource: topThree,
+                                  width: 0.8,
+                                  spacing: 0.15,
+
+                                  color: const Color(0xffF97316),
+
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+
+                                  xValueMapper: (ProjectCompletion item, _,) {
+                                    return BaseUtitiles.formatProjectName(
+                                      item.projectName ?? "",
+                                    );
+                                  },
+
+                                  // Every project gets top-level budgetUsed
+                                  yValueMapper: (ProjectCompletion item, _,) {
+                                    return budgetPercentage;
+                                  },
+
+                                  dataLabelMapper: (ProjectCompletion item, _,) {
+                                    return '${budgetPercentage.toStringAsFixed(0)}%';
+                                  },
+
+                                  dataLabelSettings:
+                                  const DataLabelSettings(
+                                    isVisible: true,
+
+                                    labelAlignment:
+                                    ChartDataLabelAlignment.outer,
+
+                                    textStyle: TextStyle(
+                                      color: Color(0xffF97316),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+
+                                ColumnSeries<ProjectCompletion, String>(
+                                  name: "Actual %",
+                                  dataSource: topThree,
+
+                                  width: 0.8,
+                                  spacing: 0.15,
+
+                                  color: const Color(0xff2563EB),
+
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+
+                                  xValueMapper: (ProjectCompletion item, _,) {
+                                    return BaseUtitiles.formatProjectName(
+                                      item.projectName ?? "",
+                                    );
+                                  },
+
+                                  // Project completion
+                                  yValueMapper: (ProjectCompletion item, _,) {
+                                    return item.completionPercentage ?? 0.0;
+                                  },
+
+                                  dataLabelMapper: (ProjectCompletion item, _,) {
+                                    return '${(item.completionPercentage ?? 0.0).toStringAsFixed(0)}%';
+                                  },
+
+                                  dataLabelSettings:
+                                  const DataLabelSettings(
+                                    isVisible: true,
+
+                                    labelAlignment:
+                                    ChartDataLabelAlignment.outer,
+
+                                    textStyle: TextStyle(
+                                      color: Color(0xff2563EB),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.15),
+                          blurRadius: 8,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Expanded(flex: 3,
+                              child: Text(
+                                "Budget Vs Spent (Project-wise)",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => BudgetVsSpendDialog(),
+                                );},
+                              child: Obx(()=>
+                                  Visibility(
+                                    visible: adminDashboardController.filteredBudgetVsSpendList.length>3,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(.1),
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withOpacity(.4)),
+                                      ),
+                                      child: Text(
+                                        "View All",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _legend(
+                              const Color(0xff2F5BEA),
+                              "Budget (₹)",
+                            ),
+                            const SizedBox(width: 15),
+                            _legend(
+                              const Color(0xff34C759),
+                              "Spent (₹)",
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+
+                        Obx(() {
+                          final chartData = List<BudgetVsSpend>.from(
+                            adminDashboardController.filteredBudgetVsSpendList,
+                          )
+                            ..sort((a, b) =>
+                                parseChartValue(b.budget).compareTo(parseChartValue(a.budget)));
+
+                          final topThree = chartData.take(3).toList();
+
+                          final axisValues = getYAxisValues(topThree);
+
+                          return SizedBox(
+                            height: 250,
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              legend:  Legend(isVisible: false),
+                              margin: const EdgeInsets.only(top: 20, right: 10),
+
+                              primaryXAxis: CategoryAxis(
+                                visibleMinimum: 0,
+                                visibleMaximum: 2,
+                                majorGridLines: const MajorGridLines(width: 0),
+                                majorTickLines: const MajorTickLines(size: 0),
+                                axisLine: const AxisLine(width: 0),
+                                labelStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+                              ),
+
+                              primaryYAxis: NumericAxis(
+                                minimum: 0,
+                                maximum: axisValues["maximum"]!,
+                                interval: axisValues["interval"]!,
+                                axisLine: const AxisLine(width: 0),
+                                majorTickLines: const MajorTickLines(size: 0),
+                                majorGridLines: MajorGridLines(
+                                  color: Colors.grey.shade300,
+                                ),
+                                axisLabelFormatter: (AxisLabelRenderDetails details) {
+                                  return ChartAxisLabel(
+                                    formatAxisLabel(details.value),
+                                    const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                },
+                              ),
+                              series: <CartesianSeries>[
+                                ColumnSeries<BudgetVsSpend, String>(
+                                  dataSource: topThree,
+                                  width: 0.8,
+                                  spacing: 0.15,
+                                  color: const Color(0xff2F5BEA),
+
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+
+                                  xValueMapper: (BudgetVsSpend item, _) =>
+                                      BaseUtitiles.formatProjectName(item.projectName ?? ""),
+
+                                  yValueMapper: (item, _) => parseChartValue(item.budget),
+                                  dataLabelMapper: (BudgetVsSpend item, _) =>
+                                      formatChartLabel(item.budget),
+                                  dataLabelSettings: const DataLabelSettings(
+                                    isVisible: true,
+                                    labelAlignment: ChartDataLabelAlignment.outer,
+                                    textStyle: TextStyle(
+                                      color: Color(0xff2F5BEA),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+
+                                ColumnSeries<BudgetVsSpend, String>(
+                                  dataSource: topThree,
+                                  width: 0.8,
+                                  spacing: 0.15,
+                                  color: const Color(0xff34C759),
+
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+
+                                  xValueMapper: (BudgetVsSpend item, _) =>
+                                      BaseUtitiles.formatProjectName(item.projectName ?? ""),
+
+                                  yValueMapper: (item, _) => parseChartValue(item.spent),
+                                  dataLabelMapper: (BudgetVsSpend item, _) =>
+                                      formatChartLabel(item.spent),
+                                  dataLabelSettings: const DataLabelSettings(
+                                    isVisible: true,
+                                    labelAlignment: ChartDataLabelAlignment.outer,
+                                    textStyle: TextStyle(
+                                      color: Color(0xff34C759),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  /// ---------- Project Status --------------
+                  Container(
+                    height: 350,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.15),
+                          blurRadius: 8,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        /// ---------------- HEADER ----------------
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                "Project Status",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+
+                            Obx(
+                                  () => Visibility(
+                                visible: adminDashboardController
+                                    .filteredProjectStatusList.length >
+                                    3,
+                                child: InkWell(
+                                  onTap: () {
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (_) => ProjectStatusDialog(),
+                                    // );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(.1),
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(.4),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "View All",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        /// ---------------- LEGEND ----------------
+                        Row(
+                          children: [
+                            _projectLegend(
+                              dashed: true,
+                              color: const Color(0xff3B82F6),
+                              title: "Planned (BOQ)",
+                            ),
+
+                            const SizedBox(width: 16),
+
+                            _projectLegend(
+                              color: const Color(0xff172B63),
+                              title: "Tower A",
+                            ),
+
+                            const SizedBox(width: 16),
+
+                            _projectLegend(
+                              color: const Color(0xffF04444),
+                              title: "Mall B",
+                            ),
+
+                            const SizedBox(width: 16),
+
+                            _projectLegend(
+                              color: const Color(0xffF97316),
+                              title: "Villa C",
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        /// ---------------- CHART ----------------
+
+                        Expanded(
+                          child: SfCartesianChart(
+                            plotAreaBorderWidth: 0,
+
+                            margin: const EdgeInsets.only(
+                              left: 0,
+                              right: 8,
+                              top: 5,
+                              bottom: 0,
+                            ),
+
+                            legend:  Legend(
+                              isVisible: false,
+                            ),
+                            tooltipBehavior: TooltipBehavior(
+                              enable: true,
+                              activationMode: ActivationMode.singleTap,
+                              color: const Color(0xff101828),
+                              borderWidth: 0,
+                              canShowMarker: false,
+                              duration: 3000,
+
+                              builder: (
+                                  dynamic data,
+                                  dynamic point,
+                                  dynamic series,
+                                  int pointIndex,
+                                  int seriesIndex,
+                                  ) {
+                                final item = data as ProjectStatus;
+
+                                String projectName;
+                                double value;
+
+                                if (seriesIndex == 0) {
+                                  projectName = "Planned (BOQ)";
+                                  value = item.planned;
+                                } else if (seriesIndex == 1) {
+                                  projectName = "Tower A";
+                                  value = item.towerA;
+                                } else if (seriesIndex == 2) {
+                                  projectName = "Mall B";
+                                  value = item.mallB;
+                                } else {
+                                  projectName = "Villa C";
+                                  value = item.villaC;
+                                }
+
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 9,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff101828),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        projectName,
+                                        style: TextStyle(
+                                          color: series.color,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 3),
+
+                                      Text(
+                                        item.month,
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 11,
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 2),
+
+                                      Text(
+                                        "${value.toStringAsFixed(0)}%",
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+
+                            primaryXAxis: CategoryAxis(
+                              majorGridLines: const MajorGridLines(
+                                width: 0,
+                              ),
+
+                              majorTickLines: const MajorTickLines(
+                                size: 0,
+                              ),
+
+                              axisLine: const AxisLine(
+                                width: 0,
+                              ),
+
+                              labelRotation: -25,
+                              // labelIntersectAction: AxisLabelIntersectAction.none,
+                              /// ---------- For 12 Months display ----------
+                              labelPlacement: LabelPlacement.betweenTicks,
+
+                              interval: 1,
+
+                              labelIntersectAction: AxisLabelIntersectAction.rotate45,
+
+                              labelStyle: const TextStyle(
+                                fontSize: 9,
+                                color: Color(0xff8B98AB),
+                              ),
+                            ),
+
+                            primaryYAxis: NumericAxis(
+                              minimum: 0,
+                              maximum: 110,
+                              interval: 20,
+
+                              axisLine: const AxisLine(
+                                width: 0,
+                              ),
+
+                              majorTickLines: const MajorTickLines(
+                                size: 0,
+                              ),
+
+                              majorGridLines: MajorGridLines(
+                                width: .7,
+                                color: Colors.grey.shade200,
+                              ),
+
+                              labelFormat: "{value}%",
+
+                              labelStyle: const TextStyle(
+                                fontSize: 9,
+                                color: Color(0xff9AA5B5),
+                              ),
+                            ),
+
+                            series: <CartesianSeries>[
+                              LineSeries<ProjectStatus, String>(
+
+                                name: "Planned (BOQ)",
+                                dataSource: chartData,
+
+                                xValueMapper: (ProjectStatus item, _,) => item.month,
+
+                                yValueMapper: (ProjectStatus item, _,) => item.planned,
+
+                                color: const Color(0xff3B82F6),
+                                width: 2,
+
+                                dashArray: const <double>[6, 4,],
+
+                                markerSettings: const MarkerSettings(isVisible: false),
+                              ),
+
+                              LineSeries<ProjectStatus, String>(
+
+                                name: "Tower A",
+                                dataSource: chartData,
+
+                                xValueMapper: (ProjectStatus item, _,) => item.month,
+
+                                yValueMapper: (ProjectStatus item, _,) => item.towerA,
+
+                                color: const Color(0xff172B63),
+                                width: 2.2,
+
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  width: 6,
+                                  height: 6,
+                                  shape: DataMarkerType.circle,
+                                  borderWidth: 1.5,
+                                  color: Color(0xff172B63),
+                                  borderColor: Colors.white,
+                                ),
+                              ),
+
+                              LineSeries<ProjectStatus, String>(
+                                name: "Mall B",
+                                dataSource: chartData,
+
+                                xValueMapper: (ProjectStatus item, _,) => item.month,
+
+                                yValueMapper: (ProjectStatus item, _,) => item.mallB,
+
+                                color: const Color(0xffF04444),
+                                width: 2.2,
+
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  width: 6,
+                                  height: 6,
+                                  shape: DataMarkerType.circle,
+                                  borderWidth: 1.5,
+                                  color: Color(0xffF04444),
+                                  borderColor: Colors.white,
+                                ),
+                              ),
+
+                              LineSeries<ProjectStatus, String>(
+                                name: "Villa C",
+                                dataSource: chartData,
+
+                                xValueMapper: (ProjectStatus item, _,) => item.month,
+
+                                yValueMapper: (ProjectStatus item, _,) => item.villaC,
+
+                                color: const Color(0xffF97316),
+                                width: 2.2,
+
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  width: 6,
+                                  height: 6,
+                                  shape: DataMarkerType.circle,
+                                  borderWidth: 1.5,
+                                  color: Color(0xffF97316) ,
+                                  borderColor: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -754,7 +1525,18 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         ),
                         Obx(() {
                           final expenseList = expenseChartList;
+                          final totalExpenseText = adminDashboardController
+                              .dashboardResponse
+                              .value
+                              ?.expenseCategoryMix
+                              ?.totalExpense
+                              ?.totalExpenseAmount
+                              ?.toString() ??
+                              "0";
 
+                          final totalExpense = parseChartValue(totalExpenseText);
+
+                          final isZeroExpense = totalExpense == 0;
                           return Column(
                             children: [
                               Row(
@@ -788,17 +1570,17 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                                     Text(
                                                       "₹ ${BaseUtitiles().formatAmount(
                                                         adminDashboardController
-                                                                .dashboardResponse
-                                                                .value
-                                                                ?.expenseCategoryMix
-                                                                ?.totalExpense
-                                                                ?.totalExpenseAmount
-                                                                .toString() ??
+                                                            .dashboardResponse
+                                                            .value
+                                                            ?.expenseCategoryMix
+                                                            ?.totalExpense
+                                                            ?.totalExpenseAmount
+                                                            .toString() ??
                                                             "0",
                                                       )}",
                                                       style: const TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                        FontWeight.bold,
                                                         fontSize: 20,
                                                       ),
                                                     ),
@@ -814,21 +1596,46 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               )
                                             ],
                                             series: [
-                                              DoughnutSeries<ExpenseChartData,
-                                                  String>(
-                                                dataSource: expenseList,
-                                                xValueMapper: (e, _) => e.title,
-                                                yValueMapper: (e, _) =>
-                                                    e.percentage,
-                                                pointColorMapper: (e, _) =>
-                                                    e.color,
-                                                startAngle: 270,
-                                                endAngle: 90,
-                                                innerRadius: "78%",
-                                                radius: "110%",
-                                                strokeWidth: 0,
-                                                strokeColor: Colors.white,
-                                              ),
+                                              if (!isZeroExpense && expenseList.isNotEmpty)
+                                                DoughnutSeries<ExpenseChartData,
+                                                    String>(
+                                                  dataSource: expenseList,
+                                                  xValueMapper: (e, _) => e.title,
+                                                  yValueMapper: (e, _) =>
+                                                  e.percentage,
+                                                  pointColorMapper: (e, _) =>
+                                                  e.color,
+                                                  startAngle: 270,
+                                                  endAngle: 90,
+                                                  innerRadius: "78%",
+                                                  radius: "110%",
+                                                  strokeWidth: 0,
+                                                  strokeColor: Colors.white,
+                                                )else
+                                                DoughnutSeries<EmptyExpenseChartData, String>(
+                                                  dataSource: const [
+                                                    EmptyExpenseChartData(
+                                                      title: "No Expense",
+                                                      value: 100,
+                                                    ),
+                                                  ],
+
+                                                  xValueMapper: (e, _) => e.title,
+
+                                                  yValueMapper: (e, _) => e.value,
+
+                                                  pointColorMapper: (_, __) =>
+                                                  const Color(0xffE3E1DD),
+
+                                                  startAngle: 270,
+                                                  endAngle: 90,
+
+                                                  innerRadius: "78%",
+                                                  radius: "110%",
+
+                                                  strokeWidth: 0,
+                                                  strokeColor: Colors.white,
+                                                ),
                                             ],
                                           ),
                                         )),
@@ -1100,197 +1907,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(.15),
-                          blurRadius: 8,
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                "Budget Vs Spent (Project-wise)",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-
-                            /// Right Side
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-
-                                // InkWell(
-                                //   onTap: () {
-                                //     showDialog(
-                                //       context: context,
-                                //       builder: (_) => ProjectWiseLabourDialog());
-                                //     },
-                                //   child: Obx(()=>
-                                      // Visibility(
-                                      //   visible: adminDashboardController.filteredBudgetVsSpendList.isNotEmpty,
-                                      //   child: Row(
-                                      //     mainAxisSize: MainAxisSize.min,
-                                      //     children: [
-                                      //       Text(
-                                      //         "View All",
-                                      //         style: TextStyle(
-                                      //           fontSize: 13,
-                                      //           fontWeight: FontWeight.bold,
-                                      //           color: Colors.black,
-                                      //         ),
-                                      //       ),
-                                      //       SizedBox(width: 4),
-                                      //       Icon(
-                                      //         Icons.arrow_forward_ios,
-                                      //         size: 12,
-                                      //         color: Colors.black,
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                  // ),
-                                // ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    _legend(
-                                      const Color(0xff2F5BEA),
-                                      "Budget (₹Cr)",
-                                    ),
-                                    const SizedBox(width: 15),
-                                    _legend(
-                                      const Color(0xff34C759),
-                                      "Spent (₹Cr)",
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        Obx(() {
-                          final chartData = adminDashboardController.filteredBudgetVsSpendList
-                              .take(3)
-                              .toList();
-
-                          final axisValues = getYAxisValues(chartData);
-
-                          return SizedBox(
-                            height: 250,
-                            child: SfCartesianChart(
-                              plotAreaBorderWidth: 0,
-                              legend:  Legend(isVisible: false),
-                              margin: const EdgeInsets.only(top: 20, right: 10),
-
-                              primaryXAxis: CategoryAxis(
-                                majorGridLines: const MajorGridLines(width: 0),
-                                majorTickLines: const MajorTickLines(size: 0),
-                                axisLine: const AxisLine(width: 0),
-                                labelStyle: const TextStyle(
-                                  fontSize: 7,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                labelIntersectAction: AxisLabelIntersectAction.multipleRows,
-                              ),
-
-                              primaryYAxis: NumericAxis(
-                                minimum: 0,
-                                maximum: axisValues["maximum"]!,
-                                interval: axisValues["interval"]!,
-                                axisLine: const AxisLine(width: 0),
-                                majorTickLines: const MajorTickLines(size: 0),
-                                majorGridLines: MajorGridLines(
-                                  color: Colors.grey.shade300,
-                                ),
-                              ),
-
-                              series: <CartesianSeries>[
-                                ColumnSeries<BudgetVsSpend, String>(
-                                  dataSource: chartData,
-                                  width: 0.8,
-                                  spacing: 0.15,
-                                  color: const Color(0xff2F5BEA),
-
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                  ),
-
-                                  xValueMapper: (BudgetVsSpend item, _) =>
-                                      BaseUtitiles.formatProjectName(item.projectName ?? ""),
-
-                                  yValueMapper: (item, _) => parseChartValue(item.budget),
-                                  dataLabelMapper: (BudgetVsSpend item, _) =>
-                                  item.budget,
-
-                                  dataLabelSettings: const DataLabelSettings(
-                                    isVisible: true,
-                                    labelAlignment: ChartDataLabelAlignment.outer,
-                                    textStyle: TextStyle(
-                                      color: Color(0xff2F5BEA),
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-
-                                ColumnSeries<BudgetVsSpend, String>(
-                                  dataSource: chartData,
-                                  width: 0.8,
-                                  spacing: 0.15,
-                                  color: const Color(0xff34C759),
-
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                  ),
-
-                                  xValueMapper: (BudgetVsSpend item, _) =>
-                                      BaseUtitiles.formatProjectName(item.projectName ?? ""),
-
-                                  yValueMapper: (item, _) => parseChartValue(item.spent),
-
-                                  dataLabelMapper: (BudgetVsSpend item, _) =>
-                                  item.spent,
-
-                                  dataLabelSettings: const DataLabelSettings(
-                                    isVisible: true,
-                                    labelAlignment: ChartDataLabelAlignment.outer,
-                                    textStyle: TextStyle(
-                                      color: Color(0xff34C759),
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        })
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 100,),
+                  SizedBox(height: 60,),
                 ],
               ),
             ),
@@ -1300,26 +1917,154 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     );
   }
 
+  final List<ProjectStatus> chartData = [
+    ProjectStatus(
+      month: "Apr",
+      planned: 0,
+      towerA: 2,
+      mallB: 0,
+      villaC: 0,
+    ),
+    ProjectStatus(
+      month: "May",
+      planned: 10,
+      towerA: 28,
+      mallB: 2,
+      villaC: 0,
+    ),
+    ProjectStatus(
+      month: "Jun",
+      planned: 20,
+      towerA: 22,
+      mallB: 43,
+      villaC: 2,
+    ),
+    ProjectStatus(
+      month: "Jul",
+      planned: 30,
+      towerA: 30,
+      mallB: 53,
+      villaC: 15,
+    ),
+    ProjectStatus(
+      month: "Aug",
+      planned: 38,
+      towerA: 25,
+      mallB: 49,
+      villaC: 20,
+    ),
+    ProjectStatus(
+      month: "Sep",
+      planned: 46,
+      towerA: 35,
+      mallB: 58,
+      villaC: 25,
+    ),
+    ProjectStatus(
+      month: "Oct",
+      planned: 55,
+      towerA: 15,
+      mallB: 75,
+      villaC: 32,
+    ),
+    ProjectStatus(
+      month: "Nov",
+      planned: 65,
+      towerA: 30,
+      mallB: 80,
+      villaC: 37,
+    ),
+    ProjectStatus(
+      month: "Dec",
+      planned: 73,
+      towerA: 15,
+      mallB: 82,
+      villaC: 42,
+    ),
+    ProjectStatus(
+      month: "Jan",
+      planned: 83,
+      towerA: 44,
+      mallB: 100,
+      villaC: 22,
+    ),
+    ProjectStatus(
+      month: "Feb",
+      planned: 92,
+      towerA: 30,
+      mallB: 96,
+      villaC: 17,
+    ),
+    ProjectStatus(
+      month: "Mar",
+      planned: 100,
+      towerA: 70,
+      mallB: 92,
+      villaC: 36,
+    ),
+  ];
+
+  double parse_Percentage(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 0.0;
+    }
+
+    return double.tryParse(
+      value.replaceAll('%', '').trim(),
+    ) ??
+        0.0;
+  }
+
   double parseChartValue(String? value) {
     if (value == null || value.trim().isEmpty) return 0;
 
-    // Remove currency symbol, commas, and spaces
-    String cleaned = value
-        .replaceAll("₹", "")
-        .replaceAll(",", "")
-        .trim();
+    String text = value.replaceAll("₹", "").replaceAll(",", "").trim();
 
-    double multiplier = 1;
-
-    // Convert units to Lakhs
-    if (cleaned.toUpperCase().endsWith("CR")) {
-      multiplier = 100; // 1 CR = 100 Lakhs
-      cleaned = cleaned.substring(0, cleaned.length - 2).trim();
-    } else if (cleaned.toUpperCase().endsWith("L")) {
-      cleaned = cleaned.substring(0, cleaned.length - 1).trim();
+    if (text.endsWith("L")) {
+      return (double.tryParse(text.replaceAll("L", "").trim()) ?? 0) * 100000;
     }
 
-    return (double.tryParse(cleaned) ?? 0) * multiplier;
+    if (text.endsWith("Cr")) {
+      return (double.tryParse(text.replaceAll("Cr", "").trim()) ?? 0) * 10000000;
+    }
+
+    return double.tryParse(text) ?? 0;
+  }
+
+  String formatChartLabel(String? value) {
+    if (value == null || value.isEmpty) return "0";
+
+    // Don't modify values with units
+    if (value.contains("L") || value.contains("Cr")) {
+      return value;
+    }
+
+    final number = double.tryParse(value.replaceAll("₹", "").trim());
+
+    if (number == null) return value;
+
+    if (number == number.toInt()) {
+      return number.toInt().toString(); // 105.00 -> 105
+    }
+
+    return number.toString(); // 100.50 -> 100.5
+  }
+
+  String formatAxisLabel(num value) {
+    if (value >= 10000000) {
+      return "${(value / 10000000).toStringAsFixed(2)} Cr";
+    }
+
+    if (value >= 100000) {
+      return "${(value / 100000).toStringAsFixed(2)} L";
+    }
+
+    // Remove trailing .00
+    if (value == value.toInt()) {
+      return value.toInt().toString();
+    }
+
+    return value.toStringAsFixed(2);
   }
 
   Widget _legend(Color color, String text) {
@@ -1355,15 +2100,20 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       );
     }
 
-    // Add 10% headroom
-    final maximum = (maxValue * 1.1).ceilToDouble();
+    // Handle all zero values
+    if (maxValue <= 0) {
+      return {
+        "maximum": 5,
+        "interval": 1,
+      };
+    }
 
-    // Split into 5 grid lines
-    final interval = maximum / 5;
+    final maximum = (maxValue * 1.1).ceilToDouble();
+    final interval = math.max(1.0, maximum / 5);
 
     return {
-      'maximum': maximum,
-      'interval': interval,
+      "maximum": maximum,
+      "interval": interval,
     };
   }
 
@@ -1411,6 +2161,110 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     ];
   }
 
+  Widget _dashboardDateCard({
+    required BuildContext context,
+    required String title,
+    required TextEditingController controller,
+    required Color accentColor,
+    required VoidCallback onTap,
+  }) {
+
+    if (controller.text.isNotEmpty) {
+      try {
+        final date = DateFormat('dd MMM yyyy')
+            .parse(controller.text);
+
+      } catch (_) {}
+    }
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 10,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: accentColor.withOpacity(.35),
+            width: 1.2,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: accentColor.withOpacity(.10),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.calendar_month_outlined,
+                color: accentColor,
+                size: 18,
+              ),
+            ),
+
+            const SizedBox(width: 5),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Color(0xff667085),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                  const SizedBox(height: 3),
+
+                  Text(
+                    controller.text.isEmpty
+                        ? "Select date"
+                        : controller.text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff101828),
+                    ),
+                  ),
+
+                  // if (weekday.isNotEmpty) ...[
+                  //   const SizedBox(height: 2),
+                  //   Text(
+                  //     weekday,
+                  //     style: const TextStyle(
+                  //       fontSize: 10,
+                  //       color: Color(0xff98A2B3),
+                  //     ),
+                  //   ),
+                  // ],
+                ],
+              ),
+            ),
+
+            // Icon(
+            //   Icons.keyboard_arrow_down_rounded,
+            //   color: accentColor,
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
   List<ExpenseChartData> get expenseChartList {
     if (adminDashboardController.expenseCategoryMixList.isEmpty) return [];
 
@@ -1450,6 +2304,91 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     ];
   }
 
+  Widget _projectLegend({
+    required Color color,
+    required String title,
+    bool dashed = false,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (dashed)
+          SizedBox(
+            width: 18,
+            child: Row(
+              children: [
+                Container(
+                  width: 7,
+                  height: 2,
+                  color: color,
+                ),
+                const SizedBox(width: 3),
+                Container(
+                  width: 7,
+                  height: 2,
+                  color: color,
+                ),
+              ],
+            ),
+          )
+        else
+          Container(
+            width: 9,
+            height: 9,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          ),
+
+        const SizedBox(width: 6),
+
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 11,
+            color: Color(0xff52647A),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+
+class AdminHomeScreen extends StatefulWidget {
+  final bool isAdmin;
+  const AdminHomeScreen({super.key,this.isAdmin = false,});
+
+  @override
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
+}
+
+class ProjectStatus {
+  final String month;
+  final double planned;
+  final double towerA;
+  final double mallB;
+  final double villaC;
+
+  ProjectStatus({
+    required this.month,
+    required this.planned,
+    required this.towerA,
+    required this.mallB,
+    required this.villaC,
+  });
+}
+
+class EmptyExpenseChartData {
+  final String title;
+  final double value;
+
+  const EmptyExpenseChartData({
+    required this.title,
+    required this.value,
+  });
 }
 
 class ExpenseChartData {
@@ -1660,15 +2599,64 @@ class AdminCard extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
-              child: Text(
-                item.value,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(
+                  begin: 0,
+                  end: parseAnimatedValue(item.value),
                 ),
+                duration: const Duration(milliseconds: 1500),
+                curve: Curves.easeOutCubic,
+                builder: (
+                    BuildContext context,
+                    double animatedValue,
+                    Widget? child,
+                    ) {
+                  String displayValue;
+
+                  final originalValue = item.value
+                      .replaceAll("₹", "")
+                      .trim()
+                      .toUpperCase();
+
+                  if (originalValue.endsWith("CR")) {
+                    displayValue =
+                    "₹ ${animatedValue.toStringAsFixed(2)} CR";
+                  } else if (originalValue.endsWith("L")) {
+                    displayValue =
+                    "₹ ${animatedValue.toStringAsFixed(2)} L";
+                  } else {
+                    displayValue = animatedValue.toInt().toString();
+
+                    if (item.value.contains("₹")) {
+                      displayValue = "₹ $displayValue";
+                    }
+                  }
+
+                  return Text(
+                    displayValue,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
             ),
           ),
+          // SizedBox(
+          //   height: 18,
+          //   child: FittedBox(
+          //     fit: BoxFit.scaleDown,
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       item.value,
+          //       style: const TextStyle(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(height: 8),
           Text(
             item.subtitle,
@@ -1682,6 +2670,29 @@ class AdminCard extends StatelessWidget {
         ],
       ),
     );
+  }
+  double parseAnimatedValue(String value) {
+    String cleanValue = value
+        .replaceAll("₹", "")
+        .replaceAll(",", "")
+        .trim()
+        .toUpperCase();
+
+    if (cleanValue.endsWith("CR")) {
+      return double.tryParse(
+        cleanValue.replaceAll("CR", "").trim(),
+      ) ??
+          0;
+    }
+
+    if (cleanValue.endsWith("L")) {
+      return double.tryParse(
+        cleanValue.replaceAll("L", "").trim(),
+      ) ??
+          0;
+    }
+
+    return double.tryParse(cleanValue) ?? 0;
   }
 }
 
@@ -1733,15 +2744,6 @@ class SegmentedProgressBar extends StatelessWidget {
   }
 }
 
-class AdminHomeScreen extends StatefulWidget {
-  final bool isAdmin;
-  const AdminHomeScreen({super.key,this.isAdmin = false,});
-
-  @override
-  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
-}
-
-
 double getProgressPercentage(String progress) {
   final match = RegExp(r'(\d+(\.\d+)?)').firstMatch(progress);
 
@@ -1752,10 +2754,7 @@ double getProgressPercentage(String progress) {
   return 0;
 }
 
-Widget segmentedProgress({
-  required String progress,
-  required Color color,
-}) {
+Widget segmentedProgress({required String progress, required Color color}) {
   const int totalSegments = 14;
 
   final percentage = getProgressPercentage(progress);

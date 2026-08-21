@@ -29,6 +29,7 @@ import 'dailywrk_done_dprnew_controller.dart';
 import 'expensencecontroller.dart';
 import 'fromproject_ccontroller.dart';
 import 'fromsite_controller.dart';
+import 'man_power_controller.dart';
 import 'material_transreq_controller.dart';
 import 'nmrweeklybill_controller.dart';
 
@@ -80,6 +81,8 @@ class BottomsheetControllers {
   CompanyController companycontroller = Get.put(CompanyController());
   FromProjectController fromprojectController =
       Get.put(FromProjectController());
+  ManPowerController manPowerController=Get.put(ManPowerController());
+
 
   final searchcontroller = TextEditingController();
   var list;
@@ -203,6 +206,8 @@ class BottomsheetControllers {
                             siteController.headNameController.text =
                                 "--SELECT--";
                             siteController.selectedHeadId.value = 0;
+                            manPowerController.selectedIds.value=[];
+                            manPowerController.manpowerLevel3ItemList.value=[];
                             consumption_controller
                                 .Consum_itemview_GetDbList.value = [];
                             await subcontractorController.getSubcontList(
@@ -708,6 +713,8 @@ class BottomsheetControllers {
                           dailyWrkDone_DPR_Controller.TypeSubcontId.value = 0;
                           siteController.headNameController.text = "--SELECT--";
                           siteController.selectedHeadId.value = 0;
+                          manPowerController.selectedIds.value=[];
+                          manPowerController.manpowerLevel3ItemList.value=[];
                           dailyWrkDone_DPRNEW_Controller
                               .dprNew_DetTable_Delete();
                           dailyWrkDone_DPRNEW_Controller
@@ -1176,113 +1183,118 @@ class BottomsheetControllers {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: BaseUtitiles.getWidthtofPercentage(context, 50),
-                  margin: EdgeInsets.only(top: 10, left: 15),
-                  child: TextField(
-                    controller: searchcontroller,
-                    decoration: InputDecoration(
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      hintText: "search..",
-                      hintStyle: TextStyle(color: Colors.black),
-                      isDense: true,
-                      fillColor: Setmybackground,
-                    ),
-                    onEditingComplete: () {
-                      FocusScope.of(context).unfocus();
-                    },
-                    textInputAction: TextInputAction.search,
-                    onChanged: (value) {
-                      list = BaseUtitiles.sitePopupAlert(
-                          value, siteController.getSiteDropdownvalue.value);
-                    },
-                  ),
-                ),
-                SizedBox(width: 20),
-                Container(
-                  width: BaseUtitiles.getWidthtofPercentage(context, 25),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 2, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(3),
-                    child: Text(
-                      "Head Name",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      searchcontroller.text = "";
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Icon(Icons.expand_circle_down,
-                            color: Theme.of(context).primaryColor))),
-              ],
-            ),
-            Divider(),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                physics: BouncingScrollPhysics(),
-                itemCount: list.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      InkWell(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          alignment: Alignment.center,
-                          child: Text(
-                            type == "DPRNEW" || type == "ManPower" || type == "WORKORDBOQ"
-                                ? list[index].headItemName
-                                : list[index].headName,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: RequestConstant.Lable_Font_SIZE,
-                                fontWeight: FontWeight.bold),
-                          ),
+        return SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: BaseUtitiles.getWidthtofPercentage(context, 50),
+                    margin: EdgeInsets.only(top: 10, left: 15),
+                    child: TextField(
+                      controller: searchcontroller,
+                      decoration: InputDecoration(
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
                         ),
-                        onTap: () async {
-                          siteController.headNameController.text =
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        hintText: "search..",
+                        hintStyle: TextStyle(color: Colors.black),
+                        isDense: true,
+                        fillColor: Setmybackground,
+                      ),
+                      onEditingComplete: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                      textInputAction: TextInputAction.search,
+                      onChanged: (value) {
+                        list = BaseUtitiles.sitePopupAlert(
+                            value, siteController.getSiteDropdownvalue.value);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Container(
+                    width: BaseUtitiles.getWidthtofPercentage(context, 25),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 2, color: Theme.of(context).primaryColor),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(3),
+                      child: Text(
+                        "Head Name",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        searchcontroller.text = "";
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          child: Icon(Icons.expand_circle_down,
+                              color: Theme.of(context).primaryColor))),
+                ],
+              ),
+              Divider(),
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: list.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        InkWell(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            alignment: Alignment.center,
+                            child: Text(
                               type == "DPRNEW" || type == "ManPower" || type == "WORKORDBOQ"
                                   ? list[index].headItemName
-                                  : list[index].headName;
-                          siteController.selectedHeadId.value = type == "WORKORDBOQ" ? list[index].headItemId : list[index].id;
-                          searchcontroller.text = "";
-                          dailyWrkDone_DPRNEW_Controller.dprNew_DetTable_Delete();
-                          dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.value=[];
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Divider(),
-                    ],
-                  );
-                },
-              ),
-            )
-          ],
+                                  : list[index].headName,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: RequestConstant.Lable_Font_SIZE,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          onTap: () async {
+                            siteController.headNameController.text =
+                                type == "DPRNEW" || type == "ManPower" || type == "WORKORDBOQ"
+                                    ? list[index].headItemName
+                                    : list[index].headName;
+                            siteController.selectedHeadId.value = type == "WORKORDBOQ" ? list[index].headItemId : list[index].id;
+                            searchcontroller.text = "";
+                            dailyWrkDone_DPRNEW_Controller.dprNew_DetTable_Delete();
+                            dailyWrkDone_DPRNEW_Controller.dprNew_EntryDetReadList.value=[];
+                            manPowerController.selectedIds.value=[];
+                            manPowerController.manpowerLevel3ItemList.value=[];
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Divider(),
+                      ],
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         );
       },
     );

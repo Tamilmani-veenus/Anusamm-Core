@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:anusamm/controller/pendinglistcontroller.dart';
 import 'package:anusamm/controller/reports_controller.dart';
@@ -201,32 +197,32 @@ class  RequisitionSlipControllerNew extends GetxController{
 
   Future reqSlipVerifyApproveApi(context,data,type) async {
     String body = requisitonSlipsaveRequestToJson(RequisitonSlipsaveRequest(
-        id: data.id,
-        requisitionNo: data.requisitionNo,
-        requisitionType: data.requisitionTypeValue,
-        entryDate: BaseUtitiles().convertDate(data.entryDate),
-        staffId: data.staffId,
-        projectId: type=="Approve"||type=="Approve-Reject"?data.projId:data.Projectid,
-        leaveReason: data.LeaveReason,
-        leaveFromDate: BaseUtitiles().convertDate(data.leaveFromDate),
-        leaveToDate: BaseUtitiles().convertDate(data.leaveToDate),
-        totalLeaveDays: data.totalLeaveDays,
-        permissionReason: data.permissionReason,
-        permissionFromDate: BaseUtitiles().convertDate(data.permissionFromDate),
-        permissionToDate: BaseUtitiles().convertDate(data.permissionToDate),
-        permissionFromTime: type=="Approve"||type=="Approve-Reject"?data.PermissionFromTime:data.permissionFromTime,
-        permissionToTime: data.permissionToTime,
-        permissionTimeHrs: data.permissionTimeHrs,
-        permissionTimeMins: data.permissionTimeMins,
-        totalPermissionHours: data.totalPermissionHours,
-        createdBy: data.createdBy,
-        // createdDt: data.entryDateMobile,
-        verifyRemarks: type=="Verify"||type=="Verify-Reject"?remarksValue.text:"",
-        approveRemarks: type=="Approve"||type=="Approve-Reject"?remarksValue.text:"",
-        verifyStatus: type=="Verify-Reject"?"R":"Y",
-        approveStatus: type=="Approve-Reject"?"R":type=="Approve"?"Y":"N",
-        leaveType: data.LeaveType,
-        isHalfDay: data.isHalfDay
+      id: data.id,
+      requisitionNo: data.requisitionNo,
+      requisitionType: data.requisitionTypeValue,
+      entryDate: BaseUtitiles().convertDate(data.entryDate),
+      staffId: data.staffId,
+      projectId: type=="Approve"||type=="Approve-Reject"?data.projId:data.Projectid,
+      leaveReason: data.LeaveReason,
+      leaveFromDate: BaseUtitiles().convertDate(data.leaveFromDate),
+      leaveToDate: BaseUtitiles().convertDate(data.leaveToDate),
+      totalLeaveDays: data.totalLeaveDays,
+      permissionReason: data.permissionReason,
+      permissionFromDate: BaseUtitiles().convertDate(data.permissionFromDate),
+      permissionToDate: BaseUtitiles().convertDate(data.permissionToDate),
+      permissionFromTime: type=="Approve"||type=="Approve-Reject"?data.PermissionFromTime:data.permissionFromTime,
+      permissionToTime: data.permissionToTime,
+      permissionTimeHrs: data.permissionTimeHrs,
+      permissionTimeMins: data.permissionTimeMins,
+      totalPermissionHours: data.totalPermissionHours,
+      createdBy: data.createdBy,
+      // createdDt: data.entryDateMobile,
+      verifyRemarks: type=="Verify"||type=="Verify-Reject"?remarksValue.text:"",
+      approveRemarks: type=="Approve"||type=="Approve-Reject"?remarksValue.text:"",
+      verifyStatus: type=="Verify-Reject"?"R":"Y",
+      approveStatus: type=="Approve-Reject"?"R":type=="Approve"?"Y":"N",
+      leaveType: data.LeaveType,
+      isHalfDay: data.isHalfDay
     ));
     final list = await RequisitionslipProvider.SaveReqslipScreenEntryAPI(body, data.id);
     if (list != null ) {
@@ -248,13 +244,14 @@ class  RequisitionSlipControllerNew extends GetxController{
 
   Future Requisitionslip_EditApi(int reqId,String MenuName, BuildContext context, status) async {
     ReqSlipEditList.value=[];
+    ClickUtils.run(() async {
     var response = await RequisitionslipProvider.Requisitionslip_editAPI(reqId,status);
     if (response != null) {
       if (response.success == true) {
         ReqSlipEditList.value = [response.result];
         if (ReqSlipEditList.isNotEmpty) {
           saveButton.value=RequestConstant.RESUBMIT;
-          Navigator.pushReplacement(
+          await Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => RequisitionSlip_Entry(heading: MenuName,))
           );
@@ -267,6 +264,7 @@ class  RequisitionSlipControllerNew extends GetxController{
     } else {
       BaseUtitiles.showToast("Something went wrong..");
     }
+    });
   }
 
 
