@@ -2016,20 +2016,50 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   }
 
   double parseChartValue(String? value) {
-    if (value == null || value.trim().isEmpty) return 0;
+    if (value == null || value.trim().isEmpty) {
+      return 0.0;
+    }
 
-    String text = value.replaceAll("₹", "").replaceAll(",", "").trim();
+    String text = value
+        .replaceAll("₹", "")
+        .replaceAll(",", "")
+        .trim()
+        .toUpperCase();
+
+    if (text.endsWith("CR")) {
+      final number = double.tryParse(
+        text.substring(0, text.length - 2).trim(),
+      );
+
+      return (number ?? 0.0) * 10000000;
+    }
 
     if (text.endsWith("L")) {
-      return (double.tryParse(text.replaceAll("L", "").trim()) ?? 0) * 100000;
+      final number = double.tryParse(
+        text.substring(0, text.length - 1).trim(),
+      );
+
+      return (number ?? 0.0) * 100000;
     }
 
-    if (text.endsWith("Cr")) {
-      return (double.tryParse(text.replaceAll("Cr", "").trim()) ?? 0) * 10000000;
-    }
-
-    return double.tryParse(text) ?? 0;
+    return double.tryParse(text) ?? 0.0;
   }
+
+  // double parseChartValue(String? value) {
+  //   if (value == null || value.trim().isEmpty) return 0;
+  //
+  //   String text = value.replaceAll("₹", "").replaceAll(",", "").trim();
+  //
+  //   if (text.endsWith("L")) {
+  //     return (double.tryParse(text.replaceAll("L", "").trim()) ?? 0) * 100000;
+  //   }
+  //
+  //   if (text.endsWith("Cr")) {
+  //     return (double.tryParse(text.replaceAll("Cr", "").trim()) ?? 0) * 10000000;
+  //   }
+  //
+  //   return double.tryParse(text) ?? 0;
+  // }
 
   String formatChartLabel(String? value) {
     if (value == null || value.isEmpty) return "0";
