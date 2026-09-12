@@ -2,46 +2,46 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class ApiConfig {
-  static const String LIVE_ENDPOINT_1 = "http://49.204.233.151:8080/";    //local
-  static const String LIVE_ENDPOINT_2 = "http://122.173.84.247:8080/";    //local
+  static const String LIVE_ENDPOINT = "http://103.89.64.224:8080/";
 
+  static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
 
-  static const String DEFAULT_BASE_URL = LIVE_ENDPOINT_1 + "AnusammAPI/";
+  static String APIURL_CORE = DEFAULT_BASE_URL_CORE;
 
-  static late final String APIURL;
-  static late final String WebURL;
-  static String get BASE_URL_CORE => APIURL;
+  static String WebURL = "${LIVE_ENDPOINT}Anusamm/";
 
+  static String BASE_URL_CORE = DEFAULT_BASE_URL_CORE;
 
   static Future<void> initializeUrl() async {
-    final liveEndpoint = await _getLiveEndpoint();
-    if (liveEndpoint != null) {
-      APIURL = "${liveEndpoint}AnusammAPI/";
-      WebURL = "${liveEndpoint}Anusamm/";
-      print("Using live endpoint: $APIURL");
+    final uri = Uri.parse(LIVE_ENDPOINT);
+
+    final isLive = await _isEndpointLive(uri.host, uri.port,);
+
+    if (isLive) {
+      APIURL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
+
+      WebURL = "${LIVE_ENDPOINT}Anusamm/";
     } else {
-      APIURL = DEFAULT_BASE_URL;
-      WebURL = DEFAULT_BASE_URL.replaceAll("AnusammAPI/", "Anusamm/");
-      print("Using default base URL: $APIURL");
+      APIURL_CORE = DEFAULT_BASE_URL_CORE;
+
+      WebURL = "${LIVE_ENDPOINT}Anusamm/";
     }
+
+    BASE_URL_CORE = APIURL_CORE;
   }
 
-  static Future<String?> _getLiveEndpoint() async {
-    final ip1 = Uri.parse(LIVE_ENDPOINT_1).host;
-    final ip2 = Uri.parse(LIVE_ENDPOINT_2).host;
-
-    if (await _isEndpointLive(ip1)) return LIVE_ENDPOINT_1;
-    if (await _isEndpointLive(ip2)) return LIVE_ENDPOINT_2;
-
-    return null; // no live endpoint found
-  }
-
-  static Future<bool> _isEndpointLive(String ip) async {
+  static Future<bool> _isEndpointLive(String host, int port) async {
     try {
-      final socket = await Socket.connect(ip, 8080, timeout: Duration(seconds: 3));
+      final socket = await Socket.connect(
+        host,
+        port,
+        timeout: const Duration(seconds: 5),
+      );
+
       socket.destroy();
+
       return true;
-    } catch (_) {
+    } catch (e) {
       return false;
     }
   }
