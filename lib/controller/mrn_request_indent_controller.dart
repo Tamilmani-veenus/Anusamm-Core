@@ -568,7 +568,7 @@ class MRN_Request_Controller extends GetxController {
 
   Future MaterialIntentList_EditApi(
       int reqId, int pId, int sId,String MenuName, BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
     await Mrn_Req_provider.Material_IntentList_editAPI(reqId);
     if (value != null) {

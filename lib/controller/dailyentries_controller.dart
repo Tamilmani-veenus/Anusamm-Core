@@ -85,7 +85,7 @@ class DailyEntriesController extends GetxController {
 
   Future getShowClickPopList(BuildContext context) async {
     store_ShowList.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await SubContAttendanceProvider.getSubcontAttenDetList(
         projectController.selectedProjectId.value,
         subcontractorController.selectedSubcontId.value);
@@ -600,7 +600,7 @@ class DailyEntriesController extends GetxController {
 
   Future subContEntryList_EditApi(int attendId, status,String MenuName, BuildContext context,
       {String? type}) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response =
     await SubContAttendanceProvider.subcont_entryList_editAPI(attendId,status);
     if (response != null) {

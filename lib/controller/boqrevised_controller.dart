@@ -135,7 +135,7 @@ class Boq_Revised_Controller extends GetxController {
   Future getItemList(BuildContext context) async {
     Boq_MainItemList.value = [];
     Boq_ItemList.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await BoqRevised_Provider.getRevisedItemlist(
       reviseId,
       projectController.selectedProjectId.value,
@@ -466,7 +466,7 @@ class Boq_Revised_Controller extends GetxController {
 
   Future BoqrevisedList_EditApi(int reviseId,String MenuName, BuildContext context,status) async {
     BoqRevised_EditListApiValue.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await BoqRevised_Provider.Boq_RevisedList_editAPI(reviseId,status);
     if (response != null) {
       if (response.success == true) {

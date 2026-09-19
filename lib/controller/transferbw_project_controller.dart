@@ -140,7 +140,7 @@ class TransferBW_project_Controller extends GetxController {
   Future getTransferProject_Alldatas(int reqId,String MenuName, BuildContext context) async {
     transferAllDatasList.value = [];
     transferItemListdatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
         await TransferBetweenProject_provider.getTransferProj_ALLDatas(reqId);
     if (value != null) {
@@ -169,7 +169,7 @@ class TransferBW_project_Controller extends GetxController {
   Future getTransPendingView(trId,String MenuName, BuildContext context) async {
     transferAllDatasList.value = [];
     transferItemListdatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
         await TransferBetweenProject_provider.getTransPendingViewAPI(trId);
     if (value != null) {
@@ -249,7 +249,7 @@ class TransferBW_project_Controller extends GetxController {
       int prid, int siteId, int reqId, BuildContext context) async {
     mainlist.value = [];
     transferItemListdatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(prid, siteId,
         type: type.value == "Direct" ? "D" : "A", reqId: reqId);
     if (value != null) {
@@ -586,7 +586,7 @@ class TransferBW_project_Controller extends GetxController {
   }
 
   Future EntryList_EditApi(int workid,String MenuName,BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
         await TransferBetweenProject_provider.entryList_editAPI(workid);
     if (value != null) {

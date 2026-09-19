@@ -812,7 +812,7 @@ class NMRWklyController extends GetxController {
   Future NmrEntryList_EditApi(int workid,String MenuName, BuildContext context,from, bool checkSts) async {
     EditListSaveDatas.value=[];
     NmritemList.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await NMRWklyprovider.nmr_entryList_editAPI(workid,checkSts);
     if (response != null) {
       if (response.success == true) {

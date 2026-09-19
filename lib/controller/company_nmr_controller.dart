@@ -94,7 +94,7 @@ class CompanyNmrAttendanceController extends GetxController{
 
   Future getLabourList(BuildContext context, SubcontId) async {
     AlldataList.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await CompanyNmrAttendance_Provider.getLabourListAPI(SubcontId);
     if (value != null) {
       if (value.success == true) {
@@ -255,7 +255,7 @@ class CompanyNmrAttendanceController extends GetxController{
 
   Future entryList_EditApi(int reqId,status,type,String MenuName, BuildContext context) async {
     EditListApiValue.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await CompanyNmrAttendance_Provider.Company_NmrList_EditAPI(reqId,status);
     if (response != null) {
       if (response.success == true) {

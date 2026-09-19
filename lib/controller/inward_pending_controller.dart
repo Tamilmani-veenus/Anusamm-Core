@@ -591,7 +591,7 @@ class InwardPending_Controller extends GetxController
   Future EntryList_EditApi(
       int workid, String type, String MenuName, BuildContext context) async {
     editListApiDatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     await Inward_Pending_provider.entryList_editAPI(workid, type)
         .then((value) async {
       if (value != null) {

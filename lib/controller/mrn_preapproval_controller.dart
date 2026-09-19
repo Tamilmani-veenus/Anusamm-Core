@@ -274,7 +274,7 @@ class MrnPreApprovalController extends GetxController {
   Future mrnPreapprovalDetListApi(
       String url, int ReqMasId, BuildContext context) async {
     mrnPreAppDetList.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await PendingListProvider.getMrnPreApproval(ReqMasId);
     if (value != null) {
       if (value.success == true) {

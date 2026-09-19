@@ -415,7 +415,7 @@ class AdvanceReqVoucherController_new extends GetxController {
 
   Future EntryList_EditApi(type,vocId,status,String MenuName, context) async {
     editListApiDatas.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await AdvanceReqVoucherProvider.entryList_editAPI(vocId, status);
     if (value != null) {
       if(value.success==true){

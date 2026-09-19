@@ -84,7 +84,7 @@ class TransferAcknowledgmentPendingController extends GetxController{
 
 
   Future tranAckAlldatasApi(int transferId, BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var value = await PendingListProvider.TransferAcknowPendingAPI(transferId);
 
     if (value != null ) {

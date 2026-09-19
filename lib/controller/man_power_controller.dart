@@ -86,7 +86,7 @@ class ManPowerController extends GetxController {
 
   Future manPowerEditApi( id,type, menuName, BuildContext context) async {
     manpowerEditApiValue.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await ManPowerProvider.manPowerEditAPI(id,type=="Edit"?true:false);
     if (value != null) {
       if(value.success == true){
@@ -146,7 +146,7 @@ class ManPowerController extends GetxController {
   Future getLevel3ItemList(context) async {
     manpowerLevel3ItemList.clear();
     originalList.clear();
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await ManPowerProvider.getManPowerLevel3ItemList(
         siteController.selectedHeadId.value);
 
