@@ -1808,20 +1808,39 @@ class BaseUtitiles {
 }
 
 class ClickUtils {
-  static bool _isClickable = true;
+  static final Set<String> _runningActions = <String>{};
 
-  static Future<void> run(Future<void> Function() action) async {
-    if (!_isClickable) return;
+  static Future<void> run(
+      Future<void> Function() action,
+      ) async {
+    final stack = StackTrace.current.toString();
 
-    _isClickable = false;
+    // Get the caller location
+    final lines = stack.split('\n');
+
+    String key = 'global';
+
+    if (lines.length > 1) {
+      key = lines[1].trim();
+    }
+
+    if (_runningActions.contains(key)) {
+      return;
+    }
+
+    _runningActions.add(key);
 
     try {
       await action();
+    } catch (e, stackTrace) {
+      debugPrint("ClickUtils Error: $e");
+      debugPrint("$stackTrace");
     } finally {
-      _isClickable = true;
+      _runningActions.remove(key);
     }
   }
 }
+
 
 class DashboardErrorWidget extends StatelessWidget {
   const DashboardErrorWidget({super.key});

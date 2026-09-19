@@ -488,7 +488,8 @@ class InwardPending_Controller extends GetxController
         BaseUtitiles.popMultiple(context, count: 1);
         BaseUtitiles.showToast(list["message"] ?? 'Something went wrong..');
       }
-    } else {
+    }
+    else {
       BaseUtitiles.showToast("Something went wrong..");
       BaseUtitiles.popMultiple(context, count: 1);
     }
@@ -500,7 +501,7 @@ class InwardPending_Controller extends GetxController
     for (int i = 0; i < ItemGetTableListdata.length; i++) {
       final element = ItemGetTableListdata[i];
 
-      // if (element.inwQty > 0) {
+      if (element.inwQty > 0) {
         var list = InwardDet(
             id: saveButton.value == RequestConstant.RESUBMIT
                 ? (i < editListApiDatas.length
@@ -527,7 +528,7 @@ class InwardPending_Controller extends GetxController
                 : "N".toString().trim());
 
         getInwardDetList.add(list);
-      // }
+      }
     }
 
     return getInwardDetList;
