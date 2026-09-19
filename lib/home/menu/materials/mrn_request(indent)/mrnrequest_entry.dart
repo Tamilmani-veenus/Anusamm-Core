@@ -1290,6 +1290,92 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                   ),
                                 ],
                               ),
+                               Obx(()=>mrn_request_controller.ReqType.value=="CP"?
+                               Row(crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(flex: 4,child: SizedBox()),
+                                  Expanded(flex: 4,child: SizedBox()),
+                                  Expanded(
+                                    flex: 4,
+                                    child:
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 10,bottom: 10),
+                                      child:
+                                      RichText(
+                                        text: TextSpan(
+                                            style: const TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black,
+                                            ),
+                                            children: <TextSpan>[
+                                              const TextSpan(
+                                                text: "Approx Days",
+                                              ),
+                                            ]),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child:
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 0, right: 10,bottom: 10),
+                                      height: BaseUtitiles.getheightofPercentage(context, 3),
+                                      width: BaseUtitiles.getWidthtofPercentage(context, 20),
+                                      child:
+                                      TextFormField(
+                                        autovalidateMode: AutovalidateMode.always,
+                                        onTap: () {
+                                          if (mrn_request_controller.AddApprox_daysControllers[index].text != "" && mrn_request_controller.AddApprox_daysControllers[index].text != "0" && mrn_request_controller.AddApprox_daysControllers[index].text != "0.0") {
+                                            return;
+                                          } else {
+                                            mrn_request_controller.AddApprox_daysControllers[index].text = "";
+                                          }
+                                        },
+                                        cursorColor: Theme.of(context).primaryColor,
+                                        textAlign: TextAlign.center,
+                                        controller: mrn_request_controller.AddApprox_daysControllers[index],
+                                        keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
+
+                                        inputFormatters: [
+                                          TextInputFormatter.withFunction((oldValue, newValue) {
+                                            return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                                ? newValue
+                                                : oldValue;
+                                          }),
+                                        ],
+
+                                        decoration: InputDecoration(contentPadding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor), borderRadius: const BorderRadius.all(Radius.circular(5))),
+                                          enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(5))),
+                                          errorStyle: const TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 10.0,
+                                          ),
+                                          errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          focusedErrorBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(2.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                        style: const TextStyle(color: Colors.black),
+                                        onChanged: (value) {
+                                            mrn_request_controller.updateConsumTables();
+                                        },
+
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ):SizedBox()),
                               Container(
                                 margin:
                                 const EdgeInsets
