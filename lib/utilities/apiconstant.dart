@@ -2,10 +2,9 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class ApiConfig {
-  static const String LIVE_ENDPOINT = "http://49.204.233.151:8080/";
-  // static const String LIVE_ENDPOINT = "http://103.89.64.224:8080/";
+  static const String LIVE_ENDPOINT = "http://103.89.64.224:8080/";
 
-  static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}ERPNEW/";
+  static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
 
   static String APIURL_CORE = DEFAULT_BASE_URL_CORE;
 
@@ -19,7 +18,7 @@ class ApiConfig {
     final isLive = await _isEndpointLive(uri.host, uri.port,);
 
     if (isLive) {
-      APIURL_CORE = "${LIVE_ENDPOINT}ERPNEW/";
+      APIURL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
 
       WebURL = "${LIVE_ENDPOINT}Anusamm/";
     } else {
