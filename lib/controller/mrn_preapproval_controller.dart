@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/pendinglistcontroller.dart';
@@ -47,6 +49,7 @@ class MrnPreApprovalController extends GetxController {
   List<TextEditingController> mrnpre_BalQty_ListController = [];
   List<TextEditingController> mrnpre_ReqQty_ListController = [];
   List<TextEditingController> mrnpre_ApprQty_ListController = [];
+  List<TextEditingController> mrnpre_ApproxDays_ListController = [];
   List<TextEditingController> mrnpre_Approval_ListController = [];
   List<TextEditingController> mrnpre_Description_ListController = [];
   List<TextEditingController> mrnpre_Remarks_ListController = [];
@@ -109,6 +112,7 @@ class MrnPreApprovalController extends GetxController {
       materialapprlistTableModel.balqty = element.balQty;
       materialapprlistTableModel.appqty = element.qty;
       materialapprlistTableModel.reqqty = element.reqQty;
+      materialapprlistTableModel.approxdays = element.approxDays;
       materialapprlistTableModel.apptype = "P";
       materialapprlistTableModel.remarks = element.remarks;
       materialapprlistTableModel.desc = element.description;
@@ -137,6 +141,7 @@ class MrnPreApprovalController extends GetxController {
       materialapprlist.balqty = getdatas['balqty'];
       materialapprlist.appqty = getdatas['appqty'];
       materialapprlist.reqqty = getdatas['reqqty'];
+      materialapprlist.approxdays = getdatas['approxdays'];
       materialapprlist.apptype = getdatas['apptype'];
       materialapprlist.remarks = getdatas['remarks'];
       materialapprlist.desc = getdatas['desc'];
@@ -159,6 +164,8 @@ class MrnPreApprovalController extends GetxController {
           MaterialAppr_itemview_GetDbList.value[index].reqqty.toString();
       mrnpre_ApprQty_ListController[index].text =
           MaterialAppr_itemview_GetDbList.value[index].appqty.toString();
+      mrnpre_ApproxDays_ListController[index].text =
+          MaterialAppr_itemview_GetDbList.value[index].approxdays.toString();
       mrnpre_Approval_ListController[index].text = MaterialAppr_itemview_GetDbList.value[index].apptype;
       mrnpre_TransfrProject_ListController[index].text =
           MaterialAppr_itemview_GetDbList.value[index].tranfromprjname == ""
@@ -217,6 +224,7 @@ class MrnPreApprovalController extends GetxController {
         materialapprlistTableModel.balqty = element.balqty;
         materialapprlistTableModel.appqty = 0;
         materialapprlistTableModel.reqqty = element.reqqty;
+        materialapprlistTableModel.approxdays = element.approxdays;
         materialapprlistTableModel.apptype =
             mrnpre_Approval_ListController[i].text;
         materialapprlistTableModel.remarks =
@@ -238,8 +246,9 @@ class MrnPreApprovalController extends GetxController {
         materialapprlistTableModel.scaleId = element.scaleId;
         materialapprlistTableModel.balqty = element.balqty;
         materialapprlistTableModel.reqqty = element.reqqty;
+        materialapprlistTableModel.approxdays = double.tryParse(mrnpre_ApproxDays_ListController[i].value.text) ?? 0;
         materialapprlistTableModel.appqty =
-            double.parse(mrnpre_ApprQty_ListController[i].value.text);
+            double.tryParse(mrnpre_ApprQty_ListController[i].value.text)?? 0;
         materialapprlistTableModel.apptype =
             mrnpre_Approval_ListController[i].text;
         materialapprlistTableModel.remarks =
@@ -298,6 +307,7 @@ class MrnPreApprovalController extends GetxController {
     mrnpre_BalQty_ListController.add(TextEditingController());
     mrnpre_ReqQty_ListController.add(TextEditingController());
     mrnpre_ApprQty_ListController.add(TextEditingController());
+    mrnpre_ApproxDays_ListController.add(TextEditingController());
     mrnpre_Approval_ListController.add(TextEditingController());
     mrnpre_TransfrProject_ListController.add(TextEditingController());
     mrnpre_Description_ListController.add(TextEditingController());
@@ -393,7 +403,8 @@ class MrnPreApprovalController extends GetxController {
           refProjectId: int.tryParse(element.tranfromprjid),
           preApproveType: element.apptype,
           preApproveStatus: "Y",
-          approveStatus: "N"
+          approveStatus: "N",
+          approxDays: mrn_request_controller.ReqType.value=="CP"? element.approxdays:0
         );
         getsaveDetList.value.add(list);
       }

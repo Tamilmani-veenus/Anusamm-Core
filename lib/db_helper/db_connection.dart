@@ -83,10 +83,10 @@ class DatabaseConnection {
     String staffvouchersite = "CREATE TABLE staffvouchersite (id INTEGER PRIMARY KEY UNIQUE,siteid INTEGER,projectid INTEGER,paytype TEXT,sitename TEXT,projectname TEXT,amt REAL,TdsPer REAL,TdsAmt REAL,NetAmt REAL,reqDetId INTEGER)";
     await database.execute(staffvouchersite);
 
-    String materialApprovalListTable = "CREATE TABLE materialApprovalListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,reqDetId INTEGER,materialname TEXT,scale TEXT,balqty REAL,reqqty REAL,appqty REAL,apptype TEXT,tranfromprjid TEXT,tranfromprjname TEXT,remarks TEXT,desc TEXT,scaleId INTEGER)";
+    String materialApprovalListTable = "CREATE TABLE materialApprovalListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,reqDetId INTEGER,materialname TEXT,scale TEXT,balqty REAL,reqqty REAL,appqty REAL,apptype TEXT,tranfromprjid TEXT,tranfromprjname TEXT,remarks TEXT,desc TEXT,scaleId INTEGER,approxdays REAL)";
     await database.execute(materialApprovalListTable);
 
-    String materialListTable = "CREATE TABLE materialListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,material TEXT,scale TEXT,balqty REAL,qty REAL,reqQty REAL,stockqty REAL,remarks TEXT,desc TEXT,scaleId INTEGER,reqDetId INTEGER)";
+    String materialListTable = "CREATE TABLE materialListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,material TEXT,scale TEXT,balqty REAL,qty REAL,reqQty REAL,stockqty REAL,remarks TEXT,desc TEXT,scaleId INTEGER,reqDetId INTEGER,approxdays REAL)";
     await database.execute(materialListTable);
 
     String consumItemListTable = "CREATE TABLE consumItemListTable (id INTEGER PRIMARY KEY UNIQUE,materialid INTEGER,material TEXT,scale TEXT,stockqty REAL,usageqty REAL,scaleId INTEGER,reqDetId INTEGER)";
