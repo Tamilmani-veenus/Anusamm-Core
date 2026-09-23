@@ -145,7 +145,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
 
   Future getAddBoqDetails(BuildContext context) async {
     dprNew_BoqDetailsList.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await DPR_New_Provider.dprNew_getBoqDetails(
         projectController.selectedProjectId.value,
         siteController.selectedsiteId.value,
@@ -821,7 +821,7 @@ class DailyWrkDone_DPRNEW_Controller extends GetxController {
 
   Future Dpr_New_EntryList_EditApi(int workid,String MenuName,BuildContext context) async {
     dprNew_EditApiList.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await DPR_New_Provider.dpr_New_entryList_editAPI(workid);
     if (response != null) {
       if (response.success == true) {

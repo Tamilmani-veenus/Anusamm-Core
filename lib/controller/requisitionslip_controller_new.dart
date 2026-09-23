@@ -244,7 +244,7 @@ class  RequisitionSlipControllerNew extends GetxController{
 
   Future Requisitionslip_EditApi(int reqId,String MenuName, BuildContext context, status) async {
     ReqSlipEditList.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await RequisitionslipProvider.Requisitionslip_editAPI(reqId,status);
     if (response != null) {
       if (response.success == true) {

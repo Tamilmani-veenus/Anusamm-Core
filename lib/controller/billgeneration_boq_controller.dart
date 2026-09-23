@@ -994,7 +994,7 @@ class BillGenerationBoqController extends GetxController {
 
   Future directBillEntryList_EditApi(int workid, String MenuName,BuildContext context,Url,status) async {
     bill_editListApiDatas.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await BillGenerateBoqProvider.directBill_entryList_editAPI(workid,status);
     if (value != null) {
       if(value.success==true){

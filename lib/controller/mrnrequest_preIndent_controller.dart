@@ -103,7 +103,7 @@ class MRNRequest_PreIndent_Controller extends GetxController{
 
   Future getPendingList_Alldatas(int reqId,String MenuName, context, Url) async {
     pendingAllDatasList.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
      await MRNRequest_PreIndent_Provider.Material_PreIntentList_editAPI(reqId);
     if (value != null) {
@@ -143,7 +143,7 @@ class MRNRequest_PreIndent_Controller extends GetxController{
   Future getMaterialList(
       BuildContext context, String requestType, projectId, siteId) async {
     getmaterialvalue.value=[];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
       final value = await CommonProvider.getmaterial(
           requestType == "CP", projectId, siteId);
       if (value != null) {
@@ -559,7 +559,7 @@ class MRNRequest_PreIndent_Controller extends GetxController{
 
   Future MaterialPreIntentList_EditApi(
       int reqId, int pId, int sId, String MenuName,BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
     await MRNRequest_PreIndent_Provider.Material_PreIntentList_editAPI(reqId);
     if (value != null) {

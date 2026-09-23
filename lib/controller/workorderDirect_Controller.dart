@@ -381,7 +381,7 @@ class WorkOrderDirectController extends GetxController{
   }
 
   Future workOrderEntryList_EditApi(int workId, status,String MenuName, BuildContext context,{String? type}) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await WorkOrderDirectProvider.workOrder_entryList_editAPI(workId,status);
     if (response != null) {
       if (response.success == true) {

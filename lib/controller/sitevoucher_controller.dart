@@ -312,7 +312,7 @@ class SiteVoucher_Controller extends GetxController {
 
   Future SiteVoucher_List_EditApi(int VocId,String MenuName, BuildContext context,Url) async {
     Sitevoucher_EditListApiValue.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     await Sitevoucher_provider.Sitevoucher_entryList_editAPI(VocId)
         .then((value) async {
       if (value != null) {

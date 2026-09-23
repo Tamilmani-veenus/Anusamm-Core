@@ -108,7 +108,7 @@ class DailyWrkDone_DPR_Controller extends GetxController {
 
   Future dpr_getItemList(int prid,int siteid,int subcontid,BuildContext context) async {
     dpr_mainitemList.value.clear();
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     var response = await  DPRProvider.get_Dpr_ItemList(
         prid,siteid,subcontid);
     if (response != null) {
@@ -173,7 +173,7 @@ class DailyWrkDone_DPR_Controller extends GetxController {
 
 
   Future DprEntryList_EditApi(int workid, String MenuName, BuildContext context, int checkdata) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await DPRProvider.dpr_entryList_editAPI(workid);
     if (value != null) {
       if(value.success == true) {

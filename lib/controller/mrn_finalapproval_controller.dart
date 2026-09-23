@@ -291,7 +291,7 @@ class MrnFinalApprovalController extends GetxController {
   Future mrnFinalapprovalDetListApi(
       int ReqMasId, String MenuName, BuildContext context) async {
     mrnfinalAppDetList.value.clear();
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
       final value = await PendingListProvider.getMrnFinalApproval(ReqMasId);
       if (value != null) {
         if (value.success == true) {

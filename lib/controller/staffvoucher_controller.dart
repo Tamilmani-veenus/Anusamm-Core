@@ -344,7 +344,7 @@ class StaffVoucher_Controller extends GetxController {
 
   Future StaffvoucherEntryList_EditApi(int VocId,String MenuName, BuildContext context) async {
     Sitevoucher_EditListApiValue.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
       final value = await StaffVoucher_provider
           .SitevoucherSite_entryList_editAPI(VocId);
       if (value != null) {

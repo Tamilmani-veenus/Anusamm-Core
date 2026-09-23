@@ -97,7 +97,7 @@ class Consumption_Controller extends GetxController {
 //---------StockMaterial List--------
   Future getStock_Material(context) async {
     Stock_List.value.clear();
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(
         projectController.selectedProjectId.value,
         siteController.selectedsiteId.value);
@@ -437,7 +437,7 @@ class Consumption_Controller extends GetxController {
   }
 
   Future ConsumEntryList_EditApi(int expenseId,String MenuName, BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
         await Consumption_provider.Consum_entryList_editAPI(expenseId);
     if (value != null) {

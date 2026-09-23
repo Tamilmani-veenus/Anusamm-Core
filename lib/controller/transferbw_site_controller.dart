@@ -80,7 +80,7 @@ class TransferBt_Site_Controller extends GetxController {
 
   Future getItemList(int prid, int siteId, context) async {
     transferItemListdatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(prid, siteId);
     if (value != null) {
       if (value.success == true) {
@@ -395,7 +395,7 @@ class TransferBt_Site_Controller extends GetxController {
   Future getStoreTransPendingView(trId,frSiteId,String MenuName, BuildContext context) async {
     transferAllDatasList.value = [];
     transferItemListdatas.value = [];
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value =
     await TransferBetSiteProvider.getStoreTransPendingViewAPI(trId,frSiteId);
     if (value != null) {
@@ -448,7 +448,7 @@ class TransferBt_Site_Controller extends GetxController {
 
 
   Future EntryList_EditApi(pId,sId,frsId,int workid,String MenuName, BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await TransferBetSiteProvider.entryList_editAPI(pId,sId,frsId,workid);
     if (value != null) {
       if (value.success == true) {

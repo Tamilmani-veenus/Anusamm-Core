@@ -83,7 +83,7 @@ class MaterialTransferReqController extends GetxController {
   Future getItemList(int prid, int siteId, BuildContext context) async {
     mainItemList.value.clear();
     mattransreqItemList.value.clear();
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await Consumption_provider.getStockmaterial(prid, siteId);
     if (value != null) {
       if (value.success == true) {
@@ -352,7 +352,7 @@ class MaterialTransferReqController extends GetxController {
   }
 
   Future matTransReqEdit(int transId,String MenuName, BuildContext context) async {
-    ClickUtils.run(() async {
+    await ClickUtils.run(() async {
     final value = await MaterialTransReqProvider.matTransReqeditAPI(transId);
     if (value != null) {
       if (value.success == true) {
