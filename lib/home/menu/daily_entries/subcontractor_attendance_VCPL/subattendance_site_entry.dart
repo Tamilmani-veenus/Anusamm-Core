@@ -962,7 +962,11 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
                                 hasInvalidHrs = true;
                               }
 
-                              if (nosValue <= 0) {
+                              // if (nosValue <= 0) {
+                              //   hasInvalid = true;
+                              //   break;
+                              // }
+                              if (nosValue <= 0 && morOtValue <= 0 && eveOtValue <= 0) {
                                 hasInvalid = true;
                                 break;
                               }
@@ -970,7 +974,7 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
 
                             if (hasInvalid) {
                               BaseUtitiles.showToast(
-                                "Please enter Nos.",
+                                "Please enter either Nos, MOR OT Hrs, or EVE OT Hrs.",
                               );
                             } else if (hasInvalidHrs) {
                               BaseUtitiles.showToast(
