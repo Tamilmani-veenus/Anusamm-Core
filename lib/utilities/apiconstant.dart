@@ -87,6 +87,9 @@ class ApiConstant{
 
   static String PENDINGLISTAPI = BASE_URL_CORE + "api/Menu/GetMobilePendingList";
   static String REQNOLISTAPI = BASE_URL_CORE + "api/MaterialPurOrdMas/GetReqMasDataByPO";
+  static String NMRLISTAPPROVEAPI = BASE_URL_CORE + "api/SubContractorNMRBill/VerifyOrApproveNMRBill";
+  static String DIRECTLISTAPPROVEAPI = BASE_URL_CORE + "api/SubContractorWorkQty/VerifyOrApproveBillDirect";
+  static String WOLISTAPPROVEAPI = BASE_URL_CORE + "api/SubcontractWorkOrderMas/VerifyOrApproveWOBill";
   static String REQNORENTALWORKLISTAPI = BASE_URL_CORE + "api/MaterialRentalWork/GetReqMasByWoId";
 
   static String GETMRNFINALAPROVALAPI = BASE_URL_CORE + "api/MaterialPreApprovalRequest/GetFinalApproveMasById";

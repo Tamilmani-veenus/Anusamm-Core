@@ -47,6 +47,17 @@ class PendingListProvider {
     }
   }
 
+  static Future putListApproval(body,type) async {
+    try {
+      final response = await ApiManager.putUpdateAPIButton(
+          type=="NMR" ?ApiConstant.NMRLISTAPPROVEAPI : type=="WO"?ApiConstant.WOLISTAPPROVEAPI : ApiConstant.DIRECTLISTAPPROVEAPI, body);
+      return jsonDecode(response);
+    } catch (error) {
+      print("Error == $error");
+      return null;
+    }
+  }
+
   static Future<MrnPreApprovalResponse?> getMRNPreApprovalPendingList() async {
     try {
       final response = await ApiManager.getAPICall(
@@ -417,6 +428,8 @@ class PendingListProvider {
       BaseUtitiles.showToast(RequestConstant.SOMETHINGWENT_WRONG);
     });
   }
+
+
 
   static Future BillGenAprovalAPI(body, context) async {
     var ratingRes = null;
