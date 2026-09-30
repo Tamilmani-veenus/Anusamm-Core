@@ -15,6 +15,7 @@ import '../controller/subcontcontroller.dart';
 import '../controller/suppliercontroller.dart';
 import '../controller/transferbw_site_controller.dart';
 import '../app_theme/app_colors.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'advance_reqvoucher_new_controller.dart';
@@ -31,6 +32,7 @@ import 'fromproject_ccontroller.dart';
 import 'fromsite_controller.dart';
 import 'man_power_controller.dart';
 import 'material_transreq_controller.dart';
+import 'mrn_request_indent_controller.dart';
 import 'nmrweeklybill_controller.dart';
 
 class BottomsheetControllers {
@@ -82,7 +84,8 @@ class BottomsheetControllers {
   FromProjectController fromprojectController =
       Get.put(FromProjectController());
   ManPowerController manPowerController=Get.put(ManPowerController());
-
+  MRN_Request_Controller mrn_request_controller =
+  Get.put(MRN_Request_Controller());
 
   final searchcontroller = TextEditingController();
   var list;
@@ -722,6 +725,9 @@ class BottomsheetControllers {
                               .clear();
                           dailyWrkDone_DPRNEW_Controller.getDetTablesDatas();
                           searchcontroller.text = "";
+                          if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
+                            mrn_request_controller.CheckBalQtyProAndSite();
+                          }
                           Navigator.pop(context);
                         },
                       ),

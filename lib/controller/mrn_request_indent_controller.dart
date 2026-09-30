@@ -16,6 +16,7 @@ import '../models/materialintentsave_model.dart';
 import '../models/mrnrq_addmat_resmodel.dart';
 import '../provider/common_provider.dart';
 import '../provider/mrn_request_indent_provider.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'logincontroller.dart';
@@ -80,6 +81,7 @@ class MRN_Request_Controller extends GetxController {
 
 
   RxBool activeType = false.obs;
+  RxBool balQtyForProAndSite = false.obs;
 
 
   var materialTableModel = Materiallist();
@@ -177,6 +179,15 @@ class MRN_Request_Controller extends GetxController {
     }
 }
 
+  Future<bool?> CheckBalQtyProAndSite() async {
+    final value = await CommonProvider.checkBalQtyForProAndSite(projectController.selectedProjectId.value,siteController.selectedsiteId.value);
+    if (value != null) {
+      balQtyForProAndSite.value=value;
+    }
+    else {
+      BaseUtitiles.showToast("Something went wrong..");
+    }
+  }
 
   void handleConfig(Map<String, dynamic> data) {
     if (data["projectWise"] == true) {
@@ -196,32 +207,37 @@ class MRN_Request_Controller extends GetxController {
     }
   }
 
-  MaterialItemlistBal_clickEdit(int index) {
-    double balQty = double.parse(
-        Material_itemview_GetDbList.value[index].balqty.toString());
+  void MaterialItemlistBal_clickEdit(int index) {
+    final double balQty = double.tryParse(
+      Material_itemview_GetDbList.value[index].balqty.toString(),
+    ) ??
+        0.0;
 
-    double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
-        ? 0
-        : double.parse(Addwork_qtyControllers[index].value.text);
-    if(ReqType.value == "PO")
-    {
-      if (enteredQty > balQty) {
-        enteredQty = 0;
-        Addwork_qtyControllers[index].text = "0.0";
-        BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-      }
-      else {
-      // If none of the above conditions are met, call updateConsumTables()
-        updateConsumTables();
+    final double enteredQty = double.tryParse(
+      Addwork_qtyControllers[index].text,
+    ) ??
+        0.0;
+
+    bool checkBalQty = false;
+
+    if (ReqType.value == "PO") {
+      checkBalQty = true;
+    }
+
+    else if (AppClient.isAnusamm && balQtyForProAndSite.value == true) {
+      if (balQty != 0) {
+        checkBalQty = true;
       }
     }
-    else {
-      updateConsumTables();
+
+    if (checkBalQty && enteredQty > balQty) {
+      Addwork_qtyControllers[index].text = "0.0";
+      BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+      return;
     }
+
+    updateConsumTables();
   }
-
-
-
 
     Future<void> getAppTypeList() async {
     appTypeList.clear();

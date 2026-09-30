@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class ApiConfig {
-  static const String LIVE_ENDPOINT = "http://103.89.64.224:8080/";
+  static const String LIVE_ENDPOINT = "http://49.204.233.151:8080/";
 
-  static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
+  static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}erpnew/";
 
   static String APIURL_CORE = DEFAULT_BASE_URL_CORE;
 
@@ -18,7 +18,7 @@ class ApiConfig {
     final isLive = await _isEndpointLive(uri.host, uri.port,);
 
     if (isLive) {
-      APIURL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
+      APIURL_CORE = "${LIVE_ENDPOINT}erpnew/";
 
       WebURL = "${LIVE_ENDPOINT}Anusamm/";
     } else {
@@ -208,6 +208,7 @@ class ApiConstant{
   static String GET_APPTYPE_API = BASE_URL_CORE + "api/MaterialReqOrdMas/ApprovalType";
   static String GETMATERIALLIST = BASE_URL_CORE + "api/MaterialReqOrdMas/GetMRNMatByReqTypeProNdSite";
   static String CHECKMATERIALLISTBALQTY = BASE_URL_CORE + "api/Admin/Getmaterialcheckingbalqty";
+  static String CHECKBALQTYPROSITE = BASE_URL_CORE + "api/MaterialQtyFixingMas/CheckBalQtyForProAndSite";
   static String GETCONSUMPTION_ENTRY_LIST = BASE_URL_CORE + "api/MaterialExpenseMas/GetAllMaterialExpenses";
   static String GETSTOCKMATERIALLIST = BASE_URL_CORE + "api/MaterialExpenseMas/GetMaterialBasedOnProjAndSite";
   static String GETCONSTYPELIST = BASE_URL_CORE + "api/MaterialExpenseMas/GetExpenseTypeAll";
