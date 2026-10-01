@@ -207,39 +207,64 @@ class MRN_Request_Controller extends GetxController {
     }
   }
 
-  void MaterialItemlistBal_clickEdit(int index) {
-    final double balQty = double.tryParse(
-      Material_itemview_GetDbList.value[index].balqty.toString(),
-    ) ??
-        0.0;
+  // void MaterialItemlistBal_clickEdit(int index) {
+  //   final double balQty = double.tryParse(
+  //     Material_itemview_GetDbList.value[index].balqty.toString(),
+  //   ) ??
+  //       0.0;
+  //
+  //   final double enteredQty = double.tryParse(
+  //     Addwork_qtyControllers[index].text,
+  //   ) ??
+  //       0.0;
+  //
+  //   bool checkBalQty = false;
+  //
+  //   if (ReqType.value == "PO") {
+  //     checkBalQty = true;
+  //   }
+  //
+  //   else if (AppClient.isAnusamm && balQtyForProAndSite.value == true) {
+  //     if (balQty != 0) {
+  //       checkBalQty = true;
+  //     }
+  //   }
+  //
+  //   if (checkBalQty && enteredQty > balQty) {
+  //     Addwork_qtyControllers[index].text = "0.0";
+  //     BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+  //     return;
+  //   }
+  //
+  //   updateConsumTables();
+  // }
 
-    final double enteredQty = double.tryParse(
-      Addwork_qtyControllers[index].text,
-    ) ??
-        0.0;
+  MaterialItemlistBal_clickEdit(int index) {
+    double balQty = double.parse(
+        Material_itemview_GetDbList.value[index].balqty.toString());
 
-    bool checkBalQty = false;
-
-    if (ReqType.value == "PO") {
-      checkBalQty = true;
-    }
-
-    else if (AppClient.isAnusamm && balQtyForProAndSite.value == true) {
-      if (balQty != 0) {
-        checkBalQty = true;
+    double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
+        ? 0
+        : double.parse(Addwork_qtyControllers[index].value.text);
+    if(ReqType.value == "PO")
+    {
+      if (enteredQty > balQty) {
+        enteredQty = 0;
+        Addwork_qtyControllers[index].text = "0.0";
+        BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+      }
+      else {
+        // If none of the above conditions are met, call updateConsumTables()
+        updateConsumTables();
       }
     }
-
-    if (checkBalQty && enteredQty > balQty) {
-      Addwork_qtyControllers[index].text = "0.0";
-      BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-      return;
+    else {
+      updateConsumTables();
     }
-
-    updateConsumTables();
   }
 
-    Future<void> getAppTypeList() async {
+
+  Future<void> getAppTypeList() async {
     appTypeList.clear();
     var response = await Mrn_Req_provider.getAppTypeListAPI();
     if (response != null) {

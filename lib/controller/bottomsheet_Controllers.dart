@@ -725,9 +725,9 @@ class BottomsheetControllers {
                               .clear();
                           dailyWrkDone_DPRNEW_Controller.getDetTablesDatas();
                           searchcontroller.text = "";
-                          if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
-                            mrn_request_controller.CheckBalQtyProAndSite();
-                          }
+                          // if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
+                          //   mrn_request_controller.CheckBalQtyProAndSite();
+                          // }
                           Navigator.pop(context);
                         },
                       ),

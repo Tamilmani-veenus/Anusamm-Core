@@ -202,36 +202,57 @@ class MrnFinalApprovalController extends GetxController {
     }
   }
 
-  void MaterialItemlistBal_clickEdit(int index) {
-    final double balQty = double.tryParse(
-      MaterialFinalAppr_itemview_GetDbList.value[index].balqty.toString(),
-    ) ??
-        0.0;
+  // void MaterialItemlistBal_clickEdit(int index) {
+  //   final double balQty = double.tryParse(
+  //     MaterialFinalAppr_itemview_GetDbList.value[index].balqty.toString(),
+  //   ) ??
+  //       0.0;
+  //
+  //   final double enteredQty = double.tryParse(
+  //     ApprQty_ListController[index].text,
+  //   ) ??
+  //       0.0;
+  //
+  //   bool checkBalQty = false;
+  //
+  //   if (mrn_request_controller.ReqType.value == "PO") {
+  //     checkBalQty = true;
+  //   }
+  //
+  //   else if (AppClient.isAnusamm && mrn_request_controller.balQtyForProAndSite.value == true) {
+  //     if (balQty != 0) {
+  //       checkBalQty = true;
+  //     }
+  //   }
+  //
+  //   if (checkBalQty && enteredQty > balQty) {
+  //     ApprQty_ListController[index].text = "0.0";
+  //     BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+  //     return;
+  //   }
+  //
+  //   finalApproval_updateConsumTables();
+  // }
 
-    final double enteredQty = double.tryParse(
-      ApprQty_ListController[index].text,
-    ) ??
-        0.0;
+  MaterialItemlistBal_clickEdit(int index) {
+    double balQty = double.parse(
+        MaterialFinalAppr_itemview_GetDbList.value[index].balqty.toString());
 
-    bool checkBalQty = false;
-
+    double enteredQty = ApprQty_ListController[index].value.text.isEmpty
+        ? 0
+        : double.parse(ApprQty_ListController[index].value.text);
     if (mrn_request_controller.ReqType.value == "PO") {
-      checkBalQty = true;
-    }
-
-    else if (AppClient.isAnusamm && mrn_request_controller.balQtyForProAndSite.value == true) {
-      if (balQty != 0) {
-        checkBalQty = true;
+      if (enteredQty > balQty) {
+        enteredQty = 0;
+        ApprQty_ListController[index].text = "0.0";
+        BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+      } else {
+        // If none of the above conditions are met, call updateConsumTables()
+        finalApproval_updateConsumTables();
       }
+    } else {
+      finalApproval_updateConsumTables();
     }
-
-    if (checkBalQty && enteredQty > balQty) {
-      ApprQty_ListController[index].text = "0.0";
-      BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-      return;
-    }
-
-    finalApproval_updateConsumTables();
   }
 
 
