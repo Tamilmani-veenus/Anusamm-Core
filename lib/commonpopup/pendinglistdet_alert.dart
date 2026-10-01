@@ -1301,6 +1301,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import '../app_theme/app_colors.dart';
 import '../controller/pendinglistcontroller.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 
@@ -2102,6 +2103,25 @@ class _PendingList_PoPopupState extends State<PendingList_PoPopup> {
                             child: Text( pendingListController.onclickPendingListDet[index].BalQty.toString())),
                       ],
                     ),
+                    if(AppClient.isAnusamm)
+                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Divider(),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Text("Data Rate" + ":  ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                                flex: 9,
+                                child: Text( pendingListController.onclickPendingListDet[index].DataRate.toString())),
+                                                  ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -2872,7 +2892,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: SizedBox(
-                          width: 875,
+                          width: AppClient.isAnusamm?960:875,
                           child: Column(
                             children: [
                               /// HEADER
@@ -2883,7 +2903,7 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                   children: [
 
                                     headerCell("Qty"),
-                                    // headerCell("Data\nRate"),
+                                    if(AppClient.isAnusamm)headerCell("Data\nRate"),
                                     headerCell("PO\nRate"),
                                     headerCell("PO\nAmt"),
                                     headerCell("GST%"),
@@ -2923,6 +2943,11 @@ class _PendingPo_Approval_PopupState extends State<PendingPo_Approval_Popup> {
                                             item.Poqty.toString(),
                                           ),
                                           // dataCell("0.0"),
+                                          if(AppClient.isAnusamm)
+                                            dataCell(
+                                            item.dataRate.toString(),
+                                          ),
+
                                           dataCell(
                                             item.rate.toString(),
                                           ),
