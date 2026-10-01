@@ -207,62 +207,59 @@ class MRN_Request_Controller extends GetxController {
     }
   }
 
-  // void MaterialItemlistBal_clickEdit(int index) {
-  //   final double balQty = double.tryParse(
-  //     Material_itemview_GetDbList.value[index].balqty.toString(),
-  //   ) ??
-  //       0.0;
+
+  // MaterialItemlistBal_clickEdit(int index) {
+  //   double balQty = double.parse(
+  //       Material_itemview_GetDbList.value[index].balqty.toString());
   //
-  //   final double enteredQty = double.tryParse(
-  //     Addwork_qtyControllers[index].text,
-  //   ) ??
-  //       0.0;
-  //
-  //   bool checkBalQty = false;
-  //
-  //   if (ReqType.value == "PO") {
-  //     checkBalQty = true;
-  //   }
-  //
-  //   else if (AppClient.isAnusamm && balQtyForProAndSite.value == true) {
-  //     if (balQty != 0) {
-  //       checkBalQty = true;
+  //   double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
+  //       ? 0
+  //       : double.parse(Addwork_qtyControllers[index].value.text);
+  //   if(ReqType.value == "PO")
+  //   {
+  //     if ( (AppClient.isAnusamm && balQtyForProAndSite.value == true) && enteredQty > balQty) {
+  //       enteredQty = 0;
+  //       Addwork_qtyControllers[index].text = "0.0";
+  //       BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+  //     }
+  //     else {
+  //       // If none of the above conditions are met, call updateConsumTables()
+  //       updateConsumTables();
   //     }
   //   }
-  //
-  //   if (checkBalQty && enteredQty > balQty) {
-  //     Addwork_qtyControllers[index].text = "0.0";
-  //     BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-  //     return;
+  //   else {
+  //     updateConsumTables();
   //   }
-  //
-  //   updateConsumTables();
   // }
 
   MaterialItemlistBal_clickEdit(int index) {
     double balQty = double.parse(
-        Material_itemview_GetDbList.value[index].balqty.toString());
+      Material_itemview_GetDbList.value[index].balqty.toString(),
+    );
 
-    double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
+    double enteredQty =
+    Addwork_qtyControllers[index].value.text.isEmpty
         ? 0
-        : double.parse(Addwork_qtyControllers[index].value.text);
-    if(ReqType.value == "PO")
-    {
-      if (enteredQty > balQty) {
+        : double.parse(
+      Addwork_qtyControllers[index].value.text,
+    );
+
+    if (ReqType.value == "PO") {
+      if ((!AppClient.isAnusamm || balQtyForProAndSite.value) &&
+          enteredQty > balQty) {
         enteredQty = 0;
         Addwork_qtyControllers[index].text = "0.0";
-        BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-      }
-      else {
-        // If none of the above conditions are met, call updateConsumTables()
+
+        BaseUtitiles.showToast(
+          "More than Bal Qty, Not Allowed",
+        );
+      } else {
         updateConsumTables();
       }
-    }
-    else {
+    } else {
       updateConsumTables();
     }
   }
-
 
   Future<void> getAppTypeList() async {
     appTypeList.clear();
@@ -320,59 +317,34 @@ class MRN_Request_Controller extends GetxController {
             Itemlist_qtyControllers[j].value.text == "0" ||
             Itemlist_qtyControllers[j].value.text == "") {}
         if (double.parse(Itemlist_qtyControllers[j].value.text) < 0) {}
-        else if (ReqType.value == "PO") {
-          if (activeType.value && element.balqty <= 0.0) {
-            itemcount++;
-          }
-          else {
-            materialTableModel = Materiallist();
-            materialTableModel.materialid = element.materialId!;
-            materialTableModel.material = element.material!;
-            materialTableModel.scale = element.scale!;
-            materialTableModel.qty = double.parse("0");
-            materialTableModel.approxdays = 0;
-            materialTableModel.stockqty = element.stockQty;
-            materialTableModel.scaleId = element.scaleId;
-            materialTableModel.balqty = element.balqty;
-            materialTableModel.reqDetId = 0;
-            materialTableModel.remarks = "";
-            materialTableModel.desc = "";
-            Material_itemview_GetDbList.forEach((element) {
-              if (element.materialid == materialTableModel.materialid) {
-                i = 1;
-                BaseUtitiles.showToast("Entries already exist");
-              }
-            });
-            if (i == 0) {
-              materialTableList.add(materialTableModel);
-            } else {
-              i = 0;
-            }
-          }
-        }
-        else {
-          materialTableModel = new Materiallist();
+        else if (ReqType.value == "PO" && !(AppClient.isAnusamm && !balQtyForProAndSite.value) &&
+            activeType.value &&
+            element.balqty <= 0.0) {
+          itemcount++;
+        } else {
+          materialTableModel = Materiallist();
           materialTableModel.materialid = element.materialId!;
           materialTableModel.material = element.material!;
           materialTableModel.scale = element.scale!;
           materialTableModel.scaleId = element.scaleId;
           materialTableModel.stockqty = element.stockQty;
           materialTableModel.approxdays = 0;
-          materialTableModel.qty = double.parse("0");
+          materialTableModel.qty = 0;
           materialTableModel.reqDetId = 0;
           materialTableModel.balqty = element.balqty;
           materialTableModel.remarks = "";
           materialTableModel.desc = "";
-          Material_itemview_GetDbList.forEach((element) {
-            if (element.materialid == materialTableModel.materialid) {
+
+          Material_itemview_GetDbList.forEach((existingElement) {
+            if (existingElement.materialid == materialTableModel.materialid) {
               i = 1;
               BaseUtitiles.showToast("Entries already exist");
             }
           });
+
           if (i == 0) {
             materialTableList.add(materialTableModel);
-          }
-          else {
+          } else {
             i = 0;
           }
         }
@@ -384,6 +356,7 @@ class MRN_Request_Controller extends GetxController {
     if(itemcount>0){
       BaseUtitiles.showToast(itemcount.toString() + " Materials doesn't have a balqty");
     }
+    print("eeeee...${materialTableList.length}");
     return Navigator.pop(context, savedatas);
   }
 

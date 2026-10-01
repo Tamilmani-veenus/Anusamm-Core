@@ -68,9 +68,9 @@ class _MrnfinalEntryScreenState extends State<MrnfinalEntryScreen> {
       mrnFinalApprovalController.ApprovalremarksText.text =
       element.app_remarks.toString()=="null" ?"-":element.app_remarks.toString();
     });
-    // if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
-    //   mrn_request_controller.CheckBalQtyProAndSite();
-    // }
+    if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "PO") {
+      mrn_request_controller.CheckBalQtyProAndSite();
+    }
     int i = 0;
     mrnFinalApprovalController.MaterialFinalAppr_itemview_GetDbList.forEach((
         element) {

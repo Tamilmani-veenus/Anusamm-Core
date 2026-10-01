@@ -101,9 +101,9 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
           mrn_request_controller.ReqTypeController.text = element.purchaseType=="PO"?"General Items":"Asset Materials";
           mrn_request_controller.ReqType.value = element.purchaseVal.toString();
           mrn_request_controller.RemarksController.text = element.reqRemarks;
-          // if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
-          //   mrn_request_controller.CheckBalQtyProAndSite();
-          // }
+          if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "PO") {
+            mrn_request_controller.CheckBalQtyProAndSite();
+          }
         });
       }
 
@@ -121,9 +121,9 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
           mrn_request_controller.ReqTypeController.text = element.purchaseType == "PO" ? "General Items" : "Asset Materials";
           mrn_request_controller.ReqType.value = element.purchaseVal.toString();
           mrn_request_controller.RemarksController.text = element.reqRemarks;
-          // if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
-          //   mrn_request_controller.CheckBalQtyProAndSite();
-          // }
+          if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "PO") {
+            mrn_request_controller.CheckBalQtyProAndSite();
+          }
         });
       }
 

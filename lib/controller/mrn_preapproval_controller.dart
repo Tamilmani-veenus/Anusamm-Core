@@ -222,7 +222,8 @@ class MrnPreApprovalController extends GetxController {
         : double.parse(mrnpre_ApprQty_ListController[index].value.text);
     if(mrn_request_controller.ReqType.value == "PO")
     {
-      if (enteredQty > balQty) {
+      if ((!AppClient.isAnusamm || mrn_request_controller.balQtyForProAndSite.value) &&
+          enteredQty > balQty) {
         enteredQty = 0;
         mrnpre_ApprQty_ListController[index].text = "0.0";
         BaseUtitiles.showToast("More than Bal Qty, Not Allowed");

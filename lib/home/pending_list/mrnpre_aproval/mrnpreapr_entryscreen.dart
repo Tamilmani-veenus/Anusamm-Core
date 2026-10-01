@@ -79,9 +79,9 @@ class _MrnPreApprovalEntryScreenState extends State<MrnPreApprovalEntryScreen> {
       mrnPreApprovalController.mrnpre_ApprovalremarksText.text = "";
     }
 
-    // if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "CP") {
-    //   mrn_request_controller.CheckBalQtyProAndSite();
-    // }
+    if(AppClient.isAnusamm && mrn_request_controller.ReqType.value == "PO") {
+      mrn_request_controller.CheckBalQtyProAndSite();
+    }
     // 🔹 Item List
     int i = 0;
     for (var element in mrnPreApprovalController.MaterialAppr_itemview_GetDbList) {
