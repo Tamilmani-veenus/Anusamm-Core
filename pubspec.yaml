@@ -98,6 +98,8 @@ dependencies:
   auto_size_text: ^3.0.0
   percent_indicator: ^4.2.3
   flutter_switch: ^0.3.2
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

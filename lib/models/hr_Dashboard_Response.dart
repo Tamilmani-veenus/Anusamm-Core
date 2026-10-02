@@ -24,7 +24,7 @@ class HrDashboardResponse {
 
   Map<String, dynamic> toJson() => {
     "success": success,
-    "result": result?.toJson(),
+    "result": result==null?null:result!.toJson(),
   };
 }
 
@@ -34,7 +34,7 @@ class Result {
   TodayPunchOverview? todayPunchOverview;
   LeaveOverview? leaveOverview;
   PendingLeaveRequest? pendingLeaveRequest;
-  List<dynamic>? recentActivity;
+  List<RecentActivity>? recentActivity;
   List<UpcomingHoliday>? upcomingHoliday;
   List<MonthlyAttendance>? monthlyAttendance;
 
@@ -55,7 +55,7 @@ class Result {
     todayPunchOverview: json["todayPunchOverview"] == null ? null : TodayPunchOverview.fromJson(json["todayPunchOverview"]),
     leaveOverview: json["leaveOverview"] == null ? null : LeaveOverview.fromJson(json["leaveOverview"]),
     pendingLeaveRequest: json["pendingLeaveRequest"] == null ? null : PendingLeaveRequest.fromJson(json["pendingLeaveRequest"]),
-    recentActivity: json["recentActivity"] == null ? [] : List<dynamic>.from(json["recentActivity"]!.map((x) => x)),
+    recentActivity: json["recentActivity"] == null ? [] : List<RecentActivity>.from(json["recentActivity"]!.map((x) => RecentActivity.fromJson(x))),
     upcomingHoliday: json["upcomingHoliday"] == null ? [] : List<UpcomingHoliday>.from(json["upcomingHoliday"]!.map((x) => UpcomingHoliday.fromJson(x))),
     monthlyAttendance: json["monthlyAttendance"] == null ? [] : List<MonthlyAttendance>.from(json["monthlyAttendance"]!.map((x) => MonthlyAttendance.fromJson(x))),
   );
@@ -66,7 +66,7 @@ class Result {
     "todayPunchOverview": todayPunchOverview?.toJson(),
     "leaveOverview": leaveOverview?.toJson(),
     "pendingLeaveRequest": pendingLeaveRequest?.toJson(),
-    "recentActivity": recentActivity == null ? [] : List<dynamic>.from(recentActivity!.map((x) => x)),
+    "recentActivity": recentActivity == null ? [] : List<dynamic>.from(recentActivity!.map((x) => x.toJson())),
     "upcomingHoliday": upcomingHoliday == null ? [] : List<dynamic>.from(upcomingHoliday!.map((x) => x.toJson())),
     "monthlyAttendance": monthlyAttendance == null ? [] : List<dynamic>.from(monthlyAttendance!.map((x) => x.toJson())),
   };
@@ -289,5 +289,65 @@ class UpcomingHoliday {
     "DateValue": dateValue,
     "HolidayRemarks": holidayRemarks,
     "RemainingDays": remainingDays,
+  };
+}
+
+class RecentActivity {
+  String? punchNo;
+  String? employeeName;
+  String? indate;
+  String? inTime;
+  String? outDate;
+  String? outTime;
+  String? inLoc;
+  String? outLoc;
+  String? instatus;
+  String? outstatus;
+  String? onpininaddress;
+  String? onpinoutaddress;
+
+  RecentActivity({
+    this.punchNo,
+    this.employeeName,
+    this.indate,
+    this.inTime,
+    this.outDate,
+    this.outTime,
+    this.inLoc,
+    this.outLoc,
+    this.instatus,
+    this.outstatus,
+    this.onpininaddress,
+    this.onpinoutaddress,
+  });
+
+  factory RecentActivity.fromJson(Map<String, dynamic> json) => RecentActivity(
+    punchNo: json["PunchNo"],
+    employeeName: json["EmployeeName"],
+    indate: json["Indate"],
+    inTime: json["InTime"],
+    outDate: json["OutDate"],
+    outTime: json["OutTime"],
+    inLoc: json["InLoc"],
+    outLoc: json["OutLoc"],
+    instatus: json["instatus"],
+    outstatus: json["outstatus"],
+    onpininaddress: json["onpininaddress"],
+    onpinoutaddress: json["onpinoutaddress"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "PunchNo": punchNo,
+    "EmployeeName": employeeName,
+    "Indate": indate,
+    "InTime": inTime,
+    "OutDate": outDate,
+    "OutTime": outTime,
+    "InLoc": inLoc,
+    "OutLoc": outLoc,
+    "instatus": instatus,
+    "outstatus": outstatus,
+    "onpininaddress": onpininaddress,
+    "onpinoutaddress": onpinoutaddress,
   };
 }

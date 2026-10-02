@@ -1752,7 +1752,11 @@ class BaseUtitiles {
     }
   }
 
-  static formatDate(DateTime date) => DateFormat.yMd().format(date);
+  static String formatDate(DateTime date) {
+    return '${date.day.toString().padLeft(2, '0')}-'
+        '${date.month.toString().padLeft(2, '0')}-'
+        '${date.year}';
+  }
 
   static String dateformat(String date){
     String data="";

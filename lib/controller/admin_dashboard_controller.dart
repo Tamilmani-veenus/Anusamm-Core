@@ -5,11 +5,10 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../models/admin_dashboard_response.dart';
 import '../newhome/maindashboard/admin_dashboard.dart';
 import '../provider/labourDashboard_Provider.dart';
+import '../utilities/baseutitiles.dart';
 
 class AdminDashboardController extends GetxController{
   RxBool isLoading = false.obs;
-  final entryFromDate = TextEditingController();
-  final entryToDate = TextEditingController();
   Rx<AdminDashboardResponse?> dashboardResponse = Rx<AdminDashboardResponse?>(null);
   RxList<PoVsbillTable> poVsBillTableList = <PoVsbillTable>[].obs;
   RxList<PoVsbillTable> allPoVsBillTableList = <PoVsbillTable>[].obs;  // Filter search
@@ -53,7 +52,9 @@ class AdminDashboardController extends GetxController{
     allBoqProgressTableList.value = [];
     try {
       isLoading.value = true;
-      final response = await LabourDashboardProvider.getAdminDashboard(entryFromDate.text,entryToDate.text);
+
+      final response = await LabourDashboardProvider.getAdminDashboard();
+
       if (response != null && response.success == true) {
         dashboardResponse.value = response;
         poVsBillTableList.assignAll(response.poVsbillTable ?? []);
@@ -127,6 +128,35 @@ class AdminDashboardController extends GetxController{
     return ((value ?? 0) / 100).clamp(0.0, 1.0);
   }
 
+  double parseChartValue(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 0;
+    }
+
+    String text = value
+        .replaceAll("₹", "")
+        .replaceAll(",", "")
+        .trim()
+        .toUpperCase();
+
+    if (text.endsWith("L")) {
+      return (double.tryParse(
+        text.replaceAll("L", "").trim(),
+      ) ??
+          0) *
+          100000;
+    }
+
+    if (text.endsWith("CR")) {
+      return (double.tryParse(
+        text.replaceAll("CR", "").trim(),
+      ) ??
+          0) *
+          10000000;
+    }
+
+    return double.tryParse(text) ?? 0;
+  }
   Color getVarianceColor(String? label) {
     if (label == null) return Colors.black;
 
