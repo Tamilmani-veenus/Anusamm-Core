@@ -1,3 +1,5 @@
+import 'package:anusamm/controller/reports_controller.dart';
+
 import '../controller/projectcontroller.dart';
 import '../provider/cashbook_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +18,7 @@ class CashBookSiteController extends GetxController{
   final closingDebit = TextEditingController();
   final closingCredit = TextEditingController();
 
-  ProjectController projectController=Get.put(ProjectController());
+  ReportsController reportsController = Get.put(ReportsController());
 
   RxList cashsiteDatas = [].obs;
 
@@ -24,9 +26,10 @@ class CashBookSiteController extends GetxController{
     cashsiteDatas.value = [];
 
     final value = await CashBookProvider.getcashbooksiteList(
-      projectController.selectedProjectId.value,
+      reportsController.selectedProjectId.value,
       cashbooksite_frdateController.text,
       cashbooksite_todateController.text,
+       reportsController.selectedCompanyId.value
     );
 
     if (value != null) {
@@ -34,7 +37,7 @@ class CashBookSiteController extends GetxController{
 
         // List data
         if (value.result != null) {
-          cashsiteDatas.value = value.result!;
+          cashsiteDatas.value = value.result![0].vouchers!;
         }
         // Totals
         totalDebit.text = value.totalDebit.toString();

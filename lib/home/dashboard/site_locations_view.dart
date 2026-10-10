@@ -287,12 +287,9 @@ class _SiteLocationViewState extends State<SiteLocationView> {
                                                   SizedBox(
                                                     width: 250.r,
                                                     child: Text(
-                                                      siteLocationController
-                                                          .projectNameRxList![i]
-                                                          .projectName
-                                                          .toString(),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      siteLocationController.projectNameRxList![i].projectName.toString(),
+                                                      // overflow:
+                                                      //     TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                         fontSize: ScreenUtil()
                                                             .setSp(14),

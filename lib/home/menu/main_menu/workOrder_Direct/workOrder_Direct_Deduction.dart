@@ -189,15 +189,18 @@ class _WorkOrderDirectDeductionState extends State<WorkOrderDirectDeduction> {
                                     });
                                   }
                                 },
-                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
-
-                                inputFormatters: [
-                                  TextInputFormatter.withFunction((oldValue, newValue) {
-                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
-                                        ? newValue
-                                        : oldValue;
-                                  }),
-                                ],
+                                keyboardType: Platform.isAndroid
+                                    ? const TextInputType.numberWithOptions(
+                                  signed: true,
+                                  decimal: true,
+                                ) : TextInputType.text,
+                                // inputFormatters: [
+                                //   TextInputFormatter.withFunction((oldValue, newValue) {
+                                //     return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                //         ? newValue
+                                //         : oldValue;
+                                //   }),
+                                // ],
                                 controller:
                                 workOrderDirectController.Roundoff,
                                 cursorColor: Colors.black,

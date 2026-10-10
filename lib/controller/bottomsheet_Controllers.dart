@@ -971,12 +971,14 @@ class BottomsheetControllers {
                         ),
                         onTap: () async {
                           if (transferBW_project_Controller.type.value ==
-                                  "Direct" ||
+                              "Direct" ||
                               screencheck == "Transfer Between Sites" ||
                               screencheck == "Material transfer request" ||
                               screencheck == "Transfer ack pending") {
                             transferBW_project_Controller
                                 .ItemGetTableListdata.value = [];
+                            transferBt_Site_Controller
+                                .itemlistTable_Delete();
                             transferBt_Site_Controller
                                 .ItemGetTableListdata.value = [];
                             fromsiteController.FromSitename.text =
@@ -988,7 +990,7 @@ class BottomsheetControllers {
                           } else if (screencheck == "STORE TRANSFER") {
                             if (fromsiteController.selectedsiteId.value ==
                                 siteController.selectedsiteId.value) {
-                              transferBW_project_Controller
+                              transferBt_Site_Controller
                                   .itemlistTable_Delete();
                               transferBt_Site_Controller
                                   .ItemGetTableListdata.value = [];
@@ -1002,12 +1004,12 @@ class BottomsheetControllers {
                                 .ItemGetTableListdata.value = [];
                             await transferBt_Site_Controller
                                 .getStoreTransPendingView(
-                                    transferBt_Site_Controller
-                                        .transferAllDatasList[0].reqMasid,
-                                    fromsiteController.selectedsiteId.value,MenuName!,
-                                    context);
+                                transferBt_Site_Controller
+                                    .transferAllDatasList[0].reqMasid,
+                                fromsiteController.selectedsiteId.value,MenuName!,
+                                context);
                             await transferBt_Site_Controller
-                                .itemlistPopup_saveLabTableDatas(context);
+                                .itemlistPopup_saveLabTableDatas(context,from:"Bottomsheet");
                             await transferBt_Site_Controller
                                 .getItemlistTablesDatas();
 
@@ -1027,12 +1029,12 @@ class BottomsheetControllers {
                                 .ItemGetTableListdata.value = [];
                             await transferBW_project_Controller
                                 .getTransproject_ItemList(
-                                    fromProjectController
-                                        .selectedProjectId.value,
-                                    fromsiteController.selectedsiteId.value,
-                                    transferBW_project_Controller
-                                        .transferAllDatasList[0].reqMasid,
-                                    context);
+                                fromProjectController
+                                    .selectedProjectId.value,
+                                fromsiteController.selectedsiteId.value,
+                                transferBW_project_Controller
+                                    .transferAllDatasList[0].reqMasid,
+                                context);
                             await transferBW_project_Controller
                                 .itemlist_SaveTable();
                             await transferBW_project_Controller

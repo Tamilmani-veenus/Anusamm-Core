@@ -185,15 +185,18 @@ class _WorkOrderBoqDeductionState extends State<WorkOrderBoqDeduction> {
                                     });
                                   }
                                 },
-                                keyboardType: Platform.isAndroid ? TextInputType.numberWithOptions(decimal: true) : TextInputType.text,
-
-                                inputFormatters: [
-                                  TextInputFormatter.withFunction((oldValue, newValue) {
-                                    return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
-                                        ? newValue
-                                        : oldValue;
-                                  }),
-                                ],
+                                keyboardType: Platform.isAndroid
+                                    ? const TextInputType.numberWithOptions(
+                                  signed: true,
+                                  decimal: true,
+                                ) : TextInputType.text,
+                                // inputFormatters: [
+                                //   TextInputFormatter.withFunction((oldValue, newValue) {
+                                //     return RegExp(r'^\d*\.?\d{0,2}$').hasMatch(newValue.text)
+                                //         ? newValue
+                                //         : oldValue;
+                                //   }),
+                                // ],
                                 controller:
                                 workOrderBoqController.Roundoff,
                                 cursorColor: Colors.black,

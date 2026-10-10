@@ -128,6 +128,8 @@ flutter:
     - assets/
     - assets/images/
     - assets/admin_dashboard_card/
+    - assets/svg_files/
+
 
 flutter_icons:
   android: true

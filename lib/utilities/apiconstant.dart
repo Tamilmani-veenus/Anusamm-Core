@@ -180,7 +180,8 @@ class ApiConstant{
   static String EDIT_BILLBOQ_API = BASE_URL_CORE + "api/SubContractorWorkQtyBOQ/GetSubContractorWorkQtyById";
   static String EDIT_INWARDPENDING_API = BASE_URL_CORE + "api/MaterialInward/GetInwardDetById";
   static String EDIT_TRANSFERBET_API = BASE_URL_CORE + "api/MaterialTransfer/GetMaterialTransferbtnProById";
-  static String EDIT_TRANSFERBET_SITE_API = BASE_URL_CORE + "api/StoreTransferPending/loadTransferBetweensiteDet";
+  // static String EDIT_TRANSFERBET_SITE_API = BASE_URL_CORE + "api/StoreTransferPending/loadTransferBetweensiteDet";
+  static String EDIT_TRANSFERBET_SITE_API = BASE_URL_CORE + "api/MaterialSitetosite/GetMaterialTransferById";
   static String EDIT_ADVANCEREQ_API = BASE_URL_CORE + "api/AdvanceReqVoucher/GetAdvanceReqVoucherById";
   static String GETINWARD_ENTRY_LIST = BASE_URL_CORE + "api/MaterialInward/GetAllMaterialInward";
   static String GETMATERIALINWARD_ALLDATAS = BASE_URL_CORE + "api/MaterialInward/GetInwardPendingById";

@@ -564,289 +564,300 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
                     const SizedBox(height: 10,),
 
                     /// Leave Overview
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: const Color(0xffE1E5EA),
-                        ),
-                      ),
-                      child: Obx(() {
-                        final leaveData = hrDashboardController.hrLeaveOverViewList.value;
+                     if(!AppClient.isAnusamm)...{
+                       Container(
+                         width: double.infinity,
+                         padding: const EdgeInsets.all(14),
+                         decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: BorderRadius.circular(14),
+                           border: Border.all(
+                             color: const Color(0xffE1E5EA),
+                           ),
+                         ),
+                         child: Obx(() {
+                           final leaveData = hrDashboardController
+                               .hrLeaveOverViewList.value;
 
-                        final int leaveUsed = leaveData?.leaveUsed ?? 0;
-                        final int remainingLeave = leaveData?.remainingLeave ?? 0;
+                           final int leaveUsed = leaveData?.leaveUsed ?? 0;
+                           final int remainingLeave = leaveData
+                               ?.remainingLeave ?? 0;
 
-                        final int totalLeaveDays =
-                            leaveUsed + remainingLeave;
+                           final int totalLeaveDays =
+                               leaveUsed + remainingLeave;
 
-                        final double leaveUsedPercentage =
-                            leaveData?.leaveUsedPercentage ?? 0;
+                           final double leaveUsedPercentage =
+                               leaveData?.leaveUsedPercentage ?? 0;
 
-                        final double remainingLeavePercentage =
-                            leaveData?.remainingLeavePercentage ?? 0;
+                           final double remainingLeavePercentage =
+                               leaveData?.remainingLeavePercentage ?? 0;
 
-                        return Column(
-                          children: [
+                           return Column(
+                             children: [
 
-                            // HEADER
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Leave Overview (This Year)",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xff172B4D),
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        "Annual leave usage summary",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xff98A2B3),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                               // HEADER
+                               Row(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   const Expanded(
+                                     child: Column(
+                                       crossAxisAlignment: CrossAxisAlignment
+                                           .start,
+                                       children: [
+                                         Text(
+                                           "Leave Overview (This Year)",
+                                           style: TextStyle(
+                                             fontSize: 16,
+                                             fontWeight: FontWeight.w700,
+                                             color: Color(0xff172B4D),
+                                           ),
+                                         ),
+                                         SizedBox(height: 4),
+                                         Text(
+                                           "Annual leave usage summary",
+                                           style: TextStyle(
+                                             fontSize: 10,
+                                             fontWeight: FontWeight.w500,
+                                             color: Color(0xff98A2B3),
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 ],
+                               ),
 
-                            const SizedBox(height: 8),
+                               const SizedBox(height: 8),
 
-                            // CHART
-                            SizedBox(
-                              height: 180,
-                              child: SfCircularChart(
-                                tooltipBehavior: _tooltipBehavior,
+                               // CHART
+                               SizedBox(
+                                 height: 180,
+                                 child: SfCircularChart(
+                                   tooltipBehavior: _tooltipBehavior,
 
-                                margin: const EdgeInsets.all(0),
+                                   margin: const EdgeInsets.all(0),
 
-                                annotations: [
-                                  CircularChartAnnotation(
-                                    widget: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          "$totalLeaveDays",
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            height: 1,
-                                            fontWeight: FontWeight.w800,
-                                            color: Color(0xff172B4D),
-                                          ),
-                                        ),
+                                   annotations: [
+                                     CircularChartAnnotation(
+                                       widget: Column(
+                                         mainAxisSize: MainAxisSize.min,
+                                         children: [
+                                           Text(
+                                             "$totalLeaveDays",
+                                             style: const TextStyle(
+                                               fontSize: 25,
+                                               height: 1,
+                                               fontWeight: FontWeight.w800,
+                                               color: Color(0xff172B4D),
+                                             ),
+                                           ),
 
-                                        const SizedBox(height: 4),
+                                           const SizedBox(height: 4),
 
-                                        const Text(
-                                          "ANNUAL DAYS",
-                                          style: TextStyle(
-                                            fontSize: 7,
-                                            letterSpacing: .5,
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xff98A2B3),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                           const Text(
+                                             "ANNUAL DAYS",
+                                             style: TextStyle(
+                                               fontSize: 7,
+                                               letterSpacing: .5,
+                                               fontWeight: FontWeight.w700,
+                                               color: Color(0xff98A2B3),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ],
 
-                                series: [
-                                  DoughnutSeries<_LeaveChartData, String>(
-                                    dataSource: [
-                                      _LeaveChartData(
-                                        "Leave Used",
-                                        leaveUsed,
-                                        const Color(0xff3B82F6),
-                                      ),
-                                      _LeaveChartData(
-                                        "Remaining",
-                                        remainingLeave,
-                                        const Color(0xff22C55E),
-                                      ),
-                                    ],
+                                   series: [
+                                     DoughnutSeries<_LeaveChartData, String>(
+                                       dataSource: [
+                                         _LeaveChartData(
+                                           "Leave Used",
+                                           leaveUsed,
+                                           const Color(0xff3B82F6),
+                                         ),
+                                         _LeaveChartData(
+                                           "Remaining",
+                                           remainingLeave,
+                                           const Color(0xff22C55E),
+                                         ),
+                                       ],
 
-                                    xValueMapper: (data, _) => data.title,
-                                    yValueMapper: (data, _) => data.value,
-                                    pointColorMapper: (data, _) => data.color,
+                                       xValueMapper: (data, _) => data.title,
+                                       yValueMapper: (data, _) => data.value,
+                                       pointColorMapper: (data, _) =>
+                                       data.color,
 
-                                    radius: "90%",
-                                    innerRadius: "70%",
+                                       radius: "90%",
+                                       innerRadius: "70%",
 
-                                    strokeWidth: 2,
-                                    strokeColor: Colors.white,
+                                       strokeWidth: 2,
+                                       strokeColor: Colors.white,
 
-                                    animationDuration: 700,
-                                    enableTooltip: true,
-                                  ),
-                                ],
-                              ),
-                            ),
+                                       animationDuration: 700,
+                                       enableTooltip: true,
+                                     ),
+                                   ],
+                                 ),
+                               ),
 
-                            // DIVIDER
-                            const Divider(
-                              height: 1,
-                              color: Color(0xffF0F2F5),
-                            ),
+                               // DIVIDER
+                               const Divider(
+                                 height: 1,
+                                 color: Color(0xffF0F2F5),
+                               ),
 
-                            const SizedBox(height: 8),
+                               const SizedBox(height: 8),
 
-                            // BOTTOM DETAILS
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _leaveSummaryItem(
-                                    title: "Leave Used",
-                                    value: leaveUsed,
-                                    percentage: leaveUsedPercentage,
-                                    color: const Color(0xff3B82F6),
-                                  ),
-                                ),
+                               // BOTTOM DETAILS
+                               Row(
+                                 children: [
+                                   Expanded(
+                                     child: _leaveSummaryItem(
+                                       title: "Leave Used",
+                                       value: leaveUsed,
+                                       percentage: leaveUsedPercentage,
+                                       color: const Color(0xff3B82F6),
+                                     ),
+                                   ),
 
-                                Expanded(
-                                  child: _leaveSummaryItem(
-                                    title: "Remaining",
-                                    value: remainingLeave,
-                                    percentage: remainingLeavePercentage,
-                                    color: const Color(0xff16A34A),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 10,),
+                                   Expanded(
+                                     child: _leaveSummaryItem(
+                                       title: "Remaining",
+                                       value: remainingLeave,
+                                       percentage: remainingLeavePercentage,
+                                       color: const Color(0xff16A34A),
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                             ],
+                           );
+                         }),
+                       ),
+                       const SizedBox(height: 10,),
+                     },
 
                     /// Today's punch overview
-                    Obx(() {
-                      final totalPunchIn = hrDashboardController.hrCategoryList.value;
-                      final data = hrDashboardController.hrTodayPunchViewList.value;
+                     if(!AppClient.isAnusamm)...{
+                       Obx(() {
+                         final totalPunchIn = hrDashboardController
+                             .hrCategoryList.value;
+                         final data = hrDashboardController.hrTodayPunchViewList
+                             .value;
 
-                      final int totalPunchOut = data?.totalPunchOut ?? 0;
-                      final int missingpunchOut = data?.missingpunchout ?? 0;
-                      final int latePunchOut = data?.latePunchOutEmployee ?? 0;
+                         final int totalPunchOut = data?.totalPunchOut ?? 0;
+                         final int missingpunchOut = data?.missingpunchout ?? 0;
+                         final int latePunchOut = data?.latePunchOutEmployee ??
+                             0;
 
 
-                      return Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.fromLTRB(
-                          16,
-                          14,
-                          16,
-                          16,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: const Color(0xffE4E7EC),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(.04),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              getAttendanceTitle("Punch Overview"),
-                              // "Today's Punch Overview",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xff172B4D),
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              "Real-time terminal scan count",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff98A2B3),
-                              ),
-                            ),
+                         return Container(
+                           width: double.infinity,
+                           padding: const EdgeInsets.fromLTRB(
+                             16,
+                             14,
+                             16,
+                             16,
+                           ),
+                           decoration: BoxDecoration(
+                             color: Colors.white,
+                             borderRadius: BorderRadius.circular(16),
+                             border: Border.all(
+                               color: const Color(0xffE4E7EC),
+                             ),
+                             boxShadow: [
+                               BoxShadow(
+                                 color: Colors.black.withOpacity(.04),
+                                 blurRadius: 8,
+                                 offset: const Offset(0, 2),
+                               ),
+                             ],
+                           ),
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Text(
+                                 getAttendanceTitle("Punch Overview"),
+                                 // "Today's Punch Overview",
+                                 style: TextStyle(
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w700,
+                                   color: Color(0xff172B4D),
+                                 ),
+                               ),
+                               SizedBox(height: 4),
+                               Text(
+                                 "Real-time terminal scan count",
+                                 style: TextStyle(
+                                   fontSize: 10,
+                                   fontWeight: FontWeight.w500,
+                                   color: Color(0xff98A2B3),
+                                 ),
+                               ),
 
-                            const SizedBox(height: 18),
+                               const SizedBox(height: 18),
 
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _leaveOverviewCard(
-                                    title: "TOTAL PUNCH IN",
-                                    value: "${totalPunchIn?.totalPresentEmployee}",
-                                    iconColor: const Color(0xff10b981),
-                                    iconBackground: const Color(0xffEEF4FF),
-                                    iconAsset: "assets/svg_files/punch.svg",
-                                  ),
-                                ),
+                               Row(
+                                 children: [
+                                   Expanded(
+                                     child: _leaveOverviewCard(
+                                       title: "TOTAL PUNCH IN",
+                                       value: "${totalPunchIn
+                                           ?.totalPresentEmployee}",
+                                       iconColor: const Color(0xff10b981),
+                                       iconBackground: const Color(0xffEEF4FF),
+                                       iconAsset: "assets/svg_files/punch.svg",
+                                     ),
+                                   ),
 
-                                const SizedBox(width: 8),
+                                   const SizedBox(width: 8),
 
-                                Expanded(
-                                  child: _leaveOverviewCard(
-                                    title: "TOTAL PUNCH OUT",
-                                    value: "$totalPunchOut",
-                                    iconColor: const Color(0xff8b5cf6),
-                                    iconBackground: const Color(0xffE9F9EF),
-                                    iconAsset: "assets/svg_files/punchOut.svg",
-                                  ),
-                                ),
-                              ],
-                            ),
+                                   Expanded(
+                                     child: _leaveOverviewCard(
+                                       title: "TOTAL PUNCH OUT",
+                                       value: "$totalPunchOut",
+                                       iconColor: const Color(0xff8b5cf6),
+                                       iconBackground: const Color(0xffE9F9EF),
+                                       iconAsset: "assets/svg_files/punchOut.svg",
+                                     ),
+                                   ),
+                                 ],
+                               ),
 
-                            const SizedBox(height: 10),
+                               const SizedBox(height: 10),
 
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _leaveOverviewCard(
-                                    title: "MISSING PUNCH OUT",
-                                    value: "$missingpunchOut",
-                                    icon: Icons.warning_amber_rounded,
-                                    iconColor: const Color(0xfff59e0b),
-                                    iconBackground: const Color(0xffF1EDFF),
-                                  ),
-                                ),
+                               Row(
+                                 children: [
+                                   Expanded(
+                                     child: _leaveOverviewCard(
+                                       title: "MISSING PUNCH OUT",
+                                       value: "$missingpunchOut",
+                                       icon: Icons.warning_amber_rounded,
+                                       iconColor: const Color(0xfff59e0b),
+                                       iconBackground: const Color(0xffF1EDFF),
+                                     ),
+                                   ),
 
-                                const SizedBox(width: 8),
+                                   const SizedBox(width: 8),
 
-                                Expanded(
-                                  child: _leaveOverviewCard(
-                                    title: "LATE PUNCH OUT",
-                                    value: "$latePunchOut",
-                                    icon: Icons.access_time_rounded,
-                                    iconColor: const Color(0xfff43f5e),
-                                    iconBackground: const Color(0xfffff0df),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                    const SizedBox(height: 10,),
-
+                                   Expanded(
+                                     child: _leaveOverviewCard(
+                                       title: "LATE PUNCH OUT",
+                                       value: "$latePunchOut",
+                                       icon: Icons.access_time_rounded,
+                                       iconColor: const Color(0xfff43f5e),
+                                       iconBackground: const Color(0xfffff0df),
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                             ],
+                           ),
+                         );
+                       }),
+                       const SizedBox(height: 10,),
+                     },
                     /// Upcoming holidays
 
                     Obx(() {

@@ -18374,7 +18374,7 @@ class _NMRBillVerificationState extends State<NMRBillVerification> {
               ),
             ),
           ),
-          bottomNavigationBar: Row(
+          bottomNavigationBar: widget.checkheading == "BILL VERIFICATION - NMR"? null:Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
