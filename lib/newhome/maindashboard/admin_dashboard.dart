@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math' as math;
+import '../../app_theme/app_colors.dart';
 import '../../commonpopup/adminDashViewAllScreen.dart';
 import '../../controller/admin_dashboard_controller.dart';
 import '../../controller/logincontroller.dart';
@@ -46,70 +47,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       await adminDashboardController.getAdminDashboardDetails();
     });
   }
-  Future<bool> showExit_Popup(BuildContext context) async {
-    return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Exit App!'),
-        content: const Text('Do you want to exit an App?'),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(left: 20, right: 20),
-            child: IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text("Cancel",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize:
-                                RequestConstant.Lable_Font_SIZE))),
-                  ),
-                  VerticalDivider(
-                    color: Colors.grey.shade400,
-                    width: 5,
-                    thickness: 2,
-                    indent: 15,
-                    endIndent: 15,
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      width:
-                      BaseUtitiles.getWidthtofPercentage(context, 15),
-                      child: TextButton(
-                        onPressed: () {
-                          exit(0);
-                        },
-                        // onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text(
-                          "Exit",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: RequestConstant.Lable_Font_SIZE,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ) ??
-        false;
-  }
 
   @override
   Widget build(BuildContext context) {
     return  WillPopScope(
-    onWillPop: () => showExit_Popup(context),
+      onWillPop: () => showExit_Popup(context),
       child: SafeArea(
         top: false,
         child: Scaffold(
@@ -121,7 +63,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -427,7 +369,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: itemList.length > 3 ? 3 : itemList.length,
+                                    itemCount: itemList.length > 2 ? 2 : itemList.length,
                                     separatorBuilder: (_, __) =>
                                     const SizedBox(height: 12),
                                     itemBuilder: (context, index) {
@@ -492,7 +434,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                                         style: TextStyle(
                                                           fontWeight: FontWeight.w800,
                                                           fontSize: 13,
-                                                          color: Theme.of(context).primaryColor,
+                                                          color: Theme.of(context).primaryColor
                                                         ),
                                                       ),
                                                     ],
@@ -608,7 +550,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               child: Text(
                                                 "View All",
                                                 style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
+                                                  color:Theme.of(context).primaryColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -620,6 +562,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
+                                adminDashboardController.filteredBudgetVsActualList.isNotEmpty ?
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -633,7 +576,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                       "Actual %",
                                     ),
                                   ],
-                                ),
+                                ) : SizedBox(),
                                 const SizedBox(height: 15),
 
                                 Obx(() {
@@ -654,6 +597,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                             a.completionPercentage ?? 0.0,
                                           ),
                                     );
+                                  if (chartData.isEmpty) {
+                                    return const SizedBox(
+                                      height: 250,
+                                      child: Center(
+                                        child: Text(
+                                          "No Record Found",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xff667085),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
 
                                   final topThree = chartData.take(3).toList();
                                   return SizedBox(
@@ -675,6 +633,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                       primaryXAxis: CategoryAxis(
                                         visibleMinimum: 0,
                                         visibleMaximum: 2,
+                                        // initialVisibleMinimum: 0,
+                                        // initialVisibleMaximum: 2,
                                         majorGridLines: const MajorGridLines(width: 0),
                                         majorTickLines: const MajorTickLines(size: 0),
                                         axisLine: const AxisLine(width: 0),
@@ -865,6 +825,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
+                                adminDashboardController.filteredBudgetVsSpendList.isNotEmpty ?
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -878,7 +839,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                       "Spent (₹)",
                                     ),
                                   ],
-                                ),
+                                ) : SizedBox(),
                                 const SizedBox(height: 15),
 
                                 Obx(() {
@@ -889,6 +850,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                           (a, b) => adminDashboardController.parseChartValue(b.budget)
                                           .compareTo(adminDashboardController.parseChartValue(a.budget)),
                                     );
+                                  if (chartData.isEmpty) {
+                                    return const SizedBox(
+                                      height: 250,
+                                      child: Center(
+                                        child: Text(
+                                          "No Record Found",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xff667085),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
                                   final topThree = chartData.take(3).toList();
 
                                   final axisValues = getYAxisValues(topThree);
@@ -902,6 +878,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                       primaryXAxis: CategoryAxis(
                                         visibleMinimum: 0,
                                         visibleMaximum: 2,
+                                        // initialVisibleMinimum: 0,
+                                        // initialVisibleMaximum: 2,
                                         majorGridLines: const MajorGridLines(width: 0),
                                         majorTickLines: const MajorTickLines(size: 0),
                                         axisLine: const AxisLine(width: 0),
@@ -1538,8 +1516,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Top 2 Active Projects",
+                                    Text(adminDashboardController.boqProgressTableList.length>2
+                                        ? "Top 2 Active Projects"
+                                        : adminDashboardController.boqProgressTableList.length>1
+                                        ? "Top 1 Active Project"
+                                        : "Top Active Project",
                                       style: TextStyle(
                                           fontSize: 14, fontWeight: FontWeight.bold),
                                     ),

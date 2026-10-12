@@ -44,11 +44,11 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
         currentDate.toString().substring(0, 10);
     hrDashboardController.getHrDashboardDetails();
     hrDashboardController.getHrCardsList();
-    hrDashboardController.getPendingLeaveRequest();
     _calendarMonth = DateTime.now();
 
     _updateCalendarDateRange();
     if (AppClient.isAnusamm){
+      hrDashboardController.getPendingLeaveRequest();
       hrDashboardController.getPlanningCalendar_List();
     }
 
@@ -159,8 +159,8 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
               onRefresh: () async {
                 await hrDashboardController.getHrDashboardDetails();
                 await hrDashboardController.getHrCardsList();
-                await hrDashboardController.getPendingLeaveRequest();
                 if (AppClient.isAnusamm) {
+                  await hrDashboardController.getPendingLeaveRequest();
                   await hrDashboardController.getPlanningCalendar_List();
                 }
               },
@@ -1332,6 +1332,8 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
                     /// Smart insights
 
                     Obx(() {
+                      final data = hrDashboardController.hrTodayPunchViewList.value;
+                      final int missingpunchOut = data?.missingpunchout ?? 0;
                       final data1 = hrDashboardController.hrCategoryList.value;
                       final holidays = hrDashboardController.hrUpcomingHolidayList;
                       final monthPerformList = hrDashboardController.hrMonthlyPerformance;
@@ -1438,9 +1440,9 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
                                   _smartInsightsCard(
                                     title: "MISSING PUNCH OUTS",
                                     value:
-                                    data1?.totalPresentEmployee == null
+                                    missingpunchOut == null
                                         ? "-" :
-                                    "${data1?.totalPresentEmployee} employees have not punched out yet today. Check shifts and logs.",
+                                    "${missingpunchOut} employees have not punched out yet today. Check shifts and logs.",
                                     iconColor: const Color(0xff8b5cf6),
                                     iconAsset: "assets/svg_files/punchOut.svg",
                                   ),
@@ -1453,15 +1455,15 @@ class _HrDashboardState extends State<HrDashboard> with SingleTickerProviderStat
                                     icon: Icons.bar_chart_rounded,
                                     iconColor: const Color(0xff27AE60),
                                   ),
-
-                                  const Divider(thickness: 1,height: 1.5,),
-
-                                  _smartInsightsCard(
-                                    title: "UPCOMING HOLIDAYS",
-                                    value: "Next holiday is ${leaveName} in ${daysLeft} days.",
-                                    icon: Icons.calendar_today_outlined,
-                                    iconColor: const Color(0xff2878F0),
-                                  ),
+                                  if (holidays.isNotEmpty)
+                                    const Divider(thickness: 1,height: 1.5,),
+                                  if (holidays.isNotEmpty)
+                                    _smartInsightsCard(
+                                      title: "UPCOMING HOLIDAYS",
+                                      value: "Next holiday is ${leaveName} in ${daysLeft} days.",
+                                      icon: Icons.calendar_today_outlined,
+                                      iconColor: const Color(0xff2878F0),
+                                    ),
                                 ],
                               ),
                             ),

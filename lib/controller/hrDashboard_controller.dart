@@ -101,9 +101,9 @@ class HrDashboardController extends GetxController{
         if(response.result!.isNotEmpty) {
           pendingLeaveReqTypes.assignAll(response.result!);
         }
-        else {
-          BaseUtitiles.showToast("No Data Found");
-        }
+        // else {
+        //   BaseUtitiles.showToast("No Data Found");
+        // }
       }  else {
         BaseUtitiles.showToast(response.message ?? RequestConstant.NETWORKERROR);
       }
