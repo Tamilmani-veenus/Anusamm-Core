@@ -61,7 +61,6 @@ class AppClient {
   static bool get isVrindhavana => packageName == "com.veenus.vrindhavana";
   static bool get isRKCPL => packageName == "com.veenus.rkcpl";
   static bool get isPrahkurti => packageName == "com.veenus.prahkurti";
-  static bool get isIOSProjects => packageName == "com.veenus.iosprojects";
 }
 
 class ApiConstant{

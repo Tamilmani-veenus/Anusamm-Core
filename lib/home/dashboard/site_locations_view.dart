@@ -39,14 +39,14 @@ class _SiteLocationViewState extends State<SiteLocationView> {
     super.initState();
 
     siteLocationController.projectNameSearch.text = "";
-    if (AppClient.isIOSProjects) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
-        setState(() {});
-      });
-    }
+    // if (AppClient.isIOSProjects) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //     position = await Geolocator.getCurrentPosition(
+    //       desiredAccuracy: LocationAccuracy.high,
+    //     );
+    //     setState(() {});
+    //   });
+    // }
   }
 
   @override
@@ -181,23 +181,24 @@ class _SiteLocationViewState extends State<SiteLocationView> {
                                         siteLocationController
                                             .projectNameRxList[i].projectId
                                             .toString();
-                                    if (AppClient.isIOSProjects) {
-                                      if (position != null) {
-                                        Get.to(() => DrawMapView(
-                                              latitude:
-                                                  position!.latitude.toString(),
-                                              longitude: position!.longitude
-                                                  .toString(),
-                                              ProjectId: siteLocationController
-                                                  .projectId,
-                                            ));
-                                      }
-                                    }else{
+                                    // if (AppClient.isIOSProjects) {
+                                    //   if (position != null) {
+                                    //     Get.to(() => DrawMapView(
+                                    //           latitude:
+                                    //               position!.latitude.toString(),
+                                    //           longitude: position!.longitude
+                                    //               .toString(),
+                                    //           ProjectId: siteLocationController
+                                    //               .projectId,
+                                    //         ));
+                                    //   }
+                                    // }
+                                    // else{
                                       Get.to(() =>
                                          RadiusView(
                                               ProjectId: siteLocationController
                                                   .projectId));
-                                    }
+                                    // }
                                   } else {
                                     await punchInController
                                         .getProjectPunchInSts();
