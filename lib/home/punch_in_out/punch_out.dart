@@ -143,48 +143,48 @@ class _PunchOutState extends State<PunchOut> {
   }
 
   void checkGeoFence(Position position) {
-    if (AppClient.isIOSProjects) {
-      if (widget.latitude != null &&
-          widget.longitude != null &&
-          widget.latitude!.isNotEmpty &&
-          widget.longitude!.isNotEmpty) {
-
-        List<String> latList = widget.latitude!.split(",");
-        List<String> lonList = widget.longitude!.split(",");
-
-        List<LatLng> polygon = [];
-
-        for (int i = 0; i < latList.length; i++) {
-          polygon.add(
-            LatLng(
-              double.parse(latList[i]),
-              double.parse(lonList[i]),
-            ),
-          );
-        }
-        bool inside = isPointInPolygon(
-          LatLng(position.latitude, position.longitude),
-          polygon,
-        );
-
-        if (inside) {
-          setState(() {
-            status = true;
-            loading = false;
-          });
-          Fluttertoast.showToast(msg: "✅ You are inside the polygon");
-        } else {
-          setState(() {
-            status = false;
-            loading = false;
-          });
-          Fluttertoast.showToast(msg: "❌ You are outside the polygon");
-        }
-
-        return;
-      }
-    }
-    else{
+    // if (AppClient.isIOSProjects) {
+    //   if (widget.latitude != null &&
+    //       widget.longitude != null &&
+    //       widget.latitude!.isNotEmpty &&
+    //       widget.longitude!.isNotEmpty) {
+    //
+    //     List<String> latList = widget.latitude!.split(",");
+    //     List<String> lonList = widget.longitude!.split(",");
+    //
+    //     List<LatLng> polygon = [];
+    //
+    //     for (int i = 0; i < latList.length; i++) {
+    //       polygon.add(
+    //         LatLng(
+    //           double.parse(latList[i]),
+    //           double.parse(lonList[i]),
+    //         ),
+    //       );
+    //     }
+    //     bool inside = isPointInPolygon(
+    //       LatLng(position.latitude, position.longitude),
+    //       polygon,
+    //     );
+    //
+    //     if (inside) {
+    //       setState(() {
+    //         status = true;
+    //         loading = false;
+    //       });
+    //       Fluttertoast.showToast(msg: "✅ You are inside the polygon");
+    //     } else {
+    //       setState(() {
+    //         status = false;
+    //         loading = false;
+    //       });
+    //       Fluttertoast.showToast(msg: "❌ You are outside the polygon");
+    //     }
+    //
+    //     return;
+    //   }
+    // }
+    // else{
       double lat = double.tryParse(widget.latitude!.trim()) ?? 0.0;
       double lon = double.tryParse(widget.longitude!.trim()) ?? 0.0;
       double radius = double.tryParse(widget.radius!.trim()) ?? 0.0;
@@ -209,7 +209,7 @@ class _PunchOutState extends State<PunchOut> {
         });
         debugPrint("Status :: You are outside the location");
       }
-    }
+    // }
   }
 
   bool isPointInPolygon(LatLng point, List<LatLng> polygon) {

@@ -379,6 +379,13 @@ class _MrnPreapprovalItemlistState extends State<MrnPreapprovalItemlist> {
                                                       borderRadius: BorderRadius.all(Radius.circular(10))),
                                                 ),
                                                 style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16.0),
+                                                onTap: () {
+                                                  if (mrnPreApprovalController.mrnpre_ApprQty_ListController[index].text != "" && mrnPreApprovalController.mrnpre_ApprQty_ListController[index].text != "0" &&mrnPreApprovalController.mrnpre_ApprQty_ListController[index].text != "0.0") {
+                                                    return;
+                                                  } else {
+                                                    mrnPreApprovalController.mrnpre_ApprQty_ListController[index].text = "";
+                                                  }
+                                                },
                                                 onChanged: (value) {
                                                   // setState(() {
                                                   if(mrn_request_controller.activeType.value){

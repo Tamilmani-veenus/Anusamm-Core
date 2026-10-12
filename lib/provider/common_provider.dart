@@ -574,6 +574,18 @@ class CommonProvider {
     }
   }
 
+  static Future<dynamic> checkBalQtyForProAndSite(proId,siteId) async {
+    try {
+      final value = await ApiManager.getAPICall(ApiConstant.CHECKBALQTYPROSITE + "?proid=$proId&siteid=$siteId");
+      print('API Response: ${value}');
+      return jsonDecode(value);
+
+    } catch (error) {
+      print("Error == $error");
+      return null;
+    }
+  }
+
   static Future<dynamic> SaveAccountnameScreenEntryAPI(
       String body, int accNameId, String saveButton) async {
 

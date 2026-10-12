@@ -16,6 +16,7 @@ import '../models/materialintentsave_model.dart';
 import '../models/mrnrq_addmat_resmodel.dart';
 import '../provider/common_provider.dart';
 import '../provider/mrn_request_indent_provider.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'logincontroller.dart';
@@ -80,6 +81,7 @@ class MRN_Request_Controller extends GetxController {
 
 
   RxBool activeType = false.obs;
+  RxBool balQtyForProAndSite = false.obs;
 
 
   var materialTableModel = Materiallist();
@@ -177,6 +179,15 @@ class MRN_Request_Controller extends GetxController {
     }
 }
 
+  Future<bool?> CheckBalQtyProAndSite() async {
+    final value = await CommonProvider.checkBalQtyForProAndSite(projectController.selectedProjectId.value,siteController.selectedsiteId.value);
+    if (value != null) {
+      balQtyForProAndSite.value=value;
+    }
+    else {
+      BaseUtitiles.showToast("Something went wrong..");
+    }
+  }
 
   void handleConfig(Map<String, dynamic> data) {
     if (data["projectWise"] == true) {
@@ -196,34 +207,61 @@ class MRN_Request_Controller extends GetxController {
     }
   }
 
+
+  // MaterialItemlistBal_clickEdit(int index) {
+  //   double balQty = double.parse(
+  //       Material_itemview_GetDbList.value[index].balqty.toString());
+  //
+  //   double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
+  //       ? 0
+  //       : double.parse(Addwork_qtyControllers[index].value.text);
+  //   if(ReqType.value == "PO")
+  //   {
+  //     if ( (AppClient.isAnusamm && balQtyForProAndSite.value == true) && enteredQty > balQty) {
+  //       enteredQty = 0;
+  //       Addwork_qtyControllers[index].text = "0.0";
+  //       BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+  //     }
+  //     else {
+  //       // If none of the above conditions are met, call updateConsumTables()
+  //       updateConsumTables();
+  //     }
+  //   }
+  //   else {
+  //     updateConsumTables();
+  //   }
+  // }
+
   MaterialItemlistBal_clickEdit(int index) {
     double balQty = double.parse(
-        Material_itemview_GetDbList.value[index].balqty.toString());
+      Material_itemview_GetDbList.value[index].balqty.toString(),
+    );
 
-    double enteredQty = Addwork_qtyControllers[index].value.text.isEmpty
+    double enteredQty =
+    Addwork_qtyControllers[index].value.text.isEmpty
         ? 0
-        : double.parse(Addwork_qtyControllers[index].value.text);
-    if(ReqType.value == "PO")
-    {
-      if (enteredQty > balQty) {
+        : double.parse(
+      Addwork_qtyControllers[index].value.text,
+    );
+
+    if (ReqType.value == "PO") {
+      if ((!AppClient.isAnusamm || balQtyForProAndSite.value) &&
+          enteredQty > balQty) {
         enteredQty = 0;
         Addwork_qtyControllers[index].text = "0.0";
-        BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
-      }
-      else {
-      // If none of the above conditions are met, call updateConsumTables()
+
+        BaseUtitiles.showToast(
+          "More than Bal Qty, Not Allowed",
+        );
+      } else {
         updateConsumTables();
       }
-    }
-    else {
+    } else {
       updateConsumTables();
     }
   }
 
-
-
-
-    Future<void> getAppTypeList() async {
+  Future<void> getAppTypeList() async {
     appTypeList.clear();
     var response = await Mrn_Req_provider.getAppTypeListAPI();
     if (response != null) {
@@ -279,59 +317,34 @@ class MRN_Request_Controller extends GetxController {
             Itemlist_qtyControllers[j].value.text == "0" ||
             Itemlist_qtyControllers[j].value.text == "") {}
         if (double.parse(Itemlist_qtyControllers[j].value.text) < 0) {}
-        else if (ReqType.value == "PO") {
-          if (activeType.value && element.balqty <= 0.0) {
-            itemcount++;
-          }
-          else {
-            materialTableModel = Materiallist();
-            materialTableModel.materialid = element.materialId!;
-            materialTableModel.material = element.material!;
-            materialTableModel.scale = element.scale!;
-            materialTableModel.qty = double.parse("0");
-            materialTableModel.approxdays = 0;
-            materialTableModel.stockqty = element.stockQty;
-            materialTableModel.scaleId = element.scaleId;
-            materialTableModel.balqty = element.balqty;
-            materialTableModel.reqDetId = 0;
-            materialTableModel.remarks = "";
-            materialTableModel.desc = "";
-            Material_itemview_GetDbList.forEach((element) {
-              if (element.materialid == materialTableModel.materialid) {
-                i = 1;
-                BaseUtitiles.showToast("Entries already exist");
-              }
-            });
-            if (i == 0) {
-              materialTableList.add(materialTableModel);
-            } else {
-              i = 0;
-            }
-          }
-        }
-        else {
-          materialTableModel = new Materiallist();
+        else if (ReqType.value == "PO" && !(AppClient.isAnusamm && !balQtyForProAndSite.value) &&
+            activeType.value &&
+            element.balqty <= 0.0) {
+          itemcount++;
+        } else {
+          materialTableModel = Materiallist();
           materialTableModel.materialid = element.materialId!;
           materialTableModel.material = element.material!;
           materialTableModel.scale = element.scale!;
           materialTableModel.scaleId = element.scaleId;
           materialTableModel.stockqty = element.stockQty;
           materialTableModel.approxdays = 0;
-          materialTableModel.qty = double.parse("0");
+          materialTableModel.qty = 0;
           materialTableModel.reqDetId = 0;
           materialTableModel.balqty = element.balqty;
           materialTableModel.remarks = "";
           materialTableModel.desc = "";
-          Material_itemview_GetDbList.forEach((element) {
-            if (element.materialid == materialTableModel.materialid) {
+
+          Material_itemview_GetDbList.forEach((existingElement) {
+            if (existingElement.materialid == materialTableModel.materialid) {
               i = 1;
               BaseUtitiles.showToast("Entries already exist");
             }
           });
+
           if (i == 0) {
             materialTableList.add(materialTableModel);
-          }
-          else {
+          } else {
             i = 0;
           }
         }
@@ -343,6 +356,7 @@ class MRN_Request_Controller extends GetxController {
     if(itemcount>0){
       BaseUtitiles.showToast(itemcount.toString() + " Materials doesn't have a balqty");
     }
+    print("eeeee...${materialTableList.length}");
     return Navigator.pop(context, savedatas);
   }
 

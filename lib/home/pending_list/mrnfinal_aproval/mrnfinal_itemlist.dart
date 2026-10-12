@@ -450,8 +450,7 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                                             Theme.of(context).primaryColor,
                                             textAlign: TextAlign.center,
                                             controller:
-                                            mrnFinalApprovalController
-                                                .ApprQty_ListController[
+                                            mrnFinalApprovalController.ApprQty_ListController[
                                             index],
                                             keyboardType:
                                             TextInputType.numberWithOptions(
@@ -484,6 +483,13 @@ class _MrnfinalItemListState extends State<MrnfinalItemList> {
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16.0),
+                                            onTap: () {
+                                              if (mrnFinalApprovalController.ApprQty_ListController[index].text != "" &&mrnFinalApprovalController.ApprQty_ListController[index].text != "0" &&mrnFinalApprovalController.ApprQty_ListController[index].text != "0.0") {
+                                                return;
+                                              } else {
+                                                mrnFinalApprovalController.ApprQty_ListController[index].text = "";
+                                              }
+                                            },
                                             onChanged: (value) {
                                               if(mrn_request_controller.activeType.value)
                                                 {

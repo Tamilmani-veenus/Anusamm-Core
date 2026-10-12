@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../models/MaterialDash_matHead_model.dart';
 import '../models/materialDash_projectwise_model.dart';
+import '../models/material_dashboard_supplier_wise.dart';
 import '../provider/labourDashboard_Provider.dart';
 
 class MaterialDashboardController extends GetxController {
@@ -13,14 +14,32 @@ class MaterialDashboardController extends GetxController {
   final entryToDate = TextEditingController();
   final selectedTab = 0.obs;
   RxBool isLoading = false.obs;
+  final RxBool isSpendDistributionExpanded = false.obs;
+  final RxBool isSpendTooltipVisible = false.obs;
+  //ProjectWise
   Rx<MaterialDashProjectWise?> projectWiseResponse = Rx<MaterialDashProjectWise?>(null);
-  Rx<MaterialDashMatHead?> materialHeadResponse = Rx<MaterialDashMatHead?>(null);
   RxList<ProjectComparison> poVsBillTableList = <ProjectComparison>[].obs;
   RxList<ProjectComparison> allPoVsBillTableList = <ProjectComparison>[].obs;
   RxList<BillingCompletion> billingCompletionList = <BillingCompletion>[].obs;
   RxList<BillingCompletion> allBillingCompletionList = <BillingCompletion>[].obs;
   RxList<PoVsBillReg> poVsBillRegList = <PoVsBillReg>[].obs;
   RxList<PoVsBillReg> allPoVsBillRegList = <PoVsBillReg>[].obs;
+
+  //MaterialHead
+  Rx<MaterialDashMatHead?> materialHeadResponse = Rx<MaterialDashMatHead?>(null);
+  RxList<PoVsBillChartValue> poVsBillChartList = <PoVsBillChartValue>[].obs;
+  RxList<PoVsBillChartValue> allPoVsBillChartList = <PoVsBillChartValue>[].obs;
+  RxList<SpendDistribution> spendDistributionList = <SpendDistribution>[].obs;
+  RxList<PoVsbillTable> poVsBillMatHeadList = <PoVsbillTable>[].obs;
+  RxList<PoVsbillTable> allPoVsBillMatHeadList = <PoVsbillTable>[].obs;
+
+  //SupplierWise
+  Rx<MaterialDashSupWise?> supplierWiseResponse = Rx<MaterialDashSupWise?>(null);
+  RxList<Povsbillreg> poVsBillRegSupWiseList = <Povsbillreg>[].obs;
+  RxList<Povsbillreg> allPoVsBillRegSupWiseList = <Povsbillreg>[].obs;
+  RxList<Povsbill> poVsBillSupWiseList = <Povsbill>[].obs;
+  RxList<Povsbill> allPoVsBillSupWiseList = <Povsbill>[].obs;
+
 
   RxString selectedStatus = "All Status".obs;
   final List<String> poVsBillStatusList = [
@@ -50,7 +69,7 @@ class MaterialDashboardController extends GetxController {
         poVsBillRegList.assignAll(response.poVsBillReg ?? []);
         allPoVsBillRegList.assignAll(response.poVsBillReg ?? []);
       }
-        else {
+      else {
         projectWiseResponse.value = null;
       }
     } catch (e) {
@@ -70,6 +89,11 @@ class MaterialDashboardController extends GetxController {
       final response = await LabourDashboardProvider.getMatDashMaterialHeadAPI(fromDate,toDate);
       if (response != null && response.success == true) {
         materialHeadResponse.value = response;
+        poVsBillChartList.assignAll(response.poVsBillChartValues ?? []);
+        allPoVsBillChartList.assignAll(response.poVsBillChartValues ?? []);
+        spendDistributionList.assignAll(response.spendDistribution ?? []);
+        poVsBillMatHeadList.assignAll(response.poVsbillTable ?? []);
+        allPoVsBillMatHeadList.assignAll(response.poVsbillTable ?? []);
       }
       else {
         materialHeadResponse.value = null;
@@ -77,6 +101,31 @@ class MaterialDashboardController extends GetxController {
     } catch (e) {
       print("Dashboard Error : $e");
       materialHeadResponse.value = null;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getSupWiseDashboardDetails() async {
+    try {
+      isLoading.value = true;
+      final fromDate = convertDateForApi(entryFromDate.text);
+      final toDate = convertDateForApi(entryToDate.text);
+
+      final response = await LabourDashboardProvider.getMatDashSupWiseAPI(fromDate,toDate);
+      if (response != null && response.success == true) {
+        supplierWiseResponse.value = response;
+        poVsBillRegSupWiseList.assignAll(response.povsbillreg ?? []);
+        allPoVsBillRegSupWiseList.assignAll(response.povsbillreg ?? []);
+        poVsBillSupWiseList.assignAll(response.povsbill ?? []);
+        allPoVsBillSupWiseList.assignAll(response.povsbill ?? []);
+      }
+      else {
+        supplierWiseResponse.value = null;
+      }
+    } catch (e) {
+      print("Dashboard Error : $e");
+      supplierWiseResponse.value = null;
     } finally {
       isLoading.value = false;
     }
@@ -157,6 +206,23 @@ class MaterialDashboardController extends GetxController {
     );
   }
 
+  void filterPoVsBillChartValues(String query) {
+    if (query.trim().isEmpty) {
+      poVsBillChartList.assignAll(allPoVsBillChartList);
+      return;
+    }
+    query = query.toLowerCase();
+
+    poVsBillChartList.assignAll(
+      allPoVsBillChartList.where((item) {
+        return (item.materialHeadName ?? "").toLowerCase().contains(query) ||
+            (item.totalPoAmount?.toString() ?? "").contains(query) ||
+            (item.totalBillAmount ?? "").toLowerCase().contains(query)||
+            (item.varianceLabel ?? "").toLowerCase().contains(query);
+      }).toList(),
+    );
+  }
+
   void filterBillingValues(String query) {
     final search = query.trim().toLowerCase();
 
@@ -184,18 +250,18 @@ class MaterialDashboardController extends GetxController {
   void filterProjects() {
     if (selectedStatus.value == "All Status") {
       poVsBillTableList.assignAll(allPoVsBillTableList);
-    // }  else if (selectedStatus.value == "Under Billed") {
-    //   poVsBillTableList.assignAll(
-    //     allPoVsBillTableList.where(
-    //           (e) => e.varianceLabel?.startsWith("Under") ?? false,
-    //     ),
-    //   );
-    // } else if (selectedStatus.value == "Over Billed") {
-    //   poVsBillTableList.assignAll(
-    //     allPoVsBillTableList.where(
-    //           (e) => e.varianceLabel?.startsWith("Over") ?? false,
-    //     ),
-    //   );
+      // }  else if (selectedStatus.value == "Under Billed") {
+      //   poVsBillTableList.assignAll(
+      //     allPoVsBillTableList.where(
+      //           (e) => e.varianceLabel?.startsWith("Under") ?? false,
+      //     ),
+      //   );
+      // } else if (selectedStatus.value == "Over Billed") {
+      //   poVsBillTableList.assignAll(
+      //     allPoVsBillTableList.where(
+      //           (e) => e.varianceLabel?.startsWith("Over") ?? false,
+      //     ),
+      //   );
     }
   }
 
@@ -236,15 +302,44 @@ class MaterialDashboardController extends GetxController {
     );
   }
 
-  Color getProgressColor(double? percentage) {
-    if (percentage! > 100) {
-      return Color(0xFFEF4444);
+  void filterPOVsBillMatHeadValues(String query) {
+    final search = query.trim().toLowerCase();
+
+    if (search.isEmpty) {
+      poVsBillMatHeadList.assignAll(allPoVsBillMatHeadList);
+      return;
+    }
+
+    poVsBillMatHeadList.assignAll(
+      allPoVsBillMatHeadList.where((item) {
+        return (item.materialHeadName ?? "")
+            .toLowerCase()
+            .contains(search) ||
+            (item.poValue?.toString() ?? "")
+                .contains(search) ||
+            (item.billed?.toString() ?? "")
+                .contains(search) ||
+            (item.unbilled?.toString() ?? "")
+                .contains(search) ||
+            (item.overBilled?.toString() ?? "")
+                .contains(search) ||
+            (item.billingPercent?.toString() ?? "")
+                .contains(search) ||
+            (item.variance?.toString() ?? "")
+                .contains(search);
+      }).toList(),
+    );
+  }
+
+  Color getProgressColor(double percentage) {
+    if (percentage > 100) {
+      return const Color(0xFFEF4444); // Red
     } else if (percentage == 100) {
-      return Color(0xFF10B981);
+      return const Color(0xFF10B981); // Green
     } else if (percentage < 1) {
-      return Color(0xF74F5DEE);
+      return const Color(0xFF4F5DEE); // Blue
     } else {
-      return Color(0xFFF59E0B);
+      return const Color(0xFFF59E0B); // Orange
     }
   }
 
@@ -269,5 +364,67 @@ class MaterialDashboardController extends GetxController {
     }
   }
 
+  Color getVarianceColor(String? varianceLabel) {
+    if (varianceLabel == null || varianceLabel.isEmpty) {
+      return Colors.grey;
+    }
+
+    final label = varianceLabel.toLowerCase();
+
+    if (label.startsWith("under")) {
+      return Color(0xF7EEB647);
+    }
+
+    if (label.startsWith("over")) {
+      return const Color(0xFFEF4444);
+    }
+
+    if (label == "match") {
+      return Color(0xFF10B981);
+    }
+
+    return Color(0xFFF59E0B);
+  }
+
+  double parseAmount(String? value) {
+    if (value == null || value.trim().isEmpty) return 0;
+
+    final text = value
+        .replaceAll('₹', '')
+        .trim()
+        .toUpperCase();
+
+    if (text.endsWith('CR')) {
+      final number = double.tryParse(
+        text.replaceAll('CR', '').trim(),
+      );
+
+      return (number ?? 0) * 10000000;
+    }
+
+    if (text.endsWith('L')) {
+      final number = double.tryParse(
+        text.replaceAll('L', '').trim(),
+      );
+
+      return (number ?? 0) * 100000;
+    }
+
+    return double.tryParse(text) ?? 0;
+  }
+
+  Color getMaterialHeadColor(int index) {
+    const colors = [
+      Color(0xFF2563EB),
+      Color(0xFF10B981),
+      Color(0xFFF59E0B),
+      Color(0xFFEF4444),
+      Color(0xFF8B5CF6),
+      Color(0xFFEC4899),
+      Color(0xFF3B82F6),
+    ];
+
+    return colors[index % colors.length];
+  }
 
 }

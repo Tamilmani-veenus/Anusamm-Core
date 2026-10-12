@@ -100,6 +100,27 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                   Row(
                     children: [
                       const SizedBox(width: 15),
+                      if (!Platform.isAndroid &&_currentPage == 0 && (isLabour || isMaterial || isHr))
+                        Row(
+                          children: [
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const Dashboard_screen(),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new_rounded,size: 18,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
                       const Expanded(
                           flex: 3,
                           child: Text(
@@ -132,26 +153,26 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                             });
                           },
                           itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: "Admin",
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 30,
-                                    child: Icon(
-                                      Icons.person,
-                                      size: 20,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  const Text(
-                                    "Admin Dashboard",
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // PopupMenuItem(
+                            //   value: "Admin",
+                            //   child: Row(
+                            //     children: [
+                            //       SizedBox(
+                            //         width: 30,
+                            //         child: Icon(
+                            //           Icons.person,
+                            //           size: 20,
+                            //           color: Theme.of(context).primaryColor,
+                            //         ),
+                            //       ),
+                            //       const SizedBox(width: 8),
+                            //       const Text(
+                            //         "Admin Dashboard",
+                            //         style: TextStyle(fontSize: 14),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
 
                             PopupMenuItem(
                               value: "Labour",
@@ -174,47 +195,47 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                               ),
                             ),
 
-                            // PopupMenuItem(
-                            //   value: "Material",
-                            //   child: Row(
-                            //     children: [
-                            //       SizedBox(
-                            //         width: 30,
-                            //         child: Icon(
-                            //           Icons.layers,
-                            //           size: 20,
-                            //           color: Theme.of(context).primaryColor,
-                            //         ),
-                            //       ),
-                            //       const SizedBox(width: 8),
-                            //       const Text(
-                            //         "Material Dashboard",
-                            //         style: TextStyle(fontSize: 14),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            //
-                            // PopupMenuItem(
-                            //   value: "Hr",
-                            //   child: Row(
-                            //     children: [
-                            //       SizedBox(
-                            //         width: 30,
-                            //         child: FaIcon(
-                            //           FontAwesomeIcons.users,
-                            //           size: 20,
-                            //           color: Theme.of(context).primaryColor,
-                            //         ),
-                            //       ),
-                            //       const SizedBox(width: 8),
-                            //       const Text(
-                            //         "HR Dashboard",
-                            //         style: TextStyle(fontSize: 14),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
+                            PopupMenuItem(
+                              value: "Material",
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                    child: Icon(
+                                      Icons.layers,
+                                      size: 20,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text(
+                                    "Material Dashboard",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            PopupMenuItem(
+                              value: "Hr",
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.users,
+                                      size: 20,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text(
+                                    "HR Dashboard",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         )
                       ),
@@ -259,7 +280,7 @@ class _Dashboard_screenState extends State<Dashboard_screen> {
                         Container(
                           alignment: Alignment.center,
                           child: isLabour ? const HomeScreen() : isAdmin ? const AdminHomeScreen()
-                              : isMaterial ? const MaterialHomeScreen() :isHr ? const HrDashboard() :const Home_Dashboard(),
+                              : isMaterial ? const MaterialHomeScreen() :isHr ? const HrDashboard() :const AdminHomeScreen(),
                         ),
                         Container(
                           alignment: Alignment.center,

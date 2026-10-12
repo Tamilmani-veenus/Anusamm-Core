@@ -14,6 +14,7 @@ import '../models/materialintentsave_model.dart';
 import '../provider/mrn_request_indent_provider.dart';
 import '../provider/mrnfinalapproval_provider.dart';
 import '../provider/pendinglist_provider.dart';
+import '../utilities/apiconstant.dart';
 import '../utilities/baseutitiles.dart';
 import '../utilities/requestconstant.dart';
 import 'logincontroller.dart';
@@ -180,6 +181,38 @@ class MrnPreApprovalController extends GetxController {
     }
   }
 
+  // void MaterialItemlistBal_clickEdit(int index) {
+  //   final double balQty = double.tryParse(
+  //     MaterialAppr_itemview_GetDbList.value[index].balqty.toString(),
+  //   ) ??
+  //       0.0;
+  //
+  //   final double enteredQty = double.tryParse(
+  //     mrnpre_ApprQty_ListController[index].text,
+  //   ) ??
+  //       0.0;
+  //
+  //   bool checkBalQty = false;
+  //
+  //   if (mrn_request_controller.ReqType.value == "PO") {
+  //     checkBalQty = true;
+  //   }
+  //
+  //   else if (AppClient.isAnusamm && mrn_request_controller.balQtyForProAndSite.value == true) {
+  //     if (balQty != 0) {
+  //       checkBalQty = true;
+  //     }
+  //   }
+  //
+  //   if (checkBalQty && enteredQty > balQty) {
+  //     mrnpre_ApprQty_ListController[index].text = "0.0";
+  //     BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
+  //     return;
+  //   }
+  //
+  //   Approval_updateConsumTables();
+  // }
+
   MaterialItemlistBal_clickEdit(int index) {
     double balQty = double.parse(
         MaterialAppr_itemview_GetDbList.value[index].balqty.toString());
@@ -189,7 +222,8 @@ class MrnPreApprovalController extends GetxController {
         : double.parse(mrnpre_ApprQty_ListController[index].value.text);
     if(mrn_request_controller.ReqType.value == "PO")
     {
-      if (enteredQty > balQty) {
+      if ((!AppClient.isAnusamm || mrn_request_controller.balQtyForProAndSite.value) &&
+          enteredQty > balQty) {
         enteredQty = 0;
         mrnpre_ApprQty_ListController[index].text = "0.0";
         BaseUtitiles.showToast("More than Bal Qty, Not Allowed");
