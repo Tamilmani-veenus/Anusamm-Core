@@ -550,7 +550,12 @@ class _SetMapViewState extends State<SetMapView> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () async {
-                  await siteLocationController.setSiteLocation(widget.ProjectId.toString(),widget.latitude!,widget.longitude!);
+                  // await siteLocationController.setSiteLocation(widget.ProjectId.toString(),widget.latitude!,widget.longitude!);
+                  await siteLocationController.setSiteLocation(
+                    widget.ProjectId.toString(),
+                    siteLocationController.latitude!,
+                    siteLocationController.longitude!,
+                  );
                 },
               ),
             ),
