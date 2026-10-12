@@ -1516,13 +1516,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(adminDashboardController.boqProgressTableList.length>2
-                                        ? "Top 2 Active Projects"
-                                        : adminDashboardController.boqProgressTableList.length>1
-                                        ? "Top 1 Active Project"
-                                        : "Top Active Project",
-                                      style: TextStyle(
-                                          fontSize: 14, fontWeight: FontWeight.bold),
+                                    Obx(()=> Text(adminDashboardController.boqProgressTableList.length == 2
+                                          ? "Top 2 Active Projects"
+                                          : adminDashboardController.boqProgressTableList.length == 1
+                                          ? "Top 1 Active Project"
+                                          : "Top Active Project",
+                                        style: TextStyle(
+                                            fontSize: 14, fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                     Obx(
                                           () => Visibility(
