@@ -90,6 +90,9 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
         consumption_controller.Consum_preparedbyController.text = loginController.EmpName();
         consumption_controller.autoYearWiseNoController.text = autoYearWiseNoController.Conum_autoYrsWise.value;
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -191,6 +194,18 @@ class _Consumption_EntryState extends State<Consumption_Entry> {
                                   value: consumption_controller.ConsumDate.text,
                                   controller: consumption_controller.ConsumDate,
                                   selectable: loginController.user.value.userType != "S",
+                                  initialDate: DateTime.tryParse(
+                                    consumption_controller.ConsumDate.text,
+                                  ) ??
+                                      DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime.now(),
+                                  onChanged: (date) {
+                                    setState(() {
+                                      consumption_controller.ConsumDate.text =
+                                          CommonDateUtils.formatApiDate(date);
+                                    });
+                                  },
                                 ),
                               ),
                             ),

@@ -463,21 +463,19 @@ class _MRNRequest_Indent_EntryState extends State<MRNRequest_Indent_Entry> {
                                     child: ConstIcons.projectName),
                               ),
                               onTap: () async {
-
-                                  if (mrn_request_controller.saveButton.value == RequestConstant.VERIFY ||
+                                if (mrn_request_controller.saveButton.value == RequestConstant.VERIFY ||
                                       mrn_request_controller
                                           .Material_itemview_GetDbList
                                           .value
                                           .isNotEmpty) {
-                                  } else {
+                                } else {
                                     await projectController.getProjectList();
                                     bottomsheetControllers.ProjectName(
                                         context,
                                         projectController
                                             .getdropDownvalue.value);
                                   }
-
-                              },
+                                  },
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     value == "--Select--" ||

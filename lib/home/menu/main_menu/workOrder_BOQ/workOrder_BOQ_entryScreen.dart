@@ -91,6 +91,9 @@ class _WorkOrderBoqEntryScreenState extends State<WorkOrderBoqEntryScreen> {
         workOrderBoqController.rebateAmount.text = "0.0";
         workOrderBoqController.Roundoff.text = "0.0";
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -184,12 +187,17 @@ class _WorkOrderBoqEntryScreenState extends State<WorkOrderBoqEntryScreen> {
                         value: workOrderBoqController.workOrdentryDateController.text,
                         controller: workOrderBoqController.workOrdentryDateController,
                         selectable: loginController.user.value.userType != "S",
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
+                        initialDate: DateTime.tryParse(
+                          workOrderBoqController.workOrdentryDateController.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
                         lastDate: DateTime.now(),
                         onChanged: (date) {
-                          workOrderBoqController.workOrdentryDateController
-                              .text = CommonDateUtils.formatApiDate(date);
+                          setState(() {
+                            workOrderBoqController.workOrdentryDateController.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
                         },
                       ),
                     ),

@@ -102,6 +102,9 @@ class _DailyWork_done_DPR_EntryState extends State<DailyWork_done_DPR_Entry> {
         await autoYearWiseNoController.AutoYearWiseNo("DPR");
         dailyWrkDone_DPR_Controller.dpr_autoYearWiseNoController.text=autoYearWiseNoController.DPR_autoYrsWise.value;
       }
+      if (!mounted) return;
+
+      setState(() {});
      });
     super.initState();
   }
@@ -201,6 +204,18 @@ class _DailyWork_done_DPR_EntryState extends State<DailyWork_done_DPR_Entry> {
                         controller:
                         dailyWrkDone_DPR_Controller.dpr_dateController,
                         selectable: loginController.user.value.userType != "S",
+                        initialDate: DateTime.tryParse(
+                          dailyWrkDone_DPR_Controller.dpr_dateController.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now(),
+                        onChanged: (date) {
+                          setState(() {
+                            dailyWrkDone_DPR_Controller.dpr_dateController.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
+                        },
                       ),
                     ),
 

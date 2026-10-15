@@ -87,6 +87,9 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
             companyNmrAttendanceController.Company_EntryRemarks.text=element.remarks.toString();
           });
         }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -249,6 +252,20 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                         controller: companyNmrAttendanceController
                             .Company_EntryDate,
                         selectable: loginController.user.value.userType != "S",
+                        initialDate: DateTime.tryParse(
+                          companyNmrAttendanceController
+                              .Company_EntryDate.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now(),
+                        onChanged: (date) {
+                          setState(() {
+                            companyNmrAttendanceController
+                                .Company_EntryDate.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
+                        },
                       ),
                     ),
                     Container(

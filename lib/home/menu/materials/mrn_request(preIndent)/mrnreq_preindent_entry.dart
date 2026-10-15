@@ -100,6 +100,9 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
         mrnRequest_PreIndent_Controller.createdById.value=0;
         bottomsheetControllers.searchcontroller.text = "";
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -191,7 +194,9 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                           value: mrnRequest_PreIndent_Controller.RequestDateController.text,
                           controller: mrnRequest_PreIndent_Controller.RequestDateController,
                           selectable: true,
-                          initialDate:
+                          initialDate: DateTime.tryParse(
+                            mrnRequest_PreIndent_Controller.RequestDateController.text,
+                          ) ??
                               DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime.now(),
@@ -208,7 +213,9 @@ class _MRNRequest_PreIndent_EntryScreenState extends State<MRNRequest_PreIndent_
                           value: mrnRequest_PreIndent_Controller.DuedateController.text,
                           controller: mrnRequest_PreIndent_Controller.DuedateController,
                           selectable: true,
-                          initialDate:
+                          initialDate: DateTime.tryParse(
+                            mrnRequest_PreIndent_Controller.DuedateController.text,
+                          ) ??
                               DateTime.now(),
                           firstDate: DateTime.tryParse(
                               mrnRequest_PreIndent_Controller

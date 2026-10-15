@@ -122,6 +122,9 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
           siteVoucher_Controller.createdById.value = element.createdBy;
         });
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -211,7 +214,19 @@ class _SiteVoucher_EntryScreenState extends State<SiteVoucher_EntryScreen> {
                           title: "Date",
                           value: siteVoucher_Controller.sitevocDate.text,
                           controller: siteVoucher_Controller.sitevocDate,
-                          selectable: loginController.user.value.userType != "S"
+                          selectable: loginController.user.value.userType != "S",
+                        initialDate: DateTime.tryParse(
+                          siteVoucher_Controller.sitevocDate.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now(),
+                        onChanged: (date) {
+                          setState(() {
+                            siteVoucher_Controller.sitevocDate.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
+                        },
                       ),
                     ),
                     Container(

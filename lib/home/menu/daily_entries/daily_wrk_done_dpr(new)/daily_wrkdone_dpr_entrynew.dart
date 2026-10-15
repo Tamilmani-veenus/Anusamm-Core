@@ -121,7 +121,9 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
           dailyWrkDone_DPRNEW_Controller.dpr_new_remarksController.text=element.remarks;
         });
       }
+      if (!mounted) return;
 
+      setState(() {});
     });
     super.initState();
   }
@@ -219,7 +221,18 @@ class _DailyWork_done_DPR_New_EntryState extends State<DailyWork_done_DPR_Entry_
                           value: dailyWrkDone_DPRNEW_Controller.dateController.text,
                           controller: dailyWrkDone_DPRNEW_Controller.dateController,
                           selectable: loginController.user.value.userType != "S",
+                          initialDate: DateTime.tryParse(
+                            dailyWrkDone_DPRNEW_Controller.dateController.text,
+                          ) ??
+                              DateTime.now(),
+                          firstDate: DateTime(2000),
                           lastDate: DateTime.now(),
+                          onChanged: (date) {
+                            setState(() {
+                              dailyWrkDone_DPRNEW_Controller.dateController.text =
+                                  CommonDateUtils.formatApiDate(date);
+                            });
+                          },
                         ),
                       ),
 

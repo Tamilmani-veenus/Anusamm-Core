@@ -114,6 +114,9 @@ class _SubAttendanceSiteEntryState extends State<SubattendanceSiteEntry> {
         });
         await dailyEntriesController.gettingImage();
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
   }
 

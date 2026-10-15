@@ -80,6 +80,9 @@ class _ManPowerEntrySreenState extends State<ManPowerEntrySreen> {
           manPowerController.RemarksController.text = element.remarks!;
         }
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
   }
 
@@ -176,6 +179,20 @@ class _ManPowerEntrySreenState extends State<ManPowerEntrySreen> {
                         controller: manPowerController
                             .ManPowerEntryDateController,
                         selectable: loginController.user.value.userType != "S",
+                        initialDate: DateTime.tryParse(
+                          manPowerController
+                              .ManPowerEntryDateController.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now(),
+                        onChanged: (date) {
+                          setState(() {
+                            manPowerController
+                                .ManPowerEntryDateController.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
+                        },
                       ),
                     ),
                     CommonDateFields(
@@ -184,7 +201,9 @@ class _ManPowerEntrySreenState extends State<ManPowerEntrySreen> {
                         value: manPowerController.ManPowerReqDateController.text,
                         controller: manPowerController.ManPowerReqDateController,
                         selectable: true,
-                        initialDate:
+                        initialDate: DateTime.tryParse(
+                          manPowerController.ManPowerReqDateController.text,
+                        ) ??
                             DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime.now(),
@@ -202,7 +221,9 @@ class _ManPowerEntrySreenState extends State<ManPowerEntrySreen> {
                         value: manPowerController.ManPowerDueDateController.text,
                         controller: manPowerController.ManPowerDueDateController,
                         selectable: true,
-                        initialDate:
+                        initialDate: DateTime.tryParse(
+                          manPowerController.ManPowerDueDateController.text,
+                        ) ??
                             DateTime.now(),
                         firstDate: DateTime.tryParse(
                             manPowerController.ManPowerReqDateController.text) ??
