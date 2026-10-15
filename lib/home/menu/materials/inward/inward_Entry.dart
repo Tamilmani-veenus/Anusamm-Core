@@ -104,6 +104,9 @@ class _InwardState extends State<Inward_entry> {
           inward_controller.InwardRemarksText.text = element.remarks == null ? "" : element.remarks.toString();
         });
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
   }
 
@@ -197,6 +200,18 @@ class _InwardState extends State<Inward_entry> {
                       value: inward_controller.InwardEntryDateText.text,
                       controller: inward_controller.InwardEntryDateText,
                       selectable: loginController.user.value.userType != "S",
+                      initialDate: DateTime.tryParse(
+                        inward_controller.InwardEntryDateText.text,
+                      ) ??
+                          DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now(),
+                      onChanged: (date) {
+                        setState(() {
+                          inward_controller.InwardEntryDateText.text =
+                              CommonDateUtils.formatApiDate(date);
+                        });
+                      },
                     ),
                   ),
 

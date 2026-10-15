@@ -126,6 +126,9 @@ class _Subcont_Nmr_EntryScreenState_Site
         billGenerationDirectController.tobededadv.text = billGenerationDirectController.to_be_dection_advance;
         billGenerationDirectController.createdById.value=0;
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -215,6 +218,18 @@ class _Subcont_Nmr_EntryScreenState_Site
                       value: billGenerationDirectController.billentryDateController.text,
                       controller: billGenerationDirectController.billentryDateController,
                       selectable: loginController.user.value.userType != "S",
+                      initialDate: DateTime.tryParse(
+                        billGenerationDirectController.billentryDateController.text,
+                      ) ??
+                          DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now(),
+                      onChanged: (date) {
+                        setState(() {
+                          billGenerationDirectController.billentryDateController.text =
+                              CommonDateUtils.formatApiDate(date);
+                        });
+                      },
                     ),
                   ),
                   Container(

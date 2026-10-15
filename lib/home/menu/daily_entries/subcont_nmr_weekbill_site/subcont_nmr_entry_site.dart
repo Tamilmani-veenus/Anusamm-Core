@@ -81,6 +81,9 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
           nmrWklyController.createdById.value = element.createdBy;
         });
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -181,6 +184,18 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                                 value: nmrWklyController.NmrentryDateController.text,
                                 controller: nmrWklyController.NmrentryDateController,
                                 selectable: loginController.user.value.userType != "S",
+                                initialDate: DateTime.tryParse(
+                                  nmrWklyController.NmrentryDateController.text,
+                                ) ??
+                                    DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime.now(),
+                                onChanged: (date) {
+                                  setState(() {
+                                    nmrWklyController.NmrentryDateController.text =
+                                        CommonDateUtils.formatApiDate(date);
+                                  });
+                                },
                               ),
                             ),
                           ),
@@ -413,7 +428,7 @@ class _Subcont_Nmr_EntryScreenState_Site extends State<Subcont_Nmr_EntryScreen_S
                           controller: nmrWklyController.TodateController,
                           selectable: true,
                           initialDate: DateTime.tryParse(
-                              nmrWklyController.FromdateController.text) ??
+                              nmrWklyController.TodateController.text) ??
                               DateTime.now(),
                           firstDate: DateTime.tryParse(
                               nmrWklyController.FromdateController.text) ??

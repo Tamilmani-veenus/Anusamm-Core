@@ -175,6 +175,9 @@ class _TrasferBetweenProjects_EntryState
 
         });
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
   }
 
@@ -292,6 +295,18 @@ class _TrasferBetweenProjects_EntryState
                                 value: transferBW_project_Controller.entryDateText.text,
                                 controller: transferBW_project_Controller.entryDateText,
                                 selectable: loginController.user.value.userType != "S",
+                                initialDate: DateTime.tryParse(
+                                  transferBW_project_Controller.entryDateText.text,
+                                ) ??
+                                    DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime.now(),
+                                onChanged: (date) {
+                                  setState(() {
+                                    transferBW_project_Controller.entryDateText.text =
+                                        CommonDateUtils.formatApiDate(date);
+                                  });
+                                },
                               ),
                             ),
                           ),

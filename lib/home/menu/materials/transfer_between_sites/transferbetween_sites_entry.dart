@@ -106,6 +106,9 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
         transferBt_Site_Controller.entryDateText.text=BaseUtitiles.initiateCurrentDateFormat();
         transferBt_Site_Controller.prearedbyText.text=loginController.EmpName();
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -218,6 +221,18 @@ class _TransferBetweenSites_EntryState extends State<TransferBetweenSites_Entry>
                                   value: transferBt_Site_Controller.entryDateText.text,
                                   controller: transferBt_Site_Controller.entryDateText,
                                   selectable: loginController.user.value.userType != "S",
+                                  initialDate: DateTime.tryParse(
+                                    transferBt_Site_Controller.entryDateText.text,
+                                  ) ??
+                                      DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime.now(),
+                                  onChanged: (date) {
+                                    setState(() {
+                                      transferBt_Site_Controller.entryDateText.text =
+                                          CommonDateUtils.formatApiDate(date);
+                                    });
+                                  },
                                 ),
                               ),
                             ),

@@ -93,6 +93,9 @@ class _WorkOrdDirectEntryScreenState extends State<WorkOrdDirectEntryScreen> {
         workOrderBoqController.filteredTermsAndCondition.clear();
         workOrderBoqController.selectedTerms.clear();
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -183,12 +186,18 @@ class _WorkOrdDirectEntryScreenState extends State<WorkOrdDirectEntryScreen> {
                       value: workOrderDirectController.workOrdentryDateController.text,
                       controller: workOrderDirectController.workOrdentryDateController,
                       selectable: loginController.user.value.userType != "S",
-                      initialDate: DateTime.now(),
+                      initialDate: DateTime.tryParse(
+                        workOrderDirectController.workOrdentryDateController.text,
+                      ) ??
+                          DateTime.now(),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
                       onChanged: (date) {
-                        workOrderDirectController.workOrdentryDateController
-                            .text =  CommonDateUtils.formatApiDate(date);
+                        setState(() {
+                          workOrderDirectController.workOrdentryDateController
+                              .text =  CommonDateUtils.formatApiDate(date);
+                        });
+
                       },
                     ),
                   ),

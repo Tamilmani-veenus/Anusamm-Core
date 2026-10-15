@@ -86,6 +86,9 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
               element.createdName.toString();
         });
       }
+      if (!mounted) return;
+
+      setState(() {});
     });
     super.initState();
   }
@@ -299,6 +302,18 @@ class _MaterialTransReqEntryState extends State<MaterialTransReqEntry> {
                               value: materialTransferReqController.entryDateText.text,
                               controller: materialTransferReqController.entryDateText,
                               selectable: loginController.user.value.userType != "S",
+                              initialDate: DateTime.tryParse(
+                                materialTransferReqController.entryDateText.text,
+                              ) ??
+                                  DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime.now(),
+                              onChanged: (date) {
+                                setState(() {
+                                  materialTransferReqController.entryDateText.text =
+                                      CommonDateUtils.formatApiDate(date);
+                                });
+                              },
                             ),
                           ),
                         ),
