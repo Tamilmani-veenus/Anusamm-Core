@@ -6188,7 +6188,7 @@ class _InwardPendingState extends State<InwardPending> {
                                                           .mainlist
                                                           .value[index]
                                                           .SupplierContactNo
-                                                          .toString(),
+                                                          ??"-",
                                                       style: TextStyle(
                                                         color: Colors.black,
                                                       ),

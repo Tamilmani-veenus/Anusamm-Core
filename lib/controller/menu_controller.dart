@@ -189,43 +189,42 @@ class Menu_Controller extends GetxController {
 
  MaterialScreen(String value,String MenuName, BuildContext context) async {
     if (value == "MRN Request (Indent)") {
-      if (!AppClient.isAnusamm) {
+      // if (!AppClient.isAnusamm) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MRN_RequestIndent_Entrylist(heading: MenuName),
           ),
         );
-        return;
-      }
-
-      if (loginController.user.value.userType == "A" ||
-          loginController.user.value.userType == "O") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MRN_RequestIndent_Entrylist(heading: MenuName),
-          ),
-        );
-        return;
-      }
-
-      await punchInController.getNetworkTime();
-
-      if (punchInController.dayName == "Tuesday" ||
-          punchInController.dayName == "Wednesday") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MRN_RequestIndent_Entrylist(heading: MenuName),
-          ),
-        );
-      } else {
-        BaseUtitiles.showToast(
-          "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
-        );
-      }
-      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MRN_RequestIndent_Entrylist()));
+        // return;
+      // }
+      //
+      // if (loginController.user.value.userType == "A" ||
+      //     loginController.user.value.userType == "O") {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => MRN_RequestIndent_Entrylist(heading: MenuName),
+      //     ),
+      //   );
+      //   return;
+      // }
+      //
+      // await punchInController.getNetworkTime();
+      //
+      // if (punchInController.dayName == "Tuesday" ||
+      //     punchInController.dayName == "Wednesday") {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => MRN_RequestIndent_Entrylist(heading: MenuName),
+      //     ),
+      //   );
+      // } else {
+      //   BaseUtitiles.showToast(
+      //     "You can't save this record on this date. It is only allowed on Tuesday and Wednesday.",
+      //   );
+      // }
 
 
     }
