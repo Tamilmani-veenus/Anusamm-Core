@@ -18,6 +18,7 @@ import '../../../../controller/logincontroller.dart';
 import '../../../../controller/projectcontroller.dart';
 import '../../../../controller/sitecontroller.dart';
 import '../../../../utilities/baseutitiles.dart';
+import '../../../../utilities/common_date_fields.dart';
 import '../../../../utilities/requestconstant.dart';
 
 class Company_nmr_entryscreen extends StatefulWidget {
@@ -240,80 +241,14 @@ class _Company_nmr_entryscreenState extends State<Company_nmr_entryscreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin:
-                          const EdgeInsets.only(top: 2, left: 10, right: 10),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          side:
-                              const BorderSide(color: Colors.white70, width: 1),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 3, left: 10, bottom: 5),
-                          child: TextFormField(
-                              readOnly: true,
-                              controller: companyNmrAttendanceController
-                                  .Company_EntryDate,
-                              cursorColor: Colors.black,
-                              style: const TextStyle(color: Colors.black),
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none,
-                                labelText: "Date",
-                                labelStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: RequestConstant.Lable_Font_SIZE),
-                                prefixIconConstraints:
-                                    BoxConstraints(minWidth: 0, minHeight: 0),
-                                prefixIcon: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 8),
-                                    child: ConstIcons.date),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return '\u26A0 Enter user name';
-                                }
-                                return null;
-                              },
-                              onTap: () async {
-                                var Entrydate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2010),
-                                    // .subtract(
-                                    // const Duration(days: 1)),
-                                    lastDate: DateTime.now(),
-                                    builder: (context, child) {
-                                      return Theme(
-                                        data: Theme.of(context).copyWith(
-                                          colorScheme: ColorScheme.light(
-                                            primary:
-                                                Theme.of(context).primaryColor,
-                                            // header background color
-                                            onPrimary: Colors.white,
-                                            // header text color
-                                            onSurface:
-                                                Colors.black, // body text color
-                                          ),
-                                          textButtonTheme: TextButtonThemeData(
-                                            style: TextButton.styleFrom(
-                                              primary: Colors
-                                                  .black, // button text color
-                                            ),
-                                          ),
-                                        ),
-                                        child: child!,
-                                      );
-                                    });
-                                companyNmrAttendanceController
-                                        .Company_EntryDate.text =
-                                    BaseUtitiles.selectDateFormat(Entrydate!);
-                              }),
-                        ),
+                    CommonDateFields(
+                      date1: CommonDateFieldConfig(
+                        title: "Date",
+                        value: companyNmrAttendanceController
+                            .Company_EntryDate.text,
+                        controller: companyNmrAttendanceController
+                            .Company_EntryDate,
+                        selectable: loginController.user.value.userType != "S",
                       ),
                     ),
                     Container(
