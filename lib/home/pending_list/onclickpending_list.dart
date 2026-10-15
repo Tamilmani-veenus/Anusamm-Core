@@ -6158,7 +6158,10 @@ class _InwardPendingState extends State<InwardPending> {
                                               )),
                                         ],
                                       ),
-                                      if (AppClient.isAnusamm)
+                                      if (AppClient.isAnusamm && pendingListController
+                                          .mainlist
+                                          .value[index]
+                                          .SupplierContactNo!=null)
                                         Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -9562,7 +9565,7 @@ class _WorkOrderState extends State<WorkOrder> {
             children: [
               InkWell(
                 child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
+                  margin: EdgeInsets.all(10),
                   width: BaseUtitiles.getWidthtofPercentage(context, 25),
                   height: BaseUtitiles.getheightofPercentage(context, 4),
                   decoration: BoxDecoration(
@@ -18381,7 +18384,7 @@ class _NMRBillVerificationState extends State<NMRBillVerification> {
             children: [
               InkWell(
                 child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
+                  margin: EdgeInsets.all(10),
                   width: BaseUtitiles.getWidthtofPercentage(context, 25),
                   height: BaseUtitiles.getheightofPercentage(context, 4),
                   decoration: BoxDecoration(
@@ -18916,7 +18919,7 @@ class _BillDirectVerificationState extends State<BillDirectVerification> {
             children: [
               InkWell(
                 child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
+                  margin: EdgeInsets.all(10),
                   width: BaseUtitiles.getWidthtofPercentage(context, 25),
                   height: BaseUtitiles.getheightofPercentage(context, 4),
                   decoration: BoxDecoration(
@@ -19768,7 +19771,7 @@ class _BillBoqVerificationState extends State<BillBoqVerification> {
             children: [
               InkWell(
                 child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
+                  margin: EdgeInsets.all(10),
                   width: BaseUtitiles.getWidthtofPercentage(context, 25),
                   height: BaseUtitiles.getheightofPercentage(context, 4),
                   decoration: BoxDecoration(
