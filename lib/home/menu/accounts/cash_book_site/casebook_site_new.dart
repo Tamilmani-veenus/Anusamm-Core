@@ -176,7 +176,7 @@ class _CashBook_SiteState extends State<CashBook_Site> {
                             ),
                             onTap: () async {
                               await reportsController.getCompanyReportList(type: "MRNReqTracker");
-                              bottomsheetControllers.CompanyName(context, reportsController.getCompanyDropDownvalue.value,type: "mrnReqTracker");
+                              bottomsheetControllers.CompanyName(context, reportsController.getCompanyDropDownvalue.value,type: "cashbook");
                             },
                           ),
                         ),
