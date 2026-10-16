@@ -195,7 +195,19 @@ class _RequisitionSlip_EntryState extends State<RequisitionSlip_Entry> {
                         title: "Request Date",
                         value: requisitionSlipController.Reqdate.text,
                         controller: requisitionSlipController.Reqdate,
-                        selectable: false,
+                        selectable: loginController.user.value.userType != "S",
+                        initialDate: DateTime.tryParse(
+                          requisitionSlipController.Reqdate.text,
+                        ) ??
+                            DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now(),
+                        onChanged: (date) {
+                          setState(() {
+                            requisitionSlipController.Reqdate.text =
+                                CommonDateUtils.formatApiDate(date);
+                          });
+                        },
                       ),
                     ),
                     Container(

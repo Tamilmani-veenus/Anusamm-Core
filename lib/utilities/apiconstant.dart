@@ -2,10 +2,8 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class ApiConfig {
-  // static const String LIVE_ENDPOINT = "http://49.204.233.151:8080/";
   static const String LIVE_ENDPOINT = "http://103.89.64.224:8080/";
 
-  // static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}erpnew/";
   static const String DEFAULT_BASE_URL_CORE = "${LIVE_ENDPOINT}AnusammAPI/";
 
   static String APIURL_CORE = DEFAULT_BASE_URL_CORE;
@@ -48,6 +46,7 @@ class ApiConfig {
     }
   }
 }
+
 
 class AppClient {
   static late String packageName;
